@@ -97,7 +97,7 @@ define( function( require ) {
       })( i );
     }
 
-    for ( var i = 0; i < 5; i++ ) {
+    for ( i = 0; i < 5; i++ ) {
       (function( i ) {
         var y = i * 110 + 5;
         var wall = new Rectangle( 400, y, 6, 100, {fill: 'white', cursor: 'pointer'} );
