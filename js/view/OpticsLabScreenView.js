@@ -105,7 +105,7 @@ define( function( require ) {
       (function( i ) {
         var y = i * 110 + 5;
         var wall = new Rectangle( 400, y, 6, 100, {fill: 'white', cursor: 'pointer'} );
-        wall.touchArea = wall.localBounds.dilatedXY( 15, 10 )
+        wall.touchArea = wall.localBounds.dilatedXY( 15, 10 );
         walls.push( wall );
         opticsLabScreenView.addChild( wall );
         wall.addInputListener( new SimpleDragHandler( {
