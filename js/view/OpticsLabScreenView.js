@@ -41,14 +41,17 @@ define( function( require ) {
         //see if it hits a wall
 
         var intersection = null;
+        var distanceToIntersection = 10000000;
         var sourceCenterX = source.circle.centerX;
         var sourceCenterY = source.circle.centerY;
         for ( var i = 0; i < walls.length; i++ ) {
           var wall = walls[i];
           var wallIntersection = Util.lineSegmentIntersection( sourceCenterX, sourceCenterY, sourceCenterX + dt.x, sourceCenterY + dt.y, wall.centerX, wall.top, wall.centerX, wall.bottom );
           if ( wallIntersection ) {
-            intersection = wallIntersection;
-            break;
+            var dist = wallIntersection.distance( wall.center );
+            if ( dist < distanceToIntersection ) {
+              intersection = wallIntersection;
+            }
           }
         }
         if ( intersection ) {
@@ -88,6 +91,7 @@ define( function( require ) {
 
         var source = {circle: circle, lines: lines};
         circle.addInputListener( new SimpleDragHandler( {
+          allowTouchSnag: true,
           translate: function( params ) {
             circle.translate( params.delta.x, params.delta.y );
             updateSourceLines( source );
@@ -101,9 +105,11 @@ define( function( require ) {
       (function( i ) {
         var y = i * 110 + 5;
         var wall = new Rectangle( 400, y, 6, 100, {fill: 'white', cursor: 'pointer'} );
+        wall.touchArea = wall.localBounds.dilatedXY( 15, 10 )
         walls.push( wall );
         opticsLabScreenView.addChild( wall );
         wall.addInputListener( new SimpleDragHandler( {
+          allowTouchSnag: true,
           translate: function( params ) {
             wall.translate( params.delta.x, params.delta.y );
             updateAllSources();
@@ -112,6 +118,7 @@ define( function( require ) {
       })( i );
     }
 
+    updateAllSources();
   }
 
   return inherit( ScreenView, OpticsLabScreenView );
