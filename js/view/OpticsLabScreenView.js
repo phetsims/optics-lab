@@ -9,6 +9,8 @@
 define( function( require ) {
   'use strict';
 
+  console.log( "hello" );
+
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var ScreenView = require( 'JOIST/ScreenView' );
