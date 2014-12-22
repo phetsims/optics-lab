@@ -12,6 +12,7 @@ define( function( require ) {
   console.log( "hello" );
 
   // modules
+  var Bounds2 = require( 'DOT/Bounds2' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Circle = require( 'SCENERY/nodes/Circle' );
@@ -29,7 +30,7 @@ define( function( require ) {
   function OpticsLabScreenView( model ) {
 
     var opticsLabScreenView = this;
-    ScreenView.call( opticsLabScreenView, {renderer: 'svg'} );
+    ScreenView.call( opticsLabScreenView, { renderer: 'svg', layoutBounds: new Bounds2( 0, 0, 768, 504 ) } );
 
     var sources = [];
     var walls = [];
