@@ -3,7 +3,6 @@
 /**
  * Model for the 'Optics Lab' screen.
  *
- * @author Chris Malley (PixelZoom, Inc.)
  * @author Sam Reid (PhET Interactive Simulations)
  */
 define( function( require ) {
