@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var OpticsLabScreen = require( 'OPTICS_LAB/OpticsLabScreen' );
+  var OpticsLabScreen = require( 'OPTICS_LAB/optics-lab/OpticsLabScreen' );
   var Sim = require( 'JOIST/Sim' );
   var SimLauncher = require( 'JOIST/SimLauncher' );
 

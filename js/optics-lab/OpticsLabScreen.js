@@ -9,8 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var OpticsLabModel = require( 'OPTICS_LAB/model/OpticsLabModel' );
-  var OpticsLabScreenView = require( 'OPTICS_LAB/view/OpticsLabScreenView' );
+  var OpticsLabModel = require( 'OPTICS_LAB/optics-lab/model/OpticsLabModel' );
+  var OpticsLabScreenView = require( 'OPTICS_LAB/optics-lab/view/OpticsLabScreenView' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
 
