@@ -1,4 +1,4 @@
-// Copyright 2002-2013, University of Colorado Boulder
+// Copyright 2002-2015, University of Colorado Boulder
 
 /**
  * View for the 'Optics Lab' screen.
@@ -23,10 +23,9 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   /**
-   * @param {BarMagnetModel} model
    * @constructor
    */
-  function OpticsLabScreenView( model ) {
+  function OpticsLabScreenView( ) {
 
     var opticsLabScreenView = this;
     ScreenView.call( opticsLabScreenView, { layoutBounds: new Bounds2( 0, 0, 768, 504 ) } );
