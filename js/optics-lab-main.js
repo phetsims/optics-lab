@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var OpticsLabScreen = require( 'OPTICS_LAB/optics-lab/OpticsLabScreen' );
+  //following 2 lines always required in every sim
   var Sim = require( 'JOIST/Sim' );
   var SimLauncher = require( 'JOIST/SimLauncher' );
 

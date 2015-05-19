@@ -8,7 +8,7 @@
 define( function( require ) {
   'use strict';
 
-  console.log( "hello" );
+  console.log( "hello" ); //test of console in browser: cntrl-shft-j
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
