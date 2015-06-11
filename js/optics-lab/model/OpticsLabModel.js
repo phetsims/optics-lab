@@ -14,11 +14,5 @@ define( function( require ) {
   function OpticsLabModel() {
   }
 
-  return inherit( Object, OpticsLabModel, {
-
-    // Called by the animation loop. Optional, so if your model has no animation, you can omit this.
-    step: function() {
-      // Handle model animation here.
-    }
-  } );
+  return inherit( Object, OpticsLabModel );
 } );
