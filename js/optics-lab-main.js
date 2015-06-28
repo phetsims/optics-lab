@@ -19,8 +19,8 @@ define( function( require ) {
   var simOptions = {
     credits: {
       //TODO fill in credits
-      leadDesign: '',
-      softwareDevelopment: '',
+      leadDesign: 'Michael Dubson',
+      softwareDevelopment: 'Michael Dubson',
       team: '',
       thanks: ''
     }
