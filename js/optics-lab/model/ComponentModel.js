@@ -9,14 +9,30 @@ define( function( require ) {
     var inherit = require( 'PHET_CORE/inherit' );
     var Vector2 = require( 'DOT/Vector2' );
 
-    function ComponentModel( diameter, focalLength ) {
+    function ComponentModel( model, type, diameter, focalLength  ) {
+
+        this.componentModel = this;
+
+        this.model = model;
+        this.type = type; // 'lens'|'mirror'|'mask'
+        this.diameter = diameter;
+        this.f = focalLength;
         this.position = new Vector2( 0, 0 );
-        this.
-        var fLength
-        var components = [];
+
+        this.model.addComponent( this );
     }
 
     return inherit(Object, OpticsLabModel, {
+            setFocalLength: function (f) {
+                this.f = f;
+            },
+            setDiameter: function( diameter ){
+                this.diameter = diameter;
+            },
+            setPosition: function( position ){
+            this.position = position;
+        }
+
         }
     );
 } );
