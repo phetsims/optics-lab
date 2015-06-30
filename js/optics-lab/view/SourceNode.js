@@ -24,6 +24,8 @@ define( function( require ) {
     function SourceNode( sourceModel, modelViewTransform ) {
 
         var sourceNode = this;
+        this.model =  sourceModel;
+        this.modelViewTransform = modelViewTransform;
 
         // Call the super constructor
         Node.call( sourceNode, {
@@ -33,18 +35,9 @@ define( function( require ) {
         } );
 
         // Add the circle graphic
-        var myCircle = new Circle( 50, { x: 300, y: 400, fill: 'green' } );
+        var myCircle = new Circle( 50, { x: 300, y: 400, fill: 'red' } );
         sourceNode.addChild( myCircle );
 
-        /*    // Add another (test) circle graphic
-         var myCircle2 = new Circle( 30, { x: 300, y: 400, fill: 'Yellow' } );
-         sourceNode.addChild( myCircle2 );
-         myCircle2.translation =  { x: myCircle.x + 100, y: myCircle.y };*/
-
-
-        // Scale it so it matches the model width and height
-        //sourceNode.scale( modelViewTransform.modelToViewDeltaX( barMagnet.size.width ) / this.width,
-        //modelViewTransform.modelToViewDeltaY( barMagnet.size.height ) / this.height );
 
         // When dragging, move the sample element
         sourceNode.addInputListener( new SimpleDragHandler(
@@ -55,20 +48,17 @@ define( function( require ) {
                 // Translate on drag events
                 translate: function( args ) {
                     //console.log( 'mouse position is ' + args.position );
-                    sampleElement.location = modelViewTransform.viewToModelPosition( args.position );
+                    sourceNode.model.setPosition( args.position );
+                    //sourceNode.location = modelViewTransform.viewToModelPosition( args.position );
                     //myCircle.translation = modelViewTransform.viewToModelPosition( args.position );
                 }
             } ) );
 
         // Register for synchronization with model.
-        sampleElement.locationProperty.link( function( location ) {
-            sourceNode.translation = modelViewTransform.modelToViewPosition( location );
+        this.model.positionProperty.link( function( position ) {
+            sourceNode.translation = position;
         } );
 
-        // Register for synchronization with model
-        //sampleElement.orientationProperty.link( function( orientation ) {
-        //sourceNode.rotation = orientation;
-        //} );
     }
 
     return inherit( Node, SourceNode );

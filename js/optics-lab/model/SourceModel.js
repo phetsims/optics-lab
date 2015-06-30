@@ -1,4 +1,6 @@
 /**
+ * Model of source of light = array of rays
+ * Rays are either a fan (point source) or a beam (parallel rays)
  * Created by Dubson on 6/28/2015.
  */
 
@@ -7,6 +9,7 @@ define( function( require ) {
 
     // modules
     var inherit = require( 'PHET_CORE/inherit' );
+    var PropertySet = require( 'AXON/PropertySet' );
     var Ray2 = require( 'DOT/Ray2' );
     var Vector2 = require( 'DOT/Vector2' );
 
@@ -20,6 +23,10 @@ define( function( require ) {
      */
 
     function SourceModel( type, nbrOfRays, spread, height ) {
+
+        PropertySet.call( this, {
+            position: 0               //@private, position of source on stage
+        } );
 
         this.sourceModel = this;
 
@@ -35,15 +42,14 @@ define( function( require ) {
             this.height = height;
         }
 
-        this.source = [];    //source is an array of rays
+        this.rays = [];    //an array of rays
         this.createRays();
-
 
     }
 
-    return inherit(Object, SourceModel, {
+    return inherit( PropertySet, SourceModel, {
             createRays: function () {
-                this.source = [];  //clear any current rays
+                this.rays = [];  //clear any current rays
                 //for fan
                 var lowestAngle = this.spread / 2;  //in degrees
                 var deltaAngle = this.spread / ( this.nbrOfRays - 1);    //in degrees
@@ -58,11 +64,11 @@ define( function( require ) {
                     if (this.type === 'fan') {
                         theta = ( lowestAngle + i*deltaAngle ) * Math.PI / 180;
                         dir = new Vector2( Math.cos(theta), Math.sin(theta) );
-                        this.source[i] = new Ray2( this.position, dir );
+                        this.rays[i] = new Ray2( this.position, dir );
                     } else if (this.type === 'beam') {
                         dir = new Vector2(1, 0);
                         pos = this.position + lowestPos + i * deltaPos;
-                        this.source[i] = new Ray2( pos, dir );
+                        this.rays[i] = new Ray2( pos, dir );
                     }
                 }
             }, //end createRays()
@@ -84,13 +90,13 @@ define( function( require ) {
             },
             setPosition: function ( position ){
                 this.position = position;
-                for( var i = 0; i < this.sources.length; i++ ){
-                    if( type === 'fan' ){
-                        this.sources[i].pos = position;
-                    }else if ( type === 'beam' ){
+                for( var i = 0; i < this.rays.length; i++ ){
+                    if( this.type === 'fan' ){
+                        this.rays[i].pos = position;
+                    }else if ( this.type === 'beam' ){
                         var deltaPos = this.height / ( this.nbrOfRays - 1 );
-                        var pos = -( this.height/2 ) + i*deltaPos;
-                        this.sources[i].pos = pos;
+                        var pos = position - ( this.height/2 ) + i*deltaPos;
+                        this.rays[i].pos = pos;
                     }
                 }
             }

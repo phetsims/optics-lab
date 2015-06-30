@@ -12,20 +12,25 @@ define( function( require ) {
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ScreenView = require( 'JOIST/ScreenView' );
   var Circle = require( 'SCENERY/nodes/Circle' );
-  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var LinearFunction = require( 'DOT/LinearFunction' );
-  var Vector2 = require( 'DOT/Vector2' );
+  var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var ScreenView = require( 'JOIST/ScreenView' );
+  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  var SourceNode = require( 'OPTICS_LAB/optics-lab/view/SourceNode' );
+  var SourceModel = require( 'OPTICS_LAB/optics-lab/model/SourceModel' );
   var Util = require( 'DOT/Util' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @constructor
    */
-  function OpticsLabScreenView( ) {
+  function OpticsLabScreenView( opticsLabModel ) {
+
+    this.opticsLabModel = opticsLabModel;
 
     var opticsLabScreenView = this;
     ScreenView.call( opticsLabScreenView, { layoutBounds: new Bounds2( 0, 0, 768, 504 ) } );
@@ -33,7 +38,15 @@ define( function( require ) {
     var sources = [];
     var walls = [];
 
-    var updateSourceLines = function( source ) {
+    // model-view transform
+    var modelViewTransform = ModelViewTransform2.createIdentity();
+
+    //function SourceModel( type, nbrOfRays, spread, height )
+    var sourceModel = new SourceModel( 'fan', 6, 45 );
+    var sourceNode = new SourceNode( sourceModel, modelViewTransform );
+    this.addChild( sourceNode );
+
+/*    var updateSourceLines = function( source ) {
       var lines = source.lines;
       for ( var j = 0; j < lines.length; j++ ) {
         var line = lines[ j ];
@@ -62,16 +75,16 @@ define( function( require ) {
           line.setLine( sourceCenterX, sourceCenterY, sourceCenterX + dt.x, sourceCenterY + dt.y );
         }
       }
-    };
+    };*/
 
-    var updateAllSources = function() {
+/*    var updateAllSources = function() {
       for ( var i = 0; i < sources.length; i++ ) {
         var source = sources[ i ];
         updateSourceLines( source );
       }
-    };
+    };*/
 
-    for ( var i = 0; i < 5; i++ ) {
+/*    for ( var i = 0; i < 5; i++ ) {
       (function( i ) {
         var circle = new Circle( 20, { stroke: 'white', lineWidth: 4, centerX: 100, centerY: i * 60 + 10, cursor: 'pointer' } );
         opticsLabScreenView.addChild( circle );
@@ -104,9 +117,9 @@ define( function( require ) {
         } ) );
         sources.push( source );
       })( i );
-    }
+    }*/
 
-    for ( i = 0; i < 5; i++ ) {
+/*    for ( i = 0; i < 5; i++ ) {
       (function( i ) {
         var y = i * 110 + 5;
         var wall = new Rectangle( 400, y, 6, 100, { fill: 'white', cursor: 'pointer' } );
@@ -121,10 +134,14 @@ define( function( require ) {
           }
         } ) );
       })( i );
+    }*/
+
+    //updateAllSources();
+  }//end constructor
+
+  return inherit( ScreenView, OpticsLabScreenView, {
+    addSource: function(){
+
     }
-
-    updateAllSources();
-  }
-
-  return inherit( ScreenView, OpticsLabScreenView );
+  } );
 } );
