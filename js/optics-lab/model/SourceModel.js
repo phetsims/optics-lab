@@ -47,7 +47,7 @@ define( function( require ) {
                 //for fan
                 var lowestAngle = this.spread / 2;  //in degrees
                 var deltaAngle = this.spread / ( this.nbrOfRays - 1);    //in degrees
-                var theta = ( lowestAngle + 0 * deltaAngle ) * Math.PI / 180; //in radians
+                var theta = ( lowestAngle ) * Math.PI / 180; //in radians
                 var dir = new Vector2( Math.cos(theta), Math.sin(theta) );
                 //for beam
                 var lowestPos = -this.height / 2;   //in cm
@@ -56,7 +56,8 @@ define( function( require ) {
 
                 for (var i = 0; i < this.nbrOfRays; i++) {
                     if (this.type === 'fan') {
-                        dir = new Vector2(Math.cos(theta), Math.sin(theta));
+                        theta = ( lowestAngle + i*deltaAngle ) * Math.PI / 180;
+                        dir = new Vector2( Math.cos(theta), Math.sin(theta) );
                         this.source[i] = new Ray2( this.position, dir );
                     } else if (this.type === 'beam') {
                         dir = new Vector2(1, 0);
@@ -75,7 +76,7 @@ define( function( require ) {
                     this.createRays();
                 }
             },
-            setHeightOfBeam: function( heightInCm ){
+            setWidthOfBeam: function( heightInCm ){
                 if( this.type === 'beam' ){
                     this.height = heightInCm;
                     this.createRays;

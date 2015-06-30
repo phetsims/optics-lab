@@ -18,7 +18,6 @@ define( function( require ) {
         this.diameter = diameter;
         this.f = focalLength;
         this.position = new Vector2( 0, 0 );
-
         this.model.addComponent( this );
     }
 
