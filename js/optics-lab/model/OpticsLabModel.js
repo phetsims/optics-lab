@@ -4,7 +4,7 @@
 /**
  * Model for the 'Optics Lab' screen.
  *
- * @author Sam Reid (PhET Interactive Simulations)
+ * @author Mike Dubson (PhET Interactive Simulations)
  */
 define( function( require ) {
   'use strict';
@@ -34,8 +34,27 @@ define( function( require ) {
         this.components.splice( index, 1 );
       },
       processRays: function() {
+        var maxDist = 2000;
+        for( var i = 0; i < this.sources.length; i++ ){
+          for( var j = 0; j < this.components.length; j++ ){
+            for( var r = 0; r < this.sources[ i ].rays.length; r++ ){
+              for( var s = 0; s < this.components[ j ].length; l++ ){
+                var rayStart = this.source[ i ].rays[ r ].pos;
+                var rayEnd = this.source[ i ].rayEnds[ r ];
+                var compDiameter = this.components[ j ].diameter;
+                var compCenter = this.components[ j ].position;
+                var intersection = Util.lineSegmentIntersection(
+                  rayStart.x, rayStart.y, rayEnd.x, rayEnd.y,
+                  compCenter.x, compCenter.y - compDiameter/2, compCenter.x, compCenter.y + compDiameter/2 );
+                if( intersection != null ){
+                  rayEnd = intersection;
+                }
+              }
+            }
+          }
+        }
 
-      }
+      }//end processRays()
     }
   );
 } );

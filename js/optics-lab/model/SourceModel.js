@@ -22,17 +22,19 @@ define( function( require ) {
      * @constructor
      */
 
-    function SourceModel( type, nbrOfRays, spread, height ) {
+    function SourceModel( mainModel, type, nbrOfRays, spread, height ) {
 
         PropertySet.call( this, {
             position: new Vector2( 0, 0 )               //@private, position of source on stage
         } );
 
         this.sourceModel = this;
+        this.mainModel = mainModel;
 
         this.type = type; //'fan'|'beam'
         this.nbrOfRays = nbrOfRays;
         this.position = new Vector2( 0, 0 );
+        this.maxLength = 10000;  //maximum length of rays in pixels
 
         if( type === 'fan' ){
             this.spread = spread;
@@ -43,6 +45,7 @@ define( function( require ) {
         }
 
         this.rays = [];    //an array of rays
+        this.rayEnds = [];
         this.createRays();
 
     }
@@ -50,6 +53,7 @@ define( function( require ) {
     return inherit( PropertySet, SourceModel, {
             createRays: function () {
                 this.rays = [];  //clear any current rays
+                this.rayEnds = [];
                 //for fan
                 var lowestAngle = - this.spread / 2;  //in degrees
                 var deltaAngle = this.spread / ( this.nbrOfRays - 1);    //in degrees
@@ -65,10 +69,12 @@ define( function( require ) {
                         theta = ( lowestAngle + i*deltaAngle ) * Math.PI / 180;
                         dir = new Vector2( Math.cos(theta), Math.sin(theta) );
                         this.rays[i] = new Ray2( this.position, dir );
+                        this.rayEnds[i] =  this.position.plus( this.dir.timesScalar( this.maxLength ));
                     } else if (this.type === 'beam') {
                         dir = new Vector2(1, 0);
                         pos = this.position + lowestPos + i * deltaPos;
                         this.rays[i] = new Ray2( pos, dir );
+                        this.rayEnds[i] = pos.plus( this.dir.timesScalar( this.maxLength ) );
                     }
                 }
             }, //end createRays()

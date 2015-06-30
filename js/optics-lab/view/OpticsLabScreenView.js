@@ -44,19 +44,20 @@ define( function( require ) {
     var modelViewTransform = ModelViewTransform2.createIdentity();
 
     //function SourceModel( type, nbrOfRays, spread, height )
-    var sourceModel = new SourceModel( 'fan', 6, 45 );
+    var sourceModel = new SourceModel( this.opticsLabModel, 'fan', 6, 45 );
     sourceModel.setNbrOfRays( 22 );
     sourceModel.setSpreadOfFan( 90 );
     var sourceNode = new SourceNode( sourceModel, modelViewTransform );
     this.addChild( sourceNode );
 
     //function ComponentModel( type, diameter, focalLength  )
-    var componentModel = new ComponentModel( 'mask', 100 );
+    var componentModel = new ComponentModel( this.opticsLabModel, 'mask', 100 );
     //ComponentNode( componentModel, modelViewTransform )
     var componentNode = new ComponentNode( componentModel, modelViewTransform );
     this.addChild( componentNode );
     this.opticsLabModel.addComponent( componentModel )
     this.opticsLabModel.addSource( sourceModel );
+
 
 /*    var updateSourceLines = function( source ) {
       var lines = source.lines;
