@@ -21,7 +21,7 @@ define( function( require ) {
     Screen.call( this, opticsLabNameString, null /* no icon, single-screen sim */,
       function() { return new OpticsLabModel(); },
       function( model ) { return new OpticsLabScreenView( model ); },
-      { backgroundColor: '#000077' }
+      { backgroundColor: '#0000CC' }
     );
   }
 

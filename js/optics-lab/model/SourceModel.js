@@ -25,7 +25,7 @@ define( function( require ) {
     function SourceModel( type, nbrOfRays, spread, height ) {
 
         PropertySet.call( this, {
-            position: 0               //@private, position of source on stage
+            position: new Vector2( 0, 0 )               //@private, position of source on stage
         } );
 
         this.sourceModel = this;
@@ -51,10 +51,10 @@ define( function( require ) {
             createRays: function () {
                 this.rays = [];  //clear any current rays
                 //for fan
-                var lowestAngle = this.spread / 2;  //in degrees
+                var lowestAngle = - this.spread / 2;  //in degrees
                 var deltaAngle = this.spread / ( this.nbrOfRays - 1);    //in degrees
                 var theta = ( lowestAngle ) * Math.PI / 180; //in radians
-                var dir = new Vector2( Math.cos(theta), Math.sin(theta) );
+                var dir = new Vector2( Math.cos( theta ), Math.sin( theta ) );
                 //for beam
                 var lowestPos = -this.height / 2;   //in cm
                 var pos = lowestPos;
@@ -88,7 +88,7 @@ define( function( require ) {
                     this.createRays;
                 }
             },
-            setPosition: function ( position ){
+            setPosition: function ( position ){   //position = Vector2
                 this.position = position;
                 for( var i = 0; i < this.rays.length; i++ ){
                     if( this.type === 'fan' ){

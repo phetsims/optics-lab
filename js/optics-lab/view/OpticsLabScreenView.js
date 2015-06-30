@@ -13,6 +13,8 @@ define( function( require ) {
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
   var Circle = require( 'SCENERY/nodes/Circle' );
+  var ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
+  var ComponentNode = require( 'OPTICS_LAB/optics-lab/view/ComponentNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var LinearFunction = require( 'DOT/LinearFunction' );
@@ -43,8 +45,18 @@ define( function( require ) {
 
     //function SourceModel( type, nbrOfRays, spread, height )
     var sourceModel = new SourceModel( 'fan', 6, 45 );
+    sourceModel.setNbrOfRays( 22 );
+    sourceModel.setSpreadOfFan( 90 );
     var sourceNode = new SourceNode( sourceModel, modelViewTransform );
     this.addChild( sourceNode );
+
+    //function ComponentModel( type, diameter, focalLength  )
+    var componentModel = new ComponentModel( 'mask', 100 );
+    //ComponentNode( componentModel, modelViewTransform )
+    var componentNode = new ComponentNode( componentModel, modelViewTransform );
+    this.addChild( componentNode );
+    this.opticsLabModel.addComponent( componentModel )
+    this.opticsLabModel.addSource( sourceModel );
 
 /*    var updateSourceLines = function( source ) {
       var lines = source.lines;

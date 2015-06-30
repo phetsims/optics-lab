@@ -13,25 +13,29 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
 
   function OpticsLabModel() {
-    var sources = [];
-    var components = [];
+    this.sources = [];
+    this.components = [];
+
   }
 
-  return inherit(Object, OpticsLabModel, {
-        addSource: function ( source ) {
-          sources.push( source );
-        },
-        addComponent: function ( component ) {
-          components.push( component );
-        },
-        removeSource: function ( source ) {
-          var index = sources.indexOf( source );
-          sources.splice(index, 1);
-        },
-        removeComponent: function ( component ) {
-          var index = components.indexOf( component );
-          components.splice( index, 1 );
-        }
+  return inherit( Object, OpticsLabModel, {
+      addSource: function( source ) {
+        this.sources.push( source );
+      },
+      addComponent: function( component ) {
+        this.components.push( component );
+      },
+      removeSource: function( source ) {
+        var index = sources.indexOf( source );
+        this.sources.splice( index, 1 );
+      },
+      removeComponent: function( component ) {
+        var index = this.components.indexOf( component );
+        this.components.splice( index, 1 );
+      },
+      processRays: function() {
+
       }
+    }
   );
 } );
