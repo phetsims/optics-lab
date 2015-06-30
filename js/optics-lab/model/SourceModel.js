@@ -34,7 +34,7 @@ define( function( require ) {
         this.type = type; //'fan'|'beam'
         this.nbrOfRays = nbrOfRays;
         this.position = new Vector2( 0, 0 );
-        this.maxLength = 10000;  //maximum length of rays in pixels
+        this.maxLength = 2000;  //maximum length of rays in pixels
 
         if( type === 'fan' ){
             this.spread = spread;
@@ -56,7 +56,12 @@ define( function( require ) {
                 this.rayEnds = [];
                 //for fan
                 var lowestAngle = - this.spread / 2;  //in degrees
-                var deltaAngle = this.spread / ( this.nbrOfRays - 1);    //in degrees
+                var deltaAngle;
+                if( this.nbrOfRays === 1 ){
+                    deltaAngle = 0;
+                }else{
+                    deltaAngle = this.spread / ( this.nbrOfRays - 1);    //in degrees
+                }
                 var theta = ( lowestAngle ) * Math.PI / 180; //in radians
                 var dir = new Vector2( Math.cos( theta ), Math.sin( theta ) );
                 //for beam
@@ -69,29 +74,32 @@ define( function( require ) {
                         theta = ( lowestAngle + i*deltaAngle ) * Math.PI / 180;
                         dir = new Vector2( Math.cos(theta), Math.sin(theta) );
                         this.rays[i] = new Ray2( this.position, dir );
-                        this.rayEnds[i] =  this.position.plus( this.dir.timesScalar( this.maxLength ));
+                        this.rayEnds[i] =  this.position.plus( dir.timesScalar( this.maxLength ));
                     } else if (this.type === 'beam') {
                         dir = new Vector2(1, 0);
                         pos = this.position + lowestPos + i * deltaPos;
                         this.rays[i] = new Ray2( pos, dir );
-                        this.rayEnds[i] = pos.plus( this.dir.timesScalar( this.maxLength ) );
+                        this.rayEnds[i] = pos.plus( dir.timesScalar( this.maxLength ) );
                     }
                 }
             }, //end createRays()
             setNbrOfRays: function ( nbrOfRays ){
                 this.nbrOfRays = nbrOfRays;
                 this.createRays();
+                this.mainModel.processRays();
             },
             setSpreadOfFan: function( angleInDegrees ){
                 if( this.type === 'fan' ){
                     this.spread = angleInDegrees;
                     this.createRays();
+                    this.mainModel.processRays();
                 }
             },
             setWidthOfBeam: function( heightInCm ){
                 if( this.type === 'beam' ){
                     this.height = heightInCm;
-                    this.createRays;
+                    this.createRays();
+                    this.mainModel.processRays();
                 }
             },
             setPosition: function ( position ){   //position = Vector2
@@ -99,12 +107,14 @@ define( function( require ) {
                 for( var i = 0; i < this.rays.length; i++ ){
                     if( this.type === 'fan' ){
                         this.rays[i].pos = position;
+                        this.rayEnds[i] = position.plus(this.rays[i].dir.timesScalar( this.maxLength ));
                     }else if ( this.type === 'beam' ){
                         var deltaPos = this.height / ( this.nbrOfRays - 1 );
                         var pos = position - ( this.height/2 ) + i*deltaPos;
                         this.rays[i].pos = pos;
                     }
                 }
+                this.mainModel.processRays();
             }
         }//end inherit
     );

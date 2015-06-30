@@ -11,6 +11,8 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var Util = require( 'DOT/Util' );
+
 
   function OpticsLabModel() {
     this.sources = [];
@@ -38,18 +40,20 @@ define( function( require ) {
         for( var i = 0; i < this.sources.length; i++ ){
           for( var j = 0; j < this.components.length; j++ ){
             for( var r = 0; r < this.sources[ i ].rays.length; r++ ){
-              for( var s = 0; s < this.components[ j ].length; l++ ){
-                var rayStart = this.source[ i ].rays[ r ].pos;
-                var rayEnd = this.source[ i ].rayEnds[ r ];
+                //console.log( 'processRays i = ' + i + '  j = ' + j + '  r = ' + r );
+                var rayStart = this.sources[ i ].rays[ r ].pos;
+              //console.log( 'rayStart = ' + rayStart );
+                var rayEnd = this.sources[ i ].rayEnds[ r ];
+              //console.log( 'rayEnd = ' + rayEnd );
                 var compDiameter = this.components[ j ].diameter;
                 var compCenter = this.components[ j ].position;
                 var intersection = Util.lineSegmentIntersection(
                   rayStart.x, rayStart.y, rayEnd.x, rayEnd.y,
                   compCenter.x, compCenter.y - compDiameter/2, compCenter.x, compCenter.y + compDiameter/2 );
-                if( intersection != null ){
-                  rayEnd = intersection;
+                console.log('intersection point is ' + intersection );
+                if( intersection !== null ){
+                  this.sources[ i ].rayEnds[ r ] = intersection;
                 }
-              }
             }
           }
         }

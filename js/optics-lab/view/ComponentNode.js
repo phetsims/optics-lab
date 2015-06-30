@@ -26,41 +26,50 @@ define( function( require ) {
    */
   function ComponentNode( componentModel, modelViewTransform ) {
 
-    var ComponentNode = this;
+    var componentNode = this;
     this.model =  componentModel;
     this.modelViewTransform = modelViewTransform;
 
     // Call the super constructor
-    Node.call( ComponentNode, {
+    Node.call( componentNode, {
       // Show a cursor hand over the bar magnet
       cursor: 'pointer'
     } );
 
     // Add the rectangle graphic
     //Rectangle( x, y, width, height, arcWidth, arcHeight, options )
-    var myHandle = new Rectangle( 600, 400, 15, 200, { fill: 'red' } );
+    var xPos = this.model.position.x;
+    var yPos = this.model.position.y;
+    var height = this.model.diameter;
+    var myHandle = new Rectangle( xPos, yPos - height/2, 15, height, { fill: 'red' } );
 
-    ComponentNode.addChild( myHandle );
+    componentNode.addChild( myHandle );
 
 
     // When dragging, move the sample element
-    ComponentNode.addInputListener( new SimpleDragHandler(
+    componentNode.addInputListener( new SimpleDragHandler(
       {
         // When dragging across it in a mobile device, pick it up
         allowTouchSnag: true,
 
         // Translate on drag events
-        translate: function( args ) {
-          //console.log( 'mouse position is ' + args.position );
-          ComponentNode.model.setPosition( args.position );
-          //ComponentNode.location = modelViewTransform.viewToModelPosition( args.position );
-          //myCircle.translation = modelViewTransform.viewToModelPosition( args.position );
+        //translate: function( args ) {
+        //  //console.log( 'mouse position is ' + args.position );
+        //  ComponentNode.model.setPosition( args.position );
+        //  //ComponentNode.location = modelViewTransform.viewToModelPosition( args.position );
+        //  //myCircle.translation = modelViewTransform.viewToModelPosition( args.position );
+        //}
+        drag: function( e ){
+          var position = componentNode.globalToParentPoint( e.pointer.point );
+          //console.log( 'position = ' + position );
+          componentNode.model.setPosition( position );
         }
       } ) );
 
     // Register for synchronization with model.
     this.model.positionProperty.link( function( position ) {
-      ComponentNode.translation = position;
+      componentNode.translation = position;
+
     } );
 
   }
