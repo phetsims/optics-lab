@@ -30,6 +30,7 @@ define( function( require ) {
 
         this.sourceModel = this;
         this.mainModel = mainModel;
+        this.sourceNumber;  //for testing
 
         this.type = type; //'fan'|'beam'
         this.nbrOfRays = nbrOfRays;
@@ -45,7 +46,8 @@ define( function( require ) {
         }
 
         this.rays = [];    //an array of rays
-        this.rayEnds = [];
+        this.rayTips = [];   //ends of undeviated rays
+        this.rayBreaks = [];    //ends of rays when intersecting component
         this.createRays();
 
     }
@@ -53,7 +55,8 @@ define( function( require ) {
     return inherit( PropertySet, SourceModel, {
             createRays: function () {
                 this.rays = [];  //clear any current rays
-                this.rayEnds = [];
+                this.rayTips = [];
+                this.rayBreaks = [];
                 //for fan
                 var lowestAngle = - this.spread / 2;  //in degrees
                 var deltaAngle;
@@ -65,21 +68,24 @@ define( function( require ) {
                 var theta = ( lowestAngle ) * Math.PI / 180; //in radians
                 var dir = new Vector2( Math.cos( theta ), Math.sin( theta ) );
                 //for beam
-                var lowestPos = -this.height / 2;   //in cm
+                var lowestPos = new Vector2( 0, -this.height / 2 );   //in cm
                 var pos = lowestPos;
-                var deltaPos = this.height / ( this.nbrOfRays - 1 );
+                var deltaHeight = this.height / ( this.nbrOfRays - 1 );
+                var deltaPos = new Vector2( 0, deltaHeight );
 
                 for (var i = 0; i < this.nbrOfRays; i++) {
                     if (this.type === 'fan') {
                         theta = ( lowestAngle + i*deltaAngle ) * Math.PI / 180;
                         dir = new Vector2( Math.cos(theta), Math.sin(theta) );
                         this.rays[i] = new Ray2( this.position, dir );
-                        this.rayEnds[i] =  this.position.plus( dir.timesScalar( this.maxLength ));
+                        this.rayTips[i] =  this.position.plus( dir.timesScalar( this.maxLength ));
+                        this.rayBreaks[i] = this.rayTips[i];
                     } else if (this.type === 'beam') {
                         dir = new Vector2(1, 0);
-                        pos = this.position + lowestPos + i * deltaPos;
+                        pos = this.position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
                         this.rays[i] = new Ray2( pos, dir );
-                        this.rayEnds[i] = pos.plus( dir.timesScalar( this.maxLength ) );
+                        this.rayTips[i] = pos.plus( dir.timesScalar( this.maxLength ) );
+                        this.rayBreaks[i] = this.rayTips[i];
                     }
                 }
             }, //end createRays()
@@ -107,11 +113,16 @@ define( function( require ) {
                 for( var i = 0; i < this.rays.length; i++ ){
                     if( this.type === 'fan' ){
                         this.rays[i].pos = position;
-                        this.rayEnds[i] = position.plus(this.rays[i].dir.timesScalar( this.maxLength ));
+                        this.rayTips[i] = position.plus(this.rays[i].dir.timesScalar( this.maxLength ));
+                        //this.rayBreaks[i] = this.rayTips[ i ];
                     }else if ( this.type === 'beam' ){
-                        var deltaPos = this.height / ( this.nbrOfRays - 1 );
-                        var pos = position - ( this.height/2 ) + i*deltaPos;
+                        var lowestPos = new Vector2( 0, -this.height / 2 );
+                        var deltaPos = new Vector2( 0, this.height / ( this.nbrOfRays - 1 ) );
+                        var pos = position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
                         this.rays[i].pos = pos;
+
+                        this.rayTips[i] = pos.plus(this.rays[i].dir.timesScalar( this.maxLength ));
+                        //this.rayBreaks[i] = this.rayTips[ i ];
                     }
                 }
                 this.mainModel.processRays();

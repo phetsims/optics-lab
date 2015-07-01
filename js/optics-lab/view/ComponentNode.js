@@ -20,14 +20,14 @@ define( function( require ) {
 
   /**
    * Constructor for ComponentNode which renders sample element as a scenery node.
-   * @param {sampleElement} sampleElement the model of the sampleElement
-   * @param {ModelViewTransform2} modelViewTransform the coordinate transform between model coordinates and view coordinates
+   * @param {sampleElement} sampleElement the componentModel of the sampleElement
+   * @param {ModelViewTransform2} modelViewTransform the coordinate transform between componentModel coordinates and view coordinates
    * @constructor
    */
   function ComponentNode( componentModel, modelViewTransform ) {
 
     var componentNode = this;
-    this.model =  componentModel;
+    this.componentModel =  componentModel;
     this.modelViewTransform = modelViewTransform;
 
     // Call the super constructor
@@ -38,10 +38,14 @@ define( function( require ) {
 
     // Add the rectangle graphic
     //Rectangle( x, y, width, height, arcWidth, arcHeight, options )
-    var xPos = this.model.position.x;
-    var yPos = this.model.position.y;
-    var height = this.model.diameter;
+    var xPos = this.componentModel.position.x;
+    var yPos = this.componentModel.position.y;
+    var height = this.componentModel.diameter;
     var myHandle = new Rectangle( xPos, yPos - height/2, 15, height, { fill: 'red' } );
+    var marker1 = new Line( xPos, yPos, xPos + 15, yPos, { stroke: 'yellow' });
+    var marker2 = new Line( xPos, yPos - height/2, xPos, yPos + height/2, { stroke: 'black' });
+
+    myHandle.children = [ marker1, marker2 ];
 
     componentNode.addChild( myHandle );
 
@@ -55,19 +59,19 @@ define( function( require ) {
         // Translate on drag events
         //translate: function( args ) {
         //  //console.log( 'mouse position is ' + args.position );
-        //  ComponentNode.model.setPosition( args.position );
+        //  ComponentNode.componentModel.setPosition( args.position );
         //  //ComponentNode.location = modelViewTransform.viewToModelPosition( args.position );
         //  //myCircle.translation = modelViewTransform.viewToModelPosition( args.position );
         //}
         drag: function( e ){
           var position = componentNode.globalToParentPoint( e.pointer.point );
-          //console.log( 'position = ' + position );
-          componentNode.model.setPosition( position );
+          //console.log( 'component position = ' + position );
+          componentNode.componentModel.setPosition( position );
         }
       } ) );
 
-    // Register for synchronization with model.
-    this.model.positionProperty.link( function( position ) {
+    // Register for synchronization with componentModel.
+    this.componentModel.positionProperty.link( function( position ) {
       componentNode.translation = position;
 
     } );
