@@ -37,8 +37,8 @@ define( function( require ) {
     var opticsLabScreenView = this;
     ScreenView.call( opticsLabScreenView, { layoutBounds: new Bounds2( 0, 0, 768, 504 ) } );
 
-    var sources = [];
-    var walls = [];
+    //var sources = [];
+    //var walls = [];
 
     // model-view transform
     var modelViewTransform = ModelViewTransform2.createIdentity();
@@ -66,7 +66,7 @@ define( function( require ) {
     this.addChild( componentNode1 );
     this.addChild( componentNode2 );
     this.opticsLabModel.addComponent( componentModel1 );
-    this.opticsLabModel.addComponent( componentModel2 )
+    this.opticsLabModel.addComponent( componentModel2 );
     this.opticsLabModel.addSource( sourceModel1 );
     this.opticsLabModel.addSource( sourceModel2 );
     sourceModel1.setPosition( new Vector2( 50, 50 ));
