@@ -57,6 +57,7 @@ define( function( require ) {
                 this.rays = [];  //clear any current rays
                 this.rayTips = [];
                 this.rayBreaks = [];
+
                 //for fan
                 var lowestAngle = - this.spread / 2;  //in degrees
                 var deltaAngle;
@@ -67,21 +68,22 @@ define( function( require ) {
                 }
                 var theta = ( lowestAngle ) * Math.PI / 180; //in radians
                 var dir = new Vector2( Math.cos( theta ), Math.sin( theta ) );
+
                 //for beam
                 var lowestPos = new Vector2( 0, -this.height / 2 );   //in cm
                 var pos = lowestPos;
                 var deltaHeight = this.height / ( this.nbrOfRays - 1 );
                 var deltaPos = new Vector2( 0, deltaHeight );
 
-                for (var i = 0; i < this.nbrOfRays; i++) {
-                    if (this.type === 'fan') {
-                        theta = ( lowestAngle + i*deltaAngle ) * Math.PI / 180;
+                for ( var i = 0; i < this.nbrOfRays; i++ ) {
+                    if ( this.type === 'fan' ) {
+                        theta = ( lowestAngle + i*deltaAngle ) * Math.PI / 180;  //in radians
                         dir = new Vector2( Math.cos(theta), Math.sin(theta) );
                         this.rays[i] = new Ray2( this.position, dir );
                         this.rayTips[i] =  this.position.plus( dir.timesScalar( this.maxLength ));
                         this.rayBreaks[i] = this.rayTips[i];
                     } else if (this.type === 'beam') {
-                        dir = new Vector2(1, 0);
+                        dir = new Vector2( 1, 0 );
                         pos = this.position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
                         this.rays[i] = new Ray2( pos, dir );
                         this.rayTips[i] = pos.plus( dir.timesScalar( this.maxLength ) );
