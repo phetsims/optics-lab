@@ -17,7 +17,7 @@ define( function( require ) {
 
   /**
    * {vector2] startDir = direction of starting ray
-   * 
+   *
    * @constructor
    */
 
