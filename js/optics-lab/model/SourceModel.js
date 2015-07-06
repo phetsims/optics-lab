@@ -82,8 +82,8 @@ define( function( require ) {
                         theta = ( lowestAngle + i*deltaAngle ) * Math.PI / 180;  //in radians
                         dir = new Vector2( Math.cos(theta), Math.sin(theta) );
                         endPosition = this.position.plus( dir.timesScalar( this.maxLength ));
-                        //this.rayPaths[i] = new RayPath( this.position, endPosition );
-                        this.rayPaths[i ].addSegment( this.position, endPositon );
+                        this.rayPaths[i] = new RayPath( dir );
+                        this.rayPaths[i].addSegment( this.position, endPosition );
                         this.rayTips[i] =  endPosition;
                         this.rayBreaks[i] = this.rayTips[i];
                     } else if (this.type === 'beam') {
@@ -91,7 +91,8 @@ define( function( require ) {
                         startPos = this.position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
                         endPosition = startPos.plus( dir.timesScalar( this.maxLength ));
                         this.rayPaths[i] = new RayPath();
-                        this.rayPaths[i ].addSegment( startPos, endPosition );
+                        this.rayPaths[i].addSegment( startPos, endPosition );
+
                         this.rayTips[i] = endPosition;
                         this.rayBreaks[i] = this.rayTips[i];
                     }
@@ -118,16 +119,16 @@ define( function( require ) {
             },
             setPosition: function ( position ){   //position = Vector2
                 this.position = position;
-                for( var i = 0; i < this.rays.length; i++ ){
+                for( var i = 0; i < this.rayPaths.length; i++ ){
                     if( this.type === 'fan' ){
-                        this.rays[i].pos = position;
+                        this.rayPaths[i].clearPath();
                         this.rayTips[i] = position.plus(this.rays[i].dir.timesScalar( this.maxLength ));
                         //this.rayBreaks[i] = this.rayTips[ i ];
                     }else if ( this.type === 'beam' ){
                         var lowestPos = new Vector2( 0, -this.height / 2 );
                         var deltaPos = new Vector2( 0, this.height / ( this.nbrOfRays - 1 ) );
                         var pos = position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
-                        this.rays[i].pos = pos;
+                        this.rayPaths[i].pos = pos;
 
                         this.rayTips[i] = pos.plus(this.rays[i].dir.timesScalar( this.maxLength ));
                         //this.rayBreaks[i] = this.rayTips[ i ];

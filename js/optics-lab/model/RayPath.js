@@ -11,19 +11,22 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'KITE/Line' );
   var PropertySet = require( 'AXON/PropertySet' );
-  var Ray2 = require( 'DOT/Ray2' );
+  //
+  // var Ray2 = require( 'DOT/Ray2' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
-   *
+   * {vector2] startDir = direction of starting ray
    * @constructor
    */
 
-  function RayPath() {
+  function RayPath( startDir ) {
 
     //PropertySet.call( this, {
     //  startPosition: startPosition             //@private, position of source on stage
     //} );
+
+    this.startDir = startDir;
 
     this.rayPath = this;
     //this.mainModel = mainModel;
@@ -32,7 +35,11 @@ define( function( require ) {
 
     //An array of Kite.Line segments.  Functions include
     //getStart(), getEnd(), getStartTangent() which returns direction
-    this.segments = [];    //an array of line segments
+
+    this.segments = [];     //an array of line segments
+    this.dirs = [];         //array of directions, corresponding to the segments
+    this.lengths = [];      //array of lengths of the segments
+
     this.shape = new Shape();
 
 
@@ -41,9 +48,19 @@ define( function( require ) {
   return inherit( Object, RayPath, {
       clearPath: function() {
         this.segments = [];
+        this.dir = [];
+        this.lengths = [];
+      },
+      clearSegments: function(){
+        this.segments = [];
       },
       addSegment: function( startPos, endPos ) {
         this.segments.push( new Line( startPos, endPos ) );
+        var deltaPos = endPos.minus( startPos );
+        var dir = deltaPos.normalize();
+        var length = deltaPos.magnitude();
+        this.dirs.push( dir );
+        this.lengths.push( length );
       },
       getShape: function(){
         this.shape = new Shape();
