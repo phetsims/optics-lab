@@ -66,9 +66,15 @@ define( function( require ) {
       },
       getShape: function(){
         this.shape = new Shape();
-        this.shape.moveTo( this.segments[0].getStart().x, this.segments[0].getStart().y );
+        //this.shape.moveTo( this.segments[0].getStart().x, this.segments[0].getStart().y );
+        //for ( var i = 0; i < this.segments.length; i++ ){
+        //  this.shape.lineTo( this.segments[i].getEnd().x, this.segments[i].getEnd().y )
+        //}
+
+        this.shape.moveToPoint( this.segments[ 0 ].getStart() );
         for ( var i = 0; i < this.segments.length; i++ ){
-          this.shape.lineTo( this.segments[i].getEnd().x, this.segments[i].getEnd().y )
+          //var segment = this.segments[ i ].getEnd().minus( this.segments[ i ].getStart());
+          this.shape.lineToPoint( this.segments[i].getEnd() );
         }
         return this.shape;
       }

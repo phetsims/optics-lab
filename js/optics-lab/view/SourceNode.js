@@ -11,7 +11,9 @@ define( function( require ) {
     var Circle = require( 'SCENERY/nodes/Circle' );
     var Line = require( 'SCENERY/nodes/Line' );
     var Node = require( 'SCENERY/nodes/Node' );
+    var Path = require( 'SCENERY/nodes/Path' );
     var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+    var Shape = require( 'KITE/Shape' );
     var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
     var Vector2 = require( 'DOT/Vector2' );
 
@@ -27,13 +29,12 @@ define( function( require ) {
      */
     function SourceNode( mainModel, sourceModel, modelViewTransform ) {
 
-        
         var sourceNode = this;
         this.sourceNumber;  //for testing
         this.mainModel = mainModel;
         this.sourceModel =  sourceModel;
         this.modelViewTransform = modelViewTransform;
-        this.rayNodes = [];
+        this.rayNodes = [];   //array of rayNodes, a rayNode is a path of a ray from source through components to end
 
         // Call the super constructor
         Node.call( sourceNode, {
@@ -55,24 +56,31 @@ define( function( require ) {
 
         //draw the rays on the handle
         var rayFontObject = { stroke: 'white', lineWidth: 2 }
+
         for ( var i = 0; i < this.sourceModel.rayPaths.length; i++ ) {
             var dir = this.sourceModel.rayPaths[ i ].startDir;
-            var position = this.sourceModel.position;
+            var sourceCenter = this.sourceModel.position;
+            var AbsoluteRayStart = sourceModel.rayPaths[ i ].segments[ 0 ].getStart();
+            var AbsoluteRayEnd = sourceModel.rayPaths[ i ].segments[ 0 ].getEnd();
+            var relativeRayStart = AbsoluteRayStart.minus( sourceCenter );
+            var relativeRayEnd = AbsoluteRayEnd.minus( sourceCenter );
+            var rayShape = new Shape();
+            rayShape.moveToPoint( relativeRayStart );
             if ( sourceModel.type === 'fan' ) {
-                var rayNode = new Line( new Vector2( 0, 0 ), dir.timesScalar( maxRayLength ), rayFontObject );
+                var relativeEndPt = dir.timesScalar( maxRayLength );
+                rayShape.lineToPoint( relativeEndPt );
+
+                //var rayNode = new Line( new Vector2( 0, 0 ), dir.timesScalar( maxRayLength ), rayFontObject );
             }else if( sourceModel.type === 'beam' ){
-                //var rayStart = new Vector2( 0, -height/2 + i * deltaHeight );
-                //var rayEnd = rayStart.plus( dir.timesScalar( maxRayLength ));
-                var AbsoluteRayStart = sourceModel.rayPaths[ i ].segments[ 0 ].getStart();
-                var AbsoluteRayEnd = sourceModel.rayPaths[ i ].segments[ 0 ].getEnd();
-                var relativeRayStart = AbsoluteRayStart.minus( position );
-                var relativeRayEnd = AbsoluteRayEnd.minus( position );
+
                 //console.log( 'ray' + i + '  rayStart is ' + relativeRayStart + '  rayEnd is ' + relativeRayEnd );
-                var rayNode = new Line( relativeRayStart, relativeRayEnd, rayFontObject );
+                //var rayNode = new Line( relativeRayStart, relativeRayEnd, rayFontObject );
+                rayShape.lineToPoint( relativeRayEnd );
             }
+            var rayNode = new Path( rayShape, rayFontObject );
 
             this.rayNodes.push( rayNode );
-            myHandle.addChild( rayNode );
+            myHandle.addChild( rayNode );   //want to work with absolute coords
         }
         sourceNode.addChild( myHandle );
 
@@ -119,16 +127,19 @@ define( function( require ) {
         drawRays: function(){
             for ( var i = 0; i < this.sourceModel.rayPaths.length; i++ ) {
                 //console.log( 'drawing rays for source ' + this.sourceNumber );
-                var centerStartPt = this.sourceModel.position;
-                var absoluteRayEndPt = this.sourceModel.rayPaths[ i ].segments[ 0 ].getEnd();
-                var relativeRayEndPt = absoluteRayEndPt.minus( centerStartPt );
-                //var absoluteRayStartPt = this.sourceModel.rays[ i ].pos;
-                //var relativeRayStartPt = absoluteRayStartPt.minus( centerStartPt );
-                //var segment = endPt.minus( startPt );
-                //var length = segment.magnitude();
-                //var dir = this.sourceModel.rays[ i ].dir;
-                this.rayNodes[ i ].setPoint2( relativeRayEndPt );
-                //this.rayNodes[ i ].setPoint2( dir.timesScalar( length ) );
+                var shape = this.sourceModel.rayPaths[ i ].getShape();
+                this.rayNodes[ i ].setShape( shape );
+                //var centerStartPt = this.sourceModel.position;
+                //var absoluteRayEndPt = this.sourceModel.rayPaths[ i ].segments[ 0 ].getEnd();
+                //var relativeRayEndPt = absoluteRayEndPt.minus( centerStartPt );
+                //this.rayNodes[ i ].setPoint2( relativeRayEndPt );
+             //this.rayNodes[ i ].setPoint2( dir.timesScalar( length ) );
+            }
+        },
+        addRayNodesToParent: function(){
+            for ( var i = 0; i < this.rayNodes.length; i++ ) {
+                debugger;
+                this.parent.addChild( this.rayNodes[ i ] );
             }
         }
     } );

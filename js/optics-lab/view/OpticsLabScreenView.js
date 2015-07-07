@@ -57,7 +57,9 @@ define( function( require ) {
     sourceNode1.sourceNumber = 1;  //for testing
     sourceNode2.sourceNumber = 2;
     this.addChild( sourceNode1 );
+    sourceNode1.addRayNodesToParent();
     this.addChild( sourceNode2 );
+    sourceNode2.addRayNodesToParent();
 
     //function componentModel1( type, diameter, focalLength  )
     var componentModel1 = new ComponentModel( this.opticsLabModel, 'mask', 100 );
