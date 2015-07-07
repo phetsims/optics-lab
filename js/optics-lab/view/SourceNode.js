@@ -80,7 +80,7 @@ define( function( require ) {
             var rayNode = new Path( rayShape, rayFontObject );
 
             this.rayNodes.push( rayNode );
-            myHandle.addChild( rayNode );   //want to work with absolute coords
+            //myHandle.addChild( rayNode );   //want to work with absolute coords
         }
         sourceNode.addChild( myHandle );
 
@@ -136,10 +136,9 @@ define( function( require ) {
              //this.rayNodes[ i ].setPoint2( dir.timesScalar( length ) );
             }
         },
-        addRayNodesToParent: function(){
+        addRayNodesToParent: function( parentNode ){
             for ( var i = 0; i < this.rayNodes.length; i++ ) {
-                debugger;
-                this.parent.addChild( this.rayNodes[ i ] );
+                parentNode.addChild( this.rayNodes[ i ] );
             }
         }
     } );
