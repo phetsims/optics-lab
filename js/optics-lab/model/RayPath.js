@@ -9,8 +9,9 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'KITE/Line' );
+  var Line = require( 'KITE/segments/Line' );
   var PropertySet = require( 'AXON/PropertySet' );
+  var Shape = require( 'KITE/Shape' );
   //
   // var Ray2 = require( 'DOT/Ray2' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -27,14 +28,14 @@ define( function( require ) {
     //  startPosition: startPosition             //@private, position of source on stage
     //} );
 
-    this.startDir = startDir;
+    this.startDir = startDir;    //starting direction of the first segment, the one thing that never changes
 
     this.rayPath = this;
     //this.mainModel = mainModel;
 
     this.maxLength = 2000;  //maximum length of rays in pixels
 
-    //An array of Kite.Line segments.  Functions include
+    //An array of Kite.Line segments.  Kite.Line functions include
     //getStart(), getEnd(), getStartTangent() which returns direction
 
     this.segments = [];     //an array of line segments
@@ -49,7 +50,7 @@ define( function( require ) {
   return inherit( Object, RayPath, {
       clearPath: function() {
         this.segments = [];
-        this.dir = [];
+        this.dirs = [];
         this.lengths = [];
       },
       clearSegments: function(){
@@ -65,9 +66,9 @@ define( function( require ) {
       },
       getShape: function(){
         this.shape = new Shape();
-        this.shape.moveTo( this.segments[0].x, this.segments[0 ].y );
+        this.shape.moveTo( this.segments[0].getStart().x, this.segments[0].getStart().y );
         for ( var i = 0; i < this.segments.length; i++ ){
-          this.shape.lineTo( this.segments[i].x, this.segments[i].y )
+          this.shape.lineTo( this.segments[i].getEnd().x, this.segments[i].getEnd().y )
         }
         return this.shape;
       }

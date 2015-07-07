@@ -9,6 +9,7 @@ define( function( require ) {
 
     // modules
     var inherit = require( 'PHET_CORE/inherit' );
+    var Line = require( 'KITE/segments/Line' );
     var PropertySet = require( 'AXON/PropertySet' );
     var Ray2 = require( 'DOT/Ray2' );
     var RayPath = require( 'OPTICS_LAB/optics-lab/model/RayPath' );
@@ -49,6 +50,7 @@ define( function( require ) {
         this.rayPaths = [];    //an array of RayPaths
         this.rayTips = [];   //ends of undeviated rays
         this.rayBreaks = [];    //ends of rays when intersecting component
+
         this.createRays();
 
     }
@@ -60,7 +62,7 @@ define( function( require ) {
                 this.rayBreaks = [];
 
                 //for fan
-                var lowestAngle = - this.spread / 2;  //in degrees
+                var lowestAngle = -this.spread / 2;  //in degrees
                 var deltaAngle;
                 if( this.nbrOfRays === 1 ){
                     deltaAngle = 0;
@@ -90,9 +92,8 @@ define( function( require ) {
                         dir = new Vector2( 1, 0 );
                         startPos = this.position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
                         endPosition = startPos.plus( dir.timesScalar( this.maxLength ));
-                        this.rayPaths[i] = new RayPath();
+                        this.rayPaths[i] = new RayPath( dir );
                         this.rayPaths[i].addSegment( startPos, endPosition );
-
                         this.rayTips[i] = endPosition;
                         this.rayBreaks[i] = this.rayTips[i];
                     }
@@ -120,17 +121,21 @@ define( function( require ) {
             setPosition: function ( position ){   //position = Vector2
                 this.position = position;
                 for( var i = 0; i < this.rayPaths.length; i++ ){
+                    var dir = this.rayPaths[ i ].startDir;
                     if( this.type === 'fan' ){
                         this.rayPaths[i].clearPath();
-                        this.rayTips[i] = position.plus(this.rays[i].dir.timesScalar( this.maxLength ));
+                        var endPos = position.plus( dir.timesScalar( this.maxLength ));
+                        this.rayPaths[i ].addSegment( position, endPos );
+                        this.rayTips[i] = endPos;
                         //this.rayBreaks[i] = this.rayTips[ i ];
                     }else if ( this.type === 'beam' ){
                         var lowestPos = new Vector2( 0, -this.height / 2 );
                         var deltaPos = new Vector2( 0, this.height / ( this.nbrOfRays - 1 ) );
                         var pos = position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
-                        this.rayPaths[i].pos = pos;
-
-                        this.rayTips[i] = pos.plus(this.rays[i].dir.timesScalar( this.maxLength ));
+                        endPos = pos.plus( dir.timesScalar( this.maxLength ));
+                        this.rayPaths[ i ].clearPath();
+                        this.rayPaths[ i ].addSegment( pos, endPos );
+                        this.rayTips[i] = endPos;
                         //this.rayBreaks[i] = this.rayTips[ i ];
                     }
                 }

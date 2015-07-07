@@ -55,19 +55,19 @@ define( function( require ) {
 
         //draw the rays on the handle
         var rayFontObject = { stroke: 'white', lineWidth: 2 }
-        for ( var i = 0; i < this.sourceModel.rays.length; i++ ) {
-            var dir = this.sourceModel.rays[ i ].dir;
+        for ( var i = 0; i < this.sourceModel.rayPaths.length; i++ ) {
+            var dir = this.sourceModel.rayPaths[ i ].startDir;
             var position = this.sourceModel.position;
             if ( sourceModel.type === 'fan' ) {
                 var rayNode = new Line( new Vector2( 0, 0 ), dir.timesScalar( maxRayLength ), rayFontObject );
             }else if( sourceModel.type === 'beam' ){
                 //var rayStart = new Vector2( 0, -height/2 + i * deltaHeight );
                 //var rayEnd = rayStart.plus( dir.timesScalar( maxRayLength ));
-                var AbsoluteRayStart = sourceModel.rays[ i ].pos;
-                var AbsoluteRayEnd = sourceModel.rayTips[ i ];
+                var AbsoluteRayStart = sourceModel.rayPaths[ i ].segments[ 0 ].getStart();
+                var AbsoluteRayEnd = sourceModel.rayPaths[ i ].segments[ 0 ].getEnd();
                 var relativeRayStart = AbsoluteRayStart.minus( position );
                 var relativeRayEnd = AbsoluteRayEnd.minus( position );
-                console.log( 'ray' + i + '  rayStart is ' + relativeRayStart + '  rayEnd is ' + relativeRayEnd );
+                //console.log( 'ray' + i + '  rayStart is ' + relativeRayStart + '  rayEnd is ' + relativeRayEnd );
                 var rayNode = new Line( relativeRayStart, relativeRayEnd, rayFontObject );
             }
 
@@ -117,10 +117,10 @@ define( function( require ) {
 
     return inherit( Node, SourceNode, {
         drawRays: function(){
-            for ( var i = 0; i < this.sourceModel.rays.length; i++ ) {
+            for ( var i = 0; i < this.sourceModel.rayPaths.length; i++ ) {
                 //console.log( 'drawing rays for source ' + this.sourceNumber );
                 var centerStartPt = this.sourceModel.position;
-                var absoluteRayEndPt = this.sourceModel.rayBreaks[ i ];
+                var absoluteRayEndPt = this.sourceModel.rayPaths[ i ].segments[ 0 ].getEnd();
                 var relativeRayEndPt = absoluteRayEndPt.minus( centerStartPt );
                 //var absoluteRayStartPt = this.sourceModel.rays[ i ].pos;
                 //var relativeRayStartPt = absoluteRayStartPt.minus( centerStartPt );

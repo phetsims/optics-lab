@@ -51,20 +51,21 @@ define( function( require ) {
         //loop through all sources
         for (var i = 0; i < this.sources.length; i++ ){
           //this.updateSourceLines( this.sources[ i ]);
-          this.updateSourceLines( this.sources.get( i ));
+          this.updateSourceLines( this.sources.get( i ));   //sources is an observable array, hence .get(i)
         }
         this.processRaysCount += 1;
       },
       updateSourceLines: function( source ) {
 
-        //loop through all rays
+        //loop through all rayPaths
         var intersection;
         var distanceToIntersection;
-        for ( var r = 0; r < source.rays.length; r++ ) {
+        for ( var r = 0; r < source.rayPaths.length; r++ ) {
           intersection = null;
-          distanceToIntersection = source.maxLength;
-          var rayStart = source.rays[ r ].pos;
-          var rayTip = source.rayTips[ r ];
+          var maxLength = source.maxLength;
+          distanceToIntersection = maxLength;
+          var rayStart = source.rayPaths[ r ].segments[ 0 ].getStart();
+          var rayTip = rayStart.plus( source.rayPaths[ r ].dirs[ 0 ].timesScalar( maxLength ) );
 
           //loop thru all components
           for ( var j = 0; j < this.components.length; j++ ) {
@@ -83,10 +84,10 @@ define( function( require ) {
             }
           }//end component loop
           if ( intersection !== null ) {
-            source.rayBreaks[ r ] = intersection;
+            source.rayPaths[ r ].segments[ 0 ]._end = intersection;   //Later, JO will provide Line.getEnd()
           }
           else {
-            source.rayBreaks[ r ] = rayTip;
+            source.rayPaths[ r ].segments[ 0 ]._end = rayTip;
           }
         }//end ray loop
       }//end updateSourceLines()
