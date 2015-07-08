@@ -44,8 +44,11 @@ define( function( require ) {
     var modelViewTransform = ModelViewTransform2.createIdentity();
 
     //function SourceModel( mainModel, type, nbrOfRays, spread, height )
-    var sourceModel1 = new SourceModel( this.opticsLabModel, 'fan', 20, 60 );
-    var sourceModel2 = new SourceModel( this.opticsLabModel, 'beam', 12, 0, 100 );
+    var positionSource1 = new Vector2( 10, 50 );
+    var positionSource2 = new Vector2( 15, 150 );
+    //SourceModel( mainModel, type, nbrOfRays, position, spread, height )
+    var sourceModel1 = new SourceModel( this.opticsLabModel, 'fan', 15, positionSource1, 45, 0 );
+    var sourceModel2 = new SourceModel( this.opticsLabModel, 'beam', 8, positionSource2, 0, 100 );
     sourceModel1.sourceNumber = 1;
     sourceModel2.sourceNumber = 2;
     //sourceModel1.setNbrOfRays( 5 );
@@ -61,7 +64,7 @@ define( function( require ) {
     this.addChild( sourceNode2 );
     sourceNode2.addRayNodesToParent( this );
 
-    //function componentModel1( type, diameter, focalLength  )
+    //ComponentModel( mainModel, type, diameter, focalLength )
     var componentModel1 = new ComponentModel( this.opticsLabModel, 'mask', 100 );
     var componentModel2 = new ComponentModel( this.opticsLabModel, 'lens', 200, 10 );
     //componentNode1( componentModel1, modelViewTransform )

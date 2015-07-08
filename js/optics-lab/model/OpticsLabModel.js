@@ -14,6 +14,7 @@ define( function( require ) {
   var ObservableArray = require( 'AXON/ObservableArray' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Util = require( 'DOT/Util' );
+  var Vector2 = require( 'DOT/Vector2' );
 
 
   function OpticsLabModel() {
@@ -66,6 +67,10 @@ define( function( require ) {
           var rayPath = source.rayPaths[ r ];
           var startPoint = rayPath.segments[ 0 ].getStart();
           var direction = rayPath.dirs[ 0 ];
+          //launchRay() assumes that segment is not yet added, so clear the segment
+          rayPath.segments = [];
+          rayPath.dirs = [];
+          rayPath.lengths = [];
           this.launchRay( rayPath, startPoint, direction );
 
         }//end rayPath loop
@@ -100,23 +105,29 @@ define( function( require ) {
         if ( intersection !== null ) {
           rayPath.addSegment( startPoint, intersection );
           var tailSegmentNbr = rayPath.segments.length - 1;
-          this.processIntersection( rayPath, tailSegmentNbr , componentIntersectedNbr );
+          this.processIntersection( rayPath, intersection, tailSegmentNbr , componentIntersectedNbr );
         }
         else {
           rayPath.addSegment( startPoint, rayTip );
         }
       }, //end launchRay()
 
-      endPath: function( rayPath, lastSegmentNbr ){
-
-      },
-      processIntersection: function( rayPath, segmentNbr, componentNbr ){
+      //endPath: function( rayPath, lastSegmentNbr ){
+      //
+      //},
+      processIntersection: function( rayPath, intersection, segmentNbr, componentNbr ){
         var rayPath = rayPath;
+        var incomingRayDir = rayPath.dirs[ segmentNbr ];
+        var angleInRads = incomingRayDir.angle();
+        var newAngleInRads = angleInRads + ( Math.random() - 0.5 );
+        var newSegment = Vector2.createPolar( this.maxLength, newAngleInRads );
         var segment = rayPath.segments[ segmentNbr ];
         var component = this.components.get( componentNbr );
 
         if( component.type === 'lens' ){
           console.log( 'It is a lens.' );
+          var randomOutgoingRayDir = incomingRayDir +
+          rayPath.addSegment( intersection, intersection.plus( newSegment ));
         }else if ( component.type === 'curved_mirror' ){
           console.log( 'It is a curved mirror.' );
         }else if( component.type === 'plane_mirror' ){

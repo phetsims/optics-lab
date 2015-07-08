@@ -24,10 +24,10 @@ define( function( require ) {
      * @constructor
      */
 
-    function SourceModel( mainModel, type, nbrOfRays, spread, height ) {
+    function SourceModel( mainModel, type, nbrOfRays, position, spread, height ) {
 
         PropertySet.call( this, {
-            position: new Vector2( 0, 0 )               //@private, position of source on stage
+            position: position              //@private, position of source on stage
         } );
 
         this.sourceModel = this;
@@ -36,7 +36,7 @@ define( function( require ) {
 
         this.type = type; //'fan'|'beam'
         this.nbrOfRays = nbrOfRays;
-        this.position = new Vector2( 0, 0 );
+        this.position = position;
         this.maxLength = 2000;  //maximum length of rays in pixels
 
         if( type === 'fan' ){
