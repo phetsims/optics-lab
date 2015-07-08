@@ -25,6 +25,7 @@ define( function( require ) {
     this.sources = new ObservableArray();
     this.components = new ObservableArray();
     this.maxLength = 2000;  //maximum length of segment of rayPath
+
     //this.sources = [];
     //this.components = [];
   }
@@ -57,51 +58,16 @@ define( function( require ) {
         this.processRaysCount += 1;
       },
       updateSourceLines: function( source ) {
-
-        //loop through all rayPaths
-        var intersection;
-        var distanceToIntersection;
+        var intersection;   //Vector2
+        var distanceToIntersection;   //Number = length of ray
 
         //loop thru all rayPaths of this source
         for ( var r = 0; r < source.rayPaths.length; r++ ) {
+          var rayPath = source.rayPaths[ r ];
+          var startPoint = rayPath.segments[ 0 ].getStart();
+          var direction = rayPath.dirs[ 0 ];
+          this.launchRay( rayPath, startPoint, direction );
 
-          //loop thru all segments of this rayPath
-          for ( var s = 0; s < source.rayPaths[ r ].segments.length; s++ ){
-            intersection = null;
-            var maxLength = source.maxLength;
-            distanceToIntersection = maxLength;
-            var rayStart = source.rayPaths[ r ].segments[ s ].getStart();
-            var rayTip = rayStart.plus( source.rayPaths[ r ].dirs[ s ].timesScalar( maxLength ) );
-
-            //loop thru all components
-            var componentIntersectedNbr = undefined;
-            for ( var j = 0; j < this.components.length; j++ ) {
-              var compDiameter = this.components.get( j ).diameter;
-              var compCenter = this.components.get( j ).position;
-              var thisIntersection = Util.lineSegmentIntersection(
-                rayStart.x, rayStart.y, rayTip.x, rayTip.y,
-                compCenter.x, compCenter.y - compDiameter / 2, compCenter.x, compCenter.y + compDiameter / 2 );
-              if( thisIntersection !== null ){
-                var dist = thisIntersection.distance( rayStart );
-                //console.log( 'dist = ' + dist );
-                if ( dist < distanceToIntersection ) {
-                  distanceToIntersection = dist;
-                  intersection = thisIntersection;
-                  componentIntersectedNbr = j;
-                }
-              }
-            }//end component loop
-            if ( intersection !== null ) {
-              source.rayPaths[ r ].segments[ s ]._end = intersection;   //Later, JO will provide Line.getEnd()
-              this.processIntersection( source.rayPaths[ r ], s , componentIntersectedNbr );
-            }
-            else {
-              source.rayPaths[ r ].segments[ s ]._end = rayTip;
-              var nbrOfSegmentsToDelete = source.rayPaths[ r ].segments.length - ( s + 1 );
-              source.rayPaths[ r ].segments.splice( s + 1, nbrOfSegmentsToDelete );
-              break;  //break out of segment loop if no intersection
-            }
-          }//end segment loop
         }//end rayPath loop
       }, //end updateSourceLines()
 
@@ -110,11 +76,8 @@ define( function( require ) {
         var startPoint = startPoint;
         var dir = direction;
         var intersection = null;
-        var distanceToIntersection;
-        var maxLength = source.maxLength;
-        distanceToIntersection = maxLength;
-        var rayStart = source.rayPaths[ r ].segments[ s ].getStart();
-        var rayTip = rayStart.plus( source.rayPaths[ r ].dirs[ s ].timesScalar( maxLength ) );
+        var distanceToIntersection = this.maxLength;
+        var rayTip = startPoint.plus( dir.timesScalar( this.maxLength ) );
 
         //loop thru all components
         var componentIntersectedNbr = undefined;
@@ -122,10 +85,10 @@ define( function( require ) {
           var compDiameter = this.components.get( j ).diameter;
           var compCenter = this.components.get( j ).position;
           var thisIntersection = Util.lineSegmentIntersection(
-            rayStart.x, rayStart.y, rayTip.x, rayTip.y,
+            startPoint.x, startPoint.y, rayTip.x, rayTip.y,
             compCenter.x, compCenter.y - compDiameter / 2, compCenter.x, compCenter.y + compDiameter / 2 );
           if( thisIntersection !== null ){
-            var dist = thisIntersection.distance( rayStart );
+            var dist = thisIntersection.distance( startPoint );
             //console.log( 'dist = ' + dist );
             if ( dist < distanceToIntersection ) {
               distanceToIntersection = dist;
@@ -135,18 +98,15 @@ define( function( require ) {
           }
         }//end component loop
         if ( intersection !== null ) {
-          source.rayPaths[ r ].segments[ s ]._end = intersection;   //Later, JO will provide Line.getEnd()
-          this.processIntersection( source.rayPaths[ r ], s , componentIntersectedNbr );
+          rayPath.addSegment( startPoint, intersection );
+          var tailSegmentNbr = rayPath.segments.length - 1;
+          this.processIntersection( rayPath, tailSegmentNbr , componentIntersectedNbr );
         }
         else {
-          source.rayPaths[ r ].segments[ s ]._end = rayTip;
-          var nbrOfSegmentsToDelete = source.rayPaths[ r ].segments.length - ( s + 1 );
-          source.rayPaths[ r ].segments.splice( s + 1, nbrOfSegmentsToDelete );
-           //break out of segment loop if no intersection
+          rayPath.addSegment( startPoint, rayTip );
         }
-
-
       }, //end launchRay()
+
       endPath: function( rayPath, lastSegmentNbr ){
 
       },

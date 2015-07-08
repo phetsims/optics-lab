@@ -48,8 +48,8 @@ define( function( require ) {
         }
 
         this.rayPaths = [];    //an array of RayPaths
-        this.rayTips = [];   //ends of undeviated rays
-        this.rayBreaks = [];    //ends of rays when intersecting component
+        //this.rayTips = [];   //ends of undeviated rays
+        //this.rayBreaks = [];    //ends of rays when intersecting component
 
         this.createRays();
 
@@ -58,10 +58,10 @@ define( function( require ) {
     return inherit( PropertySet, SourceModel, {
             createRays: function () {
                 this.rayPaths = [];  //clear any current rays
-                this.rayTips = [];
-                this.rayBreaks = [];
+                //this.rayTips = [];
+                //this.rayBreaks = [];
 
-                //for fan
+                //for fan source
                 var lowestAngle = -this.spread / 2;  //in degrees
                 var deltaAngle;
                 if( this.nbrOfRays === 1 ){
@@ -73,12 +73,13 @@ define( function( require ) {
                 var dir = new Vector2( Math.cos( theta ), Math.sin( theta ) );
                 var endPosition = this.position.plus( dir.timesScalar( this.maxLength ));
 
-                //for beam
+                //for beam source
                 var lowestPos = new Vector2( 0, -this.height / 2 );   //in cm
                 var startPos = lowestPos;
                 var deltaHeight = this.height / ( this.nbrOfRays - 1 );
                 var deltaPos = new Vector2( 0, deltaHeight );
 
+                //loop through all rayPaths of the source
                 for ( var i = 0; i < this.nbrOfRays; i++ ) {
                     if ( this.type === 'fan' ) {
                         theta = ( lowestAngle + i*deltaAngle ) * Math.PI / 180;  //in radians
@@ -86,16 +87,16 @@ define( function( require ) {
                         endPosition = this.position.plus( dir.timesScalar( this.maxLength ));
                         this.rayPaths[i] = new RayPath( dir );
                         this.rayPaths[i].addSegment( this.position, endPosition );
-                        this.rayTips[i] =  endPosition;
-                        this.rayBreaks[i] = this.rayTips[i];
+                        //this.rayTips[i] =  endPosition;
+                        //this.rayBreaks[i] = this.rayTips[i];
                     } else if (this.type === 'beam') {
                         dir = new Vector2( 1, 0 );
                         startPos = this.position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
                         endPosition = startPos.plus( dir.timesScalar( this.maxLength ));
                         this.rayPaths[i] = new RayPath( dir );
                         this.rayPaths[i].addSegment( startPos, endPosition );
-                        this.rayTips[i] = endPosition;
-                        this.rayBreaks[i] = this.rayTips[i];
+                        //this.rayTips[i] = endPosition;
+                        //this.rayBreaks[i] = this.rayTips[i];
                     }
                 }
             }, //end createRays()
@@ -123,10 +124,10 @@ define( function( require ) {
                 for( var i = 0; i < this.rayPaths.length; i++ ){
                     var dir = this.rayPaths[ i ].startDir;
                     if( this.type === 'fan' ){
-                        this.rayPaths[i].clearPath();
+                        this.rayPaths[ i ].clearPath();
                         var endPos = position.plus( dir.timesScalar( this.maxLength ));
-                        this.rayPaths[i ].addSegment( position, endPos );
-                        this.rayTips[i] = endPos;
+                        this.rayPaths[ i ].addSegment( position, endPos );
+                        //this.rayTips[i] = endPos;
                         //this.rayBreaks[i] = this.rayTips[ i ];
                     }else if ( this.type === 'beam' ){
                         var lowestPos = new Vector2( 0, -this.height / 2 );
@@ -135,7 +136,7 @@ define( function( require ) {
                         endPos = pos.plus( dir.timesScalar( this.maxLength ));
                         this.rayPaths[ i ].clearPath();
                         this.rayPaths[ i ].addSegment( pos, endPos );
-                        this.rayTips[i] = endPos;
+                        //this.rayTips[i] = endPos;
                         //this.rayBreaks[i] = this.rayTips[ i ];
                     }
                 }
