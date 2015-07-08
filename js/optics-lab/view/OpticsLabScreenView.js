@@ -63,7 +63,7 @@ define( function( require ) {
 
     //function componentModel1( type, diameter, focalLength  )
     var componentModel1 = new ComponentModel( this.opticsLabModel, 'mask', 100 );
-    var componentModel2 = new ComponentModel( this.opticsLabModel, 'mask', 200 );
+    var componentModel2 = new ComponentModel( this.opticsLabModel, 'lens', 200, 10 );
     //componentNode1( componentModel1, modelViewTransform )
     var componentNode1 = new ComponentNode( componentModel1, modelViewTransform );
     var componentNode2 = new ComponentNode( componentModel2, modelViewTransform );
