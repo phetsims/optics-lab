@@ -54,14 +54,15 @@ define( function( require ) {
             myHandle = new Rectangle( 0, -height/2, 10, height, { fill: '#8F8' } );
         }
 
-        //draw the rays on the handle
+        //draw the startomg rays on the handle
         var rayFontObject = { stroke: 'white', lineWidth: 2 }
 
-        for ( var i = 0; i < this.sourceModel.rayPaths.length; i++ ) {
-            var dir = this.sourceModel.rayPaths[ i ].startDir;
+        for ( var r = 0; r < this.sourceModel.rayPaths.length; r++ ) {
+
+            var dir = this.sourceModel.rayPaths[ r ].startDir;
             var sourceCenter = this.sourceModel.position;
-            var AbsoluteRayStart = sourceModel.rayPaths[ i ].segments[ 0 ].getStart();
-            var AbsoluteRayEnd = sourceModel.rayPaths[ i ].segments[ 0 ].getEnd();
+            var AbsoluteRayStart = sourceModel.rayPaths[ r ].segments[ 0 ].getStart();
+            var AbsoluteRayEnd = sourceModel.rayPaths[ r ].segments[ 0 ].getEnd();
             var relativeRayStart = AbsoluteRayStart.minus( sourceCenter );
             var relativeRayEnd = AbsoluteRayEnd.minus( sourceCenter );
             var rayShape = new Shape();
@@ -81,7 +82,8 @@ define( function( require ) {
 
             this.rayNodes.push( rayNode );
             //myHandle.addChild( rayNode );   //want to work with absolute coords
-        }
+        }//end rayPath loop
+
         sourceNode.addChild( myHandle );
 
 
