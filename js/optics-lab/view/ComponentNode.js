@@ -56,13 +56,7 @@ define( function( require ) {
         // When dragging across it in a mobile device, pick it up
         allowTouchSnag: true,
 
-        // Translate on drag events
-        //translate: function( args ) {
-        //  //console.log( 'mouse position is ' + args.position );
-        //  ComponentNode.componentModel.setPosition( args.position );
-        //  //ComponentNode.location = modelViewTransform.viewToModelPosition( args.position );
-        //  //myCircle.translation = modelViewTransform.viewToModelPosition( args.position );
-        //}
+
         drag: function( e ){
           var position = componentNode.globalToParentPoint( e.pointer.point );
           //console.log( 'component position = ' + position );

@@ -151,15 +151,15 @@ define( function( require ) {
           this.launchRay( rayPath, intersection, newDir );
 
         }else if ( component.type === 'curved_mirror' ){
-          console.log( 'It is a curved mirror.' );
+          //console.log( 'It is a curved mirror.' );
         }else if( component.type === 'plane_mirror' ){
-          console.log( 'It is a plane mirror.' );
+          //console.log( 'It is a plane mirror.' );
           newAngleInRads = Math.PI - angleInRads;
           newDir = new Vector2.createPolar( 1, newAngleInRads );
           this.launchRay( rayPath, intersection, newDir );
 
         }else if( component.type === 'mask' ){
-          //Do nothing, the rayPath ends at a mask
+          //Do nothing. The rayPath ends at a mask.
           //console.log( 'It is a mask.' );
         }else {
           console.log( 'ERROR: intersection component is unknown.' );
