@@ -127,13 +127,14 @@ define( function( require ) {
         var r = ( intersection.y - component.position.y );
         var f = component.f;
         var tanTheta = Math.tan( angleInRads );
+        var newDir;
 
 
         if( component.type === 'lens' ){
           //console.log( 'It is a lens.' );
           //var randomOutgoingRayDir = incomingRayDir +
           newAngleInRads = - Math.atan( (r/f) - tanTheta );
-          var newDir = new Vector2.createPolar( 1, newAngleInRads );
+          newDir = new Vector2.createPolar( 1, newAngleInRads );
           //newSegment = Vector2.createPolar( this.maxLength, newAngleInRads );
           //rayPath.addSegment( intersection, intersection.plus( newSegment ));
           this.launchRay( rayPath, intersection, newDir );
@@ -142,7 +143,12 @@ define( function( require ) {
           console.log( 'It is a curved mirror.' );
         }else if( component.type === 'plane_mirror' ){
           console.log( 'It is a plane mirror.' );
+          newAngleInRads = Math.PI - angleInRads;
+          newDir = new Vector2.createPolar( 1, newAngleInRads );
+          this.launchRay( rayPath, intersection, newDir );
+
         }else if( component.type === 'mask' ){
+          //Do nothing, the rayPath ends at a mask
           //console.log( 'It is a mask.' );
         }else {
           console.log( 'ERROR: intersection component is unknown.' );
