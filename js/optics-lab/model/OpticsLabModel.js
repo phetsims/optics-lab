@@ -64,6 +64,7 @@ define( function( require ) {
         //loop thru all rayPaths of this source
         for ( var r = 0; r < source.rayPaths.length; r++ ) {
           var rayPath = source.rayPaths[ r ];
+          rayPath.clearPath();
           var startPoint = rayPath.startPos; //rayPath.segments[ 0 ].getStart();
           var direction = rayPath.startDir;
           //launchRay() assumes that segment is not yet added, so clear the segment
@@ -94,7 +95,7 @@ define( function( require ) {
           if( thisIntersection !== null ){
             var dist = thisIntersection.distance( startPoint );
             //console.log( 'dist = ' + dist );
-            if ( dist < distanceToIntersection ) {
+            if ( dist > 10 &&  dist < distanceToIntersection ) {    //have to be sure component does not intersect its own starting ray
               distanceToIntersection = dist;
               intersection = thisIntersection;
               componentIntersectedNbr = j;
@@ -129,18 +130,20 @@ define( function( require ) {
 
 
         if( component.type === 'lens' ){
-          console.log( 'It is a lens.' );
+          //console.log( 'It is a lens.' );
           //var randomOutgoingRayDir = incomingRayDir +
           newAngleInRads = - Math.atan( (r/f) - tanTheta );
+          var newDir = new Vector2.createPolar( 1, newAngleInRads );
           //newSegment = Vector2.createPolar( this.maxLength, newAngleInRads );
           //rayPath.addSegment( intersection, intersection.plus( newSegment ));
-          this.launchRay( rayPath, intersection, newAngleInRads );
+          this.launchRay( rayPath, intersection, newDir );
+
         }else if ( component.type === 'curved_mirror' ){
           console.log( 'It is a curved mirror.' );
         }else if( component.type === 'plane_mirror' ){
           console.log( 'It is a plane mirror.' );
         }else if( component.type === 'mask' ){
-          console.log( 'It is a mask.' );
+          //console.log( 'It is a mask.' );
         }else {
           console.log( 'ERROR: intersection component is unknown.' );
         }

@@ -121,7 +121,7 @@ define( function( require ) {
                 this.position = position;
                 for( var i = 0; i < this.rayPaths.length; i++ ){
                     var dir = this.rayPaths[ i ].startDir;
-                    this.rayPaths[ i ].clearPath();
+                    //this.rayPaths[ i ].clearPath();
                     if( this.type === 'fan' ){
                         this.rayPaths[ i ].startPos = position;
                         //var endPos = position.plus( dir.timesScalar( this.maxLength ));
