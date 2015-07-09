@@ -119,15 +119,22 @@ define( function( require ) {
         var rayPath = rayPath;
         var incomingRayDir = rayPath.dirs[ segmentNbr ];
         var angleInRads = incomingRayDir.angle();
-        var newAngleInRads = angleInRads + ( Math.random() - 0.5 );
+        var newAngleInRads;  // = angleInRads + 0.1*( Math.random() - 0.5 );
         var newSegment = Vector2.createPolar( this.maxLength, newAngleInRads );
         var segment = rayPath.segments[ segmentNbr ];
         var component = this.components.get( componentNbr );
+        var r = ( intersection.y - component.position.y );
+        var f = component.f;
+        var tanTheta = Math.tan( angleInRads );
+
 
         if( component.type === 'lens' ){
           console.log( 'It is a lens.' );
-          var randomOutgoingRayDir = incomingRayDir +
+          //var randomOutgoingRayDir = incomingRayDir +
+          newAngleInRads = - Math.atan( (r/f) - tanTheta );
+          newSegment = Vector2.createPolar( this.maxLength, newAngleInRads );
           rayPath.addSegment( intersection, intersection.plus( newSegment ));
+          //this.launchRay( rayPath, intersection, newAngleInRads );
         }else if ( component.type === 'curved_mirror' ){
           console.log( 'It is a curved mirror.' );
         }else if( component.type === 'plane_mirror' ){

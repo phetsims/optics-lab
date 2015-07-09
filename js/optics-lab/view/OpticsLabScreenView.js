@@ -66,20 +66,25 @@ define( function( require ) {
 
     //ComponentModel( mainModel, type, diameter, focalLength )
     var componentModel1 = new ComponentModel( this.opticsLabModel, 'mask', 100 );
-    var componentModel2 = new ComponentModel( this.opticsLabModel, 'lens', 200, 10 );
+    var componentModel2 = new ComponentModel( this.opticsLabModel, 'lens', 200, 200 );
+    var componentModel3 = new ComponentModel( this.opticsLabModel, 'lens', 150, -200 );
     //componentNode1( componentModel1, modelViewTransform )
     var componentNode1 = new ComponentNode( componentModel1, modelViewTransform );
     var componentNode2 = new ComponentNode( componentModel2, modelViewTransform );
+    var componentNode3 = new ComponentNode( componentModel3, modelViewTransform );
     this.addChild( componentNode1 );
     this.addChild( componentNode2 );
+    this.addChild( componentNode3 );
     this.opticsLabModel.addComponent( componentModel1 );
     this.opticsLabModel.addComponent( componentModel2 );
+    this.opticsLabModel.addComponent( componentModel3 );
     this.opticsLabModel.addSource( sourceModel1 );
     this.opticsLabModel.addSource( sourceModel2 );
     sourceModel1.setPosition( new Vector2( 50, 50 ));
     componentModel1.setPosition( new Vector2( 300, 300 ));
     sourceModel2.setPosition( new Vector2( 100, 200 ));
-    componentModel2.setPosition( new Vector2( 350, 500 ));
+    componentModel2.setPosition( new Vector2( 350, 400 ));
+    componentModel3.setPosition( new Vector2( 400, 500 ));
 
 
     //updateAllSources();
