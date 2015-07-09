@@ -119,6 +119,7 @@ define( function( require ) {
       processIntersection: function( rayPath, intersection, segmentNbr, componentNbr ){
         //var rayPath = rayPath;
         var incomingRayDir = rayPath.dirs[ segmentNbr ];
+        //console.log( 'rayDir in degs is ' + incomingRayDir.angle()*180/Math.PI );
         var angleInRads = incomingRayDir.angle();
         var newAngleInRads;  // = angleInRads + 0.1*( Math.random() - 0.5 );
         //var newSegment = Vector2.createPolar( this.maxLength, newAngleInRads );
@@ -127,13 +128,23 @@ define( function( require ) {
         var r = ( intersection.y - component.position.y );
         var f = component.f;
         var tanTheta = Math.tan( angleInRads );
+        //console.log( ' tanAngle is ' + tanTheta );
         var newDir;
 
 
         if( component.type === 'lens' ){
           //console.log( 'It is a lens.' );
           //var randomOutgoingRayDir = incomingRayDir +
-          newAngleInRads = - Math.atan( (r/f) - tanTheta );
+          var fromLeft = false;
+          var angleInDegrees = angleInRads*180/Math.PI;
+          var sizeAngleInDegrees = Math.abs( angleInDegrees );
+          if( sizeAngleInDegrees < 90 ){ fromLeft = true; }
+          if( fromLeft ){
+            newAngleInRads = - Math.atan( (r/f) - tanTheta );
+          }else{
+            newAngleInRads = Math.PI - Math.atan( (r/f) + tanTheta );
+          }
+
           newDir = new Vector2.createPolar( 1, newAngleInRads );
           //newSegment = Vector2.createPolar( this.maxLength, newAngleInRads );
           //rayPath.addSegment( intersection, intersection.plus( newSegment ));

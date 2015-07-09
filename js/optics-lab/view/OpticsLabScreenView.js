@@ -47,7 +47,7 @@ define( function( require ) {
     var positionSource1 = new Vector2( 10, 50 );
     var positionSource2 = new Vector2( 15, 150 );
     //SourceModel( mainModel, type, nbrOfRays, position, spread, height )
-    var sourceModel1 = new SourceModel( this.opticsLabModel, 'fan', 15, positionSource1, 45, 0 );
+    var sourceModel1 = new SourceModel( this.opticsLabModel, 'fan', 3, positionSource1, 45, 0 );
     //var sourceModel2 = new SourceModel( this.opticsLabModel, 'beam', 8, positionSource2, 0, 100 );
     var sourceModel2 = new SourceModel( this.opticsLabModel, 'fan', 20, positionSource2, 45, 0 );
     sourceModel1.sourceNumber = 1;        //just for testing
@@ -57,8 +57,8 @@ define( function( require ) {
 
     //ComponentModel( mainModel, type, diameter, focalLength )
     var componentModel1 = new ComponentModel( this.opticsLabModel, 'mask', 100 );
-    //var componentModel2 = new ComponentModel( this.opticsLabModel, 'lens', 200, 200 );
-    var componentModel3 = new ComponentModel( this.opticsLabModel, 'lens', 150, -200 );
+    var componentModel2 = new ComponentModel( this.opticsLabModel, 'lens', 200, 200 );
+    //var componentModel3 = new ComponentModel( this.opticsLabModel, 'lens', 150, -200 );
     var componentModel3 = new ComponentModel( this.opticsLabModel, 'plane_mirror', 200, undefined );
 
     this.opticsLabModel.addSource( sourceModel1 );
