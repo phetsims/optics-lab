@@ -1,6 +1,6 @@
 {
   "name": "optics-lab",
-  "version": "1.0.0-dev.3",
+  "version": "1.0.0-dev.4",
   "license": "GPLv3",
   "simTitleStringKey": "OPTICS_LAB/optics-lab.name",
   "phetLibs": [
