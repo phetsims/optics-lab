@@ -77,8 +77,8 @@ define( function( require ) {
       }, //end updateSourceLines()
 
       launchRay: function( rayPath, startPoint, direction ){
-        var rayPath = rayPath;
-        var startPoint = startPoint;
+        //var rayPath = rayPath;
+        //var startPoint = startPoint;
         var dir = direction;
         var intersection = null;
         var distanceToIntersection = this.maxLength;
@@ -117,7 +117,7 @@ define( function( require ) {
       //
       //},
       processIntersection: function( rayPath, intersection, segmentNbr, componentNbr ){
-        var rayPath = rayPath;
+        //var rayPath = rayPath;
         var incomingRayDir = rayPath.dirs[ segmentNbr ];
         var angleInRads = incomingRayDir.angle();
         var newAngleInRads;  // = angleInRads + 0.1*( Math.random() - 0.5 );
