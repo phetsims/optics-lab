@@ -45,7 +45,7 @@ define( function( require ) {
       },
       setPosition: function( position ) {   //position is vector2
         this.position = position;
-        console.log( 'component position is ' + position );
+        //console.log( 'component position is ' + position );
         this.mainModel.processRays();
       }
     }
