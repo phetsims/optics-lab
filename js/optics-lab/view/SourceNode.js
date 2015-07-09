@@ -9,13 +9,13 @@ define( function( require ) {
     // modules
     var inherit = require( 'PHET_CORE/inherit' );
     var Circle = require( 'SCENERY/nodes/Circle' );
-    var Line = require( 'SCENERY/nodes/Line' );
+    //var Line = require( 'SCENERY/nodes/Line' );
     var Node = require( 'SCENERY/nodes/Node' );
     var Path = require( 'SCENERY/nodes/Path' );
     var Rectangle = require( 'SCENERY/nodes/Rectangle' );
     var Shape = require( 'KITE/Shape' );
     var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-    var Vector2 = require( 'DOT/Vector2' );
+    //var Vector2 = require( 'DOT/Vector2' );
 
 
     // images
@@ -45,11 +45,12 @@ define( function( require ) {
 
         // Draw a handle
         var height = sourceModel.height;   //if beam
-        var deltaHeight = height/( sourceModel.nbrOfRays - 1 );
+        //var deltaHeight = height/( sourceModel.nbrOfRays - 1 );
         var maxRayLength = sourceModel.maxLength;
+        var myHandle;
 
         if( sourceModel.type === 'fan'){
-            var myHandle = new Circle( 20, { x: 0, y: 0, fill: '#8F8' } );
+            myHandle = new Circle( 20, { x: 0, y: 0, fill: '#8F8' } );
         }else if ( sourceModel.type === 'beam' ){
             myHandle = new Rectangle( 0, -height/2, 10, height, { fill: '#8F8' } );
         }

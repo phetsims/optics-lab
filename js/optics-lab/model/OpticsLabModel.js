@@ -85,7 +85,7 @@ define( function( require ) {
         var rayTip = startPoint.plus( dir.timesScalar( this.maxLength ) );
 
         //loop thru all components
-        var componentIntersectedNbr = undefined;
+        var componentIntersectedNbr;
         for ( var j = 0; j < this.components.length; j++ ) {
           var compDiameter = this.components.get( j ).diameter;
           var compCenter = this.components.get( j ).position;
@@ -122,7 +122,7 @@ define( function( require ) {
         var angleInRads = incomingRayDir.angle();
         var newAngleInRads;  // = angleInRads + 0.1*( Math.random() - 0.5 );
         //var newSegment = Vector2.createPolar( this.maxLength, newAngleInRads );
-        var segment = rayPath.segments[ segmentNbr ];
+        //var segment = rayPath.segments[ segmentNbr ];
         var component = this.components.get( componentNbr );
         var r = ( intersection.y - component.position.y );
         var f = component.f;

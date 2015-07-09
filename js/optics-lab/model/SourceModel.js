@@ -9,9 +9,9 @@ define( function( require ) {
 
     // modules
     var inherit = require( 'PHET_CORE/inherit' );
-    var Line = require( 'KITE/segments/Line' );
+    //var Line = require( 'KITE/segments/Line' );
     var PropertySet = require( 'AXON/PropertySet' );
-    var Ray2 = require( 'DOT/Ray2' );
+    //var Ray2 = require( 'DOT/Ray2' );
     var RayPath = require( 'OPTICS_LAB/optics-lab/model/RayPath' );
     var Vector2 = require( 'DOT/Vector2' );
 
@@ -71,7 +71,7 @@ define( function( require ) {
                 }
                 var theta = ( lowestAngle ) * Math.PI / 180; //in radians
                 var dir = new Vector2( Math.cos( theta ), Math.sin( theta ) );
-                var endPosition = this.position.plus( dir.timesScalar( this.maxLength ));
+                //var endPosition = this.position.plus( dir.timesScalar( this.maxLength ));
 
                 //for beam source
                 var lowestPos = new Vector2( 0, -this.height / 2 );   //in cm
@@ -120,7 +120,7 @@ define( function( require ) {
             setPosition: function ( position ){   //position = Vector2
                 this.position = position;
                 for( var i = 0; i < this.rayPaths.length; i++ ){
-                    var dir = this.rayPaths[ i ].startDir;
+                    //var dir = this.rayPaths[ i ].startDir;
                     //this.rayPaths[ i ].clearPath();
                     if( this.type === 'fan' ){
                         this.rayPaths[ i ].startPos = position;

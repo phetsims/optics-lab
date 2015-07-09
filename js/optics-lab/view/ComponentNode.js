@@ -7,12 +7,12 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var Circle = require( 'SCENERY/nodes/Circle' );
+  //var Circle = require( 'SCENERY/nodes/Circle' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var Vector2 = require( 'DOT/Vector2' );
+  //var Vector2 = require( 'DOT/Vector2' );
 
 
   // images

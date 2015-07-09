@@ -12,19 +12,19 @@ define( function( require ) {
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
-  var Circle = require( 'SCENERY/nodes/Circle' );
+  //var Circle = require( 'SCENERY/nodes/Circle' );
   var ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
   var ComponentNode = require( 'OPTICS_LAB/optics-lab/view/ComponentNode' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'SCENERY/nodes/Line' );
-  var LinearFunction = require( 'DOT/LinearFunction' );
+  //var Line = require( 'SCENERY/nodes/Line' );
+  //var LinearFunction = require( 'DOT/LinearFunction' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  //var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  //var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var SourceNode = require( 'OPTICS_LAB/optics-lab/view/SourceNode' );
   var SourceModel = require( 'OPTICS_LAB/optics-lab/model/SourceModel' );
-  var Util = require( 'DOT/Util' );
+  //var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**

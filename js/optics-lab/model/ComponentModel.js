@@ -8,7 +8,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
-  var Ray2 = require( 'DOT/Ray2' );
+  //var Ray2 = require( 'DOT/Ray2' );
   var Vector2 = require( 'DOT/Vector2' );
 
 
@@ -36,7 +36,7 @@ define( function( require ) {
           this.mainModel.processRays();
         }
         else {
-          console.log( 'ERROR: plane mirrors and masks do not have finite focal length.' )
+          console.log( 'ERROR: plane mirrors and masks do not have finite focal length.' );
         }
       },
       setDiameter: function( diameter ) {

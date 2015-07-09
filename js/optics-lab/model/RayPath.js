@@ -10,11 +10,11 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'KITE/segments/Line' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  //var PropertySet = require( 'AXON/PropertySet' );
   var Shape = require( 'KITE/Shape' );
   //
   // var Ray2 = require( 'DOT/Ray2' );
-  var Vector2 = require( 'DOT/Vector2' );
+  //var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * {vector2] startDir = direction of starting ray
