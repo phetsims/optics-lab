@@ -29,7 +29,7 @@ define( function( require ) {
     //} );
 
     this.startDir = startDir;    //starting direction of the first segment, the one thing that never changes
-
+    this.startPos;               //starting position of the first segment
     this.rayPath = this;
     //this.mainModel = mainModel;
 

@@ -53,7 +53,6 @@ define( function( require ) {
       processRays: function(){
         //loop through all sources
         for (var i = 0; i < this.sources.length; i++ ){
-          //this.updateSourceLines( this.sources[ i ]);
           this.updateSourceLines( this.sources.get( i ));   //sources is an observable array, hence .get(i)
         }
         this.processRaysCount += 1;
@@ -65,12 +64,12 @@ define( function( require ) {
         //loop thru all rayPaths of this source
         for ( var r = 0; r < source.rayPaths.length; r++ ) {
           var rayPath = source.rayPaths[ r ];
-          var startPoint = rayPath.segments[ 0 ].getStart();
-          var direction = rayPath.dirs[ 0 ];
+          var startPoint = rayPath.startPos; //rayPath.segments[ 0 ].getStart();
+          var direction = rayPath.startDir;
           //launchRay() assumes that segment is not yet added, so clear the segment
-          rayPath.segments = [];
-          rayPath.dirs = [];
-          rayPath.lengths = [];
+          //rayPath.segments = [];
+          //rayPath.dirs = [];
+          //rayPath.lengths = [];
           this.launchRay( rayPath, startPoint, direction );
 
         }//end rayPath loop
@@ -120,7 +119,7 @@ define( function( require ) {
         var incomingRayDir = rayPath.dirs[ segmentNbr ];
         var angleInRads = incomingRayDir.angle();
         var newAngleInRads;  // = angleInRads + 0.1*( Math.random() - 0.5 );
-        var newSegment = Vector2.createPolar( this.maxLength, newAngleInRads );
+        //var newSegment = Vector2.createPolar( this.maxLength, newAngleInRads );
         var segment = rayPath.segments[ segmentNbr ];
         var component = this.components.get( componentNbr );
         var r = ( intersection.y - component.position.y );
@@ -132,9 +131,9 @@ define( function( require ) {
           console.log( 'It is a lens.' );
           //var randomOutgoingRayDir = incomingRayDir +
           newAngleInRads = - Math.atan( (r/f) - tanTheta );
-          newSegment = Vector2.createPolar( this.maxLength, newAngleInRads );
-          rayPath.addSegment( intersection, intersection.plus( newSegment ));
-          //this.launchRay( rayPath, intersection, newAngleInRads );
+          //newSegment = Vector2.createPolar( this.maxLength, newAngleInRads );
+          //rayPath.addSegment( intersection, intersection.plus( newSegment ));
+          this.launchRay( rayPath, intersection, newAngleInRads );
         }else if ( component.type === 'curved_mirror' ){
           console.log( 'It is a curved mirror.' );
         }else if( component.type === 'plane_mirror' ){

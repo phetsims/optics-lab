@@ -79,24 +79,22 @@ define( function( require ) {
                 var deltaHeight = this.height / ( this.nbrOfRays - 1 );
                 var deltaPos = new Vector2( 0, deltaHeight );
 
-                //loop through all rayPaths of the source
+                //loop through and initialize all rayPaths of the source
                 for ( var i = 0; i < this.nbrOfRays; i++ ) {
                     if ( this.type === 'fan' ) {
                         theta = ( lowestAngle + i*deltaAngle ) * Math.PI / 180;  //in radians
                         dir = new Vector2( Math.cos(theta), Math.sin(theta) );
-                        endPosition = this.position.plus( dir.timesScalar( this.maxLength ));
+                        //endPosition = this.position.plus( dir.timesScalar( this.maxLength ));
                         this.rayPaths[i] = new RayPath( dir );
-                        this.rayPaths[i].addSegment( this.position, endPosition );
-                        //this.rayTips[i] =  endPosition;
-                        //this.rayBreaks[i] = this.rayTips[i];
+                        this.rayPaths[i].startPos = this.position;
+                        //this.rayPaths[i].addSegment( this.position, endPosition );
                     } else if (this.type === 'beam') {
                         dir = new Vector2( 1, 0 );
                         startPos = this.position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
-                        endPosition = startPos.plus( dir.timesScalar( this.maxLength ));
+                        //endPosition = startPos.plus( dir.timesScalar( this.maxLength ));
                         this.rayPaths[i] = new RayPath( dir );
-                        this.rayPaths[i].addSegment( startPos, endPosition );
-                        //this.rayTips[i] = endPosition;
-                        //this.rayBreaks[i] = this.rayTips[i];
+                        this.rayPaths[i].startPos = startPos;
+                        //this.rayPaths[i].addSegment( startPos, endPosition );
                     }
                 }
             }, //end createRays()
@@ -123,21 +121,18 @@ define( function( require ) {
                 this.position = position;
                 for( var i = 0; i < this.rayPaths.length; i++ ){
                     var dir = this.rayPaths[ i ].startDir;
+                    this.rayPaths[ i ].clearPath();
                     if( this.type === 'fan' ){
-                        this.rayPaths[ i ].clearPath();
-                        var endPos = position.plus( dir.timesScalar( this.maxLength ));
-                        this.rayPaths[ i ].addSegment( position, endPos );
-                        //this.rayTips[i] = endPos;
-                        //this.rayBreaks[i] = this.rayTips[ i ];
+                        this.rayPaths[ i ].startPos = position;
+                        //var endPos = position.plus( dir.timesScalar( this.maxLength ));
+                        //this.rayPaths[ i ].addSegment( position, endPos );
                     }else if ( this.type === 'beam' ){
                         var lowestPos = new Vector2( 0, -this.height / 2 );
                         var deltaPos = new Vector2( 0, this.height / ( this.nbrOfRays - 1 ) );
                         var pos = position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
-                        endPos = pos.plus( dir.timesScalar( this.maxLength ));
-                        this.rayPaths[ i ].clearPath();
-                        this.rayPaths[ i ].addSegment( pos, endPos );
-                        //this.rayTips[i] = endPos;
-                        //this.rayBreaks[i] = this.rayTips[ i ];
+                        //endPos = pos.plus( dir.timesScalar( this.maxLength ));
+                        this.rayPaths[ i ].startPos = pos;
+                        //this.rayPaths[ i ].addSegment( pos, endPos );
                     }
                 }
                 this.mainModel.processRays();

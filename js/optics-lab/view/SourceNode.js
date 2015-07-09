@@ -54,8 +54,8 @@ define( function( require ) {
             myHandle = new Rectangle( 0, -height/2, 10, height, { fill: '#8F8' } );
         }
 
-        //draw the startomg rays on the handle
-        var rayFontObject = { stroke: 'white', lineWidth: 2 }
+        //draw the starting rays on the handle
+        var rayFontObject = { stroke: 'white', lineWidth: 2 } ;
 
         for ( var r = 0; r < this.sourceModel.rayPaths.length; r++ ) {
 
