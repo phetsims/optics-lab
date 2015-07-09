@@ -58,8 +58,8 @@ define( function( require ) {
         this.processRaysCount += 1;
       },
       updateSourceLines: function( source ) {
-        var intersection;   //Vector2
-        var distanceToIntersection;   //Number = length of ray
+        //var intersection;   //Vector2
+        //var distanceToIntersection;   //Number = length of ray
 
         //loop thru all rayPaths of this source
         for ( var r = 0; r < source.rayPaths.length; r++ ) {
@@ -101,13 +101,14 @@ define( function( require ) {
             }
           }
         }//end component loop
+
         if ( intersection !== null ) {
           rayPath.addSegment( startPoint, intersection );
           var tailSegmentNbr = rayPath.segments.length - 1;
           this.processIntersection( rayPath, intersection, tailSegmentNbr , componentIntersectedNbr );
         }
         else {
-          rayPath.addSegment( startPoint, rayTip );
+          rayPath.addSegment( startPoint, rayTip );   //rayPath ends
         }
       }, //end launchRay()
 
