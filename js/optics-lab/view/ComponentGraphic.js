@@ -65,6 +65,8 @@ define( function( require ) {
       },
       drawLens: function( ){
           this.shape = new Shape();
+
+
       },
       drawCurvedMirror: function( ) {
 
