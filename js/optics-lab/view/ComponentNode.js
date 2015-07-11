@@ -6,6 +6,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var ComponentGraphic = require( 'OPTICS_LAB/optics-lab/view/ComponentGraphic' );
   var inherit = require( 'PHET_CORE/inherit' );
   //var Circle = require( 'SCENERY/nodes/Circle' );
   var Line = require( 'SCENERY/nodes/Line' );
@@ -29,6 +30,7 @@ define( function( require ) {
     var componentNode = this;
     this.componentModel =  componentModel;
     this.modelViewTransform = modelViewTransform;
+    this.type = this.componentModel.type;
 
     // Call the super constructor
     Node.call( componentNode, {
@@ -46,8 +48,12 @@ define( function( require ) {
     var marker2 = new Line( xPos, yPos - height/2, xPos, yPos + height/2, { stroke: 'black' });
 
     myHandle.children = [ marker1, marker2 ];
+    var componentGraphic = new ComponentGraphic( this.type, height/2, 100 );
+    myHandle.addChild( componentGraphic );
 
     componentNode.addChild( myHandle );
+
+
 
 
     // When dragging, move the sample element

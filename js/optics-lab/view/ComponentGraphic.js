@@ -8,6 +8,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -26,6 +27,8 @@ define( function( require ) {
    */
 
   function ComponentGraphic( type, diameter, focalLength ) {
+      var componentGraphic = this;
+      Node.call( componentGraphic );
 
     //PropertySet.call( this, {
     //  startPosition: startPosition             //@private, position of source on stage
@@ -33,7 +36,7 @@ define( function( require ) {
     this.type = type;
     this.diameter = diameter;    //starting direction of the first segment, the one thing that never changes
     this.f = focalLength;               //starting position of the first segment
-    this.componentGraphic = this;
+
 
 
     this.shape = new Shape();
@@ -56,7 +59,7 @@ define( function( require ) {
             this.drawPlaneMirror();
             break;
           case 'mask':
-            drawMask();
+            this.drawMask();
             break;
         }//end switch
       },  //end makeDrawing()
@@ -64,9 +67,20 @@ define( function( require ) {
 
       },
       drawLens: function( ){
-          this.shape = new Shape();
-
-
+          //this.shape = new Shape();
+          if( this.f > 0 ) {
+              this.shape
+                  .moveTo( 0, this.diameter/2 )
+                  //arc: function( centerX, centerY, radius, startAngle, endAngle, anticlockwise )
+                  .lineTo( 20, this.diameter/2 )//arc( -diameter, 0,)
+                  .lineTo( 20, -this.diameter/2 )//arc( )
+                  .lineTo( -20, -this.diameter/2 )
+                  .lineTo( 0, this.diameter/2 );
+          }
+          this.addChild( new Path( this.shape, { stroke:'white', fill:'white' }) );
+          //debugger;
+          //this.addChild( new Circle( 50, { fill: 'white'}));
+          //debugger;
       },
       drawCurvedMirror: function( ) {
 
@@ -75,10 +89,6 @@ define( function( require ) {
 
       },
       drawMask: function(){
-
-        return this.shape;
-      },
-      drawComponent: function ( shape ){
 
       },
       setFocalLength: function(){
