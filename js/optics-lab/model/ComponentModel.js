@@ -12,7 +12,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
 
-  function ComponentModel( mainModel, type, diameter, focalLength ) {
+  function ComponentModel( mainModel, type, diameter, focalLength, index ) {
 
     PropertySet.call( this, {
       position: 0               //@private, position of source on stage
@@ -25,6 +25,7 @@ define( function( require ) {
     this.type = type; // 'lens'|'curved_mirror'|'plane_mirror'|'mask'
     this.diameter = diameter;
     this.f = focalLength;
+    this.n = index;  //index of refraction n > 1 , n and f set radius of lens
     this.position = new Vector2( 0, 0 );
     //this.model.addComponent( this );
   }
@@ -42,6 +43,9 @@ define( function( require ) {
       setDiameter: function( diameter ) {
         this.diameter = diameter;
         this.mainModel.processRays();
+      },
+      setIndex: function ( index ){
+        this.n = index;
       },
       setPosition: function( position ) {   //position is vector2
         this.position = position;

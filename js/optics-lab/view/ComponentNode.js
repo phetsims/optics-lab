@@ -43,15 +43,18 @@ define( function( require ) {
     var xPos = this.componentModel.position.x;
     var yPos = this.componentModel.position.y;
     var height = this.componentModel.diameter;
+    var f = this.componentModel.f;
+    var n = this.componentModel.n;
     var myHandle = new Rectangle( xPos, yPos - height/2, 15, height, { fill: 'red' } );
     var marker1 = new Line( xPos, yPos, xPos + 15, yPos, { stroke: 'yellow' });
-    var marker2 = new Line( xPos, yPos - height/2, xPos, yPos + height/2, { stroke: 'black' });
+    var centerLine = new Line( xPos, yPos - height/2, xPos, yPos + height/2, { stroke: 'blue' });
 
-    myHandle.children = [ marker1, marker2 ];
-    var componentGraphic = new ComponentGraphic( this.type, height/2, 100 );
-    myHandle.addChild( componentGraphic );
-
+    //myHandle.children = [ marker1, marker2 ];
+    //function ComponentGraphic( type, diameter, focalLength, index )
+    var componentGraphic = new ComponentGraphic( this.type, height, f, n );
+    //myHandle.addChild( componentGraphic );
     componentNode.addChild( myHandle );
+    componentNode.addChild( componentGraphic );
 
 
 

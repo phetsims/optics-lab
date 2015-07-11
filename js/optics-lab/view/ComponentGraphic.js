@@ -24,7 +24,7 @@ define( function( require ) {
    * @constructor
    */
 
-  function ComponentGraphic( type, diameter, focalLength ) {
+  function ComponentGraphic( type, diameter, focalLength, index ) {
       var componentGraphic = this;
       Node.call( componentGraphic );
 
@@ -34,7 +34,7 @@ define( function( require ) {
     this.type = type;
     this.diameter = diameter;    //starting direction of the first segment, the one thing that never changes
     this.f = focalLength;               //starting position of the first segment
-
+    this.n = index;     //index of refraction
 
 
     this.shape = new Shape();
@@ -66,20 +66,33 @@ define( function( require ) {
       },
       drawLens: function( ){
           //this.shape = new Shape();
-          if( this.f > 0 ) {
-              this.shape
-                  .moveTo( 0, this.diameter/2 )
-                  //arc: function( centerX, centerY, radius, startAngle, endAngle, anticlockwise )
-                  .lineTo( 20, this.diameter/2 )//arc( -diameter, 0,)
-                  .lineTo( 20, -this.diameter/2 )//arc( )
-                  .lineTo( -20, -this.diameter/2 )
-                  .lineTo( 0, this.diameter/2 );
-          }
-          this.addChild( new Path( this.shape, { stroke:'white', fill:'white' }) );
+        var fudge = 1;   //fudge factor to make lens radius beg enough to be apparent to ey
+        var R = fudge*2*Math.abs(this.f)/( this.n - 1 );
+        var h = this.diameter/2;
+        var theta = Math.asin( h/R );
+        var C = R*Math.cos( theta );
+        if ( this.f > 0 ) {
+          this.shape
+            .moveTo( 0, -h )
+            //arc: function( centerX, centerY, radius, startAngle, endAngle, anticlockwise )
+            .arc( -C, 0, R, theta, -theta, true )//arc( -diameter, 0,)
+            .arc( C, 0, R, -Math.PI + theta, Math.PI - theta, true );
+            //.close();
+        }else if( this.f < 0 ) {
+          var w = 10;
+          this.shape
+
+            .arc( -w - R, 0, R, theta, -theta, true )
+            .lineToRelative( 2 * ( w + ( R - C ))
+              .arc( w + R, 0, R, -Math.PI + theta, Math.PI - theta, true );
+
+
+        }
+          this.addChild( new Path( this.shape, { stroke:'white', lineWidth: 3 }) );
           //debugger;
           //this.addChild( new Circle( 50, { fill: 'white'}));
           //debugger;
-      },
+      },//end drawLens()
       drawCurvedMirror: function( ) {
 
       },

@@ -55,11 +55,11 @@ define( function( require ) {
     //sourceModel1.setNbrOfRays( 5 );
     //sourceModel1.setSpreadOfFan( 25 );
 
-    //ComponentModel( mainModel, type, diameter, focalLength )
-    var componentModel1 = new ComponentModel( this.opticsLabModel, 'mask', 100 );
-    var componentModel2 = new ComponentModel( this.opticsLabModel, 'lens', 200, 200 );
-    //var componentModel3 = new ComponentModel( this.opticsLabModel, 'lens', 150, -200 );
-    var componentModel3 = new ComponentModel( this.opticsLabModel, 'plane_mirror', 200, undefined );
+    //ComponentModel( mainModel, type, diameter, focalLength, index )
+    var componentModel1 = new ComponentModel( this.opticsLabModel, 'mask', 100, 0, 0 );
+    var componentModel2 = new ComponentModel( this.opticsLabModel, 'lens', 200, 150, 1.6 );
+    var componentModel3 = new ComponentModel( this.opticsLabModel, 'lens', 150, -200, 1.6 );
+    //var componentModel3 = new ComponentModel( this.opticsLabModel, 'plane_mirror', 200, undefined, undefined );
 
     this.opticsLabModel.addSource( sourceModel1 );
     this.opticsLabModel.addSource( sourceModel2 );

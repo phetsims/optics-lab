@@ -142,7 +142,8 @@ define( function( require ) {
           if( fromLeft ){
             newAngleInRads = - Math.atan( (r/f) - tanTheta );
           }else{
-            newAngleInRads = Math.PI + Math.atan( (r/f) + tanTheta );
+            newAngleInRads = Math.PI +
+                             Math.atan( (r/f) + tanTheta );
           }
 
           newDir = new Vector2.createPolar( 1, newAngleInRads );
