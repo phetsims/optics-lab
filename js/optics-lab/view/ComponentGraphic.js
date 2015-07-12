@@ -12,6 +12,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   //var PropertySet = require( 'AXON/PropertySet' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
 
   //
@@ -73,22 +74,21 @@ define( function( require ) {
         var C = R*Math.cos( theta );
         if ( this.f > 0 ) {
           this.shape
-            .moveTo( 0, -h )
+            //.moveTo( 0, -h )
             //arc: function( centerX, centerY, radius, startAngle, endAngle, anticlockwise )
             .arc( -C, 0, R, theta, -theta, true )//arc( -diameter, 0,)
             .arc( C, 0, R, -Math.PI + theta, Math.PI - theta, true );
             //.close();
-        }else if( this.f < 0 ) {
-          var w = 10;
+        }else if ( this.f < 0 ) {
+          var w = 5;
           this.shape
-
+            //.moveTo( 0, 0)
             .arc( -w - R, 0, R, theta, -theta, true )
-            .lineToRelative( 2 * ( w + ( R - C ))
-              .arc( w + R, 0, R, -Math.PI + theta, Math.PI - theta, true );
-
-
+            .lineToRelative( 2 * ( w + ( R - C )) )
+            .arc( w + R, 0, R, -Math.PI + theta, Math.PI - theta, true )
+            .close();
         }
-          this.addChild( new Path( this.shape, { stroke:'white', lineWidth: 3 }) );
+          this.addChild( new Path( this.shape, { stroke:'yellow', fill:'white', lineWidth: 2, opacity: 0.95 }) );
           //debugger;
           //this.addChild( new Circle( 50, { fill: 'white'}));
           //debugger;
@@ -100,7 +100,14 @@ define( function( require ) {
 
       },
       drawMask: function(){
-
+        var w = 20;
+        var height = this.diameter;
+        //Rectangle( x, y, width, height, arcWidth, arcHeight, options )
+        var maskGraphic = new Rectangle( 0, -height/2, w, height, {fill:'green'} );
+        //Line( x1, y1, x2, y2, options )
+        var lineGraphic = new Line( 0, -height/2, 0, height/2, { stroke: 'black', lineWidth: 4} );
+        this.addChild( maskGraphic );
+        this.addChild( lineGraphic );
       },
       setFocalLength: function(){
 

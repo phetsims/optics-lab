@@ -53,7 +53,7 @@ define( function( require ) {
     //function ComponentGraphic( type, diameter, focalLength, index )
     var componentGraphic = new ComponentGraphic( this.type, height, f, n );
     //myHandle.addChild( componentGraphic );
-    componentNode.addChild( myHandle );
+    //componentNode.addChild( myHandle );
     componentNode.addChild( componentGraphic );
 
 
