@@ -21,7 +21,7 @@ define( function( require ) {
       n: index                        //@private
     } );
 
-    this.componentModel = this;
+    var componentModel = this;
     this.mainModel = mainModel;
 
     //this.model = model;
@@ -31,6 +31,15 @@ define( function( require ) {
     //this.n = index;  //index of refraction n > 1 , n and f set radius of lens
     //this.position = new Vector2( 0, 0 );
     //this.model.addComponent( this );
+    this.diameterProperty.link( function(){
+      componentModel.mainModel.processRays();
+    });
+    this.fProperty.link( function(){
+      componentModel.mainModel.processRays();
+    });
+    this.nProperty.link( function(){
+      componentModel.mainModel.processRays();
+    });
   }
 
   return inherit( PropertySet, ComponentModel, {

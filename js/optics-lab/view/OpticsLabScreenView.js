@@ -71,7 +71,7 @@ define( function( require ) {
     this.opticsLabModel.addSource( sourceModel2 );
     this.opticsLabModel.addComponent( componentModel2 );
     this.opticsLabModel.addComponent( componentModel3 );
-    sourceModel1.setPosition( new Vector2( 50, 50 ));
+    sourceModel1.setPosition( new Vector2( 500, 400 ));
     sourceModel2.setPosition( new Vector2( 100, 200 ));
 
     //Source Nodes

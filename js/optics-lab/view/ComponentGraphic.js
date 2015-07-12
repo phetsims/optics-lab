@@ -38,11 +38,10 @@ define( function( require ) {
     this.n = index;     //index of refraction
 
 
-    this.shape = new Shape() ;
+    this.shape = new Shape();
     this.path = new Path( this.shape );
-    this.addChild( this.Path );
-    this.makeDrawing();
-
+    this.addChild( this.path );
+    //this.makeDrawing();
 
   }
 
@@ -69,7 +68,7 @@ define( function( require ) {
       drawLens: function() {
         this.shape = new Shape();
         var fudge = 1;   //fudge factor to make lens radius big enough to be apparent to ey
-        var R = fudge * 2 * Math.abs( this.f ) / ( this.n - 1 );  //radius of curvature of lens surface
+        var R = fudge * 2 * Math.abs( this.f ) * ( this.n - 1 );  //radius of curvature of lens surface
         var h = this.diameter / 2;                          //h = height = radius of lens
         var theta = Math.asin( h / R );                     //magnitude of startAngle and endAngle
         var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
@@ -90,7 +89,11 @@ define( function( require ) {
             .arc( w + R, 0, R, -Math.PI + theta, Math.PI - theta, true )
             .close();
         }
-        this.path.options = { stroke: 'yellow', fill: 'white', lineWidth: 2, opacity: 0.95 };
+        //this.path.options = { stroke: 'yellow', fill: 'white', lineWidth: 2, opacity: 0.95 };
+        this.path.stroke = 'yellow';
+        this.path.fill = 'white';
+        this.path.lineWidth = 2;
+        this.path.opacity = 0.95;
         this.path.setShape( this.shape );
         //this.addChild( new Path( this.shape, { stroke:'yellow', fill:'white', lineWidth: 2, opacity: 0.95 }) );
         //debugger;
@@ -129,6 +132,7 @@ define( function( require ) {
         this.makeDrawing();
       },
       setIndex: function( index ){
+        console.log( 'index is ' + index );
         this.n = index;
         this.makeDrawing();
       }
