@@ -13,6 +13,7 @@ define( function( require ) {
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
   //var Circle = require( 'SCENERY/nodes/Circle' );
+  var ComponentControlPanel = require( 'OPTICS_LAB/optics-lab/view/ComponentControlPanel' );
   var ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
   var ComponentNode = require( 'OPTICS_LAB/optics-lab/view/ComponentNode' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -60,6 +61,11 @@ define( function( require ) {
     var componentModel2 = new ComponentModel( this.opticsLabModel, 'lens', 200, 150, 1.6 );
     var componentModel3 = new ComponentModel( this.opticsLabModel, 'lens', 150, -200, 1.6 );
     //var componentModel3 = new ComponentModel( this.opticsLabModel, 'plane_mirror', 200, undefined, undefined );
+
+    var componentControlPanel = new ComponentControlPanel( componentModel2 );
+    this.addChild( componentControlPanel );
+    componentControlPanel.top = this.top + 10;
+    componentControlPanel.xCenter = this.xCenter;
 
     this.opticsLabModel.addSource( sourceModel1 );
     this.opticsLabModel.addSource( sourceModel2 );

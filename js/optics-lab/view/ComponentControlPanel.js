@@ -9,7 +9,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  // modules
   //var AquaRadioButton = require( 'SUN/AquaRadioButton' );
   //var CheckBox = require( 'SUN/CheckBox' );
   //var HSeparator = require( 'SUN/HSeparator' );
@@ -38,8 +37,8 @@ define( function( require ) {
 
     this.componentModel = componentModel;
 
-    this.diameterSlider = new HSlider( componentModel.diameterProperty, {min: 50, max: 300 } );
-    this.fSlider = new HSlider( componentModel.fProperty, {min: 50, max:300 });
+    this.diameterSlider = new HSlider( componentModel.diameterProperty, { min: 50, max: 300 } );
+    this.fSlider = new HSlider( componentModel.fProperty, { min: 50, max:300 });
     this.indexSlider = new HSlider( componentModel.nProperty, { min: 1.3, max: 2.2 });
 
     var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
