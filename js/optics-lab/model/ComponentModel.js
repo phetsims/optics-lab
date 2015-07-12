@@ -15,7 +15,10 @@ define( function( require ) {
   function ComponentModel( mainModel, type, diameter, focalLength, index ) {
 
     PropertySet.call( this, {
-      position: 0               //@private, position of source on stage
+      position: new Vector2( 0, 0 ),  //@private, position of source on stage
+      diameter: diameter,             //@private
+      f: focalLength,                 //@private
+      n: index                        //@private
     } );
 
     this.componentModel = this;
@@ -23,10 +26,10 @@ define( function( require ) {
 
     //this.model = model;
     this.type = type; // 'lens'|'curved_mirror'|'plane_mirror'|'mask'
-    this.diameter = diameter;
-    this.f = focalLength;
-    this.n = index;  //index of refraction n > 1 , n and f set radius of lens
-    this.position = new Vector2( 0, 0 );
+    //this.diameter = diameter;
+    //this.f = focalLength;
+    //this.n = index;  //index of refraction n > 1 , n and f set radius of lens
+    //this.position = new Vector2( 0, 0 );
     //this.model.addComponent( this );
   }
 
@@ -46,11 +49,11 @@ define( function( require ) {
       },
       setIndex: function ( index ){
         this.n = index;
+        this.mainModel.processRays();
       },
       setPosition: function( position ) {   //position is vector2
         this.position = position;
         //console.log( 'component position is ' + position );
-
         this.mainModel.processRays();
       }
     }

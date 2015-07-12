@@ -38,7 +38,7 @@ define( function( require ) {
     this.n = index;     //index of refraction
 
 
-    this.shape = new Shape();
+    this.shape ;
 
     this.makeDrawing();
 
@@ -66,12 +66,12 @@ define( function( require ) {
 
       },
       drawLens: function( ){
-          //this.shape = new Shape();
-        var fudge = 1;   //fudge factor to make lens radius beg enough to be apparent to ey
-        var R = fudge*2*Math.abs(this.f)/( this.n - 1 );
-        var h = this.diameter/2;
-        var theta = Math.asin( h/R );
-        var C = R*Math.cos( theta );
+        this.shape = new Shape();
+        var fudge = 1;   //fudge factor to make lens radius big enough to be apparent to ey
+        var R = fudge*2*Math.abs(this.f)/( this.n - 1 );  //radius of curvature of lens surface
+        var h = this.diameter/2;                          //h = height = radius of lens
+        var theta = Math.asin( h/R );                     //magnitude of startAngle and endAngle
+        var C = R*Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
         if ( this.f > 0 ) {
           this.shape
             //.moveTo( 0, -h )
@@ -97,7 +97,14 @@ define( function( require ) {
 
       },
       drawPlaneMirror: function( ) {
-
+        var w = 20;
+        var height = this.diameter;
+        //Rectangle( x, y, width, height, arcWidth, arcHeight, options )
+        var maskGraphic = new Rectangle( 0, -height/2, w, height, {fill:'red'} );
+        //Line( x1, y1, x2, y2, options )
+        var lineGraphic = new Line( 0, -height/2, 0, height/2, { stroke: '#FFF', lineWidth: 4} );
+        this.addChild( maskGraphic );
+        this.addChild( lineGraphic );
       },
       drawMask: function(){
         var w = 20;
@@ -109,11 +116,17 @@ define( function( require ) {
         this.addChild( maskGraphic );
         this.addChild( lineGraphic );
       },
-      setFocalLength: function(){
-
+      setFocalLength: function( focalLength ){
+        this.f = focalLength;
+        this.makeDrawing();
       },
-      setDiameter: function(){
-
+      setDiameter: function( diameter ) {
+        this.diameter = diameter;
+        this.makeDrawing();
+      },
+      setIndex: function( index ){
+        this.n = index;
+        this.makeDrawing();
       }
 
 

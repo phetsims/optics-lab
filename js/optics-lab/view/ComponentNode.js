@@ -51,10 +51,10 @@ define( function( require ) {
 
     //myHandle.children = [ marker1, marker2 ];
     //function ComponentGraphic( type, diameter, focalLength, index )
-    var componentGraphic = new ComponentGraphic( this.type, height, f, n );
+    this.componentGraphic = new ComponentGraphic( this.type, height, f, n );
     //myHandle.addChild( componentGraphic );
     //componentNode.addChild( myHandle );
-    componentNode.addChild( componentGraphic );
+    componentNode.addChild( this.componentGraphic );
 
 
 
@@ -76,7 +76,15 @@ define( function( require ) {
     // Register for synchronization with componentModel.
     this.componentModel.positionProperty.link( function( position ) {
       componentNode.translation = position;
-
+    } );
+    this.componentModel.diameterProperty.link( function( diameter ) {
+      componentNode.componentGraphic.setDiameter( diameter );
+    } );
+    this.componentModel.fProperty.link( function( f ) {
+      componentNode.componentGraphic.setFocalLength( f );
+    } );
+    this.componentModel.nProperty.link( function( n ) {
+      componentNode.componentGraphic.setIndex( n );
     } );
 
   }

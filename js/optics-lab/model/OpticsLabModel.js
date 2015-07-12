@@ -113,9 +113,7 @@ define( function( require ) {
         }
       }, //end launchRay()
 
-      //endPath: function( rayPath, lastSegmentNbr ){
-      //
-      //},
+
       processIntersection: function( rayPath, intersection, segmentNbr, componentNbr ){
         //var rayPath = rayPath;
         var incomingRayDir = rayPath.dirs[ segmentNbr ];
