@@ -18,6 +18,7 @@ define( function( require ) {
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var Util = require( 'OPTICS_LAB/optics-lab/common/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
