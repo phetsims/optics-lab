@@ -38,8 +38,9 @@ define( function( require ) {
     this.n = index;     //index of refraction
 
 
-    this.shape ;
-
+    this.shape = new Shape() ;
+    this.path = new Path( this.shape );
+    this.addChild( this.Path );
     this.makeDrawing();
 
 
@@ -65,21 +66,22 @@ define( function( require ) {
       clearDrawing: function() {
 
       },
-      drawLens: function( ){
+      drawLens: function() {
         this.shape = new Shape();
         var fudge = 1;   //fudge factor to make lens radius big enough to be apparent to ey
-        var R = fudge*2*Math.abs(this.f)/( this.n - 1 );  //radius of curvature of lens surface
-        var h = this.diameter/2;                          //h = height = radius of lens
-        var theta = Math.asin( h/R );                     //magnitude of startAngle and endAngle
-        var C = R*Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
+        var R = fudge * 2 * Math.abs( this.f ) / ( this.n - 1 );  //radius of curvature of lens surface
+        var h = this.diameter / 2;                          //h = height = radius of lens
+        var theta = Math.asin( h / R );                     //magnitude of startAngle and endAngle
+        var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
         if ( this.f > 0 ) {
           this.shape
             //.moveTo( 0, -h )
             //arc: function( centerX, centerY, radius, startAngle, endAngle, anticlockwise )
             .arc( -C, 0, R, theta, -theta, true )//arc( -diameter, 0,)
             .arc( C, 0, R, -Math.PI + theta, Math.PI - theta, true );
-            //.close();
-        }else if ( this.f < 0 ) {
+          //.close();
+        }
+        else if ( this.f < 0 ) {
           var w = 5;
           this.shape
             //.moveTo( 0, 0)
@@ -88,10 +90,12 @@ define( function( require ) {
             .arc( w + R, 0, R, -Math.PI + theta, Math.PI - theta, true )
             .close();
         }
-          this.addChild( new Path( this.shape, { stroke:'yellow', fill:'white', lineWidth: 2, opacity: 0.95 }) );
-          //debugger;
-          //this.addChild( new Circle( 50, { fill: 'white'}));
-          //debugger;
+        this.path.options = { stroke: 'yellow', fill: 'white', lineWidth: 2, opacity: 0.95 };
+        this.path.setShape( this.shape );
+        //this.addChild( new Path( this.shape, { stroke:'yellow', fill:'white', lineWidth: 2, opacity: 0.95 }) );
+        //debugger;
+        //this.addChild( new Circle( 50, { fill: 'white'}));
+        //debugger;
       },//end drawLens()
       drawCurvedMirror: function( ) {
 

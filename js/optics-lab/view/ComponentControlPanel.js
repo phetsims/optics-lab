@@ -51,7 +51,7 @@ define( function( require ) {
     var focalLengthVBox = new VBox( { children: [ this.fSlider, this.focalLengthText ], align: 'center' } );
     var indexVBox = new VBox( { children: [ this.indexSlider, this.indexText ], align: 'center' } );
 
-    var spacing = 10;
+    var spacing = 35;
     var content = new HBox( {
       children: [
         diameterVBox,
