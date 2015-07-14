@@ -9,18 +9,19 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Bounds2 = require( 'DOT/Bounds2' );
+  var CheckBox = require( 'SUN/CheckBox' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
-  var CheckBox = require( 'SUN/CheckBox' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var Panel = require( 'SUN/Panel' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  var Text = require( 'SCENERY/nodes/Text' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
   var Vector2 = require( 'DOT/Vector2' );
   var Shape = require( 'KITE/Shape' );
 
@@ -34,7 +35,7 @@ define( function( require ) {
    * @constructor
    */
 
-  function ToolBoxPanel( mainModel ) {
+  function ToolDrawerPanel( mainModel ) {
 
     var fanSourceIcon = new Node();
     var beamSourceIcon = new Node();
@@ -48,7 +49,7 @@ define( function( require ) {
     var rulerCheckBox = new CheckBox();
     var protractorCheckBox = new CheckBox();
 
-    var fontInfo = { font: DISPLAY_FONT }
+    var fontInfo = { font: DISPLAY_FONT };
     var fanSourceText = new Text( 'fan source', fontInfo );
     var beamSourceText = new Text( 'beam source', fontInfo );
     var convergingLensText = new Text( 'converging lens', fontInfo );
@@ -68,9 +69,6 @@ define( function( require ) {
     divergingLensIcon.addChild( divergingLensText );
     simpleMaskIcon.addChild( simpleMaskText );
     slitMaskIcon.addChild( slitMaskIcon );
-
-
-
 
     var spacing = 10;
     var sourceVBox = new VBox( {
@@ -134,7 +132,7 @@ define( function( require ) {
     Panel.call( this, content, { xMargin: 15, yMargin: 15, lineWidth: 2, fill: PANEL_COLOR } );
   }//end constructor
 
-  return inherit( Panel, RayPath, {
+  return inherit( Panel, ToolDrawerPanel, {
       myFunction: function() {
 
       }
