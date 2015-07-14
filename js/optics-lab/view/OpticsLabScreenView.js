@@ -47,8 +47,8 @@ define( function( require ) {
 
     var toolDrawerPanel = new ToolDrawerPanel( opticsLabModel );
     opticsLabScreenView.addChild( toolDrawerPanel );
-    toolDrawerPanel.bottom = opticsLabScreenView.bottom;
-    toolDrawerPanel.centerX = opticsLabScreenView.centerX;
+    toolDrawerPanel.bottom = this.layoutBounds.bottom - 10;
+    toolDrawerPanel.centerX = this.layoutBounds.centerX;
 
     //function SourceModel( mainModel, type, nbrOfRays, spread, height )
     var positionSource1 = new Vector2( 10, 50 );
@@ -70,8 +70,8 @@ define( function( require ) {
 
     var componentControlPanel = new ComponentControlPanel( componentModel2 );
     this.addChild( componentControlPanel );
-    componentControlPanel.top = this.top + 10;
-    componentControlPanel.xCenter = this.xCenter;
+    componentControlPanel.top = this.layoutBounds.top + 10;
+    componentControlPanel.centerX = this.layoutBounds.centerX;
 
     this.opticsLabModel.addSource( sourceModel1 );
     this.opticsLabModel.addSource( sourceModel2 );

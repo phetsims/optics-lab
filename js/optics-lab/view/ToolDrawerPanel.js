@@ -10,10 +10,10 @@ define( function( require ) {
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
-  var CheckBox = require( 'SUN/CheckBox' );
+  //var CheckBox = require( 'SUN/CheckBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var HBox = require( 'SCENERY/nodes/HBox' );
-  var HStrut = require( 'SCENERY/nodes/HStrut' );
+  //var HStrut = require( 'SCENERY/nodes/HStrut' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -27,7 +27,7 @@ define( function( require ) {
 
   //constants
   var DISPLAY_FONT = new PhetFont( 15 );
-  var PANEL_COLOR = '#999';
+  var PANEL_COLOR = '#ccc';
 
   /**
    * {vector2] startDir = direction of starting ray
@@ -37,7 +37,11 @@ define( function( require ) {
 
   function ToolDrawerPanel( mainModel ) {
 
-    var fanSourceIcon = new Node();
+    this.mainModel = mainModel;
+
+    //var nodeOptions = { fill: 'red', cursor: 'pointer' };
+
+    var fanSourceIcon = new Node( );
     var beamSourceIcon = new Node();
     var convergingLensIcon = new Node();
     var divergingLensIcon = new Node();
@@ -46,8 +50,8 @@ define( function( require ) {
     var divergingMirrorIcon = new Node();
     var simpleMaskIcon = new Node();
     var slitMaskIcon = new Node();
-    var rulerCheckBox = new CheckBox();
-    var protractorCheckBox = new CheckBox();
+    //var rulerCheckBox = new CheckBox();
+    //var protractorCheckBox = new CheckBox();
 
     var fontInfo = { font: DISPLAY_FONT };
     var fanSourceText = new Text( 'fan source', fontInfo );
@@ -60,15 +64,80 @@ define( function( require ) {
     var simpleMaskText = new Text( 'simple mask', fontInfo );
     var slitMaskText = new Text( 'slit mask', fontInfo );
 
-    fanSourceIcon.addChild( fanSourceText );
-    beamSourceIcon.addChild( beamSourceText );
-    convergingLensIcon.addChild( convergingLensText );
-    divergingLensIcon.addChild( divergingLensText );
-    convergingMirrorIcon.addChild( convergingMirrorText );
-    planeMirrorIcon.addChild( planeMirrorText );
-    divergingLensIcon.addChild( divergingLensText );
-    simpleMaskIcon.addChild( simpleMaskText );
-    slitMaskIcon.addChild( slitMaskIcon );
+    var nodeArray = [
+      fanSourceIcon,
+      beamSourceIcon,
+      convergingLensIcon,
+      divergingLensIcon,
+      convergingMirrorIcon,
+      planeMirrorIcon,
+      divergingMirrorIcon,
+      simpleMaskIcon,
+      slitMaskIcon
+    ];
+
+    var textArray = [
+      fanSourceText,
+      beamSourceText,
+      convergingLensText,
+      divergingLensText,
+      convergingMirrorText,
+      planeMirrorText,
+      divergingMirrorText,
+      simpleMaskText,
+      slitMaskText
+    ];
+
+    var nodeSetup = function( element, index, array ){
+      //Rectangle = function Rectangle( x, y, width, height, arcWidth, arcHeight, options )
+      var xCorner = -8;
+      var yCorner = textArray[ index ].height;
+      var elementWidth = textArray[ index ].width + 16;
+      var elementHeight = textArray[ index ].height + 10;
+      element.addChild( textArray[ index ] );
+      element.addChild( new Rectangle( xCorner, -yCorner, elementWidth, elementHeight, { fill:'green', cursor: 'pointer', opacity: 0 }));
+
+      element.addInputListener( new SimpleDragHandler(
+        {
+
+          allowTouchSnag: true,
+
+          start: function( e ) {
+            var mouseDownPosition = e.pointer.point;
+            console.log( 'pressed at ' + mouseDownPosition );
+          },
+
+          drag: function( e ) {
+            var v1 = element.globalToParentPoint( e.pointer.point );   //returns Vector2
+            console.log( 'dragging postion is ' + v1 );
+
+          },
+          end: function( e ){
+            console.log( 'released at ' +  e.pointer.point );
+          }
+        }
+
+      ));
+    };
+
+
+    nodeArray.forEach( nodeSetup );
+
+
+
+    //fanSourceIcon.addChild( fanSourceText );
+    //beamSourceIcon.addChild( beamSourceText );
+    //convergingLensIcon.addChild( convergingLensText );
+    //divergingLensIcon.addChild( divergingLensText );
+    //convergingMirrorIcon.addChild( convergingMirrorText );
+    //planeMirrorIcon.addChild( planeMirrorText );
+    //divergingMirrorIcon.addChild( divergingMirrorText );
+    //simpleMaskIcon.addChild( simpleMaskText );
+    //slitMaskIcon.addChild( slitMaskText );
+
+
+    //Set up drag handlers
+
 
     var spacing = 10;
     var sourceVBox = new VBox( {
@@ -104,14 +173,15 @@ define( function( require ) {
       align: 'left',
       spacing: spacing
     });
-    var toolVBox = new VBox( {
-      children:[
-        rulerCheckBox,
-        protractorCheckBox
-      ],
-      align: 'left',
-      spacing: spacing
-    });
+    //var toolVBox = new VBox( {
+    //  children:[
+    //    rulerCheckBox,
+    //    protractorCheckBox
+    //  ],
+    //  align: 'left',
+    //  spacing: spacing
+    //});
+    spacing = 30;
     var content = new HBox( {
       children:[
         sourceVBox,
@@ -119,6 +189,7 @@ define( function( require ) {
         mirrorVBox,
         maskVBox
       ],
+      align:'top',
       spacing: spacing
     });
 
@@ -129,7 +200,7 @@ define( function( require ) {
     //} );
 
 
-    Panel.call( this, content, { xMargin: 15, yMargin: 15, lineWidth: 2, fill: PANEL_COLOR } );
+    Panel.call( this, content, { xMargin: 30, yMargin: 15, lineWidth: 2, fill: PANEL_COLOR } );
   }//end constructor
 
   return inherit( Panel, ToolDrawerPanel, {
