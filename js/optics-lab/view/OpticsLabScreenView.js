@@ -25,6 +25,7 @@ define( function( require ) {
   //var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var SourceNode = require( 'OPTICS_LAB/optics-lab/view/SourceNode' );
   var SourceModel = require( 'OPTICS_LAB/optics-lab/model/SourceModel' );
+  var ToolDrawerPanel = require( 'OPTICS_LAB/optics-lab/view/ToolDrawerPanel' );
   //var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -43,6 +44,11 @@ define( function( require ) {
 
     // model-view transform
     var modelViewTransform = ModelViewTransform2.createIdentity();
+
+    var toolDrawerPanel = new ToolDrawerPanel( opticsLabModel );
+    opticsLabScreenView.addChild( toolDrawerPanel );
+    toolDrawerPanel.bottom = opticsLabScreenView.bottom;
+    toolDrawerPanel.centerX = opticsLabScreenView.centerX;
 
     //function SourceModel( mainModel, type, nbrOfRays, spread, height )
     var positionSource1 = new Vector2( 10, 50 );
