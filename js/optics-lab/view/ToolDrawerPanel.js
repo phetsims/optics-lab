@@ -37,7 +37,7 @@ define( function( require ) {
 
   function ToolDrawerPanel( mainModel ) {
 
-    this.mainModel = mainModel;
+    var mainModel = mainModel;
     var toolDrawerPanel = this;
 
     //var nodeOptions = { fill: 'red', cursor: 'pointer' };
@@ -120,7 +120,9 @@ define( function( require ) {
           start: function( e ) {
             var mouseDownPosition = toolDrawerPanel.globalToParentPoint( e.pointer.point );
             //console.log( 'pressed at ' + mouseDownPosition );
-            console.log( 'type is ' + typeArray[index] );
+            var type = typeArray[ index ];
+            mainModel.addPiece( type );
+            //console.log( 'type is ' + typeArray[index] );
           },
 
           drag: function( e ) {
@@ -143,7 +145,7 @@ define( function( require ) {
         }
 
       ));
-    };
+    }; //end nodeSetup
 
 
     nodeArray.forEach( nodeSetup );

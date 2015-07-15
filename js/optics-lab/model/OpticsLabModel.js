@@ -10,14 +10,18 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var PropertySet = require( 'AXON/PropertySet' );
+  var SourceModel = require( 'OPTICS_LAB/optics-lab/model/SourceModel' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
 
   function OpticsLabModel() {
+
+    var opticsLabModel = this;
 
     PropertySet.call( this, {
       processRaysCount: 0            //@private, position of source on stage
@@ -35,16 +39,19 @@ define( function( require ) {
       addPiece: function( type ){
         switch( type ){
           case 'fan_source':
-            this.drawLens();
+            //SourceModel( mainModel, type, nbrOfRays, position, spread, height )
+            var sourcePosition = new Vector2( 300, 300 );
+            var sourceModel = new SourceModel( this, 'fan', 20, sourcePosition, 45, 0 );
+            this.addSource( sourceModel );
             break;
-          case 'curved_mirror':
-            this.drawCurvedMirror();
+          case 'beam_source':
+            console.log( 'piece added is ' + type );
             break;
-          case 'plane_mirror':
-            this.drawPlaneMirror();
+          case 'converging_lens':
+            console.log( 'piece added is ' + type );
             break;
-          case 'mask':
-            this.drawMask();
+          case 'diverging_lens':
+            console.log( 'piece added is ' + type );
             break;
         }//end switch
       },
