@@ -40,9 +40,10 @@ define( function( require ) {
         switch( type ){
           case 'fan_source':
             //SourceModel( mainModel, type, nbrOfRays, position, spread, height )
-            var sourcePosition = new Vector2( 300, 300 );
-            var sourceModel = new SourceModel( this, 'fan', 20, sourcePosition, 45, 0 );
-            this.addSource( sourceModel );
+            //var sourcePosition = new Vector2( 300, 300 );
+            //var sourceModel = new SourceModel( this, 'fan', 20, sourcePosition, 45, 0 );
+            //this.addSource( sourceModel );
+            console.log( 'piece added is ' + type );
             break;
           case 'beam_source':
             console.log( 'piece added is ' + type );
@@ -51,6 +52,21 @@ define( function( require ) {
             console.log( 'piece added is ' + type );
             break;
           case 'diverging_lens':
+            console.log( 'piece added is ' + type );
+            break;
+          case 'converging_mirror':
+            console.log( 'piece added is ' + type );
+            break;
+          case 'plane_mirror':
+            console.log( 'piece added is ' + type );
+            break;
+          case 'diverging_mirror':
+            console.log( 'piece added is ' + type );
+            break;
+          case 'simple_mask':
+            console.log( 'piece added is ' + type );
+            break;
+          case 'slit_mask':
             console.log( 'piece added is ' + type );
             break;
         }//end switch
