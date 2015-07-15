@@ -38,6 +38,7 @@ define( function( require ) {
   function ToolDrawerPanel( mainModel ) {
 
     this.mainModel = mainModel;
+    var toolDrawerPanel = this;
 
     //var nodeOptions = { fill: 'red', cursor: 'pointer' };
 
@@ -108,12 +109,21 @@ define( function( require ) {
           },
 
           drag: function( e ) {
-            var v1 = element.globalToParentPoint( e.pointer.point );   //returns Vector2
+            //var v1 = element.globalToParentPoint( e.pointer.point );   //returns Vector2
+            var v1 = e.pointer.point;
             console.log( 'dragging postion is ' + v1 );
 
           },
           end: function( e ){
-            console.log( 'released at ' +  e.pointer.point );
+            //var vEnd = element.globalToParentPoint( e.pointer.point );
+            var vEnd = e.pointer.point;
+            console.log( 'released at ' +  vEnd );
+            console.log( 'visibleBounds are ' + toolDrawerPanel.visibleBounds );
+            if( toolDrawerPanel.visibleBounds.containsCoordinates( vEnd.x, vEnd.y )){
+              console.log( ' within Bounds' );
+            }else{
+              console.log( 'NOT within Bounds' );
+            }
           }
         }
 
