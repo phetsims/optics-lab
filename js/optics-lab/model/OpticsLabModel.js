@@ -32,6 +32,22 @@ define( function( require ) {
   }
 
   return inherit( PropertySet, OpticsLabModel, {
+      addPiece: function( type ){
+        switch( type ){
+          case 'fan_source':
+            this.drawLens();
+            break;
+          case 'curved_mirror':
+            this.drawCurvedMirror();
+            break;
+          case 'plane_mirror':
+            this.drawPlaneMirror();
+            break;
+          case 'mask':
+            this.drawMask();
+            break;
+        }//end switch
+      },
       addSource: function( source ) {
         this.sources.add( source );
         //this.sources.push( source );

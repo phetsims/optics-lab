@@ -20,7 +20,7 @@ define( function( require ) {
   //var Line = require( 'SCENERY/nodes/Line' );
   //var LinearFunction = require( 'DOT/LinearFunction' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
-  //var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ScreenView = require( 'JOIST/ScreenView' );
   //var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var SourceNode = require( 'OPTICS_LAB/optics-lab/view/SourceNode' );
@@ -47,10 +47,12 @@ define( function( require ) {
 
     var toolDrawerPanel = new ToolDrawerPanel( opticsLabModel );
     opticsLabScreenView.addChild( toolDrawerPanel );
-    //toolDrawerPanel.bottom = this.layoutBounds.bottom - 10;
-    //toolDrawerPanel.centerX = this.layoutBounds.centerX;
-    toolDrawerPanel.bottom = this.layoutBounds.bottom;
-    toolDrawerPanel.left = this.layoutBounds.left;
+    toolDrawerPanel.bottom = this.layoutBounds.bottom - 10;
+    toolDrawerPanel.centerX = this.layoutBounds.centerX;
+    //toolDrawerPanel.bottom = this.layoutBounds.bottom;
+    //toolDrawerPanel.left = this.layoutBounds.left;
+
+    //console.log( 'toolDrawer bounds are ' + toolDrawerPanel.visibleBounds );
 
     //function SourceModel( mainModel, type, nbrOfRays, spread, height )
     var positionSource1 = new Vector2( 10, 50 );

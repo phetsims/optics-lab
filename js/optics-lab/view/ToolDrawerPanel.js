@@ -89,6 +89,20 @@ define( function( require ) {
       slitMaskText
     ];
 
+    var typeArray = [
+      'fan_source',
+      'beam_source',
+      'converging_lens',
+      'diverging_lens',
+      'converging_mirror',
+      'plane_mirror',
+      'diverging_mirror',
+      'simple_mask',
+      'slit_mask'
+    ];
+
+
+
     var nodeSetup = function( element, index, array ){
       //Rectangle = function Rectangle( x, y, width, height, arcWidth, arcHeight, options )
       var xCorner = -8;
@@ -96,7 +110,7 @@ define( function( require ) {
       var elementWidth = textArray[ index ].width + 16;
       var elementHeight = textArray[ index ].height + 10;
       element.addChild( textArray[ index ] );
-      element.addChild( new Rectangle( xCorner, -yCorner, elementWidth, elementHeight, { fill:'green', cursor: 'pointer', opacity: 0 }));
+      element.addChild( new Rectangle( xCorner, -yCorner, elementWidth, elementHeight, { fill:'green', cursor: 'pointer', opacity: 0.1 }));
 
       element.addInputListener( new SimpleDragHandler(
         {
@@ -104,25 +118,26 @@ define( function( require ) {
           allowTouchSnag: true,
 
           start: function( e ) {
-            var mouseDownPosition = e.pointer.point;
-            console.log( 'pressed at ' + mouseDownPosition );
+            var mouseDownPosition = toolDrawerPanel.globalToParentPoint( e.pointer.point );
+            //console.log( 'pressed at ' + mouseDownPosition );
+            console.log( 'type is ' + typeArray[index] );
           },
 
           drag: function( e ) {
-            //var v1 = element.globalToParentPoint( e.pointer.point );   //returns Vector2
-            var v1 = e.pointer.point;
+            var v1 = toolDrawerPanel.globalToParentPoint( e.pointer.point );   //returns Vector2
+            //var v1 = e.pointer.point;
             console.log( 'dragging postion is ' + v1 );
 
           },
           end: function( e ){
-            //var vEnd = element.globalToParentPoint( e.pointer.point );
-            var vEnd = e.pointer.point;
-            console.log( 'released at ' +  vEnd );
-            console.log( 'visibleBounds are ' + toolDrawerPanel.visibleBounds );
+            var vEnd = toolDrawerPanel.globalToParentPoint( e.pointer.point );
+            //var vEnd = e.pointer.point;
+            //console.log( 'released at ' +  vEnd );
+            //console.log( 'visibleBounds are ' + toolDrawerPanel.visibleBounds );
             if( toolDrawerPanel.visibleBounds.containsCoordinates( vEnd.x, vEnd.y )){
-              console.log( ' within Bounds' );
+              //console.log( ' within Bounds' );
             }else{
-              console.log( 'NOT within Bounds' );
+              //console.log( 'NOT within Bounds' );
             }
           }
         }
