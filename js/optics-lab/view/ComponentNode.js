@@ -70,6 +70,9 @@ define( function( require ) {
           var position = componentNode.globalToParentPoint( e.pointer.point );
           //console.log( 'component position = ' + position );
           componentNode.componentModel.setPosition( position );
+        },
+        end: function( e ) {
+          var position = componentNode.globalToParentPoint( e.pointer.point );
         }
       } ) );
 

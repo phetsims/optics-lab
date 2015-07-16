@@ -43,58 +43,64 @@ define( function( require ) {
     //var walls = [];
 
     // model-view transform
-    var modelViewTransform = ModelViewTransform2.createIdentity();
+    this.modelViewTransform = ModelViewTransform2.createIdentity();
 
-    var toolDrawerPanel = new ToolDrawerPanel( opticsLabModel );
+    var toolDrawerPanel = new ToolDrawerPanel( opticsLabModel, opticsLabScreenView );
     opticsLabScreenView.addChild( toolDrawerPanel );
     toolDrawerPanel.bottom = this.layoutBounds.bottom - 10;
     toolDrawerPanel.centerX = this.layoutBounds.centerX;
-    //toolDrawerPanel.bottom = this.layoutBounds.bottom;
-    //toolDrawerPanel.left = this.layoutBounds.left;
+
+    this.opticsLabModel.sources.addItemAddedListener( function( sourceModel ){
+      //console.log( 'source added is ' + source.type );
+
+      var sourceNode = new SourceNode( opticsLabScreenView.opticsLabModel, sourceModel, opticsLabScreenView.modelViewTransform );
+      opticsLabScreenView.addChild( sourceNode );
+      sourceNode.addRayNodesToParent( opticsLabScreenView );
+    });
 
     //console.log( 'toolDrawer bounds are ' + toolDrawerPanel.visibleBounds );
 
     //function SourceModel( mainModel, type, nbrOfRays, spread, height )
-    var positionSource1 = new Vector2( 10, 50 );
-    var positionSource2 = new Vector2( 15, 150 );
+    //var positionSource1 = new Vector2( 10, 50 );
+    //var positionSource2 = new Vector2( 15, 150 );
     //SourceModel( mainModel, type, nbrOfRays, position, spread, height )
-    var sourceModel1 = new SourceModel( this.opticsLabModel, 'fan', 20, positionSource1, 45, 0 );
-    var sourceModel2 = new SourceModel( this.opticsLabModel, 'beam', 8, positionSource2, 0, 100 );
+    //var sourceModel1 = new SourceModel( this.opticsLabModel, 'fan', 20, positionSource1, 45, 0 );
+    //var sourceModel2 = new SourceModel( this.opticsLabModel, 'beam', 8, positionSource2, 0, 100 );
     //var sourceModel2 = new SourceModel( this.opticsLabModel, 'fan', 20, positionSource2, 45, 0 );
-    sourceModel1.sourceNumber = 1;        //just for testing
-    sourceModel2.sourceNumber = 2;
+    //sourceModel1.sourceNumber = 1;        //just for testing
+    //sourceModel2.sourceNumber = 2;
     //sourceModel1.setNbrOfRays( 5 );
     //sourceModel1.setSpreadOfFan( 25 );
 
     //ComponentModel( mainModel, type, diameter, focalLength, index )
-    var componentModel1 = new ComponentModel( this.opticsLabModel, 'mask', 100, 0, 0 );
-    var componentModel2 = new ComponentModel( this.opticsLabModel, 'lens', 200, 150, 1.6 );
-    var componentModel3 = new ComponentModel( this.opticsLabModel, 'lens', 150, -200, 1.6 );
+    //var componentModel1 = new ComponentModel( this.opticsLabModel, 'mask', 100, 0, 0 );
+    //var componentModel2 = new ComponentModel( this.opticsLabModel, 'lens', 200, 150, 1.6 );
+    //var componentModel3 = new ComponentModel( this.opticsLabModel, 'lens', 150, -200, 1.6 );
     //var componentModel3 = new ComponentModel( this.opticsLabModel, 'plane_mirror', 200, undefined, undefined );
 
-    var componentControlPanel = new ComponentControlPanel( componentModel2 );
-    this.addChild( componentControlPanel );
-    componentControlPanel.top = this.layoutBounds.top + 10;
-    componentControlPanel.centerX = this.layoutBounds.centerX;
+    //var componentControlPanel = new ComponentControlPanel( componentModel2 );
+    //this.addChild( componentControlPanel );
+    //componentControlPanel.top = this.layoutBounds.top + 10;
+    //componentControlPanel.centerX = this.layoutBounds.centerX;
 
-    this.opticsLabModel.addSource( sourceModel1 );
-    this.opticsLabModel.addSource( sourceModel2 );
-    this.opticsLabModel.addComponent( componentModel2 );
-    this.opticsLabModel.addComponent( componentModel3 );
-    sourceModel1.setPosition( new Vector2( 500, 400 ));
-    sourceModel2.setPosition( new Vector2( 100, 200 ));
+    //this.opticsLabModel.addSource( sourceModel1 );
+    //this.opticsLabModel.addSource( sourceModel2 );
+    //this.opticsLabModel.addComponent( componentModel2 );
+    //this.opticsLabModel.addComponent( componentModel3 );
+    //sourceModel1.setPosition( new Vector2( 500, 400 ));
+    //sourceModel2.setPosition( new Vector2( 100, 200 ));
 
     //Source Nodes
-    var sourceNode1 = new SourceNode( this.opticsLabModel, sourceModel1, modelViewTransform );
-    var sourceNode2 = new SourceNode( this.opticsLabModel, sourceModel2, modelViewTransform );
-    sourceNode1.sourceNumber = 1;  //for testing
-    sourceNode2.sourceNumber = 2;
-    this.addChild( sourceNode1 );
-    sourceNode1.addRayNodesToParent( this );
-    this.addChild( sourceNode2 );
-    sourceNode2.addRayNodesToParent( this );
-
-    this.opticsLabModel.addComponent( componentModel1 );
+    //var sourceNode1 = new SourceNode( this.opticsLabModel, sourceModel1, modelViewTransform );
+    //var sourceNode2 = new SourceNode( this.opticsLabModel, sourceModel2, modelViewTransform );
+    //sourceNode1.sourceNumber = 1;  //for testing
+    //sourceNode2.sourceNumber = 2;
+    //this.addChild( sourceNode1 );
+    //sourceNode1.addRayNodesToParent( this );
+    //this.addChild( sourceNode2 );
+    //sourceNode2.addRayNodesToParent( this );
+    //
+    //this.opticsLabModel.addComponent( componentModel1 );
 
 
 
@@ -103,15 +109,15 @@ define( function( require ) {
 
     //Component Nodes
     //componentNode1( componentModel1, modelViewTransform )
-    var componentNode1 = new ComponentNode( componentModel1, modelViewTransform );
-    var componentNode2 = new ComponentNode( componentModel2, modelViewTransform );
-    var componentNode3 = new ComponentNode( componentModel3, modelViewTransform );
-    this.addChild( componentNode1 );
-    componentModel1.setPosition( new Vector2( 300, 300 ));
-    this.addChild( componentNode2 );
-    this.addChild( componentNode3 );
-    componentModel2.setPosition( new Vector2( 350, 400 ));
-    componentModel3.setPosition( new Vector2( 400, 500 ));
+    //var componentNode1 = new ComponentNode( componentModel1, modelViewTransform );
+    //var componentNode2 = new ComponentNode( componentModel2, modelViewTransform );
+    //var componentNode3 = new ComponentNode( componentModel3, modelViewTransform );
+    //this.addChild( componentNode1 );
+    //componentModel1.setPosition( new Vector2( 300, 300 ));
+    //this.addChild( componentNode2 );
+    //this.addChild( componentNode3 );
+    //componentModel2.setPosition( new Vector2( 350, 400 ));
+    //componentModel3.setPosition( new Vector2( 400, 500 ));
 
     //this.opticsLabModel.processRays();
 

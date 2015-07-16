@@ -20,6 +20,8 @@ define( function( require ) {
   var Path = require( 'SCENERY/nodes/Path' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  var SourceNode = require( 'OPTICS_LAB/optics-lab/view/SourceNode' );
+  var SourceModel = require( 'OPTICS_LAB/optics-lab/model/SourceModel' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -35,9 +37,10 @@ define( function( require ) {
    * @constructor
    */
 
-  function ToolDrawerPanel( mainModel ) {
+  function ToolDrawerPanel( mainModel, mainView ) {
 
-    var mainModel = mainModel;
+    this.mainModel = mainModel; //OpticsLabModel
+    this.mainView = mainView;  //OpticsLabScreenView
     var toolDrawerPanel = this;
 
     //var nodeOptions = { fill: 'red', cursor: 'pointer' };
@@ -115,22 +118,23 @@ define( function( require ) {
       element.addInputListener( new SimpleDragHandler(
         {
 
-          allowTouchSnag: true,
+          //allowTouchSnag: true,
 
           start: function( e ) {
-            var mouseDownPosition = toolDrawerPanel.globalToParentPoint( e.pointer.point );
+            var startPosition = toolDrawerPanel.globalToParentPoint( e.pointer.point );
             //console.log( 'pressed at ' + mouseDownPosition );
             var type = typeArray[ index ];
-            mainModel.addPiece( type );
+            //mainModel.addPiece( type );
+            toolDrawerPanel.addPiece( type, startPosition );
             //console.log( 'type is ' + typeArray[index] );
           },
 
-          drag: function( e ) {
-            var v1 = toolDrawerPanel.globalToParentPoint( e.pointer.point );   //returns Vector2
-            //var v1 = e.pointer.point;
-            console.log( 'dragging postion is ' + v1 );
-
-          },
+          //drag: function( e ) {
+          //  var v1 = toolDrawerPanel.globalToParentPoint( e.pointer.point );   //returns Vector2
+          //  //var v1 = e.pointer.point;
+          //  console.log( 'dragging postion is ' + v1 );
+          //
+          //},
           end: function( e ){
             var vEnd = toolDrawerPanel.globalToParentPoint( e.pointer.point );
             //var vEnd = e.pointer.point;
@@ -150,17 +154,6 @@ define( function( require ) {
 
     nodeArray.forEach( nodeSetup );
 
-
-
-    //fanSourceIcon.addChild( fanSourceText );
-    //beamSourceIcon.addChild( beamSourceText );
-    //convergingLensIcon.addChild( convergingLensText );
-    //divergingLensIcon.addChild( divergingLensText );
-    //convergingMirrorIcon.addChild( convergingMirrorText );
-    //planeMirrorIcon.addChild( planeMirrorText );
-    //divergingMirrorIcon.addChild( divergingMirrorText );
-    //simpleMaskIcon.addChild( simpleMaskText );
-    //slitMaskIcon.addChild( slitMaskText );
 
 
     //Set up drag handlers
@@ -231,9 +224,42 @@ define( function( require ) {
   }//end constructor
 
   return inherit( Panel, ToolDrawerPanel, {
-      myFunction: function() {
+      addPiece: function( type, startPosition ) {
+        switch( type ){
+          case 'fan_source':
+            //SourceModel( mainModel, type, nbrOfRays, position, spread, height )
+            var sourceModel = new SourceModel( this.mainModel, 'fan', 20, startPosition, 45, 0 );
+            this.mainModel.addSource( sourceModel );
+            sourceModel.setPosition( startPosition );
 
-      }
+            //console.log( 'piece added is ' + type );
+            break;
+          case 'beam_source':
+            console.log( 'piece added is ' + type );
+            break;
+          case 'converging_lens':
+            console.log( 'piece added is ' + type );
+            break;
+          case 'diverging_lens':
+            console.log( 'piece added is ' + type );
+            break;
+          case 'converging_mirror':
+            console.log( 'piece added is ' + type );
+            break;
+          case 'plane_mirror':
+            console.log( 'piece added is ' + type );
+            break;
+          case 'diverging_mirror':
+            console.log( 'piece added is ' + type );
+            break;
+          case 'simple_mask':
+            console.log( 'piece added is ' + type );
+            break;
+          case 'slit_mask':
+            console.log( 'piece added is ' + type );
+            break;
+        }//end switch
+      }//end AddPiece
 
 
     }//end inherit

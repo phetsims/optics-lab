@@ -47,11 +47,13 @@ define( function( require ) {
             this.height = height;
         }
 
+
+
         this.rayPaths = [];    //an array of RayPaths
-        //this.rayTips = [];   //ends of undeviated rays
-        //this.rayBreaks = [];    //ends of rays when intersecting component
 
         this.createRays();
+
+        //this.setPosition( position );
 
     }
 

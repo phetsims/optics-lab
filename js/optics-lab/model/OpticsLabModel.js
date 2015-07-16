@@ -73,6 +73,7 @@ define( function( require ) {
       },
       addSource: function( source ) {
         this.sources.add( source );
+        //source.setPosition( source.position );
         //this.sources.push( source );
       },
       addComponent: function( component ) {
