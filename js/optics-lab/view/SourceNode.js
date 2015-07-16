@@ -27,13 +27,14 @@ define( function( require ) {
      * @param {ModelViewTransform2} modelViewTransform the coordinate transform between sourceModel coordinates and view coordinates
      * @constructor
      */
-    function SourceNode( mainModel, sourceModel, modelViewTransform ) {
+    function SourceNode( mainModel, sourceModel, mainView ) {
 
         var sourceNode = this;
         this.sourceNumber;  //for testing
         this.mainModel = mainModel;
         this.sourceModel =  sourceModel;
-        this.modelViewTransform = modelViewTransform;
+        this.mainView = mainView;
+        this.modelViewTransform = mainView.modelViewTransform;
         this.rayNodes = [];   //array of rayNodes, a rayNode is a path of a ray from source through components to end
 
         // Call the super constructor
@@ -109,6 +110,16 @@ define( function( require ) {
                     var position = sourceNode.globalToParentPoint( e.pointer.point );
                     //console.log( 'position = ' + position );
                     sourceNode.sourceModel.setPosition( position );
+                },
+                end: function( e ){
+                    var position = sourceNode.globalToParentPoint( e.pointer.point );
+                    if( sourceNode.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y )){
+                        console.log( 'delete this');
+                        sourceNode.mainView.removeSource( sourceNode );
+                    }else{
+                        console.log( 'keep this' );
+                    }
+
                 }
             } ) );
 

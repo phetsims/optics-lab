@@ -34,7 +34,7 @@ define( function( require ) {
    */
   function OpticsLabScreenView( opticsLabModel ) {
 
-    this.opticsLabModel = opticsLabModel;
+    this.mainModel = opticsLabModel;
 
     var opticsLabScreenView = this;
     ScreenView.call( opticsLabScreenView, { layoutBounds: new Bounds2( 0, 0, 768, 504 ) } );
@@ -45,18 +45,22 @@ define( function( require ) {
     // model-view transform
     this.modelViewTransform = ModelViewTransform2.createIdentity();
 
-    var toolDrawerPanel = new ToolDrawerPanel( opticsLabModel, opticsLabScreenView );
-    opticsLabScreenView.addChild( toolDrawerPanel );
-    toolDrawerPanel.bottom = this.layoutBounds.bottom - 10;
-    toolDrawerPanel.centerX = this.layoutBounds.centerX;
+    this.toolDrawerPanel = new ToolDrawerPanel( opticsLabModel, opticsLabScreenView );
+    opticsLabScreenView.addChild( this.toolDrawerPanel );
+    this.toolDrawerPanel.bottom = this.layoutBounds.bottom - 10;
+    this.toolDrawerPanel.centerX = this.layoutBounds.centerX;
 
-    this.opticsLabModel.sources.addItemAddedListener( function( sourceModel ){
-      //console.log( 'source added is ' + source.type );
 
-      var sourceNode = new SourceNode( opticsLabScreenView.opticsLabModel, sourceModel, opticsLabScreenView.modelViewTransform );
-      opticsLabScreenView.addChild( sourceNode );
-      sourceNode.addRayNodesToParent( opticsLabScreenView );
-    });
+
+
+
+    //this.opticsLabModel.sources.addItemAddedListener( function( sourceModel ){
+    //  //console.log( 'source added is ' + source.type );
+    //
+    //  var sourceNode = new SourceNode( opticsLabScreenView.opticsLabModel, sourceModel, opticsLabScreenView.modelViewTransform );
+    //  opticsLabScreenView.addChild( sourceNode );
+    //  sourceNode.addRayNodesToParent( opticsLabScreenView );
+    //});
 
     //console.log( 'toolDrawer bounds are ' + toolDrawerPanel.visibleBounds );
 
@@ -124,5 +128,54 @@ define( function( require ) {
     //updateAllSources();
   }//end constructor
 
-  return inherit( ScreenView, OpticsLabScreenView );
+  return inherit( ScreenView, OpticsLabScreenView,{
+      addPiece: function( type, startPosition ) {
+        switch( type ){
+          case 'fan_source':
+            //SourceModel( mainModel, type, nbrOfRays, position, spread, height )
+            var sourceModel = new SourceModel( this.mainModel, 'fan', 20, startPosition, 45, 0 );
+            this.mainModel.addSource( sourceModel );
+            sourceModel.setPosition( startPosition );
+            var sourceNode = new SourceNode( this.mainModel, sourceModel, this );
+            this.addChild( sourceNode );
+            sourceNode.addRayNodesToParent( this );
+            console.log( 'piece added is ' + type );
+            break;
+          case 'beam_source':
+            console.log( 'piece added is ' + type );
+            break;
+          case 'converging_lens':
+            console.log( 'piece added is ' + type );
+            break;
+          case 'diverging_lens':
+            console.log( 'piece added is ' + type );
+            break;
+          case 'converging_mirror':
+            console.log( 'piece added is ' + type );
+            break;
+          case 'plane_mirror':
+            console.log( 'piece added is ' + type );
+            break;
+          case 'diverging_mirror':
+            console.log( 'piece added is ' + type );
+            break;
+          case 'simple_mask':
+            console.log( 'piece added is ' + type );
+            break;
+          case 'slit_mask':
+            console.log( 'piece added is ' + type );
+            break;
+        }//end switch
+      },//end AddPiece
+      removeSource: function( sourceNode ){
+        console.log( 'remove source called. source is ' + source );
+        var sourceModel = sourceNode.sourceModel;
+        this.removeChild( sourceNode );
+        this.mainModel.removeSource( sourceModel );
+      },
+      removeComponent: function( componentNode ){
+        
+      }
+    }
+  );
 } );

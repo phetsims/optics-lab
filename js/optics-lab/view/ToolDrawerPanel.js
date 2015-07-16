@@ -125,7 +125,7 @@ define( function( require ) {
             //console.log( 'pressed at ' + mouseDownPosition );
             var type = typeArray[ index ];
             //mainModel.addPiece( type );
-            toolDrawerPanel.addPiece( type, startPosition );
+            toolDrawerPanel.mainView.addPiece( type, startPosition );
             //console.log( 'type is ' + typeArray[index] );
           },
 
@@ -224,43 +224,6 @@ define( function( require ) {
   }//end constructor
 
   return inherit( Panel, ToolDrawerPanel, {
-      addPiece: function( type, startPosition ) {
-        switch( type ){
-          case 'fan_source':
-            //SourceModel( mainModel, type, nbrOfRays, position, spread, height )
-            var sourceModel = new SourceModel( this.mainModel, 'fan', 20, startPosition, 45, 0 );
-            this.mainModel.addSource( sourceModel );
-            sourceModel.setPosition( startPosition );
-
-            //console.log( 'piece added is ' + type );
-            break;
-          case 'beam_source':
-            console.log( 'piece added is ' + type );
-            break;
-          case 'converging_lens':
-            console.log( 'piece added is ' + type );
-            break;
-          case 'diverging_lens':
-            console.log( 'piece added is ' + type );
-            break;
-          case 'converging_mirror':
-            console.log( 'piece added is ' + type );
-            break;
-          case 'plane_mirror':
-            console.log( 'piece added is ' + type );
-            break;
-          case 'diverging_mirror':
-            console.log( 'piece added is ' + type );
-            break;
-          case 'simple_mask':
-            console.log( 'piece added is ' + type );
-            break;
-          case 'slit_mask':
-            console.log( 'piece added is ' + type );
-            break;
-        }//end switch
-      }//end AddPiece
-
 
     }//end inherit
   );

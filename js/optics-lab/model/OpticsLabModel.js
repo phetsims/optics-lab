@@ -73,7 +73,7 @@ define( function( require ) {
       },
       addSource: function( source ) {
         this.sources.add( source );
-        //source.setPosition( source.position );
+        source.setPosition( source.position );
         //this.sources.push( source );
       },
       addComponent: function( component ) {
@@ -82,6 +82,7 @@ define( function( require ) {
       },
       removeSource: function( source ) {
         this.sources.remove( source );
+        this.processRays();
         //var index = sources.indexOf( source );
         //this.sources.splice( index, 1 );
       },
