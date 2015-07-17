@@ -25,11 +25,12 @@ define( function( require ) {
    * @param {ModelViewTransform2} modelViewTransform the coordinate transform between componentModel coordinates and view coordinates
    * @constructor
    */
-  function ComponentNode( componentModel, modelViewTransform ) {
+  function ComponentNode( componentModel, mainView ) {
 
     var componentNode = this;
     this.componentModel =  componentModel;
-    this.modelViewTransform = modelViewTransform;
+    this.mainView = mainView;
+    this.modelViewTransform = mainView.modelViewTransform;
     this.type = this.componentModel.type;
 
     // Call the super constructor
@@ -73,6 +74,11 @@ define( function( require ) {
         },
         end: function( e ) {
           var position = componentNode.globalToParentPoint( e.pointer.point );
+          if( componentNode.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y )){
+            componentNode.mainView.removeComponent( componentNode );
+          }else{
+            //console.log( 'keep this' );
+          }
         }
       } ) );
 

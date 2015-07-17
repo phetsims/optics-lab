@@ -83,13 +83,10 @@ define( function( require ) {
       removeSource: function( source ) {
         this.sources.remove( source );
         this.processRays();
-        //var index = sources.indexOf( source );
-        //this.sources.splice( index, 1 );
       },
       removeComponent: function( component ) {
         this.components.remove( component );
-        //var index = this.components.indexOf( component );
-        //this.components.splice( index, 1 );
+        this.processRays();
       },
       processRays: function(){
         //loop through all sources
