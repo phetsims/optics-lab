@@ -63,42 +63,62 @@ define( function( require ) {
     //this.negativefSlider = new HSlider( componentModel.fProperty, {min: -50, max: -500 });
     //this.indexSlider = new HSlider( componentModel.nProperty, { min: 1.3, max: 2.2 });
     //
-    //var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
-    //this.diameterText = new Text( 'diameter', fontInfo );
-    //this.focalLengthText = new Text( 'focal length', fontInfo );
-    //this.indexText = new Text( 'refractive index', fontInfo );
+    var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
+    this.nbrOfRaysText = new Text( 'number of rays', fontInfo );
+    this.heightText = new Text( 'height', fontInfo );
+    this.spreadText = new Text( 'spread in degrees', fontInfo );
+    this.diameterText = new Text( 'diameter', fontInfo );
+    this.radiusText = new Text( 'radius of curvature', fontInfo );
+    this.focalLengthText = new Text( 'focal length', fontInfo );
+    this.indexText = new Text( 'refractive index', fontInfo );
     //
     //var diameterVBox = new VBox( { children: [ this.diameterSlider, this.diameterText ], align: 'center' } );
     //var focalLengthVBox = new VBox( { children: [ this.positivefSlider, this.focalLengthText ], align: 'center' } );
     //var indexVBox = new VBox( { children: [ this.indexSlider, this.indexText ], align: 'center' } );
 
     var spacing = 35;
-    var content = new HBox( {
+    this.content = new HBox( {
       children: [
           new Text( 'filler', {font: DISPLAY_FONT})
       ],
       spacing: spacing
     } );
 
+    this.setUpAccordionBox();
 
-
-    AccordionBox.call( this, content, {
-      lineWidth: 2,
-      cornerRadius: 10,
-      buttonXMargin: 12, // horizontal space between button and left|right edge of box
-      buttonYMargin: 12,
-      titleNode: new Text( '  Values', { font: DISPLAY_FONT, fontWeight: 'bold' } ),
-      titleAlignX: 'left',
-      //contentAlign: 'left',
-      fill: PANEL_COLOR,
-      showTitleWhenExpanded: true,
-      contentXMargin: 20,
-      contentYMargin: 15,
-      contentYSpacing: 8
-    } );
+    //AccordionBox.call( this, content, {
+    //  lineWidth: 2,
+    //  cornerRadius: 10,
+    //  buttonXMargin: 12, // horizontal space between button and left|right edge of box
+    //  buttonYMargin: 12,
+    //  titleNode: new Text( '  Values', { font: DISPLAY_FONT, fontWeight: 'bold' } ),
+    //  titleAlignX: 'left',
+    //  //contentAlign: 'left',
+    //  fill: PANEL_COLOR,
+    //  showTitleWhenExpanded: true,
+    //  contentXMargin: 20,
+    //  contentYMargin: 15,
+    //  contentYSpacing: 8
+    //} );
   }
 
   return inherit( AccordionBox, ControlPanel, {
+      setUpAccordionBox: function(){
+        AccordionBox.call( this, this.content, {
+          lineWidth: 2,
+          cornerRadius: 10,
+          buttonXMargin: 12, // horizontal space between button and left|right edge of box
+          buttonYMargin: 12,
+          titleNode: new Text( '  Values', { font: DISPLAY_FONT, fontWeight: 'bold' } ),
+          titleAlignX: 'left',
+          //contentAlign: 'left',
+          fill: PANEL_COLOR,
+          showTitleWhenExpanded: true,
+          contentXMargin: 20,
+          contentYMargin: 15,
+          contentYSpacing: 8
+        } );
+      },
 
       //change the component that this panel controls
       setControlsForSelectedPiece: function( piece ) {
@@ -107,18 +127,21 @@ define( function( require ) {
           var type = piece.type;
           if( type === 'fan_source' || type === 'beam_source' ){
             pieceModel = piece.sourceModel;
-            this.nbrLinesSlider = new HSlider( pieceModel.nbrLinesProperty, {min: 1, max: 40 })
+            var nbrOfRaysSlider = new HSlider( pieceModel.nbrOfRaysProperty, {min: 1, max: 40 });
+            var nbrOfRaysVBox = new VBox( { children: [ nbrOfRaysSlider, this.nbrOfRaysText ], align: 'center' } );
           }else{
             pieceModel = piece.componentModel;
           }
-          this.diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 50, max: 400 } );
-          console.log( 'setControlsForSelectedPiece ' + piece.type);
+          var diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 50, max: 400 } );
+          //console.log( 'setControlsForSelectedPiece' + piece.type );
           switch( type ){
             case 'fan_source':
-
+              var spreadSlider = new HSlider( pieceModel.spreadProperty, { min: 2, max: 90 } );
+              var spreadVBox = new VBox( { children: [ spreadSlider, this.spreadText ], align: 'center' } );
+              this.content = new HBox( { children: [ nbrOfRaysVBox, spreadVBox ] } );
               break;
             case 'beam_source':
-
+              var heightSlider = new HSlider( pieceModel.heightProperty, { min: 50, max: 400 } );
               break;
             case 'converging_lens':
               //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
@@ -141,7 +164,8 @@ define( function( require ) {
             case 'slit_mask':
               break;
           }//end switch()
-        }
+          this.setUpAccordionBox();
+        }//end if (type != null)
       }
 
 

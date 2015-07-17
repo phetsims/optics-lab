@@ -29,6 +29,7 @@ define( function( require ) {
         PropertySet.call( this, {
             position: position,         //@private, position of source on stage
             nbrOfRays: nbrOfRays,       //@private, number of rays
+            spread: spread,             //spread of point source (fan source) in degrees
             height: height              //height of source, if beam
         } );
 
@@ -48,6 +49,19 @@ define( function( require ) {
             this.spread = 0;
             this.height = height;
         }
+
+        this.nbrOfRaysProperty.link( function(){
+            this.createRays();
+            this.mainModel.processRays();
+        });
+        this.spreadProperty.link( function(){
+            this.createRays();
+            this.mainModel.processRays();
+        });
+        this.heightProperty.link( function(){
+            this.createRays();
+            this.mainModel.processRays();
+        });
 
 
 
