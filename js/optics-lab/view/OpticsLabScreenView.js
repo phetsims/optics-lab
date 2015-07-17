@@ -174,7 +174,7 @@ define( function( require ) {
         this.mainModel.removeSource( sourceModel );
       },
       removeComponent: function( componentNode ){
-        
+
       }
     }
   );
