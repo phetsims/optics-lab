@@ -103,8 +103,44 @@ define( function( require ) {
       //change the component that this panel controls
       setControlsForSelectedPiece: function( piece ) {
         if ( piece != null ) {
+          var pieceModel;
           var type = piece.type;
-          //switch
+          if( type === 'fan_source' || type === 'beam_source' ){
+            pieceModel = piece.sourceModel;
+            this.nbrLinesSlider = new HSlider( pieceModel.nbrLinesProperty, {min: 1, max: 40 })
+          }else{
+            pieceModel = piece.componentModel;
+          }
+          this.diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 50, max: 400 } );
+          console.log( 'setControlsForSelectedPiece ' + piece.type);
+          switch( type ){
+            case 'fan_source':
+
+              break;
+            case 'beam_source':
+
+              break;
+            case 'converging_lens':
+              //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
+              //radius of curvature R = 2*f*( n - 1 )
+
+              break;
+            case 'diverging_lens':
+
+              break;
+            case 'converging_mirror':
+              break;
+            case 'plane_mirror':
+
+              break;
+            case 'diverging_mirror':
+              break;
+            case 'simple_mask':
+
+              break;
+            case 'slit_mask':
+              break;
+          }//end switch()
         }
       }
 

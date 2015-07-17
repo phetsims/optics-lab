@@ -27,7 +27,9 @@ define( function( require ) {
     function SourceModel( mainModel, type, nbrOfRays, position, spread, height ) {
 
         PropertySet.call( this, {
-            position: position              //@private, position of source on stage
+            position: position,         //@private, position of source on stage
+            nbrOfRays: nbrOfRays,       //@private, number of rays
+            height: height              //height of source, if beam
         } );
 
         this.sourceModel = this;
@@ -35,7 +37,7 @@ define( function( require ) {
         this.sourceNumber;  //for testing
 
         this.type = type; //'fan'|'beam'
-        this.nbrOfRays = nbrOfRays;
+        //this.nbrOfRays = nbrOfRays;
         this.position = position;
         this.maxLength = 2000;  //maximum length of rays in pixels
 

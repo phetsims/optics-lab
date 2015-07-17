@@ -96,17 +96,6 @@ define( function( require ) {
                 // When dragging across it in a mobile device, pick it up
                 allowTouchSnag: true,
 
-                // Translate on drag events
-                //translate: function( args ) {
-                //    //console.log( 'mouse position is ' + args.position );
-                //    sourceNode.sourceModel.setPosition( args.position );
-                //    //var position = sourceNode.globalToParentPoint( args.pointer.point );
-                //    //console.log( 'sourceNode position = ' + position );
-                //    //console.log( ' args.pointer.point' + sourceNode.globalToParentPoint( args.pointer.point ));
-                //    //console.log( ' args.pointer.point' + args.pointer.point );
-                //    //sourceNode.location = modelViewTransform.viewToModelPosition( args.position );
-                //    //myCircle.translation = modelViewTransform.viewToModelPosition( args.position );
-                //}
                 start: function( e ){
                     sourceNode.mainView.setSelectedPiece( sourceNode );
                 },
