@@ -139,10 +139,17 @@ define( function( require ) {
             var sourceNode = new SourceNode( this.mainModel, sourceModel, this );
             this.addChild( sourceNode );
             sourceNode.addRayNodesToParent( this );
-            console.log( 'piece added is ' + type );
+            //console.log( 'piece added is ' + type );
             break;
           case 'beam_source':
-            console.log( 'piece added is ' + type );
+            //SourceModel( mainModel, type, nbrOfRays, position, spread, height )
+            var sourceModel = new SourceModel( this.mainModel, 'beam', 10, startPosition, 0, 50 );
+            this.mainModel.addSource( sourceModel );
+            sourceModel.setPosition( startPosition );
+            var sourceNode = new SourceNode( this.mainModel, sourceModel, this );
+            this.addChild( sourceNode );
+            sourceNode.addRayNodesToParent( this );
+            //console.log( 'piece added is ' + type );
             break;
           case 'converging_lens':
             console.log( 'piece added is ' + type );
@@ -168,8 +175,9 @@ define( function( require ) {
         }//end switch
       },//end AddPiece
       removeSource: function( sourceNode ){
-        console.log( 'remove source called. source is ' + source );
+        console.log( 'remove source called. source is ' + sourceNode );
         var sourceModel = sourceNode.sourceModel;
+        sourceNode.removeRayNodesFromParent( this );
         this.removeChild( sourceNode );
         this.mainModel.removeSource( sourceModel );
       },

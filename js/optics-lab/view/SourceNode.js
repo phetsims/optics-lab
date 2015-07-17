@@ -154,6 +154,11 @@ define( function( require ) {
             for ( var i = 0; i < this.rayNodes.length; i++ ) {
                 parentNode.addChild( this.rayNodes[ i ] );
             }
+        },
+        removeRayNodesFromParent: function( parentNode ){
+            for ( var i = this.rayNodes.length - 1; i >= 0 ; i-- ) {
+                parentNode.removeChild( this.rayNodes[ i ] );
+            }
         }
     } );
 } );
