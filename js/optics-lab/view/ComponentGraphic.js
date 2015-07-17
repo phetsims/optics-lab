@@ -49,17 +49,27 @@ define( function( require ) {
   return inherit( Node, ComponentGraphic, {
       makeDrawing: function(){
         switch( this.type ){
-          case 'lens':
+          case 'converging_lens':
             this.drawLens();
             break;
-          case 'curved_mirror':
+          case 'diverging_lens':
+            this.drawLens();
+            break;
+          case 'converging_mirror':
             this.drawCurvedMirror();
             break;
           case 'plane_mirror':
             this.drawPlaneMirror();
             break;
-          case 'mask':
+          case 'diverging_mirror':
+            this.drawCurvedMirror();
+            break;
+          case 'simple_mask':
             this.drawMask();
+            break;
+          case 'slit_mask':
+            this.drawMask();
+
             break;
         }//end switch
       },  //end makeDrawing()

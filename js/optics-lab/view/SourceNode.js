@@ -35,6 +35,7 @@ define( function( require ) {
         this.sourceModel =  sourceModel;
         this.mainView = mainView;
         this.modelViewTransform = mainView.modelViewTransform;
+        this.type = this.sourceModel.type;
         this.rayNodes = [];   //array of rayNodes, a rayNode is a path of a ray from source through components to end
 
         // Call the super constructor
@@ -50,9 +51,9 @@ define( function( require ) {
         var maxRayLength = sourceModel.maxLength;
         var myHandle;
 
-        if( sourceModel.type === 'fan'){
+        if( sourceModel.type === 'fan_source'){
             myHandle = new Circle( 20, { x: 0, y: 0, fill: '#8F8' } );
-        }else if ( sourceModel.type === 'beam' ){
+        }else if ( sourceModel.type === 'beam_source' ){
             myHandle = new Rectangle( 0, -height/2, 10, height, { fill: '#8F8' } );
         }
 
@@ -69,12 +70,12 @@ define( function( require ) {
             var relativeRayEnd = AbsoluteRayEnd.minus( sourceCenter );
             var rayShape = new Shape();
             rayShape.moveToPoint( relativeRayStart );
-            if ( sourceModel.type === 'fan' ) {
+            if ( sourceModel.type === 'fan_source' ) {
                 var relativeEndPt = dir.timesScalar( maxRayLength );
                 rayShape.lineToPoint( relativeEndPt );
 
                 //var rayNode = new Line( new Vector2( 0, 0 ), dir.timesScalar( maxRayLength ), rayFontObject );
-            }else if( sourceModel.type === 'beam' ){
+            }else if( sourceModel.type === 'beam_source' ){
 
                 //console.log( 'ray' + i + '  rayStart is ' + relativeRayStart + '  rayEnd is ' + relativeRayEnd );
                 //var rayNode = new Line( relativeRayStart, relativeRayEnd, rayFontObject );
@@ -106,6 +107,10 @@ define( function( require ) {
                 //    //sourceNode.location = modelViewTransform.viewToModelPosition( args.position );
                 //    //myCircle.translation = modelViewTransform.viewToModelPosition( args.position );
                 //}
+                start: function( e ){
+                    sourceNode.mainView.setSelectedPiece( sourceNode );
+                },
+
                 drag: function( e ){
                     var position = sourceNode.globalToParentPoint( e.pointer.point );
                     //console.log( 'position = ' + position );
@@ -114,10 +119,10 @@ define( function( require ) {
                 end: function( e ){
                     var position = sourceNode.globalToParentPoint( e.pointer.point );
                     if( sourceNode.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y )){
-                        console.log( 'delete this');
+                        //console.log( 'delete this');
                         sourceNode.mainView.removeSource( sourceNode );
                     }else{
-                        console.log( 'keep this' );
+                        //console.log( 'keep this' );
                     }
 
                 }

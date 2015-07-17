@@ -39,10 +39,10 @@ define( function( require ) {
         this.position = position;
         this.maxLength = 2000;  //maximum length of rays in pixels
 
-        if( type === 'fan' ){
+        if( type === 'fan_source' ){
             this.spread = spread;
             this.height = 0;
-        }else if ( type === 'beam' ){
+        }else if ( type === 'beam_source' ){
             this.spread = 0;
             this.height = height;
         }
@@ -60,8 +60,6 @@ define( function( require ) {
     return inherit( PropertySet, SourceModel, {
             createRays: function () {
                 this.rayPaths = [];  //clear any current rays
-                //this.rayTips = [];
-                //this.rayBreaks = [];
 
                 //for fan source
                 var lowestAngle = -this.spread / 2;  //in degrees
@@ -83,14 +81,14 @@ define( function( require ) {
 
                 //loop through and initialize all rayPaths of the source
                 for ( var i = 0; i < this.nbrOfRays; i++ ) {
-                    if ( this.type === 'fan' ) {
+                    if ( this.type === 'fan_source' ) {
                         theta = ( lowestAngle + i*deltaAngle ) * Math.PI / 180;  //in radians
                         dir = new Vector2( Math.cos(theta), Math.sin(theta) );
                         //endPosition = this.position.plus( dir.timesScalar( this.maxLength ));
                         this.rayPaths[i] = new RayPath( dir );
                         this.rayPaths[i].startPos = this.position;
                         //this.rayPaths[i].addSegment( this.position, endPosition );
-                    } else if (this.type === 'beam') {
+                    } else if (this.type === 'beam_source') {
                         dir = new Vector2( 1, 0 );
                         startPos = this.position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
                         //endPosition = startPos.plus( dir.timesScalar( this.maxLength ));
@@ -106,14 +104,14 @@ define( function( require ) {
                 this.mainModel.processRays();
             },
             setSpreadOfFan: function( angleInDegrees ){
-                if( this.type === 'fan' ){
+                if( this.type === 'fan_source' ){
                     this.spread = angleInDegrees;
                     this.createRays();
                     this.mainModel.processRays();
                 }
             },
             setWidthOfBeam: function( heightInCm ){
-                if( this.type === 'beam' ){
+                if( this.type === 'beam_source' ){
                     this.height = heightInCm;
                     this.createRays();
                     this.mainModel.processRays();
@@ -124,11 +122,11 @@ define( function( require ) {
                 for( var i = 0; i < this.rayPaths.length; i++ ){
                     //var dir = this.rayPaths[ i ].startDir;
                     //this.rayPaths[ i ].clearPath();
-                    if( this.type === 'fan' ){
+                    if( this.type === 'fan_source' ){
                         this.rayPaths[ i ].startPos = position;
                         //var endPos = position.plus( dir.timesScalar( this.maxLength ));
                         //this.rayPaths[ i ].addSegment( position, endPos );
-                    }else if ( this.type === 'beam' ){
+                    }else if ( this.type === 'beam_source' ){
                         var lowestPos = new Vector2( 0, -this.height / 2 );
                         var deltaPos = new Vector2( 0, this.height / ( this.nbrOfRays - 1 ) );
                         var pos = position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );

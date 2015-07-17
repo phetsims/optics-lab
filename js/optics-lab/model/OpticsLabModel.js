@@ -168,7 +168,7 @@ define( function( require ) {
         var newDir;
 
 
-        if( component.type === 'lens' ){
+        if( component.type === 'converging_lens' || component.type === 'diverging_lens' ){
           //console.log( 'It is a lens.' );
           //var randomOutgoingRayDir = incomingRayDir +
           var fromLeft = false;
@@ -195,7 +195,7 @@ define( function( require ) {
           newDir = new Vector2.createPolar( 1, newAngleInRads );
           this.launchRay( rayPath, intersection, newDir );
 
-        }else if( component.type === 'mask' ){
+        }else if( component.type === 'simple_mask' ){
           //Do nothing. The rayPath ends at a mask.
           //console.log( 'It is a mask.' );
         }else {

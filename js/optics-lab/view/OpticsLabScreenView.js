@@ -13,13 +13,14 @@ define( function( require ) {
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
   //var Circle = require( 'SCENERY/nodes/Circle' );
-  var ComponentControlPanel = require( 'OPTICS_LAB/optics-lab/view/ComponentControlPanel' );
+  var ControlPanel = require( 'OPTICS_LAB/optics-lab/view/ControlPanel' );
   var ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
   var ComponentNode = require( 'OPTICS_LAB/optics-lab/view/ComponentNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   //var Line = require( 'SCENERY/nodes/Line' );
   //var LinearFunction = require( 'DOT/LinearFunction' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
+  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ScreenView = require( 'JOIST/ScreenView' );
   //var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
@@ -35,6 +36,7 @@ define( function( require ) {
   function OpticsLabScreenView( opticsLabModel ) {
 
     this.mainModel = opticsLabModel;
+    this.selectedPieceProperty = new Property( null );
 
     var opticsLabScreenView = this;
     ScreenView.call( opticsLabScreenView, { layoutBounds: new Bounds2( 0, 0, 768, 504 ) } );
@@ -44,11 +46,20 @@ define( function( require ) {
 
     // model-view transform
     this.modelViewTransform = ModelViewTransform2.createIdentity();
+    this.controlPanel = new ControlPanel( this.mainModel, this );
+    opticsLabScreenView.addChild( this.controlPanel );
 
     this.toolDrawerPanel = new ToolDrawerPanel( opticsLabModel, opticsLabScreenView );
     opticsLabScreenView.addChild( this.toolDrawerPanel );
     this.toolDrawerPanel.bottom = this.layoutBounds.bottom - 10;
     this.toolDrawerPanel.centerX = this.layoutBounds.centerX;
+
+    this.selectedPieceProperty.link( function( property ){
+      //console.log( 'selectedPieceProperty linked ' );
+      if( property != null ){
+        //console.log( 'selected piece is ' + property.type );
+      }
+    } );
 
     //this.opticsLabModel.sources.addItemAddedListener( function( sourceModel ){
     //  //console.log( 'source added is ' + source.type );
@@ -71,9 +82,9 @@ define( function( require ) {
   return inherit( ScreenView, OpticsLabScreenView,{
       addSource: function( type, startPosition ){
         if ( type === 'fan_source' ){
-          var sourceModel = new SourceModel( this.mainModel, 'fan', 20, startPosition, 45, 0 );
+          var sourceModel = new SourceModel( this.mainModel, 'fan_source', 20, startPosition, 45, 0 );
         }else{
-          var sourceModel = new SourceModel( this.mainModel, 'beam', 10, startPosition, 0, 50 );
+          var sourceModel = new SourceModel( this.mainModel, 'beam_source', 10, startPosition, 0, 50 );
         }
         this.mainModel.addSource( sourceModel );
         sourceModel.setPosition( startPosition );
@@ -85,10 +96,12 @@ define( function( require ) {
         var componentModel;
         switch( type ){
           case 'converging_lens':
-            componentModel = new ComponentModel( this.mainModel, 'lens', 200, 150, 1.6 );
+            //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
+            //radius of curvature R = 2*f*( n - 1 )
+            componentModel = new ComponentModel( this.mainModel, 'converging_lens', 200, 2*250/( 1.6 - 1 ), 250, 1.6 );
             break;
           case 'diverging_lens':
-            componentModel = new ComponentModel( this.mainModel, 'lens', 150, -200, 1.6 );
+            componentModel = new ComponentModel( this.mainModel, 'diverging_lens', 150, 2*200/( 1.6 - 1 ), -200, 1.6 );
             break;
           case 'converging_mirror':
             break;
@@ -98,7 +111,7 @@ define( function( require ) {
           case 'diverging_mirror':
             break;
           case 'simple_mask':
-            componentModel = new ComponentModel( this.mainModel, 'mask', 100, 0, 0 );
+            componentModel = new ComponentModel( this.mainModel, 'simple_mask', 100, 0, 0 );
             break;
           case 'slit_mask':
             break;
@@ -131,6 +144,10 @@ define( function( require ) {
         this.removeChild( componentNode );
         var componentModel = componentNode.componentModel;
         this.mainModel.removeComponent( componentModel );
+      },
+      setSelectedPiece: function ( piece ){
+        //console.log( 'setSelectedPiece() called.' )
+        this.selectedPieceProperty.value = piece;
       }
     }
   );

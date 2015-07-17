@@ -34,7 +34,7 @@ define( function( require ) {
     this.type = this.componentModel.type;
 
     // Call the super constructor
-    Node.call( componentNode, {
+    Node.call( this, {
       // Show a cursor hand over the bar magnet
       cursor: 'pointer'
     } );
@@ -58,14 +58,14 @@ define( function( require ) {
     componentNode.addChild( this.componentGraphic );
 
 
-
-
     // When dragging, move the sample element
     componentNode.addInputListener( new SimpleDragHandler(
       {
         // When dragging across it in a mobile device, pick it up
         allowTouchSnag: true,
-
+        start: function( e ){
+          componentNode.mainView.setSelectedPiece( componentNode );
+        },
 
         drag: function( e ){
           var position = componentNode.globalToParentPoint( e.pointer.point );

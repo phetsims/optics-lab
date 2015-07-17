@@ -12,11 +12,12 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
 
-  function ComponentModel( mainModel, type, diameter, focalLength, index ) {
+  function ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index ) {
 
     PropertySet.call( this, {
       position: new Vector2( 0, 0 ),  //@private, position of source on stage
       diameter: diameter,             //@private
+      R: radiusCurvature,
       f: focalLength,                 //@private
       n: index                        //@private
     } );
@@ -25,13 +26,16 @@ define( function( require ) {
     this.mainModel = mainModel;
 
     //this.model = model;
-    this.type = type; // 'lens'|'curved_mirror'|'plane_mirror'|'mask'
+    this.type = type; // 'converging_lens'|'diverging_lens'|'converging_mirror'|'plane_mirror'|etc.
     //this.diameter = diameter;
     //this.f = focalLength;
     //this.n = index;  //index of refraction n > 1 , n and f set radius of lens
     //this.position = new Vector2( 0, 0 );
     //this.model.addComponent( this );
     this.diameterProperty.link( function(){
+      componentModel.mainModel.processRays();
+    });
+    this.RProperty.link( function(){
       componentModel.mainModel.processRays();
     });
     this.fProperty.link( function(){
@@ -44,7 +48,7 @@ define( function( require ) {
 
   return inherit( PropertySet, ComponentModel, {
       setFocalLength: function( f ) {
-        if ( this.type === 'lens' || this.type === 'curved_mirror' ) {
+        if ( this.type === 'converging_lens' || this.type === 'diverging_lens' ) {
           this.f = f;
           this.mainModel.processRays();
         }
@@ -54,6 +58,10 @@ define( function( require ) {
       },
       setDiameter: function( diameter ) {
         this.diameter = diameter;
+        this.mainModel.processRays();
+      },
+      setRadius: function( radius ){
+        this.R = radius;
         this.mainModel.processRays();
       },
       setIndex: function ( index ){
