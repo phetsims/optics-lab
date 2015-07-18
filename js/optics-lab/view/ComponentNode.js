@@ -44,15 +44,16 @@ define( function( require ) {
     var xPos = this.componentModel.position.x;
     var yPos = this.componentModel.position.y;
     var height = this.componentModel.diameter;
+    var radius = this.componentModel.radius;    //radius of curvature
     var f = this.componentModel.f;
-    var n = this.componentModel.n;
+    var index = this.componentModel.index;
     var myHandle = new Rectangle( xPos, yPos - height/2, 15, height, { fill: 'red' } );
     var marker1 = new Line( xPos, yPos, xPos + 15, yPos, { stroke: 'yellow' });
     var centerLine = new Line( xPos, yPos - height/2, xPos, yPos + height/2, { stroke: 'blue' });
 
     //myHandle.children = [ marker1, marker2 ];
-    //function ComponentGraphic( type, diameter, focalLength, index )
-    this.componentGraphic = new ComponentGraphic( this.type, height, f, n );
+    //function ComponentGraphic( type, diameter, radius(of curvature), index )
+    this.componentGraphic = new ComponentGraphic( this.type, height, radius, index );
     //myHandle.addChild( componentGraphic );
     //componentNode.addChild( myHandle );
     componentNode.addChild( this.componentGraphic );
@@ -89,10 +90,13 @@ define( function( require ) {
     this.componentModel.diameterProperty.link( function( diameter ) {
       componentNode.componentGraphic.setDiameter( diameter );
     } );
+    this.componentModel.radiusProperty.link( function( R ) {
+      componentNode.componentGraphic.setRadius( R );
+    } );
     this.componentModel.fProperty.link( function( f ) {
       componentNode.componentGraphic.setFocalLength( f );
     } );
-    this.componentModel.nProperty.link( function( n ) {
+    this.componentModel.indexProperty.link( function( n ) {
       componentNode.componentGraphic.setIndex( n );
     } );
 

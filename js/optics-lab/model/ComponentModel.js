@@ -12,14 +12,14 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
 
-  function ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index ) {
+  function ComponentModel( mainModel, type, diameter, radiusCurvature, index ) {
 
     PropertySet.call( this, {
       position: new Vector2( 0, 0 ),  //@private, position of source on stage
       diameter: diameter,             //@private
-      R: radiusCurvature,
+      radius: radiusCurvature,
       f: focalLength,                 //@private
-      n: index                        //@private
+      index: index                        //@private
     } );
 
     var componentModel = this;
@@ -35,13 +35,13 @@ define( function( require ) {
     this.diameterProperty.link( function(){
       componentModel.mainModel.processRays();
     });
-    this.RProperty.link( function(){
+    this.radiusProperty.link( function(){
       componentModel.mainModel.processRays();
     });
     this.fProperty.link( function(){
       componentModel.mainModel.processRays();
     });
-    this.nProperty.link( function(){
+    this.indexProperty.link( function(){
       componentModel.mainModel.processRays();
     });
   }
@@ -61,11 +61,11 @@ define( function( require ) {
         this.mainModel.processRays();
       },
       setRadius: function( radius ){
-        this.R = radius;
+        this.radius = radius;
         this.mainModel.processRays();
       },
       setIndex: function ( index ){
-        this.n = index;
+        this.index = index;
         this.mainModel.processRays();
       },
       setPosition: function( position ) {   //position is vector2

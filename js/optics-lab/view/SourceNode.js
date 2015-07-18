@@ -109,7 +109,6 @@ define( function( require ) {
 
     return inherit( Node, SourceNode, {
         setRayNodes: function(){
-            this.rayNodes = [];
             var maxRayLength = this.sourceModel.maxLength;
             var rayFontObject = { stroke: 'white', lineWidth: 2 } ;
             for ( var r = 0; r < this.sourceModel.rayPaths.length; r++ ) {

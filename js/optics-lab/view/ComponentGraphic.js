@@ -26,7 +26,7 @@ define( function( require ) {
    * @constructor
    */
 
-  function ComponentGraphic( type, diameter, focalLength, index ) {
+  function ComponentGraphic( type, diameter, radius, index ) {
       var componentGraphic = this;
       Node.call( componentGraphic );
 
@@ -35,8 +35,9 @@ define( function( require ) {
     //} );
     this.type = type;
     this.diameter = diameter;    //starting direction of the first segment, the one thing that never changes
-    this.f = focalLength;               //starting position of the first segment
+    this.radius = radius;   //radius of curvature of each surface of lens
     this.n = index;     //index of refraction
+    this.f = this.radius/( 2*( this.index - 1 ));
 
 
     this.shape = new Shape();
@@ -79,7 +80,9 @@ define( function( require ) {
       drawLens: function() {
         this.shape = new Shape();
         var fudge = 1;   //fudge factor to make lens radius big enough to be apparent to ey
-        var R = fudge * 2 * Math.abs( this.f ) * ( this.n - 1 );  //radius of curvature of lens surface
+        var R = this.radius; //fudge * 2 * Math.abs( this.f ) * ( this.n - 1 );  //radius of curvature of lens surface
+        var n = this.index;
+        this.f = ( R / 2 )* ( 1 / ( n - 1 ) );
         var h = this.diameter / 2;                          //h = height = radius of lens
         var theta = Math.asin( h / R );                     //magnitude of startAngle and endAngle
         var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
@@ -140,6 +143,10 @@ define( function( require ) {
       },
       setDiameter: function( diameter ) {
         this.diameter = diameter;
+        this.makeDrawing();
+      },
+      setRadius: function( R ) {
+        this.radius = R;
         this.makeDrawing();
       },
       setIndex: function( index ){

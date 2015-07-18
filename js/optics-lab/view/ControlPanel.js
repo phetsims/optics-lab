@@ -124,6 +124,7 @@ define( function( require ) {
           }else{
             pieceModel = piece.componentModel;
             var diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 50, max: 400 }, sliderOptions );
+            var diameterVBox = new VBox( { children: [ diameterSlider, this.diameterText ]});
           }
 
           //console.log( 'setControlsForSelectedPiece' + piece.type );
@@ -134,12 +135,18 @@ define( function( require ) {
               this.content = new HBox( { children: [ nbrOfRaysVBox, spreadVBox ], spacing: 40 } );
               break;
             case 'beam_source':
-              var heightSlider = new HSlider( pieceModel.heightProperty, { min: 50, max: 400 } );
+              var heightSlider = new HSlider( pieceModel.heightProperty, { min: 50, max: 400 }, sliderOptions );
+              var heightVBox = new VBox( { children: [ heightSlider, this.heightText ], align: 'center' } );
+              this.content = new HBox( { children: [ nbrOfRaysVBox, heightVBox ], spacing: 40 } );
               break;
             case 'converging_lens':
               //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
               //radius of curvature R = 2*f*( n - 1 )
-
+              var radiusSlider = new HSlider( pieceModel.radiusProperty, { min: 50, max: 400 }, sliderOptions );
+              var radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
+              var indexSlider = new HSlider( pieceModel.indexProperty, { min: 50, max: 400 }, sliderOptions );
+              var indexVBox = new VBox( { children: [ indexSlider, this.indexText ], align: 'center' } );
+              this.content = new HBox( { children: [ diameterVBox, radiusVBox, indexVBox ], spacing: 40 } );
               break;
             case 'diverging_lens':
 
