@@ -82,7 +82,12 @@ define( function( require ) {
         var fudge = 1;   //fudge factor to make lens radius big enough to be apparent to ey
         var R = this.radius; //fudge * 2 * Math.abs( this.f ) * ( this.n - 1 );  //radius of curvature of lens surface
         var n = this.index;
-        this.f = ( R / 2 )* ( 1 / ( n - 1 ) );
+        if( this.type === 'converging_lens' ){
+          this.f = ( R / 2 )* ( 1 / ( n - 1 ) );
+        }else{
+          this.f = -( R / 2 )* ( 1 / ( n - 1 ) );
+        }
+
         var h = this.diameter / 2;                          //h = height = radius of lens
         var theta = Math.asin( h / R );                     //magnitude of startAngle and endAngle
         var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
@@ -150,8 +155,8 @@ define( function( require ) {
         this.makeDrawing();
       },
       setIndex: function( index ){
-        console.log( 'index is ' + index );
-        this.n = index;
+        //console.log( 'index is ' + index );
+        this.index = index;
         this.makeDrawing();
       }
 

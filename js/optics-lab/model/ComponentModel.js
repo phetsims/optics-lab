@@ -35,15 +35,19 @@ define( function( require ) {
       componentModel.mainModel.processRays();
     });
     this.radiusProperty.link( function( radius ){
-      console.log( 'radius is ' + radius );
-      this.f = this.radius/(2*(this.index - 1));
+      //console.log( 'radius is ' + radius );
+      var R = componentModel.radius;
+      var n = componentModel.index;
+      componentModel.f = R/( 2 * ( n - 1 ));
       componentModel.mainModel.processRays();
     });
     this.fProperty.link( function(){    //probably unused
       componentModel.mainModel.processRays();
     });
     this.indexProperty.link( function(){
-      this.f = this.radius/(2*(this.index - 1));
+      var R = componentModel.radius;
+      var n = componentModel.index;
+      componentModel.f = R /( 2 * ( n - 1 ));
       componentModel.mainModel.processRays();
     });
   }
