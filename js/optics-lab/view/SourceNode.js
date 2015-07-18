@@ -48,7 +48,7 @@ define( function( require ) {
         // Draw a handle
         var height = sourceModel.height;   //if beam
         //var deltaHeight = height/( sourceModel.nbrOfRays - 1 );
-        var maxRayLength = sourceModel.maxLength;
+
         var myHandle;
 
         if( sourceModel.type === 'fan_source'){
@@ -57,38 +57,10 @@ define( function( require ) {
             myHandle = new Rectangle( 0, -height/2, 10, height, { fill: '#8F8' } );
         }
 
-        //draw the starting rays on the handle
-        var rayFontObject = { stroke: 'white', lineWidth: 2 } ;
-
-        for ( var r = 0; r < this.sourceModel.rayPaths.length; r++ ) {
-
-            var dir = this.sourceModel.rayPaths[ r ].startDir;
-            var sourceCenter = this.sourceModel.position;
-            var AbsoluteRayStart = sourceModel.rayPaths[ r ].segments[ 0 ].getStart();
-            var AbsoluteRayEnd = sourceModel.rayPaths[ r ].segments[ 0 ].getEnd();
-            var relativeRayStart = AbsoluteRayStart.minus( sourceCenter );
-            var relativeRayEnd = AbsoluteRayEnd.minus( sourceCenter );
-            var rayShape = new Shape();
-            rayShape.moveToPoint( relativeRayStart );
-            if ( sourceModel.type === 'fan_source' ) {
-                var relativeEndPt = dir.timesScalar( maxRayLength );
-                rayShape.lineToPoint( relativeEndPt );
-
-                //var rayNode = new Line( new Vector2( 0, 0 ), dir.timesScalar( maxRayLength ), rayFontObject );
-            }else if( sourceModel.type === 'beam_source' ){
-
-                //console.log( 'ray' + i + '  rayStart is ' + relativeRayStart + '  rayEnd is ' + relativeRayEnd );
-                //var rayNode = new Line( relativeRayStart, relativeRayEnd, rayFontObject );
-                rayShape.lineToPoint( relativeRayEnd );
-            }
-            var rayNode = new Path( rayShape, rayFontObject );
-
-            this.rayNodes.push( rayNode );
-            //myHandle.addChild( rayNode );   //want to work with absolute coords
-        }//end rayPath loop
-
         sourceNode.addChild( myHandle );
 
+        //draw the starting rays
+        this.setRayNodes();
 
         // When dragging, move the sample element
         sourceNode.addInputListener( new SimpleDragHandler(
@@ -124,6 +96,10 @@ define( function( require ) {
             //sourceNode.drawRays();
         } );
 
+        this.sourceModel.nbrOfRaysProperty.link( function( nbrOfRays ){
+            sourceNode.setRayNodes();
+        });
+
         this.mainModel.processRaysCountProperty.link( function( count ) {
             sourceNode.drawRays();
             //console.log( 'source callback, rays processed. Count is ' + count );
@@ -132,6 +108,36 @@ define( function( require ) {
     }
 
     return inherit( Node, SourceNode, {
+        setRayNodes: function(){
+            var maxRayLength = this.sourceModel.maxLength;
+            var rayFontObject = { stroke: 'white', lineWidth: 2 } ;
+            for ( var r = 0; r < this.sourceModel.rayPaths.length; r++ ) {
+
+                var dir = this.sourceModel.rayPaths[ r ].startDir;
+                var sourceCenter = this.sourceModel.position;
+                var AbsoluteRayStart = this.sourceModel.rayPaths[ r ].segments[ 0 ].getStart();
+                var AbsoluteRayEnd = this.sourceModel.rayPaths[ r ].segments[ 0 ].getEnd();
+                var relativeRayStart = AbsoluteRayStart.minus( sourceCenter );
+                var relativeRayEnd = AbsoluteRayEnd.minus( sourceCenter );
+                var rayShape = new Shape();
+                rayShape.moveToPoint( relativeRayStart );
+                if ( this.sourceModel.type === 'fan_source' ) {
+                    var relativeEndPt = dir.timesScalar( maxRayLength );
+                    rayShape.lineToPoint( relativeEndPt );
+
+                    //var rayNode = new Line( new Vector2( 0, 0 ), dir.timesScalar( maxRayLength ), rayFontObject );
+                }else if( this.sourceModel.type === 'beam_source' ){
+
+                    //console.log( 'ray' + i + '  rayStart is ' + relativeRayStart + '  rayEnd is ' + relativeRayEnd );
+                    //var rayNode = new Line( relativeRayStart, relativeRayEnd, rayFontObject );
+                    rayShape.lineToPoint( relativeRayEnd );
+                }
+                var rayNode = new Path( rayShape, rayFontObject );
+
+                this.rayNodes.push( rayNode );
+                //myHandle.addChild( rayNode );   //want to work with absolute coords
+            }//end rayPath loop
+        },//end setRayNodes()
         drawRays: function(){
             for ( var i = 0; i < this.sourceModel.rayPaths.length; i++ ) {
                 //console.log( 'drawing rays for source ' + this.sourceNumber );

@@ -33,13 +33,11 @@ define( function( require ) {
             height: height              //height of source, if beam
         } );
 
-        this.sourceModel = this;
+        var sourceModel = this;
         this.mainModel = mainModel;
         this.sourceNumber;  //for testing
 
-        this.type = type; //'fan'|'beam'
-        //this.nbrOfRays = nbrOfRays;
-        this.position = position;
+        this.type = type; //'fan_source'|'beam_source'
         this.maxLength = 2000;  //maximum length of rays in pixels
 
         if( type === 'fan_source' ){
@@ -51,16 +49,17 @@ define( function( require ) {
         }
 
         this.nbrOfRaysProperty.link( function(){
-            this.createRays();
-            this.mainModel.processRays();
+            //debugger;
+            sourceModel.createRays();
+            sourceModel.mainModel.processRays();
         });
         this.spreadProperty.link( function(){
-            this.createRays();
-            this.mainModel.processRays();
+            sourceModel.createRays();
+            sourceModel.mainModel.processRays();
         });
         this.heightProperty.link( function(){
-            this.createRays();
-            this.mainModel.processRays();
+            sourceModel.createRays();
+            sourceModel.mainModel.processRays();
         });
 
 
@@ -76,7 +75,7 @@ define( function( require ) {
     return inherit( PropertySet, SourceModel, {
             createRays: function () {
                 this.rayPaths = [];  //clear any current rays
-
+                this.nbrOfRays = Math.round( this.nbrOfRays );
                 //for fan source
                 var lowestAngle = -this.spread / 2;  //in degrees
                 var deltaAngle;

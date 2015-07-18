@@ -23,9 +23,11 @@ define( function( require ) {
   //var CheckBox = require( 'SUN/CheckBox' );
   //var HSeparator = require( 'SUN/HSeparator' );
   var AccordionBox = require( 'SUN/AccordionBox' );
+  var Dimension2 = require( 'DOT/Dimension2' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HSlider = require( 'SUN/HSlider' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -46,27 +48,23 @@ define( function( require ) {
    */
 
   function ControlPanel( mainModel, mainView ) {
+
+    Node.call( this );
     var controlPanel = this;
     this.mainModel = mainModel;
     this.mainView = mainView;
 
     this.mainView.selectedPieceProperty.link( function( piece ){
-      controlPanel.setControlsForSelectedPiece( piece );
+      if( piece != null ){
+        console.log( 'calling setControls for piece ' + piece.type );
+        controlPanel.setControlsForSelectedPiece( piece );
+      }
     } );
 
-
-    //this.componentModel = pieceModel;
-    //
-    //this.diameterSlider = new HSlider( componentModel.diameterProperty, { min: 50, max: 400 } );
-    //this.radiusSlider = new HSlider( componentModel.radiusProperty, { min: 200, max: 600 });
-    //this.positivefSlider = new HSlider( componentModel.fProperty, { min: 50, max:500 });
-    //this.negativefSlider = new HSlider( componentModel.fProperty, {min: -50, max: -500 });
-    //this.indexSlider = new HSlider( componentModel.nProperty, { min: 1.3, max: 2.2 });
-    //
     var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
     this.nbrOfRaysText = new Text( 'number of rays', fontInfo );
     this.heightText = new Text( 'height', fontInfo );
-    this.spreadText = new Text( 'spread in degrees', fontInfo );
+    this.spreadText = new Text( 'spread', fontInfo );
     this.diameterText = new Text( 'diameter', fontInfo );
     this.radiusText = new Text( 'radius of curvature', fontInfo );
     this.focalLengthText = new Text( 'focal length', fontInfo );
@@ -84,61 +82,56 @@ define( function( require ) {
       spacing: spacing
     } );
 
-    this.setUpAccordionBox();
+    this.accordionBoxOptions = {
+      lineWidth: 2,
+      cornerRadius: 10,
+      buttonXMargin: 12, // horizontal space between button and left|right edge of box
+      buttonYMargin: 12,
+      titleNode: new Text( '  Values', { font: DISPLAY_FONT, fontWeight: 'bold' } ),
+      titleAlignX: 'left',
+      //contentAlign: 'left',
+      fill: PANEL_COLOR,
+      showTitleWhenExpanded: true,
+      contentXMargin: 20,
+      contentYMargin: 15,
+      contentYSpacing: 8
+    };
 
-    //AccordionBox.call( this, content, {
-    //  lineWidth: 2,
-    //  cornerRadius: 10,
-    //  buttonXMargin: 12, // horizontal space between button and left|right edge of box
-    //  buttonYMargin: 12,
-    //  titleNode: new Text( '  Values', { font: DISPLAY_FONT, fontWeight: 'bold' } ),
-    //  titleAlignX: 'left',
-    //  //contentAlign: 'left',
-    //  fill: PANEL_COLOR,
-    //  showTitleWhenExpanded: true,
-    //  contentXMargin: 20,
-    //  contentYMargin: 15,
-    //  contentYSpacing: 8
-    //} );
-  }
+    this.accordionBox = new AccordionBox( this.content, this.accordionBoxOptions );
+    this.addChild( this.accordionBox );
 
-  return inherit( AccordionBox, ControlPanel, {
-      setUpAccordionBox: function(){
-        AccordionBox.call( this, this.content, {
-          lineWidth: 2,
-          cornerRadius: 10,
-          buttonXMargin: 12, // horizontal space between button and left|right edge of box
-          buttonYMargin: 12,
-          titleNode: new Text( '  Values', { font: DISPLAY_FONT, fontWeight: 'bold' } ),
-          titleAlignX: 'left',
-          //contentAlign: 'left',
-          fill: PANEL_COLOR,
-          showTitleWhenExpanded: true,
-          contentXMargin: 20,
-          contentYMargin: 15,
-          contentYSpacing: 8
-        } );
-      },
+  }//end constructor
+
+  return inherit( Node, ControlPanel, {
+      resetAccordionBox: function(){
+        this.removeChild( this.accordionBox );
+        this.accordionBox = null;
+        this.accordionBox = new AccordionBox( this.content, this.accordionBoxOptions );
+        this.addChild( this.accordionBox );
+      },//end setUpAccordionBox()
 
       //change the component that this panel controls
       setControlsForSelectedPiece: function( piece ) {
+
         if ( piece != null ) {
           var pieceModel;
           var type = piece.type;
+          var sliderOptions = { trackSize: new Dimension2( 200, 5 ) };
           if( type === 'fan_source' || type === 'beam_source' ){
             pieceModel = piece.sourceModel;
-            var nbrOfRaysSlider = new HSlider( pieceModel.nbrOfRaysProperty, {min: 1, max: 40 });
+            var nbrOfRaysSlider = new HSlider( pieceModel.nbrOfRaysProperty, { min: 1, max: 40 }, sliderOptions );
             var nbrOfRaysVBox = new VBox( { children: [ nbrOfRaysSlider, this.nbrOfRaysText ], align: 'center' } );
           }else{
             pieceModel = piece.componentModel;
+            var diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 50, max: 400 }, sliderOptions );
           }
-          var diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 50, max: 400 } );
+
           //console.log( 'setControlsForSelectedPiece' + piece.type );
           switch( type ){
             case 'fan_source':
-              var spreadSlider = new HSlider( pieceModel.spreadProperty, { min: 2, max: 90 } );
+              var spreadSlider = new HSlider( pieceModel.spreadProperty, { min: 2, max: 90 }, sliderOptions );
               var spreadVBox = new VBox( { children: [ spreadSlider, this.spreadText ], align: 'center' } );
-              this.content = new HBox( { children: [ nbrOfRaysVBox, spreadVBox ] } );
+              this.content = new HBox( { children: [ nbrOfRaysVBox, spreadVBox ], spacing: 40 } );
               break;
             case 'beam_source':
               var heightSlider = new HSlider( pieceModel.heightProperty, { min: 50, max: 400 } );
@@ -164,9 +157,9 @@ define( function( require ) {
             case 'slit_mask':
               break;
           }//end switch()
-          this.setUpAccordionBox();
+          this.resetAccordionBox();
         }//end if (type != null)
-      }
+      }// end setControlsForSelectedPiece()
 
 
     }//end inherit
