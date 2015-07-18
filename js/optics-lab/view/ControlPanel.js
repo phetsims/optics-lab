@@ -154,7 +154,8 @@ define( function( require ) {
               var radiusSlider = new HSlider( pieceModel.radiusProperty, { min: 200, max: 800 }, sliderOptions );
               var radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
               var indexSlider = new HSlider( pieceModel.indexProperty, { min: 1.4, max: 2.2 }, sliderOptions );
-              var indexVBox = new VBox( { children: [ indexSlider, this.indexText ], align: 'center' } );
+              var indexVBo
+              x = new VBox( { children: [ indexSlider, this.indexText ], align: 'center' } );
               this.content = new HBox( { children: [ diameterVBox, radiusVBox, indexVBox ], spacing: 40 } );
 
               break;
