@@ -56,7 +56,7 @@ define( function( require ) {
 
     this.mainView.selectedPieceProperty.link( function( piece ){
       if( piece != null ){
-        console.log( 'calling setControls for piece ' + piece.type );
+        //console.log( 'calling setControls for piece ' + piece.type );
         controlPanel.setControlsForSelectedPiece( piece );
       }
     } );

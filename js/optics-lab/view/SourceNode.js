@@ -37,7 +37,7 @@ define( function( require ) {
         this.modelViewTransform = mainView.modelViewTransform;
         this.type = this.sourceModel.type;
         this.rayNodes = [];   //array of rayNodes, a rayNode is a path of a ray from source through components to end
-
+        this.counter = 0; //for testing only
         // Call the super constructor
         Node.call( sourceNode, {
 
@@ -109,6 +109,7 @@ define( function( require ) {
 
     return inherit( Node, SourceNode, {
         setRayNodes: function(){
+            this.rayNodes = [];
             var maxRayLength = this.sourceModel.maxLength;
             var rayFontObject = { stroke: 'white', lineWidth: 2 } ;
             for ( var r = 0; r < this.sourceModel.rayPaths.length; r++ ) {
