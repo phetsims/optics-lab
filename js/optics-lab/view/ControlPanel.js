@@ -130,7 +130,7 @@ define( function( require ) {
           //console.log( 'setControlsForSelectedPiece' + piece.type );
           switch( type ){
             case 'fan_source':
-              var spreadSlider = new HSlider( pieceModel.spreadProperty, { min: 2, max: 90 }, sliderOptions );
+              var spreadSlider = new HSlider( pieceModel.spreadProperty, { min: 2, max: 180 }, sliderOptions );
               var spreadVBox = new VBox( { children: [ spreadSlider, this.spreadText ], align: 'center' } );
               this.content = new HBox( { children: [ nbrOfRaysVBox, spreadVBox ], spacing: 40 } );
               break;

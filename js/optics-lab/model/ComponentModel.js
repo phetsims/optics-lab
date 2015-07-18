@@ -34,13 +34,16 @@ define( function( require ) {
     this.diameterProperty.link( function(){
       componentModel.mainModel.processRays();
     });
-    this.radiusProperty.link( function(){
+    this.radiusProperty.link( function( radius ){
+      console.log( 'radius is ' + radius );
+      this.f = this.radius/(2*(this.index - 1));
       componentModel.mainModel.processRays();
     });
-    this.fProperty.link( function(){
+    this.fProperty.link( function(){    //probably unused
       componentModel.mainModel.processRays();
     });
     this.indexProperty.link( function(){
+      this.f = this.radius/(2*(this.index - 1));
       componentModel.mainModel.processRays();
     });
   }
