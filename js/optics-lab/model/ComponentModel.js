@@ -17,9 +17,9 @@ define( function( require ) {
     PropertySet.call( this, {
       position: new Vector2( 0, 0 ),  //@private, position of source on stage
       diameter: diameter,             //@private
-      radius: radiusCurvature,
-      f: focalLength,                 //@private
-      index: index                        //@private
+      radius: radiusCurvature,       //@private
+      index: index,                        //@private
+      f: 500
     } );
 
     var componentModel = this;
@@ -28,7 +28,6 @@ define( function( require ) {
     //this.model = model;
     this.type = type; // 'converging_lens'|'diverging_lens'|'converging_mirror'|'plane_mirror'|etc.
     //this.diameter = diameter;
-    //this.f = focalLength;
     //this.n = index;  //index of refraction n > 1 , n and f set radius of lens
     //this.position = new Vector2( 0, 0 );
     //this.model.addComponent( this );
@@ -47,9 +46,9 @@ define( function( require ) {
   }
 
   return inherit( PropertySet, ComponentModel, {
-      setFocalLength: function( f ) {
+      updateFocalLength: function() {
         if ( this.type === 'converging_lens' || this.type === 'diverging_lens' ) {
-          this.f = f;
+          this.f = ( this.radius/2 )/( this.index - 1 );
           this.mainModel.processRays();
         }
         else {

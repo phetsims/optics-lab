@@ -142,9 +142,9 @@ define( function( require ) {
             case 'converging_lens':
               //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
               //radius of curvature R = 2*f*( n - 1 )
-              var radiusSlider = new HSlider( pieceModel.radiusProperty, { min: 50, max: 400 }, sliderOptions );
+              var radiusSlider = new HSlider( pieceModel.radiusProperty, { min: 200, max: 800 }, sliderOptions );
               var radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
-              var indexSlider = new HSlider( pieceModel.indexProperty, { min: 50, max: 400 }, sliderOptions );
+              var indexSlider = new HSlider( pieceModel.indexProperty, { min: 1.4, max: 2.2 }, sliderOptions );
               var indexVBox = new VBox( { children: [ indexSlider, this.indexText ], align: 'center' } );
               this.content = new HBox( { children: [ diameterVBox, radiusVBox, indexVBox ], spacing: 40 } );
               break;

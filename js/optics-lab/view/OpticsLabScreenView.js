@@ -96,8 +96,9 @@ define( function( require ) {
         var componentModel;
         switch( type ){
           case 'converging_lens':
-            //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
+            //ComponentModel( mainModel, type, diameter, radiusCurvature, index )
             //radius of curvature R = 2*f*( n - 1 )
+
             componentModel = new ComponentModel( this.mainModel, 'converging_lens', 200, 250, 1.6 );
             break;
           case 'diverging_lens':

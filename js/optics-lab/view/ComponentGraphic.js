@@ -36,7 +36,7 @@ define( function( require ) {
     this.type = type;
     this.diameter = diameter;    //starting direction of the first segment, the one thing that never changes
     this.radius = radius;   //radius of curvature of each surface of lens
-    this.n = index;     //index of refraction
+    this.index = index;     //index of refraction
     this.f = this.radius/( 2*( this.index - 1 ));
 
 
