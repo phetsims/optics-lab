@@ -90,7 +90,7 @@ define( function( require ) {
         sourceModel.setPosition( startPosition );
         var sourceNode = new SourceNode( this.mainModel, sourceModel, this );
         this.addChild( sourceNode );
-        sourceNode.addRayNodesToParent( this );
+        //sourceNode.addRayNodesToParent( this );
       },
       addComponent: function( type, startPosition ){
         var componentModel;
@@ -136,7 +136,7 @@ define( function( require ) {
       removeSource: function( sourceNode ){
         //console.log( 'remove source called. source is ' + sourceNode );
         var sourceModel = sourceNode.sourceModel;
-        sourceNode.removeRayNodesFromParent( this );
+        //sourceNode.removeRayNodesFromParent( this );
         this.removeChild( sourceNode );
         this.mainModel.removeSource( sourceModel );
       },

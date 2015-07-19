@@ -71,6 +71,19 @@ define( function( require ) {
           this.shape.lineToPoint( this.segments[i].getEnd() );
         }
         return this.shape;
+      },
+      getRelativeShape: function(){
+        var shape = new Shape;
+        shape.moveTo( 0, 0 );
+        var startPoint = this.segments[ 0 ].getStart();
+        var nextAbsolutePoint;
+        var nextRelativePoint;
+        for ( var i = 0; i < this.segments.length; i++ ){
+          nextAbsolutePoint = this.segments[i].getEnd();
+          nextRelativePoint = nextAbsolutePoint.minus( startPoint );
+          shape.lineToPoint( nextAbsolutePoint );
+        }
+        return shape;
       }
 
 

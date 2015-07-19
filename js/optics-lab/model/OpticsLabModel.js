@@ -24,7 +24,7 @@ define( function( require ) {
     var opticsLabModel = this;
 
     PropertySet.call( this, {
-      processRaysCount: 0            //@private, position of source on stage
+      processRaysCount: 0            //@private, number of times processRays() called, flag for further processing
     } );
 
     this.sources = new ObservableArray();
@@ -36,41 +36,41 @@ define( function( require ) {
   }
 
   return inherit( PropertySet, OpticsLabModel, {
-      addPiece: function( type ){
-        switch( type ){
-          case 'fan_source':
-            //SourceModel( mainModel, type, nbrOfRays, position, spread, height )
-            //var sourcePosition = new Vector2( 300, 300 );
-            //var sourceModel = new SourceModel( this, 'fan', 20, sourcePosition, 45, 0 );
-            //this.addSource( sourceModel );
-            console.log( 'piece added is ' + type );
-            break;
-          case 'beam_source':
-            console.log( 'piece added is ' + type );
-            break;
-          case 'converging_lens':
-            console.log( 'piece added is ' + type );
-            break;
-          case 'diverging_lens':
-            console.log( 'piece added is ' + type );
-            break;
-          case 'converging_mirror':
-            console.log( 'piece added is ' + type );
-            break;
-          case 'plane_mirror':
-            console.log( 'piece added is ' + type );
-            break;
-          case 'diverging_mirror':
-            console.log( 'piece added is ' + type );
-            break;
-          case 'simple_mask':
-            console.log( 'piece added is ' + type );
-            break;
-          case 'slit_mask':
-            console.log( 'piece added is ' + type );
-            break;
-        }//end switch
-      },
+      //addPiece: function( type ){
+      //  switch( type ){
+      //    case 'fan_source':
+      //      //SourceModel( mainModel, type, nbrOfRays, position, spread, height )
+      //      //var sourcePosition = new Vector2( 300, 300 );
+      //      //var sourceModel = new SourceModel( this, 'fan', 20, sourcePosition, 45, 0 );
+      //      //this.addSource( sourceModel );
+      //      console.log( 'piece added is ' + type );
+      //      break;
+      //    case 'beam_source':
+      //      console.log( 'piece added is ' + type );
+      //      break;
+      //    case 'converging_lens':
+      //      console.log( 'piece added is ' + type );
+      //      break;
+      //    case 'diverging_lens':
+      //      console.log( 'piece added is ' + type );
+      //      break;
+      //    case 'converging_mirror':
+      //      console.log( 'piece added is ' + type );
+      //      break;
+      //    case 'plane_mirror':
+      //      console.log( 'piece added is ' + type );
+      //      break;
+      //    case 'diverging_mirror':
+      //      console.log( 'piece added is ' + type );
+      //      break;
+      //    case 'simple_mask':
+      //      console.log( 'piece added is ' + type );
+      //      break;
+      //    case 'slit_mask':
+      //      console.log( 'piece added is ' + type );
+      //      break;
+      //  }//end switch
+      //},
       addSource: function( source ) {
         this.sources.add( source );
         source.setPosition( source.position );
@@ -93,7 +93,7 @@ define( function( require ) {
         for (var i = 0; i < this.sources.length; i++ ){
           this.updateSourceLines( this.sources.get( i ));   //sources is an observable array, hence .get(i)
         }
-        this.processRaysCount += 1;
+        this.processRaysCount += 1;  //increment number of times processRays called
       },
       updateSourceLines: function( source ) {
         //var intersection;   //Vector2
@@ -123,7 +123,7 @@ define( function( require ) {
         var rayTip = startPoint.plus( dir.timesScalar( this.maxLength ) );
 
         //loop thru all components
-        var componentIntersectedNbr;
+        var componentIntersectedIndex;
         for ( var j = 0; j < this.components.length; j++ ) {
           var compDiameter = this.components.get( j ).diameter;
           var compCenter = this.components.get( j ).position;
@@ -136,7 +136,7 @@ define( function( require ) {
             if ( dist > 10 &&  dist < distanceToIntersection ) {    //have to be sure component does not intersect its own starting ray
               distanceToIntersection = dist;
               intersection = thisIntersection;
-              componentIntersectedNbr = j;
+              componentIntersectedIndex = j;
             }
           }
         }//end component loop
@@ -144,7 +144,7 @@ define( function( require ) {
         if ( intersection !== null ) {
           rayPath.addSegment( startPoint, intersection );
           var tailSegmentNbr = rayPath.segments.length - 1;
-          this.processIntersection( rayPath, intersection, tailSegmentNbr , componentIntersectedNbr );
+          this.processIntersection( rayPath, intersection, tailSegmentNbr , componentIntersectedIndex );
         }
         else {
           rayPath.addSegment( startPoint, rayTip );   //rayPath ends
@@ -153,13 +153,10 @@ define( function( require ) {
 
 
       processIntersection: function( rayPath, intersection, segmentNbr, componentNbr ){
-        //var rayPath = rayPath;
         var incomingRayDir = rayPath.dirs[ segmentNbr ];
         //console.log( 'rayDir in degs is ' + incomingRayDir.angle()*180/Math.PI );
         var angleInRads = incomingRayDir.angle();
         var newAngleInRads;  // = angleInRads + 0.1*( Math.random() - 0.5 );
-        //var newSegment = Vector2.createPolar( this.maxLength, newAngleInRads );
-        //var segment = rayPath.segments[ segmentNbr ];
         var component = this.components.get( componentNbr );
         var r = ( intersection.y - component.position.y );
         var f = component.f;
@@ -170,11 +167,10 @@ define( function( require ) {
 
         if( component.type === 'converging_lens' || component.type === 'diverging_lens' ){
           //console.log( 'It is a lens.' );
-          //var randomOutgoingRayDir = incomingRayDir +
-          var fromLeft = false;
+          var fromLeft = false;  //true is ray is from left to right, false if reflected once by mirror
           var angleInDegrees = angleInRads*180/Math.PI;
-          var sizeAngleInDegrees = Math.abs( angleInDegrees );
-          if( sizeAngleInDegrees < 90 ){ fromLeft = true; }
+          var magnitudeAngleInDegrees = Math.abs( angleInDegrees );
+          if( magnitudeAngleInDegrees < 90 ){ fromLeft = true; }
           if( fromLeft ){
             newAngleInRads = - Math.atan( (r/f) - tanTheta );
           }else{

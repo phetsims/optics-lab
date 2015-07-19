@@ -16,8 +16,8 @@ define( function( require ) {
     var Vector2 = require( 'DOT/Vector2' );
 
     /**
-     *
-     * @param {String} type = 'fan'|'beam' = fan of diverging rays or beam of parallel rays
+     * @param {OpticsLabModel} mainModel for this sim
+     * @param {String} type = 'fan_source'|'beam_source' = fan of diverging rays or beam of parallel rays
      * @param {Number} nbrOfRays
      * @param {Number} spread = for fan source, range of angles in degrees; for beam, spread is zero
      * @param {Number} height = for beam source, range of y-position in cm; for fan, height is zero
@@ -75,12 +75,13 @@ define( function( require ) {
     return inherit( PropertySet, SourceModel, {
             createRays: function () {
                 this.rayPaths = [];  //clear any current rays
-                this.nbrOfRays = Math.round( this.nbrOfRays );
+                this.nbrOfRays = Math.round( this.nbrOfRays );  //slider may produce non-integer number of rays
                 //for fan source
                 var lowestAngle = -this.spread / 2;  //in degrees
                 var deltaAngle;
                 if( this.nbrOfRays === 1 ){
                     deltaAngle = 0;
+                    lowestAngle = 0;  //if only one ray, ray is horizontal
                 }else{
                     deltaAngle = this.spread / ( this.nbrOfRays - 1);    //in degrees
                 }

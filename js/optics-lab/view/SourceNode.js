@@ -1,7 +1,7 @@
 /**
  * Node for Source of light, which is either a fan of rays (point source)
  * or a parallel beam of rays
- * Created by Duso on 6/29/2015.
+ * Created by Dubson on 6/29/2015.
  */
 define( function( require ) {
     'use strict';
@@ -20,11 +20,11 @@ define( function( require ) {
 
     // images
 
-
     /**
-     * Constructor for SourceNode which renders sample element as a scenery node.
-     * @param {sampleElement} sampleElement the sourceModel of the sampleElement
-     * @param {ModelViewTransform2} modelViewTransform the coordinate transform between sourceModel coordinates and view coordinates
+     *
+     * @param {OpticsLabModel} mainModel
+     * @param {SourceModel} sourceModel
+     * @param {OpticsLabScreenView} mainView
      * @constructor
      */
     function SourceNode( mainModel, sourceModel, mainView ) {
@@ -40,24 +40,23 @@ define( function( require ) {
         this.counter = 0; //for testing only
         // Call the super constructor
         Node.call( sourceNode, {
-
             // Show a cursor hand over the bar magnet
             cursor: 'pointer'
         } );
 
         // Draw a handle
-        var height = sourceModel.height;   //if beam
-        //var deltaHeight = height/( sourceModel.nbrOfRays - 1 );
+        var height = sourceModel.height;   //if type = 'beam_source'
+        this.defaultHeight = height;
 
-        var myHandle;
+        this.myHandle;
 
         if( sourceModel.type === 'fan_source'){
-            myHandle = new Circle( 20, { x: 0, y: 0, fill: '#8F8' } );
+            this.myHandle = new Circle( 20, { x: 0, y: 0, fill: '#8F8' } );
         }else if ( sourceModel.type === 'beam_source' ){
-            myHandle = new Rectangle( 0, -height/2, 10, height, { fill: '#8F8' } );
+            this.myHandle = new Rectangle( 0, -height/2, 10, height, { fill: '#8F8' } );
         }
 
-        sourceNode.addChild( myHandle );
+        sourceNode.addChild( this.myHandle );
 
         //draw the starting rays
         this.setRayNodes();
@@ -100,6 +99,11 @@ define( function( require ) {
             sourceNode.setRayNodes();
         });
 
+        this.sourceModel.heightProperty.link( function( height ){
+            //console.log( 'source callback, height is ' + height );
+            sourceNode.setHeight( height );
+        });
+
         this.mainModel.processRaysCountProperty.link( function( count ) {
             sourceNode.drawRays();
             //console.log( 'source callback, rays processed. Count is ' + count );
@@ -135,13 +139,13 @@ define( function( require ) {
                 var rayNode = new Path( rayShape, rayFontObject );
 
                 this.rayNodes.push( rayNode );
-                //myHandle.addChild( rayNode );   //want to work with absolute coords
+                this.myHandle.addChild( rayNode );   //want to work with absolute coords
             }//end rayPath loop
         },//end setRayNodes()
         drawRays: function(){
             for ( var i = 0; i < this.sourceModel.rayPaths.length; i++ ) {
                 //console.log( 'drawing rays for source ' + this.sourceNumber );
-                var shape = this.sourceModel.rayPaths[ i ].getShape();
+                var shape = this.sourceModel.rayPaths[ i ].getRelativeShape();//getShape();
                 this.rayNodes[ i ].setShape( shape );
                 //var centerStartPt = this.sourceModel.position;
                 //var absoluteRayEndPt = this.sourceModel.rayPaths[ i ].segments[ 0 ].getEnd();
@@ -159,6 +163,9 @@ define( function( require ) {
             for ( var i = this.rayNodes.length - 1; i >= 0 ; i-- ) {
                 parentNode.removeChild( this.rayNodes[ i ] );
             }
+        },
+        setHeight: function( height ){
+            this.myHandle.setScaleMagnitude( 1, height/this.defaultHeight );
         }
     } );
 } );
