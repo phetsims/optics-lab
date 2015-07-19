@@ -165,7 +165,9 @@ define( function( require ) {
             }
         },
         setHeight: function( height ){
-            this.myHandle.setScaleMagnitude( 1, height/this.defaultHeight );
+            if( this.type === 'beam_source' ){
+                this.myHandle.setScaleMagnitude( 1, height/this.defaultHeight );
+            }
         }
     } );
 } );

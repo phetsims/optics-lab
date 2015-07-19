@@ -82,7 +82,8 @@ define( function( require ) {
   return inherit( ScreenView, OpticsLabScreenView,{
       addSource: function( type, startPosition ){
         if ( type === 'fan_source' ){
-          var sourceModel = new SourceModel( this.mainModel, 'fan_source', 20, startPosition, 45, 0 );
+          //SourceModel( mainModel, type, nbrOfRays, position, spread, height )
+          var sourceModel = new SourceModel( this.mainModel, 'fan_source', 2, startPosition, 5, 0 );
         }else{
           var sourceModel = new SourceModel( this.mainModel, 'beam_source', 10, startPosition, 0, 50 );
         }
