@@ -35,7 +35,7 @@ define( function( require ) {
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
-  var DISPLAY_FONT = new PhetFont( 20 );
+  var DISPLAY_FONT = new PhetFont( 12 );
   var TEXT_COLOR = Util.TEXT_COLOR;
   var PANEL_COLOR = Util.PANEL_COLOR;
   //var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
@@ -151,11 +151,10 @@ define( function( require ) {
             case 'diverging_lens':
               //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
               //radius of curvature R = 2*f*( n - 1 )
-              var radiusSlider = new HSlider( pieceModel.radiusProperty, { min: 200, max: 800 }, sliderOptions );
+              var radiusSlider = new HSlider( pieceModel.radiusProperty, { min: -200, max: -800 }, sliderOptions );
               var radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
               var indexSlider = new HSlider( pieceModel.indexProperty, { min: 1.4, max: 2.2 }, sliderOptions );
-              var indexVBo
-              x = new VBox( { children: [ indexSlider, this.indexText ], align: 'center' } );
+              var indexVBox = new VBox( { children: [ indexSlider, this.indexText ], align: 'center' } );
               this.content = new HBox( { children: [ diameterVBox, radiusVBox, indexVBox ], spacing: 40 } );
 
               break;

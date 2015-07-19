@@ -80,14 +80,16 @@ define( function( require ) {
       drawLens: function() {
         this.shape = new Shape();
         var fudge = 1;   //fudge factor to make lens radius big enough to be apparent to ey
-        var R = this.radius; //fudge * 2 * Math.abs( this.f ) * ( this.n - 1 );  //radius of curvature of lens surface
+        //fudge * 2 * Math.abs( this.f ) * ( this.n - 1 );  //radius of curvature of lens surface
         var n = this.index;
         if( this.type === 'converging_lens' ){
-          this.f = ( R / 2 )* ( 1 / ( n - 1 ) );
+          var R = this.radius;
         }else{
-          this.f = -( R / 2 )* ( 1 / ( n - 1 ) );
+          var R = -this.radius
         }
-
+        this.f = ( this.radius / 2 )* ( 1 / ( n - 1 ) );
+          console.log( 'type is  ' + this.type + 'f  = ' + this.f );
+        console.log( 'R = ' + R + '   n = ' + n );
         var h = this.diameter / 2;                          //h = height = radius of lens
         var theta = Math.asin( h / R );                     //magnitude of startAngle and endAngle
         var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface

@@ -36,9 +36,10 @@ define( function( require ) {
     });
     this.radiusProperty.link( function( radius ){
       //console.log( 'radius is ' + radius );
-      var R = componentModel.radius;
+      var R = componentModel.radius;   //R is always positive
       var n = componentModel.index;
       componentModel.f = R/( 2 * ( n - 1 ));
+
       componentModel.mainModel.processRays();
     });
     this.fProperty.link( function(){    //probably unused
@@ -47,7 +48,7 @@ define( function( require ) {
     this.indexProperty.link( function(){
       var R = componentModel.radius;
       var n = componentModel.index;
-      componentModel.f = R /( 2 * ( n - 1 ));
+      componentModel.f = R/( 2 * ( n - 1 ));
       componentModel.mainModel.processRays();
     });
   }
