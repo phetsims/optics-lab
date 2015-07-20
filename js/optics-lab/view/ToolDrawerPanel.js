@@ -126,7 +126,7 @@ define( function( require ) {
             var type = typeArray[ index ];
             //mainModel.addPiece( type );
             toolDrawerPanel.mainView.addPiece( type, startPosition );
-            console.log( 'type is ' + typeArray[index] );
+            //console.log( 'type is ' + typeArray[index] );
           },
 
           //drag: function( e ) {

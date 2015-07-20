@@ -101,9 +101,17 @@ define( function( require ) {
             sourceNode.setRayNodes();
         });
 
+        this.sourceModel.spreadProperty.link( function( nbrOfRays ){
+            if( sourceNode.type === 'fan_source' ){
+                sourceNode.setRayNodes();
+            }
+        });
+
         this.sourceModel.heightProperty.link( function( height ){
             //console.log( 'source callback, height is ' + height );
-            sourceNode.setHeight( height );
+            if( sourceNode.type === 'beam_source' ){
+                sourceNode.setHeight( height );
+            }
         });
 
         this.mainModel.processRaysCountProperty.link( function( count ) {
@@ -115,6 +123,8 @@ define( function( require ) {
 
     return inherit( Node, SourceNode, {
         setRayNodes: function(){
+            this.myHandle.removeAllChildren();
+            this.rayNodes = [];
             var maxRayLength = this.sourceModel.maxLength;
             var rayFontObject = { stroke: 'white', lineWidth: 2 } ;
             for ( var r = 0; r < this.sourceModel.rayPaths.length; r++ ) {
@@ -169,9 +179,7 @@ define( function( require ) {
         //    }
         //},
         setHeight: function( height ){
-            if( this.type === 'beam_source' ){
-                this.myHandle.setScaleMagnitude( 1, height/this.defaultHeight );
-            }
+            this.myHandle.setScaleMagnitude( 1, height/this.defaultHeight );
         }
     } );
 } );
