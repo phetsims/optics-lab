@@ -21,14 +21,14 @@ define( function( require ) {
   //var LinearFunction = require( 'DOT/LinearFunction' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var Property = require( 'AXON/Property' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  //var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ScreenView = require( 'JOIST/ScreenView' );
   //var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var SourceNode = require( 'OPTICS_LAB/optics-lab/view/SourceNode' );
   var SourceModel = require( 'OPTICS_LAB/optics-lab/model/SourceModel' );
   var ToolDrawerPanel = require( 'OPTICS_LAB/optics-lab/view/ToolDrawerPanel' );
   //var Util = require( 'DOT/Util' );
-  var Vector2 = require( 'DOT/Vector2' );
+  //var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @constructor
@@ -81,11 +81,12 @@ define( function( require ) {
 
   return inherit( ScreenView, OpticsLabScreenView,{
       addSource: function( type, startPosition ){
+        var sourceModel;
         if ( type === 'fan_source' ){
           //SourceModel( mainModel, type, nbrOfRays, position, spread, height )
-          var sourceModel = new SourceModel( this.mainModel, 'fan_source', 10, startPosition, 45, 0 );
+          sourceModel = new SourceModel( this.mainModel, 'fan_source', 10, startPosition, 45, 0 );
         }else{
-          var sourceModel = new SourceModel( this.mainModel, 'beam_source', 10, startPosition, 0, 50 );
+          sourceModel = new SourceModel( this.mainModel, 'beam_source', 10, startPosition, 0, 50 );
         }
         this.mainModel.addSource( sourceModel );
         sourceModel.setPosition( startPosition );
@@ -118,7 +119,7 @@ define( function( require ) {
           case 'slit_mask':
             break;
         }//end switch()
-        if( componentModel != undefined ){
+        if( componentModel !== undefined ){
           this.mainModel.addComponent( componentModel );
           var componentNode = new ComponentNode( componentModel, this);
           this.addChild( componentNode );

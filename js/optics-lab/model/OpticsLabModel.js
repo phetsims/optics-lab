@@ -10,18 +10,18 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
+  //var ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var PropertySet = require( 'AXON/PropertySet' );
-  var SourceModel = require( 'OPTICS_LAB/optics-lab/model/SourceModel' );
+  //var SourceModel = require( 'OPTICS_LAB/optics-lab/model/SourceModel' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
 
   function OpticsLabModel() {
 
-    var opticsLabModel = this;
+    //var opticsLabModel = this;
 
     PropertySet.call( this, {
       processRaysCount: 0            //@private, number of times processRays() called, flag for further processing

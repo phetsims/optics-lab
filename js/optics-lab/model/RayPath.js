@@ -75,7 +75,7 @@ define( function( require ) {
       },
       getRelativeShape: function(){
 
-        var shape = new Shape;
+        var shape = new Shape();
         shape.moveToPoint( this.relativeStartPos );
         var startPoint = this.segments[ 0 ].getStart();
         var nextAbsolutePoint;

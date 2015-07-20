@@ -139,7 +139,7 @@ define( function( require ) {
                 this.rayNodes[ i ].visible = false;
             }
             var maxRayLength = this.sourceModel.maxLength;
-            var rayFontObject = { stroke: 'white', lineWidth: 2 } ;
+            //var rayFontObject = { stroke: 'white', lineWidth: 2 } ;
             for ( var r = 0; r < this.sourceModel.rayPaths.length; r++ ) {
                 this.rayNodes[ r ].visible = true;
                 var dir = this.sourceModel.rayPaths[ r ].startDir;

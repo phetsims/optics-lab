@@ -9,9 +9,9 @@ define( function( require ) {
   var ComponentGraphic = require( 'OPTICS_LAB/optics-lab/view/ComponentGraphic' );
   var inherit = require( 'PHET_CORE/inherit' );
   //var Circle = require( 'SCENERY/nodes/Circle' );
-  var Line = require( 'SCENERY/nodes/Line' );
+  //var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  //var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   //var Vector2 = require( 'DOT/Vector2' );
 
@@ -41,15 +41,15 @@ define( function( require ) {
 
     // Add the rectangle graphic
     //Rectangle( x, y, width, height, arcWidth, arcHeight, options )
-    var xPos = this.componentModel.position.x;
-    var yPos = this.componentModel.position.y;
+    //var xPos = this.componentModel.position.x;
+    //var yPos = this.componentModel.position.y;
     var height = this.componentModel.diameter;
     var radius = this.componentModel.radius;    //radius of curvature
-    var f = this.componentModel.f;
+    //var f = this.componentModel.f;
     var index = this.componentModel.index;
-    var myHandle = new Rectangle( xPos, yPos - height/2, 15, height, { fill: 'red' } );
-    var marker1 = new Line( xPos, yPos, xPos + 15, yPos, { stroke: 'yellow' });
-    var centerLine = new Line( xPos, yPos - height/2, xPos, yPos + height/2, { stroke: 'blue' });
+    //var myHandle = new Rectangle( xPos, yPos - height/2, 15, height, { fill: 'red' } );
+    //var marker1 = new Line( xPos, yPos, xPos + 15, yPos, { stroke: 'yellow' });
+    //var centerLine = new Line( xPos, yPos - height/2, xPos, yPos + height/2, { stroke: 'blue' });
 
     //myHandle.children = [ marker1, marker2 ];
     //function ComponentGraphic( type, diameter, radius(of curvature), index )

@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Bounds2 = require( 'DOT/Bounds2' );
+  //var Bounds2 = require( 'DOT/Bounds2' );
   //var CheckBox = require( 'SUN/CheckBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -17,15 +17,15 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Path = require( 'SCENERY/nodes/Path' );
+  //var Path = require( 'SCENERY/nodes/Path' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var SourceNode = require( 'OPTICS_LAB/optics-lab/view/SourceNode' );
-  var SourceModel = require( 'OPTICS_LAB/optics-lab/model/SourceModel' );
+  //var SourceNode = require( 'OPTICS_LAB/optics-lab/view/SourceNode' );
+  //var SourceModel = require( 'OPTICS_LAB/optics-lab/model/SourceModel' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
-  var Vector2 = require( 'DOT/Vector2' );
-  var Shape = require( 'KITE/Shape' );
+  //var Vector2 = require( 'DOT/Vector2' );
+  //var Shape = require( 'KITE/Shape' );
 
   //constants
   var DISPLAY_FONT = new PhetFont( 15 );

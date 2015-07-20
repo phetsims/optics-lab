@@ -28,7 +28,7 @@ define( function( require ) {
   var HSlider = require( 'SUN/HSlider' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Panel = require( 'SUN/Panel' );
+  //var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'OPTICS_LAB/optics-lab/common/Util' );
@@ -55,7 +55,7 @@ define( function( require ) {
     this.mainView = mainView;
 
     this.mainView.selectedPieceProperty.link( function( piece ){
-      if( piece != null ){
+      if( piece !== null ){
         //console.log( 'calling setControls for piece ' + piece.type );
         controlPanel.setControlsForSelectedPiece( piece );
       }
@@ -113,19 +113,22 @@ define( function( require ) {
       //change the component that this panel controls
       setControlsForSelectedPiece: function( piece ) {
 
-        if ( piece != null ) {
+        if ( piece !== null ) {
           var pieceModel;
           var type = piece.type;
+          var maxNbrRays;
+          var nbrOfRaysVBox;
+          var diameterVBox;
           var sliderOptions = { trackSize: new Dimension2( 200, 5 ), thumbSize: new Dimension2( 15, 30 ) };
           if( type === 'fan_source' || type === 'beam_source' ){
             pieceModel = piece.sourceModel;
-            var maxNbrRays = pieceModel.maxNbrOfRays;
+            maxNbrRays = pieceModel.maxNbrOfRays;
             var nbrOfRaysSlider = new HSlider( pieceModel.nbrOfRaysProperty, { min: 1, max: maxNbrRays }, sliderOptions );
-            var nbrOfRaysVBox = new VBox( { children: [ nbrOfRaysSlider, this.nbrOfRaysText ], align: 'center' } );
+            nbrOfRaysVBox = new VBox( { children: [ nbrOfRaysSlider, this.nbrOfRaysText ], align: 'center' } );
           }else{
             pieceModel = piece.componentModel;
             var diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 50, max: 400 }, sliderOptions );
-            var diameterVBox = new VBox( { children: [ diameterSlider, this.diameterText ]});
+            diameterVBox = new VBox( { children: [ diameterSlider, this.diameterText ]});
           }
 
           //console.log( 'setControlsForSelectedPiece' + piece.type );
@@ -152,10 +155,10 @@ define( function( require ) {
             case 'diverging_lens':
               //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
               //radius of curvature R = 2*f*( n - 1 )
-              var radiusSlider = new HSlider( pieceModel.radiusProperty, { min: -200, max: -800 }, sliderOptions );
-              var radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
-              var indexSlider = new HSlider( pieceModel.indexProperty, { min: 1.4, max: 2.2 }, sliderOptions );
-              var indexVBox = new VBox( { children: [ indexSlider, this.indexText ], align: 'center' } );
+              radiusSlider = new HSlider( pieceModel.radiusProperty, { min: -200, max: -800 }, sliderOptions );
+              radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
+              indexSlider = new HSlider( pieceModel.indexProperty, { min: 1.4, max: 2.2 }, sliderOptions );
+              indexVBox = new VBox( { children: [ indexSlider, this.indexText ], align: 'center' } );
               this.content = new HBox( { children: [ diameterVBox, radiusVBox, indexVBox ], spacing: 40 } );
 
               break;

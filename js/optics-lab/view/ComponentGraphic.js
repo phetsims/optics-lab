@@ -79,18 +79,19 @@ define( function( require ) {
       },
       drawLens: function() {
         this.shape = new Shape();
+        var R;  //radius of lens
         var fudge1 = 1;   //fudge factor to make lens radius big enough to be apparent to eye
         var fudge2 = 2;   //fudge factor to make adjust range of index of refraction
         //fudge * 2 * Math.abs( this.f ) * ( this.n - 1 );  //radius of curvature of lens surface
         var n = fudge2*this.index;
         if( this.type === 'converging_lens' ){
-          var R = this.radius;
+          R = fudge1*this.radius;
         }else{
-          var R = -this.radius
+          R = -fudge1*this.radius;
         }
         this.f = ( this.radius / 2 )* ( 1 / ( n - 1 ) );
-          console.log( 'type is  ' + this.type + 'f  = ' + this.f );
-        console.log( 'R = ' + R + '   n = ' + n );
+          //console.log( 'type is  ' + this.type + 'f  = ' + this.f );
+        //console.log( 'R = ' + R + '   n = ' + n );
         var h = this.diameter / 2;                          //h = height = radius of lens
         var theta = Math.asin( h / R );                     //magnitude of startAngle and endAngle
         var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
