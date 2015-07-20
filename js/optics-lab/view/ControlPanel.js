@@ -119,7 +119,8 @@ define( function( require ) {
           var sliderOptions = { trackSize: new Dimension2( 200, 5 ) };
           if( type === 'fan_source' || type === 'beam_source' ){
             pieceModel = piece.sourceModel;
-            var nbrOfRaysSlider = new HSlider( pieceModel.nbrOfRaysProperty, { min: 1, max: 40 }, sliderOptions );
+            var maxNbrRays = pieceModel.maxNbrOfRays;
+            var nbrOfRaysSlider = new HSlider( pieceModel.nbrOfRaysProperty, { min: 1, max: maxNbrRays }, sliderOptions );
             var nbrOfRaysVBox = new VBox( { children: [ nbrOfRaysSlider, this.nbrOfRaysText ], align: 'center' } );
           }else{
             pieceModel = piece.componentModel;

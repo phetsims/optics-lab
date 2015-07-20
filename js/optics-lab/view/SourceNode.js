@@ -38,6 +38,7 @@ define( function( require ) {
         this.type = this.sourceModel.type;
         this.relativeRayStarts = []; //starting positions, relative to source center, of each ray
         this.rayNodes = [];   //array of rayNodes, a rayNode is a path of a ray from source through components to end
+        this.maxNbrOfRays = sourceModel.maxNbrOfRays;
         this.counter = 0; //for testing only
         // Call the super constructor
         Node.call( sourceNode, {
@@ -59,8 +60,13 @@ define( function( require ) {
 
         sourceNode.addChild( this.myHandle );
 
-        //draw the starting rays
-        //this.setRayNodes();
+        //initialize rayNodes array
+
+        var rayFontObject = { stroke: 'white', lineWidth: 2 } ;
+        for( var r = 0; r < this.maxNbrOfRays; r++ ){
+            this.rayNodes[ r ] = new Path( new Shape(), rayFontObject );
+            sourceNode.addChild( this.rayNodes[ r ] );
+        }
 
 
         // When dragging, move the sample element
@@ -98,7 +104,7 @@ define( function( require ) {
         } );
 
         this.sourceModel.nbrOfRaysProperty.link( function( nbrOfRays ){
-            sourceNode.setRayNodes();
+            sourceNode.setRayNodes( nbrOfRays );
         });
 
         this.sourceModel.spreadProperty.link( function( nbrOfRays ){
@@ -122,13 +128,17 @@ define( function( require ) {
     }
 
     return inherit( Node, SourceNode, {
-        setRayNodes: function(){
-            this.myHandle.removeAllChildren();
-            this.rayNodes = [];
+        setRayNodes: function( nbrOfRays ){
+            //this.myHandle.removeAllChildren();
+            //this.rayNodes = [];
+            nbrOfRays = Math.round( nbrOfRays );
+            for( var i = nbrOfRays; i < this.maxNbrOfRays; i++ ){
+                this.rayNodes[ i ].visible = false;
+            }
             var maxRayLength = this.sourceModel.maxLength;
             var rayFontObject = { stroke: 'white', lineWidth: 2 } ;
             for ( var r = 0; r < this.sourceModel.rayPaths.length; r++ ) {
-
+                this.rayNodes[ r ].visible = true;
                 var dir = this.sourceModel.rayPaths[ r ].startDir;
                 var sourceCenter = this.sourceModel.position;
                 var AbsoluteRayStart = this.sourceModel.rayPaths[ r ].segments[ 0 ].getStart();
@@ -150,10 +160,11 @@ define( function( require ) {
                     this.relativeRayStarts[ r ] = relativeRayStart;
                     rayShape.lineToPoint( relativeRayEnd );
                 }
-                var rayNode = new Path( rayShape, rayFontObject );
+                this.rayNodes[ r ].setShape( rayShape );
+                //var rayNode = new Path( rayShape, rayFontObject );
 
-                this.rayNodes.push( rayNode );
-                this.myHandle.addChild( rayNode );   //want to work with absolute coords
+                //this.rayNodes.push( rayNode );
+                //this.myHandle.addChild( rayNode );   //want to work with absolute coords
             }//end rayPath loop
         },//end setRayNodes()
         drawRays: function(){
