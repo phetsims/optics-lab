@@ -28,7 +28,7 @@ define( function( require ) {
   //var Shape = require( 'KITE/Shape' );
 
   //constants
-  var DISPLAY_FONT = new PhetFont( 15 );
+  var DISPLAY_FONT = new PhetFont( 12 );
   var PANEL_COLOR = '#ccc';
 
   /**
@@ -159,7 +159,7 @@ define( function( require ) {
     //Set up drag handlers
 
 
-    var spacing = 10;
+    var spacing = 5;
     var sourceVBox = new VBox( {
       children:[
         fanSourceIcon,
@@ -176,11 +176,17 @@ define( function( require ) {
       align: 'left',
       spacing: spacing
     });
-    var mirrorVBox = new VBox( {
+    var curvedMirrorVBox = new VBox( {
       children:[
         convergingMirrorIcon,
-        planeMirrorIcon,
         divergingMirrorIcon
+      ],
+      align: 'left',
+      spacing: spacing
+    });
+    var planeMirrorVBox = new VBox( {
+      children:[
+        planeMirrorIcon,
       ],
       align: 'left',
       spacing: spacing
@@ -201,12 +207,13 @@ define( function( require ) {
     //  align: 'left',
     //  spacing: spacing
     //});
-    spacing = 30;
+    spacing = 10;
     var content = new HBox( {
       children:[
         sourceVBox,
         lensVBox,
-        mirrorVBox,
+        planeMirrorVBox,
+        curvedMirrorVBox,
         maskVBox
       ],
       align:'top',
@@ -220,7 +227,7 @@ define( function( require ) {
     //} );
 
 
-    Panel.call( this, content, { xMargin: 30, yMargin: 15, lineWidth: 2, fill: PANEL_COLOR } );
+    Panel.call( this, content, { xMargin: 15, yMargin: 5, lineWidth: 2, fill: PANEL_COLOR } );
   }//end constructor
 
   return inherit( Panel, ToolDrawerPanel, {

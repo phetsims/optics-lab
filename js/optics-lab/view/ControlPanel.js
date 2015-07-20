@@ -84,17 +84,17 @@ define( function( require ) {
 
     this.accordionBoxOptions = {
       lineWidth: 2,
-      cornerRadius: 7,
-      buttonXMargin: 5, // horizontal space between button and left|right edge of box
-      buttonYMargin: 5,
+      cornerRadius: 5,
+      buttonXMargin: 3, // horizontal space between button and left|right edge of box
+      buttonYMargin: 3,
       titleNode: new Text( '  Values', { font: DISPLAY_FONT, fontWeight: 'bold' } ),
       titleAlignX: 'left',
       //contentAlign: 'left',
       fill: PANEL_COLOR,
       showTitleWhenExpanded: true,
-      contentXMargin: 5,
-      contentYMargin: 5,
-      contentYSpacing: 5
+      contentXMargin: 3,
+      contentYMargin: 3,
+      contentYSpacing: 3
     };
 
     this.accordionBox = new AccordionBox( this.content, this.accordionBoxOptions );
@@ -119,7 +119,7 @@ define( function( require ) {
           var maxNbrRays;
           var nbrOfRaysVBox;
           var diameterVBox;
-          var sliderOptions = { trackSize: new Dimension2( 200, 5 ), thumbSize: new Dimension2( 15, 30 ) };
+          var sliderOptions = { trackSize: new Dimension2( 150, 5 ), thumbSize: new Dimension2( 10, 20 ) };
           if( type === 'fan_source' || type === 'beam_source' ){
             pieceModel = piece.sourceModel;
             maxNbrRays = pieceModel.maxNbrOfRays;
@@ -127,7 +127,7 @@ define( function( require ) {
             nbrOfRaysVBox = new VBox( { children: [ nbrOfRaysSlider, this.nbrOfRaysText ], align: 'center' } );
           }else{
             pieceModel = piece.componentModel;
-            var diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 50, max: 400 }, sliderOptions );
+            var diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 40, max: 200 }, sliderOptions );
             diameterVBox = new VBox( { children: [ diameterSlider, this.diameterText ]});
           }
 

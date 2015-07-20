@@ -101,10 +101,10 @@ define( function( require ) {
             //ComponentModel( mainModel, type, diameter, radiusCurvature, index )
             //radius of curvature R = 2*f*( n - 1 )
 
-            componentModel = new ComponentModel( this.mainModel, 'converging_lens', 200, 250, 1.6 );
+            componentModel = new ComponentModel( this.mainModel, 'converging_lens', 200, 350, 1.8 );
             break;
           case 'diverging_lens':
-            componentModel = new ComponentModel( this.mainModel, 'diverging_lens', 150, -200, 1.6 );
+            componentModel = new ComponentModel( this.mainModel, 'diverging_lens', 150, -300, 1.8 );
             break;
           case 'converging_mirror':
             break;
