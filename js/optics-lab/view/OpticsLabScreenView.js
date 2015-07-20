@@ -83,7 +83,7 @@ define( function( require ) {
       addSource: function( type, startPosition ){
         if ( type === 'fan_source' ){
           //SourceModel( mainModel, type, nbrOfRays, position, spread, height )
-          var sourceModel = new SourceModel( this.mainModel, 'fan_source', 2, startPosition, 5, 0 );
+          var sourceModel = new SourceModel( this.mainModel, 'fan_source', 10, startPosition, 45, 0 );
         }else{
           var sourceModel = new SourceModel( this.mainModel, 'beam_source', 10, startPosition, 0, 50 );
         }

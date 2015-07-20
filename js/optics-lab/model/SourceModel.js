@@ -87,6 +87,7 @@ define( function( require ) {
                 }
                 var theta = ( lowestAngle ) * Math.PI / 180; //in radians
                 var dir = new Vector2( Math.cos( theta ), Math.sin( theta ) );
+                var relativeStartPos = new Vector2( 0, 0 );
                 //var endPosition = this.position.plus( dir.timesScalar( this.maxLength ));
 
                 //for beam source
@@ -99,16 +100,19 @@ define( function( require ) {
                 for ( var i = 0; i < this.nbrOfRays; i++ ) {
                     if ( this.type === 'fan_source' ) {
                         theta = ( lowestAngle + i*deltaAngle ) * Math.PI / 180;  //in radians
+                        relativeStartPos = new Vector2( 0, 0 );
                         dir = new Vector2( Math.cos(theta), Math.sin(theta) );
                         //endPosition = this.position.plus( dir.timesScalar( this.maxLength ));
-                        this.rayPaths[i] = new RayPath( dir );
+
+                        this.rayPaths[i] = new RayPath( relativeStartPos, dir );
                         this.rayPaths[i].startPos = this.position;
                         //this.rayPaths[i].addSegment( this.position, endPosition );
                     } else if (this.type === 'beam_source') {
                         dir = new Vector2( 1, 0 );
+                        relativeStartPos = lowestPos.plus( deltaPos.timesScalar( i ) );
                         startPos = this.position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
                         //endPosition = startPos.plus( dir.timesScalar( this.maxLength ));
-                        this.rayPaths[i] = new RayPath( dir );
+                        this.rayPaths[i] = new RayPath( relativeStartPos, dir );
                         this.rayPaths[i].startPos = startPos;
                         //this.rayPaths[i].addSegment( startPos, endPosition );
                     }

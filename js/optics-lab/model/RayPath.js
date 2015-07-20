@@ -17,19 +17,20 @@ define( function( require ) {
   //var Vector2 = require( 'DOT/Vector2' );
 
   /**
-   * {vector2] startDir = direction of starting ray
    *
+   * @param relativeStartPos
+   * @param startDir
    * @constructor
    */
 
-  function RayPath( startDir ) {
+  function RayPath( relativeStartPos, startDir ) {
 
     //PropertySet.call( this, {
     //  startPosition: startPosition             //@private, position of source on stage
     //} );
 
     this.startDir = startDir;    //starting direction of the first segment, the one thing that never changes
-    this.startPos;               //starting position of the first segment
+    this.relativeStartPos = relativeStartPos;  //starting position, relative to source center, of the first segment
     this.rayPath = this;
     //this.mainModel = mainModel;
 
@@ -74,14 +75,14 @@ define( function( require ) {
       },
       getRelativeShape: function(){
         var shape = new Shape;
-        shape.moveTo( 0, 0 );
+        shape.moveToPoint( this.relativeStartPos );
         var startPoint = this.segments[ 0 ].getStart();
         var nextAbsolutePoint;
         var nextRelativePoint;
         for ( var i = 0; i < this.segments.length; i++ ){
           nextAbsolutePoint = this.segments[i].getEnd();
           nextRelativePoint = nextAbsolutePoint.minus( startPoint );
-          shape.lineToPoint( nextAbsolutePoint );
+          shape.lineToPoint( nextRelativePoint );
         }
         return shape;
       }

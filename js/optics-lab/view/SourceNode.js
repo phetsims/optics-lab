@@ -36,6 +36,7 @@ define( function( require ) {
         this.mainView = mainView;
         this.modelViewTransform = mainView.modelViewTransform;
         this.type = this.sourceModel.type;
+        this.relativeRayStarts = []; //starting positions, relative to source center, of each ray
         this.rayNodes = [];   //array of rayNodes, a rayNode is a path of a ray from source through components to end
         this.counter = 0; //for testing only
         // Call the super constructor
@@ -59,7 +60,8 @@ define( function( require ) {
         sourceNode.addChild( this.myHandle );
 
         //draw the starting rays
-        this.setRayNodes();
+        //this.setRayNodes();
+
 
         // When dragging, move the sample element
         sourceNode.addInputListener( new SimpleDragHandler(
@@ -126,6 +128,7 @@ define( function( require ) {
                 var rayShape = new Shape();
                 rayShape.moveToPoint( relativeRayStart );
                 if ( this.sourceModel.type === 'fan_source' ) {
+                    this.relativeRayStarts[ r ] = relativeRayStart;
                     var relativeEndPt = dir.timesScalar( maxRayLength );
                     rayShape.lineToPoint( relativeEndPt );
 
@@ -134,6 +137,7 @@ define( function( require ) {
 
                     //console.log( 'ray' + i + '  rayStart is ' + relativeRayStart + '  rayEnd is ' + relativeRayEnd );
                     //var rayNode = new Line( relativeRayStart, relativeRayEnd, rayFontObject );
+                    this.relativeRayStarts[ r ] = relativeRayStart;
                     rayShape.lineToPoint( relativeRayEnd );
                 }
                 var rayNode = new Path( rayShape, rayFontObject );
@@ -154,16 +158,16 @@ define( function( require ) {
              //this.rayNodes[ i ].setPoint2( dir.timesScalar( length ) );
             }
         },
-        addRayNodesToParent: function( parentNode ){
-            for ( var i = 0; i < this.rayNodes.length; i++ ) {
-                parentNode.addChild( this.rayNodes[ i ] );
-            }
-        },
-        removeRayNodesFromParent: function( parentNode ){
-            for ( var i = this.rayNodes.length - 1; i >= 0 ; i-- ) {
-                parentNode.removeChild( this.rayNodes[ i ] );
-            }
-        },
+        //addRayNodesToParent: function( parentNode ){
+        //    for ( var i = 0; i < this.rayNodes.length; i++ ) {
+        //        parentNode.addChild( this.rayNodes[ i ] );
+        //    }
+        //},
+        //removeRayNodesFromParent: function( parentNode ){
+        //    for ( var i = this.rayNodes.length - 1; i >= 0 ; i-- ) {
+        //        parentNode.removeChild( this.rayNodes[ i ] );
+        //    }
+        //},
         setHeight: function( height ){
             if( this.type === 'beam_source' ){
                 this.myHandle.setScaleMagnitude( 1, height/this.defaultHeight );
