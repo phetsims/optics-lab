@@ -70,7 +70,7 @@ define( function( require ) {
 
 
         // When dragging, move the sample element
-        sourceNode.addInputListener( new SimpleDragHandler(
+        sourceNode.myHandle.addInputListener( new SimpleDragHandler(
             {
                 // When dragging across it in a mobile device, pick it up
                 allowTouchSnag: true,
@@ -105,11 +105,13 @@ define( function( require ) {
 
         this.sourceModel.nbrOfRaysProperty.link( function( nbrOfRays ){
             sourceNode.setRayNodes( nbrOfRays );
+            sourceModel.mainModel.processRays();
         });
 
         this.sourceModel.spreadProperty.link( function( nbrOfRays ){
             if( sourceNode.type === 'fan_source' ){
                 sourceNode.setRayNodes();
+                sourceModel.mainModel.processRays();
             }
         });
 
@@ -132,6 +134,7 @@ define( function( require ) {
             //this.myHandle.removeAllChildren();
             //this.rayNodes = [];
             nbrOfRays = Math.round( nbrOfRays );
+
             for( var i = nbrOfRays; i < this.maxNbrOfRays; i++ ){
                 this.rayNodes[ i ].visible = false;
             }

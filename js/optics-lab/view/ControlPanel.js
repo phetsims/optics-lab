@@ -84,17 +84,17 @@ define( function( require ) {
 
     this.accordionBoxOptions = {
       lineWidth: 2,
-      cornerRadius: 10,
-      buttonXMargin: 12, // horizontal space between button and left|right edge of box
-      buttonYMargin: 12,
+      cornerRadius: 7,
+      buttonXMargin: 5, // horizontal space between button and left|right edge of box
+      buttonYMargin: 5,
       titleNode: new Text( '  Values', { font: DISPLAY_FONT, fontWeight: 'bold' } ),
       titleAlignX: 'left',
       //contentAlign: 'left',
       fill: PANEL_COLOR,
       showTitleWhenExpanded: true,
-      contentXMargin: 20,
-      contentYMargin: 15,
-      contentYSpacing: 8
+      contentXMargin: 5,
+      contentYMargin: 5,
+      contentYSpacing: 5
     };
 
     this.accordionBox = new AccordionBox( this.content, this.accordionBoxOptions );
@@ -116,7 +116,7 @@ define( function( require ) {
         if ( piece != null ) {
           var pieceModel;
           var type = piece.type;
-          var sliderOptions = { trackSize: new Dimension2( 200, 5 ) };
+          var sliderOptions = { trackSize: new Dimension2( 200, 5 ), thumbSize: new Dimension2( 15, 30 ) };
           if( type === 'fan_source' || type === 'beam_source' ){
             pieceModel = piece.sourceModel;
             var maxNbrRays = pieceModel.maxNbrOfRays;
@@ -162,11 +162,12 @@ define( function( require ) {
             case 'converging_mirror':
               break;
             case 'plane_mirror':
-
+              this.content = new HBox( { children: [ diameterVBox], spacing: 40 } );
               break;
             case 'diverging_mirror':
               break;
             case 'simple_mask':
+              this.content = new HBox( { children: [ diameterVBox], spacing: 40 } );
 
               break;
             case 'slit_mask':

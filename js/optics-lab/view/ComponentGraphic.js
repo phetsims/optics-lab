@@ -79,9 +79,10 @@ define( function( require ) {
       },
       drawLens: function() {
         this.shape = new Shape();
-        var fudge = 1;   //fudge factor to make lens radius big enough to be apparent to ey
+        var fudge1 = 1;   //fudge factor to make lens radius big enough to be apparent to eye
+        var fudge2 = 2;   //fudge factor to make adjust range of index of refraction
         //fudge * 2 * Math.abs( this.f ) * ( this.n - 1 );  //radius of curvature of lens surface
-        var n = this.index;
+        var n = fudge2*this.index;
         if( this.type === 'converging_lens' ){
           var R = this.radius;
         }else{
@@ -125,6 +126,7 @@ define( function( require ) {
 
       },
       drawPlaneMirror: function( ) {
+        this.removeAllChildren();
         var w = 20;
         var height = this.diameter;
         //Rectangle( x, y, width, height, arcWidth, arcHeight, options )
@@ -135,6 +137,7 @@ define( function( require ) {
         this.addChild( lineGraphic );
       },
       drawMask: function(){
+        this.removeAllChildren();
         var w = 20;
         var height = this.diameter;
         //Rectangle( x, y, width, height, arcWidth, arcHeight, options )
