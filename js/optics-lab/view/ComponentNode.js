@@ -52,11 +52,13 @@ define( function( require ) {
     //var centerLine = new Line( xPos, yPos - height/2, xPos, yPos + height/2, { stroke: 'blue' });
 
     //myHandle.children = [ marker1, marker2 ];
-    //function ComponentGraphic( type, diameter, radius(of curvature), index )
+    //function ComponentGraphic( type, diameter, radius(of curvature), index, mainView )
     this.componentGraphic = new ComponentGraphic( this.type, height, radius, index );
     //myHandle.addChild( componentGraphic );
     //componentNode.addChild( myHandle );
     componentNode.addChild( this.componentGraphic );
+
+
 
 
     // When dragging, move the sample element
@@ -99,6 +101,14 @@ define( function( require ) {
     this.componentModel.indexProperty.link( function( n ) {
       componentNode.componentGraphic.setIndex( n );
     } );
+    this.mainView.controlPanel.showFocalPointsProperty.link( function( isVisible ){
+      //console.log( 'focal points visibility = ' + isVisible );
+      componentNode.componentGraphic.setFocalPointsVisibility( isVisible );
+    } ) ;
+
+    this.componentModel.fProperty.link( function( focalLength ){
+      componentNode.componentGraphic.setFocalPointPositions( focalLength );
+    });
 
   }
 

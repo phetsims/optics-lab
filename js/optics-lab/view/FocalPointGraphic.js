@@ -7,7 +7,9 @@ define( function( require ) {
 
     // modules
     var inherit = require( 'PHET_CORE/inherit' );
-    var Line = require( 'KITE/segments/Line' );
+    var Line = require( 'SCENERY/nodes/Line' );
+    var Node = require( 'SCENERY/nodes/Node' );
+
     var Shape = require( 'KITE/Shape' );
     //
     // var Ray2 = require( 'DOT/Ray2' );
@@ -25,8 +27,11 @@ define( function( require ) {
         var focalPointGraphic = this;
         Node.call( focalPointGraphic );
 
-        var R = size/2;
-        var strokeInfo = { stroke: 'yellow', lineWidth: 3 };
+        var R = Math.round( size/2 );
+        if( size == undefined ){
+            R = 30;
+        }
+        var strokeInfo = { stroke: 'yellow', lineWidth: 4, lineCap: 'butt' };
         var line1 = new Line( -R, -R, R, R, strokeInfo );
         var line2 = new Line( R, -R, - R, R, strokeInfo );
         this.children = [ line1, line2 ];

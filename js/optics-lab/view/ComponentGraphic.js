@@ -8,6 +8,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var FocalPointGraphic = require( 'OPTICS_LAB/optics-lab/view/FocalPointGraphic' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -42,7 +43,14 @@ define( function( require ) {
 
     this.shape = new Shape();
     this.path = new Path( this.shape );
-    this.addChild( this.path );
+    this.focalPtRight = new FocalPointGraphic( 15 );
+    this.focalPtLeft = new FocalPointGraphic( 15 );
+    this.focalPtRight.visible = true;
+    this.focalPtLeft.visible = true;
+    //this.addChild( this.focalPtLeft );
+    //this.addChild( this.focalPtRight );
+    //this.addChild( this.path );
+    this.children = [ this.path, this.focalPtLeft, this.focalPtRight ];
     //this.makeDrawing();
 
   }
@@ -160,11 +168,21 @@ define( function( require ) {
         this.radius = R;
         this.makeDrawing();
       },
-      setIndex: function( index ){
-        //console.log( 'index is ' + index );
-        this.index = index;
-        this.makeDrawing();
-      }
+        setIndex: function (index) {
+          //console.log( 'index is ' + index );
+          this.index = index;
+          this.makeDrawing();
+        },
+        setFocalPointPositions: function( distance ){
+          this.focalPtLeft.x = -distance;
+          this.focalPtRight.x = distance;
+          //console.log( 'focal points distance = ' + distance );
+        },
+        setFocalPointsVisibility: function (isVisible) {
+          this.focalPtLeft.visible = isVisible;
+          this.focalPtRight.visible = isVisible;
+          //console.log( 'focal points visibility = ' + isVisible );
+        }
 
 
     }//end inherit
