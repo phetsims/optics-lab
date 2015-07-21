@@ -124,7 +124,7 @@ define( function( require ) {
           var diameterVBox;
           var sliderOptions = { trackSize: new Dimension2( 150, 5 ), thumbSize: new Dimension2( 12, 25 ) };
           if( type === 'fan_source' || type === 'beam_source' ){
-            pieceModel = piece.sourceModel;
+            pieceModel = piece.pieceModel;
             maxNbrRays = pieceModel.maxNbrOfRays;
             var nbrOfRaysSlider = new HSlider( pieceModel.nbrOfRaysProperty, { min: 1, max: maxNbrRays }, sliderOptions );
             nbrOfRaysVBox = new VBox( { children: [ nbrOfRaysSlider, this.nbrOfRaysText ], align: 'center' } );

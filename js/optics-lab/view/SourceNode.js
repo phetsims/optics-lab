@@ -32,10 +32,10 @@ define( function( require ) {
         var sourceNode = this;
         this.sourceNumber;  //for testing
         this.mainModel = mainModel;
-        this.sourceModel =  sourceModel;
+        this.pieceModel =  sourceModel;
         this.mainView = mainView;
         this.modelViewTransform = mainView.modelViewTransform;
-        this.type = this.sourceModel.type;
+        this.type = this.pieceModel.type;
         this.relativeRayStarts = []; //starting positions, relative to source center, of each ray
         this.rayNodes = [];   //array of rayNodes, a rayNode is a path of a ray from source through components to end
         this.maxNbrOfRays = sourceModel.maxNbrOfRays;
@@ -82,7 +82,7 @@ define( function( require ) {
                 drag: function( e ){
                     var position = sourceNode.globalToParentPoint( e.pointer.point );
                     //console.log( 'position = ' + position );
-                    sourceNode.sourceModel.setPosition( position );
+                    sourceNode.pieceModel.setPosition( position );
                 },
                 end: function( e ){
                     var position = sourceNode.globalToParentPoint( e.pointer.point );
@@ -96,26 +96,26 @@ define( function( require ) {
                 }
             } ) );
 
-        // Register for synchronization with sourceModel and mainModel.
-        this.sourceModel.positionProperty.link( function( position ) {
+        // Register for synchronization with pieceModel and mainModel.
+        this.pieceModel.positionProperty.link( function( position ) {
             sourceNode.translation = position;
             //console.log( 'source callback, position is ' + position );
             //sourceNode.drawRays();
         } );
 
-        this.sourceModel.nbrOfRaysProperty.link( function( nbrOfRays ){
+        this.pieceModel.nbrOfRaysProperty.link( function( nbrOfRays ){
             sourceNode.setRayNodes( nbrOfRays );
             sourceModel.mainModel.processRays();
         });
 
-        this.sourceModel.spreadProperty.link( function( nbrOfRays ){
+        this.pieceModel.spreadProperty.link( function( nbrOfRays ){
             if( sourceNode.type === 'fan_source' ){
                 sourceNode.setRayNodes();
                 sourceModel.mainModel.processRays();
             }
         });
 
-        this.sourceModel.heightProperty.link( function( height ){
+        this.pieceModel.heightProperty.link( function( height ){
             //console.log( 'source callback, height is ' + height );
             if( sourceNode.type === 'beam_source' ){
                 sourceNode.setHeight( height );
@@ -138,25 +138,25 @@ define( function( require ) {
             for( var i = nbrOfRays; i < this.maxNbrOfRays; i++ ){
                 this.rayNodes[ i ].visible = false;
             }
-            var maxRayLength = this.sourceModel.maxLength;
+            var maxRayLength = this.pieceModel.maxLength;
             //var rayFontObject = { stroke: 'white', lineWidth: 2 } ;
-            for ( var r = 0; r < this.sourceModel.rayPaths.length; r++ ) {
+            for ( var r = 0; r < this.pieceModel.rayPaths.length; r++ ) {
                 this.rayNodes[ r ].visible = true;
-                var dir = this.sourceModel.rayPaths[ r ].startDir;
-                var sourceCenter = this.sourceModel.position;
-                var AbsoluteRayStart = this.sourceModel.rayPaths[ r ].segments[ 0 ].getStart();
-                var AbsoluteRayEnd = this.sourceModel.rayPaths[ r ].segments[ 0 ].getEnd();
+                var dir = this.pieceModel.rayPaths[ r ].startDir;
+                var sourceCenter = this.pieceModel.position;
+                var AbsoluteRayStart = this.pieceModel.rayPaths[ r ].segments[ 0 ].getStart();
+                var AbsoluteRayEnd = this.pieceModel.rayPaths[ r ].segments[ 0 ].getEnd();
                 var relativeRayStart = AbsoluteRayStart.minus( sourceCenter );
                 var relativeRayEnd = AbsoluteRayEnd.minus( sourceCenter );
                 var rayShape = new Shape();
                 rayShape.moveToPoint( relativeRayStart );
-                if ( this.sourceModel.type === 'fan_source' ) {
+                if ( this.pieceModel.type === 'fan_source' ) {
                     this.relativeRayStarts[ r ] = relativeRayStart;
                     var relativeEndPt = dir.timesScalar( maxRayLength );
                     rayShape.lineToPoint( relativeEndPt );
 
                     //var rayNode = new Line( new Vector2( 0, 0 ), dir.timesScalar( maxRayLength ), rayFontObject );
-                }else if( this.sourceModel.type === 'beam_source' ){
+                }else if( this.pieceModel.type === 'beam_source' ){
 
                     //console.log( 'ray' + i + '  rayStart is ' + relativeRayStart + '  rayEnd is ' + relativeRayEnd );
                     //var rayNode = new Line( relativeRayStart, relativeRayEnd, rayFontObject );
@@ -171,12 +171,12 @@ define( function( require ) {
             }//end rayPath loop
         },//end setRayNodes()
         drawRays: function(){
-            for ( var i = 0; i < this.sourceModel.rayPaths.length; i++ ) {
+            for ( var i = 0; i < this.pieceModel.rayPaths.length; i++ ) {
                 //console.log( 'drawing rays for source ' + this.sourceNumber );
-                var shape = this.sourceModel.rayPaths[ i ].getRelativeShape();//getShape();
+                var shape = this.pieceModel.rayPaths[ i ].getRelativeShape();//getShape();
                 this.rayNodes[ i ].setShape( shape );
-                //var centerStartPt = this.sourceModel.position;
-                //var absoluteRayEndPt = this.sourceModel.rayPaths[ i ].segments[ 0 ].getEnd();
+                //var centerStartPt = this.pieceModel.position;
+                //var absoluteRayEndPt = this.pieceModel.rayPaths[ i ].segments[ 0 ].getEnd();
                 //var relativeRayEndPt = absoluteRayEndPt.minus( centerStartPt );
                 //this.rayNodes[ i ].setPoint2( relativeRayEndPt );
              //this.rayNodes[ i ].setPoint2( dir.timesScalar( length ) );

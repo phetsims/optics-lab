@@ -41,8 +41,8 @@ define( function( require ) {
       //    case 'fan_source':
       //      //SourceModel( mainModel, type, nbrOfRays, position, spread, height )
       //      //var sourcePosition = new Vector2( 300, 300 );
-      //      //var sourceModel = new SourceModel( this, 'fan', 20, sourcePosition, 45, 0 );
-      //      //this.addSource( sourceModel );
+      //      //var pieceModel = new SourceModel( this, 'fan', 20, sourcePosition, 45, 0 );
+      //      //this.addSource( pieceModel );
       //      console.log( 'piece added is ' + type );
       //      break;
       //    case 'beam_source':

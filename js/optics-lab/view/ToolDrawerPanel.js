@@ -135,12 +135,13 @@ define( function( require ) {
             var position = toolDrawerPanel.globalToParentPoint( e.pointer.point );   //returns Vector2
             //var v1 = e.pointer.point;
             //toolDrawerPanel.mainView.
-            if( pieceGrabbed.type === 'fan_source' || pieceGrabbed.type === 'beam_source'){
-              pieceGrabbed.sourceModel.setPosition( position );
-            }else{
-              pieceGrabbed.pieceModel.setPosition( position );
-            }
-              //sourceNode.sourceModel.setPosition( position );
+            pieceGrabbed.pieceModel.setPosition( position );
+            //if( pieceGrabbed.type === 'fan_source' || pieceGrabbed.type === 'beam_source'){
+            //  pieceGrabbed.pieceModel.setPosition( position );
+            //}else{
+            //  pieceGrabbed.pieceModel.setPosition( position );
+            //}
+              //sourceNode.pieceModel.setPosition( position );
             //console.log( 'dragging postion is ' + v1 );
 
           },

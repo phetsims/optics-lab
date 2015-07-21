@@ -118,7 +118,7 @@ define( function( require ) {
       },//end AddPiece
       removeSource: function( sourceNode ){
         //console.log( 'remove source called. source is ' + sourceNode );
-        var sourceModel = sourceNode.sourceModel;
+        var sourceModel = sourceNode.pieceModel;
         //sourceNode.removeRayNodesFromParent( this );
         this.removeChild( sourceNode );
         this.mainModel.removeSource( sourceModel );
