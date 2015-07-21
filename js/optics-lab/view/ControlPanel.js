@@ -122,7 +122,7 @@ define( function( require ) {
           var maxNbrRays;
           var nbrOfRaysVBox;
           var diameterVBox;
-          var sliderOptions = { trackSize: new Dimension2( 200, 5 ), thumbSize: new Dimension2( 15, 30 ) };
+          var sliderOptions = { trackSize: new Dimension2( 150, 5 ), thumbSize: new Dimension2( 12, 25 ) };
           if( type === 'fan_source' || type === 'beam_source' ){
             pieceModel = piece.sourceModel;
             maxNbrRays = pieceModel.maxNbrOfRays;
@@ -130,22 +130,23 @@ define( function( require ) {
             nbrOfRaysVBox = new VBox( { children: [ nbrOfRaysSlider, this.nbrOfRaysText ], align: 'center' } );
           }else{
             pieceModel = piece.componentModel;
-            var diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 50, max: 400 }, sliderOptions );
+            var diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 50, max: 250 }, sliderOptions );
             diameterVBox = new VBox( { children: [ diameterSlider, this.diameterText ]});
           }
 
           var checkBoxOptions = { checkBoxColorBackground: 'white' };
+          var spacing = 30;
           //console.log( 'setControlsForSelectedPiece' + piece.type );
           switch( type ){
             case 'fan_source':
               var spreadSlider = new HSlider( pieceModel.spreadProperty, { min: 2, max: 180 }, sliderOptions );
               var spreadVBox = new VBox( { children: [ spreadSlider, this.spreadText ], align: 'center' } );
-              this.content = new HBox( { children: [ nbrOfRaysVBox, spreadVBox ], spacing: 40 } );
+              this.content = new HBox( { children: [ nbrOfRaysVBox, spreadVBox ], spacing: spacing } );
               break;
             case 'beam_source':
               var heightSlider = new HSlider( pieceModel.heightProperty, { min: 50, max: 400 }, sliderOptions );
               var heightVBox = new VBox( { children: [ heightSlider, this.heightText ], align: 'center' } );
-              this.content = new HBox( { children: [ nbrOfRaysVBox, heightVBox ], spacing: 40 } );
+              this.content = new HBox( { children: [ nbrOfRaysVBox, heightVBox ], spacing: spacing } );
               break;
             case 'converging_lens':
               //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
@@ -155,7 +156,7 @@ define( function( require ) {
               var indexSlider = new HSlider( pieceModel.indexProperty, { min: 1.4, max: 2.2 }, sliderOptions );
               var indexVBox = new VBox( { children: [ indexSlider, this.indexText ], align: 'center' } );
               var focalPtCheckBox = new CheckBox( this.focalPointsText, this.showFocalPointsProperty, checkBoxOptions );
-              this.content = new HBox( { children: [ diameterVBox, radiusVBox, indexVBox, focalPtCheckBox ], spacing: 40 } );
+              this.content = new HBox( { children: [ diameterVBox, radiusVBox, indexVBox, focalPtCheckBox ], spacing: spacing } );
               break;
             case 'diverging_lens':
               //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
@@ -165,17 +166,17 @@ define( function( require ) {
               indexSlider = new HSlider( pieceModel.indexProperty, { min: 1.4, max: 2.2 }, sliderOptions );
               indexVBox = new VBox( { children: [ indexSlider, this.indexText ], align: 'center' } );
               focalPtCheckBox = new CheckBox( this.focalPointsText, this.showFocalPointsProperty, checkBoxOptions );
-              this.content = new HBox( { children: [ diameterVBox, radiusVBox, indexVBox, focalPtCheckBox ], spacing: 40 } );
+              this.content = new HBox( { children: [ diameterVBox, radiusVBox, indexVBox, focalPtCheckBox ], spacing: spacing } );
               break;
             case 'converging_mirror':
               break;
             case 'plane_mirror':
-              this.content = new HBox( { children: [ diameterVBox], spacing: 40 } );
+              this.content = new HBox( { children: [ diameterVBox], spacing: spacing } );
               break;
             case 'diverging_mirror':
               break;
             case 'simple_mask':
-              this.content = new HBox( { children: [ diameterVBox], spacing: 40 } );
+              this.content = new HBox( { children: [ diameterVBox], spacing: spacing } );
 
               break;
             case 'slit_mask':

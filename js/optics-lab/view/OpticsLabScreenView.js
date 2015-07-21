@@ -54,28 +54,6 @@ define( function( require ) {
     this.toolDrawerPanel.bottom = this.layoutBounds.bottom - 10;
     this.toolDrawerPanel.centerX = this.layoutBounds.centerX;
 
-    //this.selectedPieceProperty.link( function( property ){
-    //  //console.log( 'selectedPieceProperty linked ' );
-    //  if( property != null ){
-    //    //console.log( 'selected piece is ' + property.type );
-    //  }
-    //} );
-
-    //this.opticsLabModel.sources.addItemAddedListener( function( sourceModel ){
-    //  //console.log( 'source added is ' + source.type );
-    //
-    //  var sourceNode = new SourceNode( opticsLabScreenView.opticsLabModel, sourceModel, opticsLabScreenView.modelViewTransform );
-    //  opticsLabScreenView.addChild( sourceNode );
-    //  sourceNode.addRayNodesToParent( opticsLabScreenView );
-    //});
-
-    //console.log( 'toolDrawer bounds are ' + toolDrawerPanel.visibleBounds );
-
-
-    //var componentControlPanel = new ComponentControlPanel( componentModel2 );
-    //this.addChild( componentControlPanel );
-    //componentControlPanel.top = this.layoutBounds.top + 10;
-    //componentControlPanel.centerX = this.layoutBounds.centerX;
 
   }//end constructor
 
@@ -151,6 +129,7 @@ define( function( require ) {
       setSelectedPiece: function ( piece ){
         //console.log( 'setSelectedPiece() called.' )
         this.selectedPieceProperty.value = piece;
+        piece.moveToFront();
       }
     }
   );
