@@ -20,39 +20,23 @@ define( function( require ) {
      * @constructor
      */
 
-    function FocalPointGraphic( ) {
+    function FocalPointGraphic( size ) {
 
         var focalPointGraphic = this;
         Node.call( focalPointGraphic );
-        //PropertySet.call( this, {
-        //  startPosition: startPosition             //@private, position of source on stage
-        //} );
-        var length = 15;
-        var line1 = new Line()
-        this.startDir = startDir;    //starting direction of the first segment, the one thing that never changes
-        this.relativeStartPos = relativeStartPos;  //starting position, relative to source center, of the first segment
-        this.rayPath = this;
-        //this.mainModel = mainModel;
 
-        this.maxLength = 2000;  //maximum length of rays in pixels
+        var R = size/2;
+        var strokeInfo = { stroke: 'yellow', lineWidth: 3 };
+        var line1 = new Line( -R, -R, R, R, strokeInfo );
+        var line2 = new Line( R, -R, - R, R, strokeInfo );
+        this.children = [ line1, line2 ];
 
-        //An array of Kite.Line segments.  Kite.Line functions include
-        //getStart(), getEnd(), getStartTangent() which returns direction
-
-        this.segments = [];     //an array of line segments
-        this.dirs = [];         //array of directions, corresponding to the segments
-        this.lengths = [];      //array of lengths of the segments
-
-        this.shape = new Shape();
 
 
     }
 
     return inherit( Node, FocalPointGraphic, {
-            clearPath: function() {
-                this.segments = [];
-                this.dirs = [];
-                this.lengths = [];
+            myFunction: function() {
             }
 
 
