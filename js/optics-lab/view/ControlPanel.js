@@ -43,7 +43,7 @@ define( function( require ) {
 
 
   /**
-   * {ComponentModel] componentModel
+   * {ComponentModel] pieceModel
    *
    * @constructor
    */
@@ -129,7 +129,7 @@ define( function( require ) {
             var nbrOfRaysSlider = new HSlider( pieceModel.nbrOfRaysProperty, { min: 1, max: maxNbrRays }, sliderOptions );
             nbrOfRaysVBox = new VBox( { children: [ nbrOfRaysSlider, this.nbrOfRaysText ], align: 'center' } );
           }else{
-            pieceModel = piece.componentModel;
+            pieceModel = piece.pieceModel;
             var diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 50, max: 250 }, sliderOptions );
             diameterVBox = new VBox( { children: [ diameterSlider, this.diameterText ]});
           }

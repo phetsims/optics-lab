@@ -112,6 +112,7 @@ define( function( require ) {
       var yCorner = textArray[ index ].height;
       var elementWidth = textArray[ index ].width + 16;
       var elementHeight = textArray[ index ].height + 10;
+      var pieceGrabbed;
       element.addChild( textArray[ index ] );
       element.addChild( new Rectangle( xCorner, -yCorner, elementWidth, elementHeight, { fill:'green', cursor: 'pointer', opacity: 0.1 }));
 
@@ -120,21 +121,29 @@ define( function( require ) {
 
           //allowTouchSnag: true,
 
+
           start: function( e ) {
             var startPosition = toolDrawerPanel.globalToParentPoint( e.pointer.point );
             //console.log( 'pressed at ' + mouseDownPosition );
             var type = typeArray[ index ];
             //mainModel.addPiece( type );
-            toolDrawerPanel.mainView.addPiece( type, startPosition );
-            //console.log( 'type is ' + typeArray[index] );
+            pieceGrabbed = toolDrawerPanel.mainView.addPiece( type, startPosition );
+            console.log( 'pieceGrabbed is ' + pieceGrabbed.type );
           },
 
-          //drag: function( e ) {
-          //  var v1 = toolDrawerPanel.globalToParentPoint( e.pointer.point );   //returns Vector2
-          //  //var v1 = e.pointer.point;
-          //  console.log( 'dragging postion is ' + v1 );
-          //
-          //},
+          drag: function( e ) {
+            var position = toolDrawerPanel.globalToParentPoint( e.pointer.point );   //returns Vector2
+            //var v1 = e.pointer.point;
+            //toolDrawerPanel.mainView.
+            if( pieceGrabbed.type === 'fan_source' || pieceGrabbed.type === 'beam_source'){
+              pieceGrabbed.sourceModel.setPosition( position );
+            }else{
+              pieceGrabbed.pieceModel.setPosition( position );
+            }
+              //sourceNode.sourceModel.setPosition( position );
+            //console.log( 'dragging postion is ' + v1 );
+
+          },
           end: function( e ){
             var vEnd = toolDrawerPanel.globalToParentPoint( e.pointer.point );
             //var vEnd = e.pointer.point;

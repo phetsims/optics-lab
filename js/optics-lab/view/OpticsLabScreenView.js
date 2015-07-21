@@ -70,6 +70,7 @@ define( function( require ) {
         sourceModel.setPosition( startPosition );
         var sourceNode = new SourceNode( this.mainModel, sourceModel, this );
         this.addChild( sourceNode );
+        return sourceNode;
         //sourceNode.addRayNodesToParent( this );
       },
       addComponent: function( type, startPosition ){
@@ -103,15 +104,17 @@ define( function( require ) {
           this.addChild( componentNode );
           componentModel.setPosition( startPosition );
         }
+        return componentNode;
 
       },//end addComponent()
       //A piece is either a source or a component
       addPiece: function( type, startPosition ) {
         if( type === 'fan_source' || type === 'beam_source' ){
-          this.addSource( type, startPosition );
+          var piece = this.addSource( type, startPosition );
         }else{
-          this.addComponent( type, startPosition );
+          piece = this.addComponent( type, startPosition );
         }
+        return piece;
       },//end AddPiece
       removeSource: function( sourceNode ){
         //console.log( 'remove source called. source is ' + sourceNode );
@@ -123,7 +126,7 @@ define( function( require ) {
       removeComponent: function( componentNode ){
           //console.log( 'remove component ' + componentNode );
         this.removeChild( componentNode );
-        var componentModel = componentNode.componentModel;
+        var componentModel = componentNode.pieceModel;
         this.mainModel.removeComponent( componentModel );
       },
       setSelectedPiece: function ( piece ){

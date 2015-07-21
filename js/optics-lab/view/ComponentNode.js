@@ -21,17 +21,17 @@ define( function( require ) {
 
   /**
    * Constructor for ComponentNode which renders sample element as a scenery node.
-   * @param {sampleElement} sampleElement the componentModel of the sampleElement
-   * @param {ModelViewTransform2} modelViewTransform the coordinate transform between componentModel coordinates and view coordinates
+   * @param {sampleElement} sampleElement the pieceModel of the sampleElement
+   * @param {ModelViewTransform2} modelViewTransform the coordinate transform between pieceModel coordinates and view coordinates
    * @constructor
    */
   function ComponentNode( componentModel, mainView ) {
 
     var componentNode = this;
-    this.componentModel =  componentModel;
+    this.pieceModel =  componentModel;
     this.mainView = mainView;
     this.modelViewTransform = mainView.modelViewTransform;
-    this.type = this.componentModel.type;
+    this.type = this.pieceModel.type;
 
     // Call the super constructor
     Node.call( this, {
@@ -41,12 +41,12 @@ define( function( require ) {
 
     // Add the rectangle graphic
     //Rectangle( x, y, width, height, arcWidth, arcHeight, options )
-    //var xPos = this.componentModel.position.x;
-    //var yPos = this.componentModel.position.y;
-    var height = this.componentModel.diameter;
-    var radius = this.componentModel.radius;    //radius of curvature
-    //var f = this.componentModel.f;
-    var index = this.componentModel.index;
+    //var xPos = this.pieceModel.position.x;
+    //var yPos = this.pieceModel.position.y;
+    var height = this.pieceModel.diameter;
+    var radius = this.pieceModel.radius;    //radius of curvature
+    //var f = this.pieceModel.f;
+    var index = this.pieceModel.index;
     //var myHandle = new Rectangle( xPos, yPos - height/2, 15, height, { fill: 'red' } );
     //var marker1 = new Line( xPos, yPos, xPos + 15, yPos, { stroke: 'yellow' });
     //var centerLine = new Line( xPos, yPos - height/2, xPos, yPos + height/2, { stroke: 'blue' });
@@ -73,7 +73,7 @@ define( function( require ) {
         drag: function( e ){
           var position = componentNode.globalToParentPoint( e.pointer.point );
           //console.log( 'component position = ' + position );
-          componentNode.componentModel.setPosition( position );
+          componentNode.pieceModel.setPosition( position );
         },
         end: function( e ) {
           var position = componentNode.globalToParentPoint( e.pointer.point );
@@ -85,20 +85,20 @@ define( function( require ) {
         }
       } ) );
 
-    // Register for synchronization with componentModel.
-    this.componentModel.positionProperty.link( function( position ) {
+    // Register for synchronization with pieceModel.
+    this.pieceModel.positionProperty.link( function( position ) {
       componentNode.translation = position;
     } );
-    this.componentModel.diameterProperty.link( function( diameter ) {
+    this.pieceModel.diameterProperty.link( function( diameter ) {
       componentNode.componentGraphic.setDiameter( diameter );
     } );
-    this.componentModel.radiusProperty.link( function( R ) {
+    this.pieceModel.radiusProperty.link( function( R ) {
       componentNode.componentGraphic.setRadius( R );
     } );
-    this.componentModel.fProperty.link( function( f ) {
+    this.pieceModel.fProperty.link( function( f ) {
       componentNode.componentGraphic.setFocalLength( f );
     } );
-    this.componentModel.indexProperty.link( function( n ) {
+    this.pieceModel.indexProperty.link( function( n ) {
       componentNode.componentGraphic.setIndex( n );
     } );
     this.mainView.controlPanel.showFocalPointsProperty.link( function( isVisible ){
@@ -106,7 +106,7 @@ define( function( require ) {
       componentNode.componentGraphic.setFocalPointsVisibility( isVisible );
     } ) ;
 
-    this.componentModel.fProperty.link( function( focalLength ){
+    this.pieceModel.fProperty.link( function( focalLength ){
       componentNode.componentGraphic.setFocalPointPositions( focalLength );
     });
 
