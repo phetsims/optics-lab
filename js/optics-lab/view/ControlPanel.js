@@ -20,9 +20,9 @@ define( function( require ) {
 
   // modules
   //var AquaRadioButton = require( 'SUN/AquaRadioButton' );
-  //var CheckBox = require( 'SUN/CheckBox' );
   //var HSeparator = require( 'SUN/HSeparator' );
   var AccordionBox = require( 'SUN/AccordionBox' );
+  var CheckBox = require( 'SUN/CheckBox' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HSlider = require( 'SUN/HSlider' );
@@ -30,6 +30,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   //var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'OPTICS_LAB/optics-lab/common/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
@@ -63,12 +64,14 @@ define( function( require ) {
 
     var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
     this.nbrOfRaysText = new Text( 'number of rays', fontInfo );
+    this.focalPointsText = new Text( 'focal points', fontInfo );
     this.heightText = new Text( 'height', fontInfo );
     this.spreadText = new Text( 'spread', fontInfo );
     this.diameterText = new Text( 'diameter', fontInfo );
     this.radiusText = new Text( 'radius of curvature', fontInfo );
     this.focalLengthText = new Text( 'focal length', fontInfo );
     this.indexText = new Text( 'refractive index', fontInfo );
+    this.showFocalPointsProperty = new Property( false );
     //
     //var diameterVBox = new VBox( { children: [ this.diameterSlider, this.diameterText ], align: 'center' } );
     //var focalLengthVBox = new VBox( { children: [ this.positivefSlider, this.focalLengthText ], align: 'center' } );
@@ -84,17 +87,17 @@ define( function( require ) {
 
     this.accordionBoxOptions = {
       lineWidth: 2,
-      cornerRadius: 5,
-      buttonXMargin: 3, // horizontal space between button and left|right edge of box
-      buttonYMargin: 3,
+      cornerRadius: 7,
+      buttonXMargin: 5, // horizontal space between button and left|right edge of box
+      buttonYMargin: 5,
       titleNode: new Text( '  Values', { font: DISPLAY_FONT, fontWeight: 'bold' } ),
       titleAlignX: 'left',
       //contentAlign: 'left',
       fill: PANEL_COLOR,
       showTitleWhenExpanded: true,
-      contentXMargin: 3,
-      contentYMargin: 3,
-      contentYSpacing: 3
+      contentXMargin: 15,
+      contentYMargin: 5,
+      contentYSpacing: 5
     };
 
     this.accordionBox = new AccordionBox( this.content, this.accordionBoxOptions );
@@ -119,7 +122,7 @@ define( function( require ) {
           var maxNbrRays;
           var nbrOfRaysVBox;
           var diameterVBox;
-          var sliderOptions = { trackSize: new Dimension2( 150, 5 ), thumbSize: new Dimension2( 10, 20 ) };
+          var sliderOptions = { trackSize: new Dimension2( 200, 5 ), thumbSize: new Dimension2( 15, 30 ) };
           if( type === 'fan_source' || type === 'beam_source' ){
             pieceModel = piece.sourceModel;
             maxNbrRays = pieceModel.maxNbrOfRays;
@@ -127,10 +130,11 @@ define( function( require ) {
             nbrOfRaysVBox = new VBox( { children: [ nbrOfRaysSlider, this.nbrOfRaysText ], align: 'center' } );
           }else{
             pieceModel = piece.componentModel;
-            var diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 40, max: 200 }, sliderOptions );
+            var diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 50, max: 400 }, sliderOptions );
             diameterVBox = new VBox( { children: [ diameterSlider, this.diameterText ]});
           }
 
+          var checkBoxOptions = { checkBoxColorBackground: 'white' };
           //console.log( 'setControlsForSelectedPiece' + piece.type );
           switch( type ){
             case 'fan_source':
@@ -150,7 +154,8 @@ define( function( require ) {
               var radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
               var indexSlider = new HSlider( pieceModel.indexProperty, { min: 1.4, max: 2.2 }, sliderOptions );
               var indexVBox = new VBox( { children: [ indexSlider, this.indexText ], align: 'center' } );
-              this.content = new HBox( { children: [ diameterVBox, radiusVBox, indexVBox ], spacing: 40 } );
+              var focalPtCheckBox = new CheckBox( this.focalPointsText, this.showFocalPointsProperty, checkBoxOptions );
+              this.content = new HBox( { children: [ diameterVBox, radiusVBox, indexVBox, focalPtCheckBox ], spacing: 40 } );
               break;
             case 'diverging_lens':
               //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
@@ -159,8 +164,8 @@ define( function( require ) {
               radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
               indexSlider = new HSlider( pieceModel.indexProperty, { min: 1.4, max: 2.2 }, sliderOptions );
               indexVBox = new VBox( { children: [ indexSlider, this.indexText ], align: 'center' } );
-              this.content = new HBox( { children: [ diameterVBox, radiusVBox, indexVBox ], spacing: 40 } );
-
+              focalPtCheckBox = new CheckBox( this.focalPointsText, this.showFocalPointsProperty, checkBoxOptions );
+              this.content = new HBox( { children: [ diameterVBox, radiusVBox, indexVBox, focalPtCheckBox ], spacing: 40 } );
               break;
             case 'converging_mirror':
               break;
