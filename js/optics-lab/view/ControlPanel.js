@@ -81,7 +81,7 @@ define( function( require ) {
     this.expandCollapseButton = new ExpandCollapseButton( this.expandedProperty, { sideLength: 15, cursor:'pointer' });
 
     var spacing = 35;
-    var fillerBox = new Text( '   ', {font: DISPLAY_FONT} );
+    var fillerBox = new Text( '', {font: DISPLAY_FONT} );
     this.content = new HBox( {
       children: [
           fillerBox
@@ -157,7 +157,7 @@ define( function( require ) {
           }
 
           var checkBoxOptions = { checkBoxColorBackground: 'white' };
-          var spacing = 30;
+          var spacing = 25;
           //console.log( 'setControlsForSelectedPiece' + piece.type );
           switch( type ){
             case 'fan_source':
@@ -191,17 +191,20 @@ define( function( require ) {
               this.content = new HBox( { children: [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox ], spacing: spacing } );
               break;
             case 'converging_mirror':
+              this.content = new HBox( { children: [ fillerBox ] } );
               break;
             case 'plane_mirror':
               this.content = new HBox( { children: [ fillerBox, diameterVBox], spacing: spacing } );
               break;
             case 'diverging_mirror':
+              this.content = new HBox( { children: [ fillerBox ] } );
               break;
             case 'simple_mask':
               this.content = new HBox( { children: [ fillerBox, diameterVBox], spacing: spacing } );
 
               break;
             case 'slit_mask':
+              this.content = new HBox( { children: [ fillerBox ] } );
               break;
           }//end switch()
           //this.resetAccordionBox();
