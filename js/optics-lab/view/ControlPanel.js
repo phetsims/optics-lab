@@ -38,7 +38,7 @@ define( function( require ) {
   // constants
   var DISPLAY_FONT = new PhetFont( 12 );
   var TEXT_COLOR = Util.TEXT_COLOR;
-  var PANEL_COLOR = Util.PANEL_COLOR;
+  //var PANEL_COLOR = Util.PANEL_COLOR;
   //var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
 
 

@@ -10,7 +10,7 @@ define( function( require ) {
     var Line = require( 'SCENERY/nodes/Line' );
     var Node = require( 'SCENERY/nodes/Node' );
 
-    var Shape = require( 'KITE/Shape' );
+    //var Shape = require( 'KITE/Shape' );
     //
     // var Ray2 = require( 'DOT/Ray2' );
     //var Vector2 = require( 'DOT/Vector2' );
@@ -28,7 +28,7 @@ define( function( require ) {
         Node.call( focalPointGraphic );
 
         var R = Math.round( size/2 );
-        if( size == undefined ){
+        if( size === undefined ){
             R = 30;
         }
         var strokeInfo = { stroke: 'yellow', lineWidth: 4, lineCap: 'butt' };

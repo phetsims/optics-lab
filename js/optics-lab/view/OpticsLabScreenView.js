@@ -102,9 +102,10 @@ define( function( require ) {
           case 'slit_mask':
             break;
         }//end switch()
+        var componentNode;
         if( componentModel !== undefined ){
           this.mainModel.addComponent( componentModel );
-          var componentNode = new ComponentNode( componentModel, this);
+          componentNode = new ComponentNode( componentModel, this);
           this.addChild( componentNode );
           componentModel.setPosition( startPosition );
         }
@@ -113,8 +114,9 @@ define( function( require ) {
       },//end addComponent()
       //A piece is either a source or a component
       addPiece: function( type, startPosition ) {
+        var piece;
         if( type === 'fan_source' || type === 'beam_source' ){
-          var piece = this.addSource( type, startPosition );
+          piece = this.addSource( type, startPosition );
         }else{
           piece = this.addComponent( type, startPosition );
         }
