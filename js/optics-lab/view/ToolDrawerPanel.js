@@ -119,16 +119,15 @@ define( function( require ) {
       element.addInputListener( new SimpleDragHandler(
         {
 
-          //allowTouchSnag: true,
+          allowTouchSnag: true,
 
 
           start: function( e ) {
             var startPosition = toolDrawerPanel.globalToParentPoint( e.pointer.point );
-            //console.log( 'pressed at ' + mouseDownPosition );
             var type = typeArray[ index ];
-            //mainModel.addPiece( type );
             pieceGrabbed = toolDrawerPanel.mainView.addPiece( type, startPosition );
-            console.log( 'pieceGrabbed is ' + pieceGrabbed.type );
+            pieceGrabbed.mainView.setSelectedPiece( pieceGrabbed );
+            //console.log( 'pieceGrabbed is ' + pieceGrabbed.type );
           },
 
           drag: function( e ) {
@@ -147,16 +146,11 @@ define( function( require ) {
           },
           end: function( e ){
             var vEnd = toolDrawerPanel.globalToParentPoint( e.pointer.point );
-            //var vEnd = e.pointer.point;
-            //console.log( 'released at ' +  vEnd );
-            //console.log( 'visibleBounds are ' + toolDrawerPanel.visibleBounds );
             if( toolDrawerPanel.visibleBounds.containsCoordinates( vEnd.x, vEnd.y )){
-              //console.log( ' within Bounds' );
-            }else{
-              //console.log( 'NOT within Bounds' );
+              pieceGrabbed.mainView.removeComponent( pieceGrabbed );
             }
           }
-        }
+        }//end addInputListener
 
       ));
     }; //end nodeSetup
@@ -164,9 +158,6 @@ define( function( require ) {
 
     nodeArray.forEach( nodeSetup );
 
-
-
-    //Set up drag handlers
 
 
     var spacing = 5;
