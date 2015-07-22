@@ -21,7 +21,7 @@ define( function( require ) {
   // modules
   //var AquaRadioButton = require( 'SUN/AquaRadioButton' );
   //var HSeparator = require( 'SUN/HSeparator' );
-  var AccordionBox = require( 'SUN/AccordionBox' );
+  //var AccordionBox = require( 'SUN/AccordionBox' );
   var CheckBox = require( 'SUN/CheckBox' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
