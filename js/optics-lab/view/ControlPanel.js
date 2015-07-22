@@ -28,7 +28,7 @@ define( function( require ) {
   var HSlider = require( 'SUN/HSlider' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  //var Panel = require( 'SUN/Panel' );
+  var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -85,34 +85,91 @@ define( function( require ) {
       spacing: spacing
     } );
 
-    this.accordionBoxOptions = {
-      lineWidth: 2,
-      cornerRadius: 7,
-      buttonXMargin: 5, // horizontal space between button and left|right edge of box
-      buttonYMargin: 5,
-      titleNode: new Text( '  Values', { font: DISPLAY_FONT, fontWeight: 'bold' } ),
-      titleAlignX: 'left',
-      //contentAlign: 'left',
-      fill: PANEL_COLOR,
-      showTitleWhenExpanded: true,
-      contentXMargin: 15,
-      contentYMargin: 5,
-      contentYSpacing: 5
+    //this.accordionBoxOptions = {
+    //  lineWidth: 2,
+    //  cornerRadius: 7,
+    //  buttonXMargin: 5, // horizontal space between button and left|right edge of box
+    //  buttonYMargin: 5,
+    //  titleNode: new Text( '  Values', { font: DISPLAY_FONT, fontWeight: 'bold' } ),
+    //  titleAlignX: 'left',
+    //  //contentAlign: 'left',
+    //  fill: PANEL_COLOR,
+    //  showTitleWhenExpanded: true,
+    //  contentXMargin: 15,
+    //  contentYMargin: 5,
+    //  contentYSpacing: 5
+    //};
+    //
+    //this.accordionBox = new AccordionBox( this.content, this.accordionBoxOptions );
+    //this.addChild( this.accordionBox );
+    //accordionBox is empty, just need the button and title
+    // All graphic elements, curves, axes, labels, etc are placed on display node, with visibility set by accordionBox button
+    this.panelOptions = {
+      fill: 'white',
+      stroke: 'black',
+      lineWidth: 1, // width of the background border
+      xMargin: 15,
+      yMargin: 5,
+      cornerRadius: 5, // radius of the rounded corners on the background
+      resize: true, // dynamically resize when content bounds change
+      backgroundPickable: false,
+      align: 'left', // {string} horizontal of content in the pane, left|center|right
+      minWidth: 0 // minimum width of the panel
     };
 
-    this.accordionBox = new AccordionBox( this.content, this.accordionBoxOptions );
-    this.addChild( this.accordionBox );
+    this.displayPanel = new Panel( this.content, this.panelOptions );
+
+    //AccordionBox is repurposed just to provide open/close button and title
+    var emptyNode = new Text( '', { font: DISPLAY_FONT });
+    //this.titleWhenClosed = new Text( 'Values', { font: DISPLAY_FONT } );
+    //this.titleWhenOpen = new Text( ' ', { font: DISPLAY_FONT } );
+    this.panelTitle = new Text( '', { font: DISPLAY_FONT } );
+    var accordionInfoObject = {
+      titleNode: this.panelTitle,
+      showTitleWhenExpanded: false,
+      titleAlignX: 'left',
+      titleXSpacing: 0,
+      titleXMargin: 0,
+      stroke: 'white',
+      cornerRadius: 3, // radius of the rounded corners on the background
+      contentAlign: 'left',
+      fill: 'white'
+    };
+    this.accordionBox = new AccordionBox( emptyNode, accordionInfoObject );
+
+    this.children = [ this.displayPanel, this.accordionBox ];
+    this.accordionBox.left = 0;
+    this.accordionBox.top = 0;
+
+
+
+    this.accordionBox.expandedProperty.link( function( tOrF ){
+      controlPanel.displayPanel.visible = tOrF;
+      if( tOrF ){
+        controlPanel.setTitleBar( ' ' );
+      }else{
+        controlPanel.setTitleBar( 'Values' );
+      }
+
+    });
 
   }//end constructor
 
   return inherit( Node, ControlPanel, {
-      resetAccordionBox: function(){
-        this.removeChild( this.accordionBox );
-        this.accordionBox = null;
-        this.accordionBox = new AccordionBox( this.content, this.accordionBoxOptions );
-        this.addChild( this.accordionBox );
-      },//end setUpAccordionBox()
-
+      //resetAccordionBox: function(){
+      //  this.removeChild( this.accordionBox );
+      //  this.accordionBox = null;
+      //  this.accordionBox = new AccordionBox( this.content, this.accordionBoxOptions );
+      //  this.addChild( this.accordionBox );
+      //},//end setUpAccordionBox()
+      setControls: function() {
+        this.removeChild( this.displayPanel );
+        this.displayPanel = new Panel( this.content, this.panelOptions );
+        this.insertChild( 0, this.displayPanel );
+      },
+      setTitleBar: function( titleString ){
+        this.panelTitle.text = titleString;
+      },
       //change the component that this panel controls
       setControlsForSelectedPiece: function( piece ) {
 
@@ -182,7 +239,8 @@ define( function( require ) {
             case 'slit_mask':
               break;
           }//end switch()
-          this.resetAccordionBox();
+          //this.resetAccordionBox();
+          this.setControls();
         }//end if (type != null)
       }// end setControlsForSelectedPiece()
 

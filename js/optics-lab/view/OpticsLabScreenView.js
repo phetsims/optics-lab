@@ -51,6 +51,10 @@ define( function( require ) {
 
     this.toolDrawerPanel = new ToolDrawerPanel( opticsLabModel, opticsLabScreenView );
     opticsLabScreenView.addChild( this.toolDrawerPanel );
+
+    //Layout
+    this.controlPanel.left = 40;
+    this.controlPanel.top = 10;
     this.toolDrawerPanel.bottom = this.layoutBounds.bottom - 10;
     this.toolDrawerPanel.centerX = this.layoutBounds.centerX;
 
