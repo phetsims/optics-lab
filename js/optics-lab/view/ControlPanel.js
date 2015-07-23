@@ -194,7 +194,8 @@ define( function( require ) {
             case 'converging_mirror':
               radiusSlider = new HSlider( pieceModel.radiusProperty, { min: 200, max: 1600 }, sliderOptions );
               radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
-              this.content = new HBox( { children: [ fillerBox, diameterVBox, radiusVBox ], spacing: spacing } );
+              focalPtCheckBox = new CheckBox( this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions );
+              this.content = new HBox( { children: [ fillerBox, diameterVBox, radiusVBox, focalPtCheckBox ], spacing: spacing } );
               break;
             case 'plane_mirror':
               this.content = new HBox( { children: [ fillerBox, diameterVBox], spacing: spacing } );
@@ -202,7 +203,8 @@ define( function( require ) {
             case 'diverging_mirror':
               radiusSlider = new HSlider( pieceModel.radiusProperty, { min: -200, max: -1600 }, sliderOptions );
               radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
-              this.content = new HBox( { children: [ fillerBox, diameterVBox, radiusVBox ], spacing: spacing } );
+              focalPtCheckBox = new CheckBox( this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions );
+              this.content = new HBox( { children: [ fillerBox, diameterVBox, radiusVBox, focalPtCheckBox ], spacing: spacing } );
               break;
             case 'simple_mask':
               this.content = new HBox( { children: [ fillerBox, diameterVBox], spacing: spacing } );

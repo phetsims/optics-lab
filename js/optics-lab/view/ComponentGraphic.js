@@ -41,7 +41,7 @@ define( function( require ) {
     this.f = this.radius/( 2*( this.index - 1 ));
 
 
-
+    this.mirrorBackGraphic = new Rectangle( 0, -0.5, 20, 1, {fill:'red'} );
     this.shape = new Shape();
     this.path = new Path( this.shape );
     this.focalPtRight = new FocalPointGraphic( 15 );
@@ -51,7 +51,7 @@ define( function( require ) {
     //this.addChild( this.focalPtLeft );
     //this.addChild( this.focalPtRight );
     //this.addChild( this.path );
-    this.children = [ this.path, this.focalPtLeft, this.focalPtRight ];
+    this.children = [ this.mirrorBackGraphic, this.path, this.focalPtLeft, this.focalPtRight ];
     //this.makeDrawing();
 
   }
@@ -125,11 +125,13 @@ define( function( require ) {
         this.path.stroke = 'yellow';
         this.path.fill = 'white';
         this.path.lineWidth = 2;
+
         this.path.opacity = 0.95;
         this.path.setShape( this.shape );
+        this.mirrorBackGraphic.visible = false;
       },//end drawLens()
       drawCurvedMirror: function( ) {
-        this.removeAllChildren();
+        //this.removeAllChildren();
         var fudge = 1;
         var R = fudge*this.radius;
         var f = this.radius/2;
@@ -147,8 +149,10 @@ define( function( require ) {
         //this.path.opacity = 0.95;
         this.path.setShape( this.shape );
         var w = 20;
-        var mirrorBackGraphic = new Rectangle( 0, -h, w, 2*h, {fill:'red'} );
-        this.children = [ mirrorBackGraphic, this.path ];
+        //this.mirrorBackGraphic = new Rectangle( 0, -h, w, 2*h, {fill:'red'} );
+        this.mirrorBackGraphic.setScaleMagnitude( 1, 2*h );
+        this.mirrorBackGraphic.visible = true;
+        //this.children = [ mirrorBackGraphic, this.path, this.focalPtLeft, this.focalPtRight ];
       },
       //drawDivergingMirror: function(){
       //  this.removeAllChildren();
@@ -219,6 +223,14 @@ define( function( require ) {
         setFocalPointsVisibility: function (isVisible) {
           this.focalPtLeft.visible = isVisible;
           this.focalPtRight.visible = isVisible;
+          //if( this.type === 'converging_lens' || this.type === 'diverging_lens' ){
+          //  this.focalPtLeft.visible = isVisible;
+          //  this.focalPtRight.visible = isVisible;
+          //}else if( this.type === 'converging_mirror' || this.type === 'diverging_mirror'){
+          //  this.focalPtLeft.visible = isVisible;
+          //  this.focalPtRight.visible = false;
+          //}
+
           //console.log( 'focal points visibility = ' + isVisible );
         }
 
