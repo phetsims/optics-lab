@@ -178,7 +178,7 @@ define( function( require ) {
               var radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
               var indexSlider = new HSlider( pieceModel.indexProperty, { min: 1.4, max: 2.2 }, sliderOptions );
               var indexVBox = new VBox( { children: [ indexSlider, this.indexText ], align: 'center' } );
-              var focalPtCheckBox = new CheckBox( this.focalPointsText, this.selectedPiece.showFocalPointsProperty, checkBoxOptions );
+              var focalPtCheckBox = new CheckBox( this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions );
               this.content = new HBox( { children: [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox ], spacing: spacing } );
               break;
             case 'diverging_lens':
@@ -188,7 +188,7 @@ define( function( require ) {
               radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
               indexSlider = new HSlider( pieceModel.indexProperty, { min: 1.4, max: 2.2 }, sliderOptions );
               indexVBox = new VBox( { children: [ indexSlider, this.indexText ], align: 'center' } );
-              focalPtCheckBox = new CheckBox( this.focalPointsText, this.selectedPiece.showFocalPointsProperty, checkBoxOptions );
+              focalPtCheckBox = new CheckBox( this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions );
               this.content = new HBox( { children: [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox ], spacing: spacing } );
               break;
             case 'converging_mirror':
