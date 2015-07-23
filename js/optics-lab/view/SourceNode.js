@@ -70,6 +70,7 @@ define( function( require ) {
         }
 
 
+
         // When dragging, move the sample element
         sourceNode.myHandle.addInputListener( new SimpleDragHandler(
             {
@@ -196,6 +197,11 @@ define( function( require ) {
         //},
         setHeight: function( height ){
             this.myHandle.setScaleMagnitude( 1, height/this.defaultHeight );
+        },
+        setColor: function( color ){
+            for ( var i = 0; i < this.pieceModel.rayPaths.length; i++ ) {
+                this.rayNodes[ i ].strokeColor = color;
+            }
         }
     } );
 } );
