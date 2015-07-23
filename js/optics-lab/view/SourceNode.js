@@ -40,6 +40,7 @@ define( function( require ) {
         this.rayNodes = [];   //array of rayNodes, a rayNode is a path of a ray from source through components to end
         this.maxNbrOfRays = sourceModel.maxNbrOfRays;
         this.counter = 0; //for testing only
+        this.rayColor = '#fff';
         // Call the super constructor
         Node.call( sourceNode, {
             // Show a cursor hand over the bar magnet
@@ -62,7 +63,7 @@ define( function( require ) {
 
         //initialize rayNodes array
 
-        var rayFontObject = { stroke: 'white', lineWidth: 2 } ;
+        var rayFontObject = { stroke: this.sourceColor, lineWidth: 2 } ;
         for( var r = 0; r < this.maxNbrOfRays; r++ ){
             this.rayNodes[ r ] = new Path( new Shape(), rayFontObject );
             sourceNode.addChild( this.rayNodes[ r ] );
