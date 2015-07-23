@@ -89,6 +89,7 @@ define( function( require ) {
                     if( sourceNode.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y )){
                         //console.log( 'delete this');
                         sourceNode.mainView.removeSource( sourceNode );
+                        sourceNode.mainView.controlPanel.displayPanel.visible = false;
                     }else{
                         //console.log( 'keep this' );
                     }
