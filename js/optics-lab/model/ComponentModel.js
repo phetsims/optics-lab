@@ -18,7 +18,7 @@ define( function( require ) {
       position: new Vector2( 0, 0 ),  //@private, position of source on stage
       diameter: diameter,             //@private
       radius: radiusCurvature,       //@private
-      index: index,                        //@private
+      index: index,                  //@private
       f: 500
     } );
 
@@ -39,9 +39,9 @@ define( function( require ) {
     });
     this.radiusProperty.link( function( radius ){
       //console.log( 'radius is ' + radius );
-      var R = componentModel.radius;   //R is always positive
+      var R = componentModel.radius;   //R is signed.  + for converging lenses, - for diverging lenses
       var n = componentModel.index;
-      componentModel.f = R/( 2 * ( n - 1 ));
+      componentModel.f = R/( 2 * ( n - 1 ));  //focal length gets correct sign from sign of radius R.
 
       componentModel.mainModel.processRays();
     });

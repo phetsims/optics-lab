@@ -71,10 +71,6 @@ define( function( require ) {
           rayPath.clearPath();
           var startPoint = rayPath.startPos; //rayPath.segments[ 0 ].getStart();
           var direction = rayPath.startDir;
-          //launchRay() assumes that segment is not yet added, so clear the segment
-          //rayPath.segments = [];
-          //rayPath.dirs = [];
-          //rayPath.lengths = [];
           this.launchRay( rayPath, startPoint, direction );
 
         }//end rayPath loop
@@ -129,14 +125,14 @@ define( function( require ) {
         var tanTheta = Math.tan( angleInRads );
         //console.log( ' tanAngle is ' + tanTheta );
         var newDir;
-
+        var fromLeft = false;  //true is ray is from left to right, true if reflected once by mirror
+        var angleInDegrees = angleInRads*180/Math.PI;
+        var magnitudeAngleInDegrees = Math.abs( angleInDegrees );
+        if( magnitudeAngleInDegrees < 90 ){ fromLeft = true; }
 
         if( component.type === 'converging_lens' || component.type === 'diverging_lens' ){
           //console.log( 'It is a lens.' );
-          var fromLeft = false;  //true is ray is from left to right, false if reflected once by mirror
-          var angleInDegrees = angleInRads*180/Math.PI;
-          var magnitudeAngleInDegrees = Math.abs( angleInDegrees );
-          if( magnitudeAngleInDegrees < 90 ){ fromLeft = true; }
+          //var fromLeft = false;  //true is ray is from left to right, false if reflected once by mirror
           if( fromLeft ){
             newAngleInRads = - Math.atan( (r/f) - tanTheta );
           }else{
@@ -149,14 +145,20 @@ define( function( require ) {
           this.launchRay( rayPath, intersection, newDir );
 
         }else if ( component.type === 'converging_mirror' ) {
-          newAngleInRads = Math.PI + Math.atan( (r / f) + tanTheta );
-          newDir = new Vector2.createPolar( 1, newAngleInRads );
-          this.launchRay( rayPath, intersection, newDir );
+          if( fromLeft ){
+            newAngleInRads = Math.PI + Math.atan( (r / f) + tanTheta );
+            newDir = new Vector2.createPolar( 1, newAngleInRads );
+            this.launchRay( rayPath, intersection, newDir );
+          }
+
           //console.log( 'It is a curved mirror.' );
         }else if( component.type === 'diverging_mirror' ){
-          newAngleInRads = Math.PI + Math.atan( (r / f) + tanTheta );
-          newDir = new Vector2.createPolar( 1, newAngleInRads );
-          this.launchRay( rayPath, intersection, newDir );
+          if( fromLeft ){
+            newAngleInRads = Math.PI + Math.atan( (r / f) + tanTheta );
+            newDir = new Vector2.createPolar( 1, newAngleInRads );
+            this.launchRay( rayPath, intersection, newDir );
+          }
+
           //code here
         }else if( component.type === 'plane_mirror' ){
           //console.log( 'It is a plane mirror.' );
