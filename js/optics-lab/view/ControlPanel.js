@@ -59,6 +59,7 @@ define( function( require ) {
 
     this.mainView.selectedPieceProperty.link( function( piece ){
       if( piece !== null ){
+        this.selectedPiece = piece;
         //console.log( 'calling setControls for piece ' + piece.type );
         controlPanel.setControlsForSelectedPiece( piece );
       }
@@ -73,7 +74,7 @@ define( function( require ) {
     this.radiusText = new Text( 'radius of curvature', fontInfo );
     this.focalLengthText = new Text( 'focal length', fontInfo );
     this.indexText = new Text( 'refractive index', fontInfo );
-    this.showFocalPointsProperty = new Property( false );
+    //this.showFocalPointsProperty = new Property( false );
     //
     //var diameterVBox = new VBox( { children: [ this.diameterSlider, this.diameterText ], align: 'center' } );
     //var focalLengthVBox = new VBox( { children: [ this.positivefSlider, this.focalLengthText ], align: 'center' } );
@@ -177,7 +178,7 @@ define( function( require ) {
               var radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
               var indexSlider = new HSlider( pieceModel.indexProperty, { min: 1.4, max: 2.2 }, sliderOptions );
               var indexVBox = new VBox( { children: [ indexSlider, this.indexText ], align: 'center' } );
-              var focalPtCheckBox = new CheckBox( this.focalPointsText, this.showFocalPointsProperty, checkBoxOptions );
+              var focalPtCheckBox = new CheckBox( this.focalPointsText, this.selectedPiece.showFocalPointsProperty, checkBoxOptions );
               this.content = new HBox( { children: [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox ], spacing: spacing } );
               break;
             case 'diverging_lens':
@@ -187,7 +188,7 @@ define( function( require ) {
               radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
               indexSlider = new HSlider( pieceModel.indexProperty, { min: 1.4, max: 2.2 }, sliderOptions );
               indexVBox = new VBox( { children: [ indexSlider, this.indexText ], align: 'center' } );
-              focalPtCheckBox = new CheckBox( this.focalPointsText, this.showFocalPointsProperty, checkBoxOptions );
+              focalPtCheckBox = new CheckBox( this.focalPointsText, this.selectedPiece.showFocalPointsProperty, checkBoxOptions );
               this.content = new HBox( { children: [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox ], spacing: spacing } );
               break;
             case 'converging_mirror':

@@ -41,6 +41,7 @@ define( function( require ) {
     this.f = this.radius/( 2*( this.index - 1 ));
 
 
+
     this.shape = new Shape();
     this.path = new Path( this.shape );
     this.focalPtRight = new FocalPointGraphic( 15 );
