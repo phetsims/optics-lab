@@ -90,13 +90,13 @@ define( function( require ) {
             componentModel = new ComponentModel( this.mainModel, 'diverging_lens', 150, -300, 1.8 );
             break;
           case 'converging_mirror':
-            componentModel = new ComponentModel( this.mainModel, 'converging_mirror', 200, -300, undefined );
+            componentModel = new ComponentModel( this.mainModel, 'converging_mirror', 200, 300, undefined );
             break;
           case 'plane_mirror':
             componentModel = new ComponentModel( this.mainModel, 'plane_mirror', 200, undefined, undefined );
             break;
           case 'diverging_mirror':
-            componentModel = new ComponentModel( this.mainModel, 'diverging_mirror', 200, 300, undefined );
+            componentModel = new ComponentModel( this.mainModel, 'diverging_mirror', 200, -300, undefined );
             break;
           case 'simple_mask':
             componentModel = new ComponentModel( this.mainModel, 'simple_mask', 100, 0, 0 );

@@ -192,7 +192,7 @@ define( function( require ) {
               this.content = new HBox( { children: [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox ], spacing: spacing } );
               break;
             case 'converging_mirror':
-              radiusSlider = new HSlider( pieceModel.radiusProperty, { min: -200, max: -800 }, sliderOptions );
+              radiusSlider = new HSlider( pieceModel.radiusProperty, { min: 200, max: 1600 }, sliderOptions );
               radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
               this.content = new HBox( { children: [ fillerBox, diameterVBox, radiusVBox ], spacing: spacing } );
               break;
@@ -200,7 +200,7 @@ define( function( require ) {
               this.content = new HBox( { children: [ fillerBox, diameterVBox], spacing: spacing } );
               break;
             case 'diverging_mirror':
-              radiusSlider = new HSlider( pieceModel.radiusProperty, { min: -200, max: -800 }, sliderOptions );
+              radiusSlider = new HSlider( pieceModel.radiusProperty, { min: -200, max: -1600 }, sliderOptions );
               radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
               this.content = new HBox( { children: [ fillerBox, diameterVBox, radiusVBox ], spacing: spacing } );
               break;
