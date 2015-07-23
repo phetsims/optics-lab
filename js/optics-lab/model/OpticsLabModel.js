@@ -36,41 +36,7 @@ define( function( require ) {
   }
 
   return inherit( PropertySet, OpticsLabModel, {
-      //addPiece: function( type ){
-      //  switch( type ){
-      //    case 'fan_source':
-      //      //SourceModel( mainModel, type, nbrOfRays, position, spread, height )
-      //      //var sourcePosition = new Vector2( 300, 300 );
-      //      //var pieceModel = new SourceModel( this, 'fan', 20, sourcePosition, 45, 0 );
-      //      //this.addSource( pieceModel );
-      //      console.log( 'piece added is ' + type );
-      //      break;
-      //    case 'beam_source':
-      //      console.log( 'piece added is ' + type );
-      //      break;
-      //    case 'converging_lens':
-      //      console.log( 'piece added is ' + type );
-      //      break;
-      //    case 'diverging_lens':
-      //      console.log( 'piece added is ' + type );
-      //      break;
-      //    case 'converging_mirror':
-      //      console.log( 'piece added is ' + type );
-      //      break;
-      //    case 'plane_mirror':
-      //      console.log( 'piece added is ' + type );
-      //      break;
-      //    case 'diverging_mirror':
-      //      console.log( 'piece added is ' + type );
-      //      break;
-      //    case 'simple_mask':
-      //      console.log( 'piece added is ' + type );
-      //      break;
-      //    case 'slit_mask':
-      //      console.log( 'piece added is ' + type );
-      //      break;
-      //  }//end switch
-      //},
+
       addSource: function( source ) {
         this.sources.add( source );
         source.setPosition( source.position );
@@ -174,8 +140,7 @@ define( function( require ) {
           if( fromLeft ){
             newAngleInRads = - Math.atan( (r/f) - tanTheta );
           }else{
-            newAngleInRads = Math.PI +
-                             Math.atan( (r/f) + tanTheta );
+            newAngleInRads = Math.PI + Math.atan( (r/f) + tanTheta );
           }
 
           newDir = new Vector2.createPolar( 1, newAngleInRads );
@@ -183,8 +148,16 @@ define( function( require ) {
           //rayPath.addSegment( intersection, intersection.plus( newSegment ));
           this.launchRay( rayPath, intersection, newDir );
 
-        }else if ( component.type === 'curved_mirror' ){
+        }else if ( component.type === 'converging_mirror' ) {
+          newAngleInRads = Math.PI + Math.atan( (r / f) + tanTheta );
+          newDir = new Vector2.createPolar( 1, newAngleInRads );
+          this.launchRay( rayPath, intersection, newDir );
           //console.log( 'It is a curved mirror.' );
+        }else if( component.type === 'diverging_mirror' ){
+          newAngleInRads = Math.PI + Math.atan( (r / f) + tanTheta );
+          newDir = new Vector2.createPolar( 1, newAngleInRads );
+          this.launchRay( rayPath, intersection, newDir );
+          //code here
         }else if( component.type === 'plane_mirror' ){
           //console.log( 'It is a plane mirror.' );
           newAngleInRads = Math.PI - angleInRads;

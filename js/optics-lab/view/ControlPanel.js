@@ -192,13 +192,17 @@ define( function( require ) {
               this.content = new HBox( { children: [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox ], spacing: spacing } );
               break;
             case 'converging_mirror':
-              this.content = new HBox( { children: [ fillerBox ] } );
+              radiusSlider = new HSlider( pieceModel.radiusProperty, { min: -200, max: -800 }, sliderOptions );
+              radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
+              this.content = new HBox( { children: [ fillerBox, diameterVBox, radiusVBox ], spacing: spacing } );
               break;
             case 'plane_mirror':
               this.content = new HBox( { children: [ fillerBox, diameterVBox], spacing: spacing } );
               break;
             case 'diverging_mirror':
-              this.content = new HBox( { children: [ fillerBox ] } );
+              radiusSlider = new HSlider( pieceModel.radiusProperty, { min: -200, max: -800 }, sliderOptions );
+              radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
+              this.content = new HBox( { children: [ fillerBox, diameterVBox, radiusVBox ], spacing: spacing } );
               break;
             case 'simple_mask':
               this.content = new HBox( { children: [ fillerBox, diameterVBox], spacing: spacing } );

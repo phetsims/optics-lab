@@ -66,13 +66,15 @@ define( function( require ) {
             this.drawLens();
             break;
           case 'converging_mirror':
-            this.drawCurvedMirror();
+            this.drawPlaneMirror();
+            //this.drawCurvedMirror();
             break;
           case 'plane_mirror':
             this.drawPlaneMirror();
             break;
           case 'diverging_mirror':
-            this.drawCurvedMirror();
+            this.drawPlaneMirror();
+            //this.drawCurvedMirror();
             break;
           case 'simple_mask':
             this.drawMask();
