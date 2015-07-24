@@ -18,7 +18,7 @@ define( function( require ) {
       position: new Vector2( 0, 0 ),  //@private, position of source on stage
       diameter: diameter,             //@private
       radius: radiusCurvature,       //@private
-      index: index,                        //@private
+      index: index,                  //@private
       f: 500
     } );
 
@@ -27,6 +27,9 @@ define( function( require ) {
 
     //this.model = model;
     this.type = type; // 'converging_lens'|'diverging_lens'|'converging_mirror'|'plane_mirror'|etc.
+    if( this.type === 'converging_mirror' || this.type === 'diverging_mirror' ){
+      this.index = 2;
+    }
     //this.diameter = diameter;
     //this.n = index;  //index of refraction n > 1 , n and f set radius of lens
     //this.position = new Vector2( 0, 0 );
@@ -36,9 +39,9 @@ define( function( require ) {
     });
     this.radiusProperty.link( function( radius ){
       //console.log( 'radius is ' + radius );
-      var R = componentModel.radius;   //R is always positive
+      var R = componentModel.radius;   //R is signed.  + for converging lenses, - for diverging lenses
       var n = componentModel.index;
-      componentModel.f = R/( 2 * ( n - 1 ));
+      componentModel.f = R/( 2 * ( n - 1 ));  //focal length gets correct sign from sign of radius R.
 
       componentModel.mainModel.processRays();
     });
@@ -57,11 +60,13 @@ define( function( require ) {
       updateFocalLength: function() {
         if ( this.type === 'converging_lens' || this.type === 'diverging_lens' ) {
           this.f = ( this.radius/2 )/( this.index - 1 );
-          this.mainModel.processRays();
         }
-        else {
+        else if( this.type === 'converging_mirror' || this.type === 'diverging_mirror'  ) {
+          this.f =  this.radius/2 ;
+        }else{
           console.log( 'ERROR: plane mirrors and masks do not have finite focal length.' );
         }
+        this.mainModel.processRays();
       },
       setDiameter: function( diameter ) {
         this.diameter = diameter;

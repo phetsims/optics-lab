@@ -1,7 +1,7 @@
 /**
  * Draws graphic for lens, mirror, mask or other component
  * with adjustable focal length, diameter, etc.
- * Created by dubson on 7/9/2015.
+ * Created by Dubson on 7/9/2015.
  */
 
 define( function( require ) {
@@ -41,6 +41,7 @@ define( function( require ) {
     this.f = this.radius/( 2*( this.index - 1 ));
 
 
+    this.mirrorBackGraphic = new Rectangle( 0, -0.5, 20, 1, {fill:'red'} );
     this.shape = new Shape();
     this.path = new Path( this.shape );
     this.focalPtRight = new FocalPointGraphic( 15 );
@@ -50,7 +51,7 @@ define( function( require ) {
     //this.addChild( this.focalPtLeft );
     //this.addChild( this.focalPtRight );
     //this.addChild( this.path );
-    this.children = [ this.path, this.focalPtLeft, this.focalPtRight ];
+    this.children = [ this.mirrorBackGraphic, this.path, this.focalPtLeft, this.focalPtRight ];
     //this.makeDrawing();
 
   }
@@ -65,12 +66,14 @@ define( function( require ) {
             this.drawLens();
             break;
           case 'converging_mirror':
+            //this.drawPlaneMirror();
             this.drawCurvedMirror();
             break;
           case 'plane_mirror':
             this.drawPlaneMirror();
             break;
           case 'diverging_mirror':
+            //this.drawDivergingMirror();
             this.drawCurvedMirror();
             break;
           case 'simple_mask':
@@ -87,7 +90,7 @@ define( function( require ) {
       },
       drawLens: function() {
         this.shape = new Shape();
-        var R;  //radius of lens
+        var R;  //same as this.radius = radius of curvature of lens, not to be confused with half-diameter of lens
         var fudge1 = 1;   //fudge factor to make lens radius big enough to be apparent to eye
         var fudge2 = 2;   //fudge factor to make adjust range of index of refraction
         //fudge * 2 * Math.abs( this.f ) * ( this.n - 1 );  //radius of curvature of lens surface
@@ -95,11 +98,9 @@ define( function( require ) {
         if( this.type === 'converging_lens' ){
           R = fudge1*this.radius;
         }else{
-          R = -fudge1*this.radius;
+          R = -fudge1*this.radius;   //radius has sign, R is positive
         }
-        this.f = ( this.radius / 2 )* ( 1 / ( n - 1 ) );
-          //console.log( 'type is  ' + this.type + 'f  = ' + this.f );
-        //console.log( 'R = ' + R + '   n = ' + n );
+        this.f = ( this.radius / 2 )* ( 1 / ( n - 1 ) );  //f takes sign of R
         var h = this.diameter / 2;                          //h = height = radius of lens
         var theta = Math.asin( h / R );                     //magnitude of startAngle and endAngle
         var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
@@ -124,16 +125,57 @@ define( function( require ) {
         this.path.stroke = 'yellow';
         this.path.fill = 'white';
         this.path.lineWidth = 2;
+
         this.path.opacity = 0.95;
         this.path.setShape( this.shape );
-        //this.addChild( new Path( this.shape, { stroke:'yellow', fill:'white', lineWidth: 2, opacity: 0.95 }) );
-        //debugger;
-        //this.addChild( new Circle( 50, { fill: 'white'}));
-        //debugger;
+        this.mirrorBackGraphic.visible = false;
       },//end drawLens()
       drawCurvedMirror: function( ) {
-
+        //this.removeAllChildren();
+        var fudge = 1;
+        var R = fudge*this.radius;
+        var f = this.radius/2;
+        var h = this.diameter / 2;                          //h = height = radius of lens
+        var theta = Math.asin( h / R );                     //magnitude of startAngle and endAngle
+        var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
+        this.shape = new Shape();
+        if( this.type === 'diverging_mirror'){
+          this.shape.arc( C, 0, R, -Math.PI + theta, Math.PI - theta, true );
+        }else{
+          this.shape.arc( -C, 0, R, theta, -theta, true );
+        }
+        this.path.stroke = 'white';
+        this.path.lineWidth = 8;
+        //this.path.opacity = 0.95;
+        this.path.setShape( this.shape );
+        var w = 20;
+        //this.mirrorBackGraphic = new Rectangle( 0, -h, w, 2*h, {fill:'red'} );
+        this.mirrorBackGraphic.setScaleMagnitude( 1, 2*h );
+        this.mirrorBackGraphic.visible = true;
+        //this.children = [ mirrorBackGraphic, this.path, this.focalPtLeft, this.focalPtRight ];
       },
+      //drawDivergingMirror: function(){
+      //  this.removeAllChildren();
+      //  var fudge = 1;
+      //  var R = fudge*this.radius;
+      //  var f = this.radius/2;
+      //  var h = this.diameter / 2;                          //h = height = radius of lens
+      //  var theta = Math.asin( h / R );                     //magnitude of startAngle and endAngle
+      //  var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
+      //  this.shape = new Shape();
+      //  this.shape.arc( C, 0, R, -Math.PI + theta, Math.PI - theta, true );
+      //  this.path.stroke = 'white';
+      //  this.path.lineWidth = 8;
+      //  //this.path.opacity = 0.95;
+      //  this.path.setShape( this.shape );
+      //  var w = 20;
+      //  var mirrorBackGraphic = new Rectangle( 0, -h, w, 2*h, {fill:'red'} );
+      //  this.children = [ mirrorBackGraphic, this.path ];
+      //
+      //},
+      //drawConvergingMirror: function(){
+      //
+      //},
       drawPlaneMirror: function( ) {
         this.removeAllChildren();
         var w = 20;
@@ -181,6 +223,14 @@ define( function( require ) {
         setFocalPointsVisibility: function (isVisible) {
           this.focalPtLeft.visible = isVisible;
           this.focalPtRight.visible = isVisible;
+          //if( this.type === 'converging_lens' || this.type === 'diverging_lens' ){
+          //  this.focalPtLeft.visible = isVisible;
+          //  this.focalPtRight.visible = isVisible;
+          //}else if( this.type === 'converging_mirror' || this.type === 'diverging_mirror'){
+          //  this.focalPtLeft.visible = isVisible;
+          //  this.focalPtRight.visible = false;
+          //}
+
           //console.log( 'focal points visibility = ' + isVisible );
         }
 

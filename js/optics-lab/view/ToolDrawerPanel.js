@@ -148,6 +148,7 @@ define( function( require ) {
             var vEnd = toolDrawerPanel.globalToParentPoint( e.pointer.point );
             if( toolDrawerPanel.visibleBounds.containsCoordinates( vEnd.x, vEnd.y )){
               pieceGrabbed.mainView.removeComponent( pieceGrabbed );
+              mainView.controlPanel.displayPanel.visible = false;
             }
           }
         }//end addInputListener

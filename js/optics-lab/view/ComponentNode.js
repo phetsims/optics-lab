@@ -12,6 +12,7 @@ define( function( require ) {
   //var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   //var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var Property = require( 'AXON/Property' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   //var Vector2 = require( 'DOT/Vector2' );
 
@@ -32,6 +33,7 @@ define( function( require ) {
     this.mainView = mainView;
     this.modelViewTransform = mainView.modelViewTransform;
     this.type = this.pieceModel.type;
+    this.showFocalPointsProperty = new Property( false );
 
     // Call the super constructor
     Node.call( this, {
@@ -79,6 +81,7 @@ define( function( require ) {
           var position = componentNode.globalToParentPoint( e.pointer.point );
           if( componentNode.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y )){
             componentNode.mainView.removeComponent( componentNode );
+            componentNode.mainView.controlPanel.displayPanel.visible = false;
           }else{
             //console.log( 'keep this' );
           }
@@ -101,8 +104,11 @@ define( function( require ) {
     this.pieceModel.indexProperty.link( function( n ) {
       componentNode.componentGraphic.setIndex( n );
     } );
-    this.mainView.controlPanel.showFocalPointsProperty.link( function( isVisible ){
-      //console.log( 'focal points visibility = ' + isVisible );
+    //this.mainView.controlPanel.showFocalPointsProperty.link( function( isVisible ){
+    //  //console.log( 'focal points visibility = ' + isVisible );
+    //  componentNode.componentGraphic.setFocalPointsVisibility( isVisible );
+    //} ) ;
+    this.showFocalPointsProperty.link( function( isVisible ){
       componentNode.componentGraphic.setFocalPointsVisibility( isVisible );
     } ) ;
 
