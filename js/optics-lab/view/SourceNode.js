@@ -12,6 +12,7 @@ define( function( require ) {
     //var Line = require( 'SCENERY/nodes/Line' );
     var Node = require( 'SCENERY/nodes/Node' );
     var Path = require( 'SCENERY/nodes/Path' );
+    var Property = require( 'AXON/Property' );
     var Rectangle = require( 'SCENERY/nodes/Rectangle' );
     var Shape = require( 'KITE/Shape' );
     var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
@@ -30,6 +31,7 @@ define( function( require ) {
     function SourceNode( mainModel, sourceModel, mainView ) {
 
         var sourceNode = this;
+        this.colorProperty = new Property ('white');  //sets color of rays
         this.sourceNumber;  //for testing
         this.mainModel = mainModel;
         this.pieceModel =  sourceModel;
@@ -128,6 +130,11 @@ define( function( require ) {
         this.mainModel.processRaysCountProperty.link( function( count ) {
             sourceNode.drawRays();
             //console.log( 'source callback, rays processed. Count is ' + count );
+        });
+        this.colorProperty.link( function( color ){
+            for ( var i = 0; i < this.pieceModel.rayPaths.length; i++ ) {
+                this.rayNodes[ i ].strokeColor = color;
+            }
         });
 
     }

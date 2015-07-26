@@ -58,6 +58,8 @@ define( function( require ) {
     this.mainView = mainView;
     this.expandedProperty = new Property( true );
 
+
+
     this.mainView.selectedPieceProperty.link( function( piece ){
       if( piece !== null ){
         this.selectedPiece = piece;
@@ -65,6 +67,22 @@ define( function( require ) {
         controlPanel.setControlsForSelectedPiece( piece );
       }
     } );
+
+    //initialize ray color radio buttons
+    fontInfo = { font: DISPLAY_FONT };
+    var whiteText = new Text( 'white', fontInfo );
+    var greenText = new Text( 'green', fontInfo );
+    var redText = new Text( 'red', fontInfo );
+    var yellowText = new Text( 'yellow', fontInfo );
+
+    var radioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white' } ;
+    var whiteColorRadioButton = new AquaRadioButton( this.selectedPiece.colorProperty, 'white', whiteText, radioButtonOptions );
+    var greenColorRadioButton = new AquaRadioButton( this.selectedPiece.colorProperty, 'green', greenText, radioButtonOptions );
+    var redColorRadioButton = new AquaRadioButton( this.selectedPiece.colorProperty, 'red', redText, radioButtonOptions );
+    var yellowColorRadioButton = new AquaRadioButton( this.selectedPiece.colorProperty, 'yellow', yellowText, radioButtonOptions );
+
+    var colorVBox1 = new VBox( {children:[ whiteColorRadioButton, greenColorRadioButton ], align: 'left' } );
+    var colorVBox2 = new VBox( {children:[ redColorRadioButton, yellowColorRadioButton ], align: 'left' } );
 
     var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
     this.nbrOfRaysText = new Text( 'number of rays', fontInfo );
@@ -81,6 +99,7 @@ define( function( require ) {
     //var focalLengthVBox = new VBox( { children: [ this.positivefSlider, this.focalLengthText ], align: 'center' } );
     //var indexVBox = new VBox( { children: [ this.indexSlider, this.indexText ], align: 'center' } );
     this.expandCollapseButton = new ExpandCollapseButton( this.expandedProperty, { sideLength: 15, cursor:'pointer' });
+
 
     var spacing = 35;
     var fillerBox = new Text( '', {font: DISPLAY_FONT} );
