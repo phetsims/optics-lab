@@ -75,14 +75,7 @@ define( function( require ) {
     this.redText = new Text( 'red', fontInfo );
     this.yellowText = new Text( 'yellow', fontInfo );
 
-    var radioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white' };
-    var whiteColorRadioButton = new AquaRadioButton( this.selectedPiece.colorProperty, 'white', this.whiteText, radioButtonOptions );
-    var greenColorRadioButton = new AquaRadioButton( this.selectedPiece.colorProperty, 'green', this.greenText, radioButtonOptions );
-    var redColorRadioButton = new AquaRadioButton( this.selectedPiece.colorProperty, 'red', this.redText, radioButtonOptions );
-    var yellowColorRadioButton = new AquaRadioButton( this.selectedPiece.colorProperty, 'yellow', this.yellowText, radioButtonOptions );
 
-    this.colorVBox1 = new VBox( { children: [ whiteColorRadioButton, greenColorRadioButton ], align: 'left' } );
-    this.colorVBox2 = new VBox( { children: [ redColorRadioButton, yellowColorRadioButton ], align: 'left' } );
 
     var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
     this.nbrOfRaysText = new Text( 'number of rays', fontInfo );
@@ -171,6 +164,7 @@ define( function( require ) {
             maxNbrRays = pieceModel.maxNbrOfRays;
             var nbrOfRaysSlider = new HSlider( pieceModel.nbrOfRaysProperty, { min: 1, max: maxNbrRays }, sliderOptions );
             nbrOfRaysVBox = new VBox( { children: [ nbrOfRaysSlider, this.nbrOfRaysText ], align: 'center' } );
+            this.setColorRadioButtonsForSourceNode( piece );
           }else{
             pieceModel = piece.pieceModel;
             var diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 50, max: 250 }, sliderOptions );
@@ -237,7 +231,17 @@ define( function( require ) {
           //this.resetAccordionBox();
           this.setControls();
         }//end if (type != null)
-      }// end setControlsForSelectedPiece()
+      },// end setControlsForSelectedPiece()
+      setColorRadioButtonsForSourceNode: function( sourceNode ){
+        var radioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white' };
+        var whiteColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'white', this.whiteText, radioButtonOptions );
+        var greenColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'green', this.greenText, radioButtonOptions );
+        var redColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'red', this.redText, radioButtonOptions );
+        var yellowColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'yellow', this.yellowText, radioButtonOptions );
+
+        this.colorVBox1 = new VBox( { children: [ whiteColorRadioButton, greenColorRadioButton ], align: 'left' } );
+        this.colorVBox2 = new VBox( { children: [ redColorRadioButton, yellowColorRadioButton ], align: 'left' } );
+      }
 
 
     }//end inherit
