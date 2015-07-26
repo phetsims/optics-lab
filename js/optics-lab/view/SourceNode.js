@@ -146,8 +146,9 @@ define( function( require ) {
                 case 'yellow':
                   colorCode = '#ff0';
                 break;
+                sourceNode.rayColor = colorCode;
             }
-            for ( var i = 0; i < sourceNode.pieceModel.rayPaths.length; i++ ) {
+            for ( var i = 0; i < sourceNode.maxNbrOfRays; i++ ) {
                 sourceNode.rayNodes[ i ].strokeColor = colorCode;
             }
         });
@@ -162,11 +163,13 @@ define( function( require ) {
 
             for( var i = nbrOfRays; i < this.maxNbrOfRays; i++ ){
                 this.rayNodes[ i ].visible = false;
+
             }
             var maxRayLength = this.pieceModel.maxLength;
             //var rayFontObject = { stroke: 'white', lineWidth: 2 } ;
             for ( var r = 0; r < this.pieceModel.rayPaths.length; r++ ) {
                 this.rayNodes[ r ].visible = true;
+                //this.rayNodes[ r ].strokeColor = this.rayColor;
                 var dir = this.pieceModel.rayPaths[ r ].startDir;
                 var sourceCenter = this.pieceModel.position;
                 var AbsoluteRayStart = this.pieceModel.rayPaths[ r ].segments[ 0 ].getStart();

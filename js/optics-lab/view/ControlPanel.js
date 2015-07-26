@@ -233,14 +233,14 @@ define( function( require ) {
         }//end if (type != null)
       },// end setControlsForSelectedPiece()
       setColorRadioButtonsForSourceNode: function( sourceNode ){
-        var radioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white' };
+        var radioButtonOptions = { radius: 8, fontSize: 12, deselectedColor: 'white' };
         var whiteColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'white', this.whiteText, radioButtonOptions );
         var greenColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'green', this.greenText, radioButtonOptions );
         var redColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'red', this.redText, radioButtonOptions );
         var yellowColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'yellow', this.yellowText, radioButtonOptions );
-
-        this.colorVBox1 = new VBox( { children: [ whiteColorRadioButton, greenColorRadioButton ], align: 'left' } );
-        this.colorVBox2 = new VBox( { children: [ redColorRadioButton, yellowColorRadioButton ], align: 'left' } );
+        var spacing = 5;
+        this.colorVBox1 = new VBox( { children: [ whiteColorRadioButton, greenColorRadioButton ], align: 'left', spacing: spacing } );
+        this.colorVBox2 = new VBox( { children: [ redColorRadioButton, yellowColorRadioButton ], align: 'left', spacing: spacing  } );
       }
 
 
