@@ -63,26 +63,26 @@ define( function( require ) {
     this.mainView.selectedPieceProperty.link( function( piece ){
       if( piece !== null ){
         this.selectedPiece = piece;
-        //console.log( 'calling setControls for piece ' + piece.type );
         controlPanel.setControlsForSelectedPiece( piece );
       }
-    } );
+    //console.log( 'calling setControls for piece ' + piece.type );
+  } );
 
-    //initialize ray color radio buttons
+  //initialize ray color radio buttons
     fontInfo = { font: DISPLAY_FONT };
-    var whiteText = new Text( 'white', fontInfo );
-    var greenText = new Text( 'green', fontInfo );
-    var redText = new Text( 'red', fontInfo );
-    var yellowText = new Text( 'yellow', fontInfo );
+    this.whiteText = new Text( 'white', fontInfo );
+    this.greenText = new Text( 'green', fontInfo );
+    this.redText = new Text( 'red', fontInfo );
+    this.yellowText = new Text( 'yellow', fontInfo );
 
-    var radioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white' } ;
-    var whiteColorRadioButton = new AquaRadioButton( this.selectedPiece.colorProperty, 'white', whiteText, radioButtonOptions );
-    var greenColorRadioButton = new AquaRadioButton( this.selectedPiece.colorProperty, 'green', greenText, radioButtonOptions );
-    var redColorRadioButton = new AquaRadioButton( this.selectedPiece.colorProperty, 'red', redText, radioButtonOptions );
-    var yellowColorRadioButton = new AquaRadioButton( this.selectedPiece.colorProperty, 'yellow', yellowText, radioButtonOptions );
+    var radioButtonOptions = { radius: 10, fontSize: 15, deselectedColor: 'white' };
+    var whiteColorRadioButton = new AquaRadioButton( this.selectedPiece.colorProperty, 'white', this.whiteText, radioButtonOptions );
+    var greenColorRadioButton = new AquaRadioButton( this.selectedPiece.colorProperty, 'green', this.greenText, radioButtonOptions );
+    var redColorRadioButton = new AquaRadioButton( this.selectedPiece.colorProperty, 'red', this.redText, radioButtonOptions );
+    var yellowColorRadioButton = new AquaRadioButton( this.selectedPiece.colorProperty, 'yellow', this.yellowText, radioButtonOptions );
 
-    this.colorVBox1 = new VBox( {children:[ whiteColorRadioButton, greenColorRadioButton ], align: 'left' } );
-    this.colorVBox2 = new VBox( {children:[ redColorRadioButton, yellowColorRadioButton ], align: 'left' } );
+    this.colorVBox1 = new VBox( { children: [ whiteColorRadioButton, greenColorRadioButton ], align: 'left' } );
+    this.colorVBox2 = new VBox( { children: [ redColorRadioButton, yellowColorRadioButton ], align: 'left' } );
 
     var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
     this.nbrOfRaysText = new Text( 'number of rays', fontInfo );
@@ -98,7 +98,7 @@ define( function( require ) {
     //var diameterVBox = new VBox( { children: [ this.diameterSlider, this.diameterText ], align: 'center' } );
     //var focalLengthVBox = new VBox( { children: [ this.positivefSlider, this.focalLengthText ], align: 'center' } );
     //var indexVBox = new VBox( { children: [ this.indexSlider, this.indexText ], align: 'center' } );
-    this.expandCollapseButton = new ExpandCollapseButton( this.expandedProperty, { sideLength: 15, cursor:'pointer' });
+    this.expandCollapseButton = new ExpandCollapseButton( this.expandedProperty, { sideLength: 15, cursor: 'pointer' } );
 
 
     var spacing = 35;
