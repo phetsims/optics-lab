@@ -147,8 +147,8 @@ define( function( require ) {
                   colorCode = '#ff0';
                 break;
             }
-            for ( var i = 0; i < this.pieceModel.rayPaths.length; i++ ) {
-                this.rayNodes[ i ].strokeColor = colorCode;
+            for ( var i = 0; i < sourceNode.pieceModel.rayPaths.length; i++ ) {
+                sourceNode.rayNodes[ i ].strokeColor = colorCode;
             }
         });
 
