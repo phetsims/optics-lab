@@ -132,8 +132,23 @@ define( function( require ) {
             //console.log( 'source callback, rays processed. Count is ' + count );
         });
         this.colorProperty.link( function( color ){
+            var colorCode;            //switch ( color )
+            switch( color ){
+                case 'white':
+                  colorCode = '#fff';
+                break;
+                case 'green':
+                  colorCode = '#0f0';
+                break;
+                case 'red':
+                  colorCode = '#f00';
+                break;
+                case 'yellow':
+                  colorCode = '#ff0';
+                break;
+            }
             for ( var i = 0; i < this.pieceModel.rayPaths.length; i++ ) {
-                this.rayNodes[ i ].strokeColor = color;
+                this.rayNodes[ i ].strokeColor = colorCode;
             }
         });
 
