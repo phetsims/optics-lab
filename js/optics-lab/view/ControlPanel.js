@@ -81,8 +81,8 @@ define( function( require ) {
     var redColorRadioButton = new AquaRadioButton( this.selectedPiece.colorProperty, 'red', redText, radioButtonOptions );
     var yellowColorRadioButton = new AquaRadioButton( this.selectedPiece.colorProperty, 'yellow', yellowText, radioButtonOptions );
 
-    var colorVBox1 = new VBox( {children:[ whiteColorRadioButton, greenColorRadioButton ], align: 'left' } );
-    var colorVBox2 = new VBox( {children:[ redColorRadioButton, yellowColorRadioButton ], align: 'left' } );
+    this.colorVBox1 = new VBox( {children:[ whiteColorRadioButton, greenColorRadioButton ], align: 'left' } );
+    this.colorVBox2 = new VBox( {children:[ redColorRadioButton, yellowColorRadioButton ], align: 'left' } );
 
     var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
     this.nbrOfRaysText = new Text( 'number of rays', fontInfo );
@@ -184,12 +184,12 @@ define( function( require ) {
             case 'fan_source':
               var spreadSlider = new HSlider( pieceModel.spreadProperty, { min: 2, max: 180 }, sliderOptions );
               var spreadVBox = new VBox( { children: [ spreadSlider, this.spreadText ], align: 'center' } );
-              this.content = new HBox( { children: [ fillerBox, nbrOfRaysVBox, spreadVBox ], spacing: spacing } );
+              this.content = new HBox( { children: [ fillerBox, nbrOfRaysVBox, spreadVBox, this.colorVBox1, this.colorVBox2 ], spacing: spacing } );
               break;
             case 'beam_source':
               var heightSlider = new HSlider( pieceModel.heightProperty, { min: 50, max: 400 }, sliderOptions );
               var heightVBox = new VBox( { children: [ heightSlider, this.heightText ], align: 'center' } );
-              this.content = new HBox( { children: [ fillerBox, nbrOfRaysVBox, heightVBox ], spacing: spacing } );
+              this.content = new HBox( { children: [ fillerBox, nbrOfRaysVBox, heightVBox, this.colorVBox1, this.colorVBox2  ], spacing: spacing } );
               break;
             case 'converging_lens':
               //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
