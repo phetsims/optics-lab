@@ -1,5 +1,5 @@
 {
-  "comment": "# optics-lab 1.0.0-dev.6 Wed Jul 22 2015 16:09:54 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# optics-lab 1.0.0-dev.7 Mon Jul 27 2015 06:28:05 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "858e65ac477bf1861883ce06eed56d9fdefa5027",
     "branch": "master"
@@ -9,11 +9,11 @@
     "branch": "master"
   },
   "brand": {
-    "sha": "3c45cb6fe87c342c377a90453be9fa8649818f59",
+    "sha": "cd34c36674d5fda7f2fa54e5c3040783ecec8156",
     "branch": "phet"
   },
   "chipper": {
-    "sha": "b737909c0e646c22e463e9c59fa4fc142a44c2df",
+    "sha": "e088167821eae6df6e8b38eaa7050b24f8923d6f",
     "branch": "master"
   },
   "dot": {
@@ -21,7 +21,7 @@
     "branch": "master"
   },
   "joist": {
-    "sha": "35a12c18242cbe15ff3ad69617c12cf76acf9bad",
+    "sha": "83a6a763154428c2728e769166e2abdd01639dda",
     "branch": "master"
   },
   "kite": {
@@ -29,7 +29,7 @@
     "branch": "master"
   },
   "optics-lab": {
-    "sha": "d08bea6694439460ad5bfc49e05286f56f2e065e",
+    "sha": "694a44279474e2b0cba1e1413d3c5f11a627d332",
     "branch": "master"
   },
   "phet-core": {
@@ -45,15 +45,15 @@
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "f3f305457bc3771a720de717cd17ba27a3de7f24",
+    "sha": "d075767b043c228639c3177279764f6410577733",
     "branch": "master"
   },
   "sherpa": {
-    "sha": "b1ce778911672de02bbfc7edd3227bab43007f1b",
+    "sha": "abf5ecaf4af061c6420e74cb4c6511beb932eb40",
     "branch": "master"
   },
   "sun": {
-    "sha": "dc08e5f3cdf78c54df51fc1cdfcc20b61dc0c98a",
+    "sha": "d08562fb4f6f80efa94f513b86a53dc6bfe38146",
     "branch": "master"
   }
 }
