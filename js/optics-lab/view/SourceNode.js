@@ -146,8 +146,8 @@ define( function( require ) {
                 case 'yellow':
                   colorCode = '#ff0';
                 break;
-                sourceNode.rayColor = colorCode;
             }
+            sourceNode.rayColor = colorCode;
             for ( var i = 0; i < sourceNode.maxNbrOfRays; i++ ) {
                 sourceNode.rayNodes[ i ].strokeColor = colorCode;
             }

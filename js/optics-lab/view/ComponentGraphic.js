@@ -134,7 +134,7 @@ define( function( require ) {
         //this.removeAllChildren();
         var fudge = 1;
         var R = fudge*this.radius;
-        var f = this.radius/2;
+        //var f = this.radius/2;
         var h = this.diameter / 2;                          //h = height = radius of lens
         var theta = Math.asin( h / R );                     //magnitude of startAngle and endAngle
         var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
@@ -148,7 +148,7 @@ define( function( require ) {
         this.path.lineWidth = 8;
         //this.path.opacity = 0.95;
         this.path.setShape( this.shape );
-        var w = 20;
+        //var w = 20;
         //this.mirrorBackGraphic = new Rectangle( 0, -h, w, 2*h, {fill:'red'} );
         this.mirrorBackGraphic.setScaleMagnitude( 1, 2*h );
         this.mirrorBackGraphic.visible = true;

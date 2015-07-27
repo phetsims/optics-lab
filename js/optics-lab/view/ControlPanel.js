@@ -69,7 +69,7 @@ define( function( require ) {
   } );
 
   //initialize ray color radio buttons
-    fontInfo = { font: DISPLAY_FONT };
+    var fontInfo = { font: DISPLAY_FONT };
     this.whiteText = new Text( 'white', fontInfo );
     this.greenText = new Text( 'green', fontInfo );
     this.redText = new Text( 'red', fontInfo );
@@ -77,7 +77,7 @@ define( function( require ) {
 
 
 
-    var fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
+    fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
     this.nbrOfRaysText = new Text( 'number of rays', fontInfo );
     this.focalPointsText = new Text( 'focal points', fontInfo );
     this.heightText = new Text( 'height', fontInfo );
