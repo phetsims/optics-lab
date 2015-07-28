@@ -181,7 +181,7 @@ define( function( require ) {
                 }
                 this.mainModel.processRays();
             }, //end setPosition()
-          setAngle: function ( angleInRads ){
+          setAngle: function( angleInRads ){
               this.angle = angleInRads;
               if( this.type === 'beam_source'){
                 this.setPosition( this.position );

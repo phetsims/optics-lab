@@ -55,7 +55,7 @@ define( function( require ) {
         this.defaultHeight = height;
 
         this.translationHandle;
-        this.rotationHandle
+        this.rotationHandle = new Node();
         if( sourceModel.type === 'fan_source'){
             this.translationHandle = new Circle( 20, { x: 0, y: 0, fill: '#8F8' } );
         }else if ( sourceModel.type === 'beam_source' ){
@@ -114,8 +114,10 @@ define( function( require ) {
 
             drag: function(e){
                 var mousePosRelative =  sourceNode.rotationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
-                var angle = -mousePosRelative.angle();  //model angle is negative of xy screen coordinates angle
-                console.log( 'rotationHandle dragged. angle is ' + angle );
+                var angle = mousePosRelative.angle() - Math.PI/2;  //angle = 0 when beam horizontal, CW is + angle
+                sourceNode.pieceModel.setAngle( angle );
+                //console.log( 'position is ' + mousePosRelative );
+                //console.log( 'rotation angle in degree is ' + angle*180/Math.PI );
 
             }
         }));//end this.rotationHandle.addInputListener()
@@ -125,6 +127,11 @@ define( function( require ) {
             sourceNode.translation = position;
             //console.log( 'source callback, position is ' + position );
             //sourceNode.drawRays();
+        } );
+
+        this.pieceModel.angleProperty.link( function( angle ){
+            //sourceNode.rotation = angle;
+            console.log( 'angle in degs is ' + angle*180/Math.PI );
         } );
 
         this.pieceModel.nbrOfRaysProperty.link( function( nbrOfRays ){
