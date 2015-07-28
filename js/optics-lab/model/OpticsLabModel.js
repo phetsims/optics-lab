@@ -155,7 +155,7 @@ define( function( require ) {
           //console.log( 'It is a curved mirror.' );
         }else if( component.type === 'diverging_mirror' ){
           if( fromLeft ){
-            newAngleInRads = Math.PI + Math.atan( (r / f) + tanTheta );
+            newAngleInRads = Math.PI + Math.atan( (r / f) - tanTheta );
             newDir = new Vector2.createPolar( 1, newAngleInRads );
             this.launchRay( rayPath, intersection, newDir );
           }
