@@ -171,7 +171,7 @@ define( function( require ) {
 
 
                             lowestPos = new Vector2( h*sinAngle / 2, -h*cosAngle / 2 );
-                            deltaPos = new Vector2( 0, this.height / ( this.nbrOfRays - 1 ) );
+                            deltaPos = new Vector2( h*sinAngle, h*cosAngle / ( this.nbrOfRays - 1 ) );
                         }
                         var pos = position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
                         //endPos = pos.plus( dir.timesScalar( this.maxLength ));
