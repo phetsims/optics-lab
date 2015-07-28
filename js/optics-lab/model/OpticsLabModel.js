@@ -147,7 +147,7 @@ define( function( require ) {
         }else if ( component.type === 'converging_mirror' ) {
           if( fromLeft ){
             newAngleInRads = Math.PI + Math.atan( (r / f) - tanTheta );
-            console.log( 'tanThetaIncoming = ' + tanTheta + '    Math.atan( (r/f) + tanTheta  = ' + Math.atan( (r / f) + tanTheta ));
+            //console.log( 'tanThetaIncoming = ' + tanTheta + '    Math.atan( (r/f) + tanTheta  = ' + Math.atan( (r / f) + tanTheta ));
             newDir = new Vector2.createPolar( 1, newAngleInRads );
             this.launchRay( rayPath, intersection, newDir );
           }
