@@ -42,7 +42,7 @@ define( function( require ) {
       var R = componentModel.radius;   //R is signed.  + for converging lenses, - for diverging lenses
       var n = componentModel.index;
       componentModel.f = R/( 2 * ( n - 1 ));  //focal length gets correct sign from sign of radius R.
-
+      //console.log(  'R curvature = ' + R + '   f = ' + componentModel.f );
       componentModel.mainModel.processRays();
     });
     this.fProperty.link( function(){    //probably unused
