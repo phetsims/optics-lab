@@ -30,7 +30,8 @@ define( function( require ) {
             position: position,         //@private, position of source on stage
             nbrOfRays: nbrOfRays,       //@private, number of rays
             spread: spread,             //spread of point source (fan source) in degrees
-            height: height              //height of source, if beam
+            height: height,              //height of source, if beam
+            angle: 0                    //angle in rads of beam source, 0 = horizontal. + = CCW, - = CW
         } );
 
         var sourceModel = this;
@@ -160,11 +161,16 @@ define( function( require ) {
                     }else if ( this.type === 'beam_source' ){
                         var lowestPos;
                         var deltaPos;
+                        var sinAngle = Math.sin( this.angle );
+                        var cosAngle = Math.cos( this.angle );
+                        var h = this.height;
                         if( this.nbrOfRays === 1 ){
                             lowestPos = new Vector2( 0, 0 );
                             deltaPos = new Vector2( 0, 0 );
                         }else{
-                            lowestPos = new Vector2( 0, -this.height / 2 );
+
+
+                            lowestPos = new Vector2( h*sinAngle / 2, -h*cosAngle / 2 );
                             deltaPos = new Vector2( 0, this.height / ( this.nbrOfRays - 1 ) );
                         }
                         var pos = position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
@@ -174,7 +180,14 @@ define( function( require ) {
                     }
                 }
                 this.mainModel.processRays();
-            }
+            }, //end setPosition()
+          setAngle: function ( angleInRads ){
+              this.angle = angleInRads;
+              if( this.type === 'beam_source'){
+
+              }
+          }
+
         }//end inherit
     );
 } );
