@@ -113,11 +113,11 @@ define( function( require ) {
             },
 
             drag: function(e){
-                var mousePosRelative =  sourceNode.rotationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
+                var mousePosRelative =  sourceNode.translationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
                 var angle = mousePosRelative.angle() - Math.PI/2;  //angle = 0 when beam horizontal, CW is + angle
                 sourceNode.pieceModel.setAngle( angle );
                 //console.log( 'position is ' + mousePosRelative );
-                //console.log( 'rotation angle in degree is ' + angle*180/Math.PI );
+                console.log( 'rotation angle in degree is ' + angle*180/Math.PI );
 
             }
         }));//end this.rotationHandle.addInputListener()
@@ -244,10 +244,12 @@ define( function( require ) {
         //removeRayNodesFromParent: function( parentNode ){
         //    for ( var i = this.rayNodes.length - 1; i >= 0 ; i-- ) {
         //        parentNode.removeChild( this.rayNodes[ i ] );
-        //    }
+        //    }i
         //},
         setHeight: function( height ){
+            //this.translationHandle.rotation = 0;
             this.translationHandle.setScaleMagnitude( 1, height/this.defaultHeight );
+            //this.translationHandle.rotation = this.pieceModel.angle;
             var cosAngle = Math.cos( this.pieceModel.angle );
             var sinAngle = Math.sin( this.pieceModel.angle );
             this.rotationHandle.x = ( height/2 )*sinAngle;
