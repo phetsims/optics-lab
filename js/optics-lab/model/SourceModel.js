@@ -96,8 +96,7 @@ define( function( require ) {
                 var startPos;
                 var deltaHeight;
                 var deltaPos;
-
-                if ( this.setNbrOfRays === 1 ) {
+                if ( this.nbrOfRays === 1 ) {
                     lowestPos = new Vector2( 0, 0 );
                     deltaHeight = 0;
                 }
@@ -159,8 +158,15 @@ define( function( require ) {
                         //var endPos = position.plus( dir.timesScalar( this.maxLength ));
                         //this.rayPaths[ i ].addSegment( position, endPos );
                     }else if ( this.type === 'beam_source' ){
-                        var lowestPos = new Vector2( 0, -this.height / 2 );
-                        var deltaPos = new Vector2( 0, this.height / ( this.nbrOfRays - 1 ) );
+                        var lowestPos;
+                        var deltaPos;
+                        if( this.nbrOfRays === 1 ){
+                            lowestPos = new Vector2( 0, 0 );
+                            deltaPos = new Vector2( 0, 0 );
+                        }else{
+                            lowestPos = new Vector2( 0, -this.height / 2 );
+                            deltaPos = new Vector2( 0, this.height / ( this.nbrOfRays - 1 ) );
+                        }
                         var pos = position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
                         //endPos = pos.plus( dir.timesScalar( this.maxLength ));
                         this.rayPaths[ i ].startPos = pos;
