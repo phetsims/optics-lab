@@ -168,14 +168,14 @@ define( function( require ) {
                             lowestPos = new Vector2( 0, 0 );
                             deltaPos = new Vector2( 0, 0 );
                         }else{
-
-
                             lowestPos = new Vector2( h*sinAngle / 2, -h*cosAngle / 2 );
                             deltaPos = new Vector2( h*sinAngle, h*cosAngle / ( this.nbrOfRays - 1 ) );
                         }
                         var pos = position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
                         //endPos = pos.plus( dir.timesScalar( this.maxLength ));
                         this.rayPaths[ i ].startPos = pos;
+                        this.rayPaths[ i ].startDir.x = cosAngle;
+                        this.rayPaths[ i ].startDir.y = sinAngle;
                         //this.rayPaths[ i ].addSegment( pos, endPos );
                     }
                 }
@@ -184,7 +184,7 @@ define( function( require ) {
           setAngle: function ( angleInRads ){
               this.angle = angleInRads;
               if( this.type === 'beam_source'){
-
+                this.setPosition( this.position );
               }
           }
 

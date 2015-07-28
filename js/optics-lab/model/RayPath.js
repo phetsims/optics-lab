@@ -28,9 +28,10 @@ define( function( require ) {
     //PropertySet.call( this, {
     //  startPosition: startPosition             //@private, position of source on stage
     //} );
-
-    this.startDir = startDir;    //starting direction of the first segment, the one thing that never changes
+    this.startPos;  //starting position of Path in absolute coordinates
+    this.startDir = startDir;    //starting direction of the first segment, changes upon rotation of source
     this.relativeStartPos = relativeStartPos;  //starting position, relative to source center, of the first segment
+
     this.rayPath = this;
     //this.mainModel = mainModel;
 

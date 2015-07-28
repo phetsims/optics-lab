@@ -34,7 +34,7 @@ define( function( require ) {
         this.colorProperty = new Property ('white');  //sets color of rays
         this.sourceNumber;  //for testing
         this.mainModel = mainModel;
-        this.pieceModel =  sourceModel;
+        this.pieceModel =  sourceModel;   //need generic name because need to loop over all pieces and have pieceModel
         this.mainView = mainView;
         this.modelViewTransform = mainView.modelViewTransform;
         this.type = this.pieceModel.type;
@@ -51,18 +51,21 @@ define( function( require ) {
 
         // Draw a handle
         var height = sourceModel.height;   //if type = 'beam_source'
+        var angle = sourceModel.angle;
         this.defaultHeight = height;
 
-        this.myHandle;
-
+        this.translationHandle;
+        this.rotationHandle
         if( sourceModel.type === 'fan_source'){
-            this.myHandle = new Circle( 20, { x: 0, y: 0, fill: '#8F8' } );
+            this.translationHandle = new Circle( 20, { x: 0, y: 0, fill: '#8F8' } );
         }else if ( sourceModel.type === 'beam_source' ){
-            this.myHandle = new Rectangle( 0, -height/2, 10, height, { fill: '#8F8' } );
+            this.translationHandle = new Rectangle( 0, -height/2, 10, height, { fill: '#8F8' } );
+            this.rotationHandle = new Circle( 5, { x: Math.sin( angle )*height/2, y: Math.cos( angle )*height/2, fill: 'yellow' });
+            sourceNode.addChild( this.rotationHandle );
+            //this.translationHandle.addChild( this.rotationHandle );
         }
 
-        sourceNode.addChild( this.myHandle );
-
+        sourceNode.insertChild( 0, this.translationHandle );
         //initialize rayNodes array
 
         var rayFontObject = { stroke: this.rayColor, lineWidth: 2 } ;
@@ -74,7 +77,7 @@ define( function( require ) {
 
 
         // When dragging, move the sample element
-        sourceNode.myHandle.addInputListener( new SimpleDragHandler(
+        sourceNode.translationHandle.addInputListener( new SimpleDragHandler(
             {
                 // When dragging across it in a mobile device, pick it up
                 allowTouchSnag: true,
@@ -99,7 +102,23 @@ define( function( require ) {
                     }
 
                 }
-            } ) );
+            } ) );//end translationHandle.addInputListener()
+
+        this.rotationHandle.addInputListener ( new SimpleDragHandler ( {
+            allowTouchSnag: true,
+            //start function for testing only
+            start: function (e){
+                //console.log( 'mouse down' );
+                var mouseDownPosition = e.pointer.point;
+            },
+
+            drag: function(e){
+                var mousePosRelative =  sourceNode.rotationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
+                var angle = -mousePosRelative.angle();  //model angle is negative of xy screen coordinates angle
+                console.log( 'rotationHandle dragged. angle is ' + angle );
+
+            }
+        }));//end this.rotationHandle.addInputListener()
 
         // Register for synchronization with pieceModel and mainModel.
         this.pieceModel.positionProperty.link( function( position ) {
@@ -157,7 +176,7 @@ define( function( require ) {
 
     return inherit( Node, SourceNode, {
         setRayNodes: function( nbrOfRays ){
-            //this.myHandle.removeAllChildren();
+            //this.translationHandle.removeAllChildren();
             //this.rayNodes = [];
             nbrOfRays = Math.round( nbrOfRays );
 
@@ -195,7 +214,7 @@ define( function( require ) {
                 //var rayNode = new Path( rayShape, rayFontObject );
 
                 //this.rayNodes.push( rayNode );
-                //this.myHandle.addChild( rayNode );   //want to work with absolute coords
+                //this.translationHandle.addChild( rayNode );   //want to work with absolute coords
             }//end rayPath loop
         },//end setRayNodes()
         drawRays: function(){
@@ -221,7 +240,11 @@ define( function( require ) {
         //    }
         //},
         setHeight: function( height ){
-            this.myHandle.setScaleMagnitude( 1, height/this.defaultHeight );
+            this.translationHandle.setScaleMagnitude( 1, height/this.defaultHeight );
+            var cosAngle = Math.cos( this.pieceModel.angle );
+            var sinAngle = Math.sin( this.pieceModel.angle );
+            this.rotationHandle.x = ( height/2 )*sinAngle;
+            this.rotationHandle.y = ( height/2 )*cosAngle;
         },
         setColor: function( color ){
             for ( var i = 0; i < this.pieceModel.rayPaths.length; i++ ) {
