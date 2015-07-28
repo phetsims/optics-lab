@@ -92,9 +92,20 @@ define( function( require ) {
                 //var endPosition = this.position.plus( dir.timesScalar( this.maxLength ));
 
                 //for beam source
-                var lowestPos = new Vector2( 0, -this.height / 2 );   //in cm
+                var lowestPos;   //in cm
+                var startPos;
+                var deltaHeight;
+                var deltaPos;
+
+                if ( this.setNbrOfRays === 1 ) {
+                    lowestPos = new Vector2( 0, 0 );
+                    deltaHeight = 0;
+                }
+                else {
+                    lowestPos = new Vector2( 0, -this.height / 2 );   //in cm
+                    deltaHeight = this.height / ( this.nbrOfRays - 1 );
+                }
                 var startPos = lowestPos;
-                var deltaHeight = this.height / ( this.nbrOfRays - 1 );
                 var deltaPos = new Vector2( 0, deltaHeight );
 
                 //loop through and initialize all rayPaths of the source
