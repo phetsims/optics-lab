@@ -16,7 +16,7 @@ define( function( require ) {
     var Rectangle = require( 'SCENERY/nodes/Rectangle' );
     var Shape = require( 'KITE/Shape' );
     var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-    //var Vector2 = require( 'DOT/Vector2' );
+    var Vector2 = require( 'DOT/Vector2' );
 
 
     // images
@@ -43,6 +43,7 @@ define( function( require ) {
         this.maxNbrOfRays = sourceModel.maxNbrOfRays;
         this.counter = 0; //for testing only
         this.rayColor = '#fff';
+        this.settingHeight = false; //flag used to prevent conflicting calls to set angle of translation handle
         // Call the super constructor
         Node.call( sourceNode, {
             // Show a cursor hand over the bar magnet
@@ -59,13 +60,14 @@ define( function( require ) {
         if( sourceModel.type === 'fan_source'){
             this.translationHandle = new Circle( 20, { x: 0, y: 0, fill: '#8F8' } );
         }else if ( sourceModel.type === 'beam_source' ){
-            this.translationHandle = new Rectangle( 0, -height/2, 10, height, { fill: '#8F8' } );
+            this.translationHandle = new Rectangle( -5, -height/2, 10, height, { fill: '#8F8', cursor: 'pointer' } );
             this.rotationHandle = new Circle( 5, { x: Math.sin( angle )*height/2, y: Math.cos( angle )*height/2, fill: 'yellow' });
             sourceNode.addChild( this.rotationHandle );
             //this.translationHandle.addChild( this.rotationHandle );
         }
 
-        sourceNode.insertChild( 0, this.translationHandle );
+        //sourceNode.insertChild( 0, this.translationHandle );
+        sourceNode.addChild( this.translationHandle );
         //initialize rayNodes array
 
         var rayFontObject = { stroke: this.rayColor, lineWidth: 2 } ;
@@ -117,7 +119,7 @@ define( function( require ) {
                 var angle = mousePosRelative.angle() - Math.PI/2;  //angle = 0 when beam horizontal, CW is + angle
                 sourceNode.pieceModel.setAngle( angle );
                 //console.log( 'position is ' + mousePosRelative );
-                console.log( 'rotation angle in degree is ' + angle*180/Math.PI );
+                //console.log( 'rotation angle in degree is ' + angle*180/Math.PI );
 
             }
         }));//end this.rotationHandle.addInputListener()
@@ -130,8 +132,16 @@ define( function( require ) {
         } );
 
         this.pieceModel.angleProperty.link( function( angle ){
-            //sourceNode.rotation = angle;
-            console.log( 'angle in degs is ' + angle*180/Math.PI );
+            if( !sourceNode.settingHeight ){
+                sourceNode.translationHandle.rotation = angle;
+            }
+
+            var cosAngle = Math.cos( angle );
+            var sinAngle = Math.sin( angle );
+            var height = sourceNode.pieceModel.height;
+            sourceNode.rotationHandle.translation = new Vector2( -( height/2 )*sinAngle, ( height/2 )*cosAngle );
+            //debugger;
+            //console.log( 'angle in degs is ' + angle*180/Math.PI );
         } );
 
         this.pieceModel.nbrOfRaysProperty.link( function( nbrOfRays ){
@@ -247,13 +257,23 @@ define( function( require ) {
         //    }i
         //},
         setHeight: function( height ){
-            //this.translationHandle.rotation = 0;
-            this.translationHandle.setScaleMagnitude( 1, height/this.defaultHeight );
-            //this.translationHandle.rotation = this.pieceModel.angle;
+            this.settingHeight = true;
             var cosAngle = Math.cos( this.pieceModel.angle );
             var sinAngle = Math.sin( this.pieceModel.angle );
-            this.rotationHandle.x = ( height/2 )*sinAngle;
-            this.rotationHandle.y = ( height/2 )*cosAngle;
+            //console.log( 'setHeight called');
+            this.translationHandle.rotation = 0;
+            //this.translationHandle.setScaleMagnitude( 1 , height/this.defaultHeight );
+            //this.removeChild( this.translationHandle );
+            this.translationHandle.rotation = this.pieceModel.angle;
+            //this.translationHandle = new Rectangle( -5, -height/2, 10, height, { fill: '#8F8' } );
+            //this.insertChild( 0, this.translationHandle );
+            //this.translationHandle.rotation = this.pieceModel.angle;
+
+            this.rotationHandle.translation = new Vector2( ( - height/2 )*sinAngle, ( height/2 )*cosAngle );
+            this.settingHeight = false;
+            //console.log( 'cosAngle is ' + cosAngle );
+            //this.rotationHandle.x = ( height/2 )*sinAngle;
+            //this.rotationHandle.y = ( height/2 )*cosAngle;
         },
         setColor: function( color ){
             for ( var i = 0; i < this.pieceModel.rayPaths.length; i++ ) {
