@@ -126,6 +126,7 @@ define( function( require ) {
         var angleInRads = incomingRayDir.angle();
         var newAngleInRads;  // = angleInRads + 0.1*( Math.random() - 0.5 );
         var component = this.components.get( componentNbr );
+        var componentAngle = component.angle;
         var r = ( intersection.y - component.position.y );
         var f = component.f;
         var tanTheta = Math.tan( angleInRads );
