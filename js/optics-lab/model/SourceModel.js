@@ -101,16 +101,23 @@ define( function( require ) {
                 var startPos;
                 var deltaHeight;
                 var deltaPos;
+                var sinAngle = Math.sin( -this.angle );   //in screen coords, + angle is CW
+                var cosAngle = Math.cos( -this.angle );
+                var h = this.height;
                 if ( this.nbrOfRays === 1 ) {
                     lowestPos = new Vector2( 0, 0 );
                     deltaHeight = 0;
                 }
                 else {
-                    lowestPos = new Vector2( 0, -this.height / 2 );   //in cm
-                    deltaHeight = this.height / ( this.nbrOfRays - 1 );
+                    //lowestPos = new Vector2( 0, -this.height / 2 );   //in cm
+                    //deltaHeight = this.height / ( this.nbrOfRays - 1 );
+                    lowestPos = new Vector2( h*sinAngle / 2, h*cosAngle / 2 );
+                    deltaPos = new Vector2( -h*sinAngle/ ( this.nbrOfRays - 1 ), -h*cosAngle / ( this.nbrOfRays - 1 ) );
+
                 }
-                var startPos = lowestPos;
-                var deltaPos = new Vector2( 0, deltaHeight );
+                startPos = lowestPos;
+                //var deltaPos = new Vector2( 0, deltaHeight );
+
 
                 //loop through and initialize all rayPaths of the source
                 for ( var i = 0; i < this.nbrOfRays; i++ ) {
@@ -124,7 +131,7 @@ define( function( require ) {
                         this.rayPaths[i].startPos = this.position;
                         //this.rayPaths[i].addSegment( this.position, endPosition );
                     } else if (this.type === 'beam_source') {
-                        dir = new Vector2( 1, 0 );
+                        dir = new Vector2( cosAngle, -sinAngle );
                         relativeStartPos = lowestPos.plus( deltaPos.timesScalar( i ) );
                         startPos = this.position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
                         //endPosition = startPos.plus( dir.timesScalar( this.maxLength ));

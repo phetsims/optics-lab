@@ -134,6 +134,7 @@ define( function( require ) {
         this.pieceModel.angleProperty.link( function( angle ){
             if( !sourceNode.settingHeight ){
                 sourceNode.translationHandle.rotation = angle;
+                //console.log('calling angleProperty.link');
             }
 
             var cosAngle = Math.cos( angle );
@@ -160,6 +161,8 @@ define( function( require ) {
             //console.log( 'source callback, height is ' + height );
             if( sourceNode.type === 'beam_source' ){
                 sourceNode.setHeight( height );
+                sourceNode.setRayNodes();
+                sourceModel.mainModel.processRays();
             }
         });
 
@@ -262,6 +265,8 @@ define( function( require ) {
             var sinAngle = Math.sin( this.pieceModel.angle );
             //console.log( 'setHeight called');
             this.translationHandle.rotation = 0;
+            //
+            this.translationHandle.setRect( -5, -height/2, 10, height );
             //this.translationHandle.setScaleMagnitude( 1 , height/this.defaultHeight );
             //this.removeChild( this.translationHandle );
             this.translationHandle.rotation = this.pieceModel.angle;
