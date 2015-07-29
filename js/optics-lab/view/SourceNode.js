@@ -66,8 +66,8 @@ define( function( require ) {
             //this.translationHandle.addChild( this.rotationHandle );
         }
 
-        //sourceNode.insertChild( 0, this.translationHandle );
-        sourceNode.addChild( this.translationHandle );
+        sourceNode.insertChild( 0, this.translationHandle );
+        //sourceNode.addChild( this.translationHandle );
         //initialize rayNodes array
 
         var rayFontObject = { stroke: this.rayColor, lineWidth: 2 } ;
