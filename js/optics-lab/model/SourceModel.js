@@ -31,7 +31,7 @@ define( function( require ) {
             nbrOfRays: nbrOfRays,       //@private, number of rays
             spread: spread,             //spread of point source (fan source) in degrees
             height: height,              //height of source, if beam
-            angle: 0                    //angle in rads of beam source, 0 = horizontal. + = CCW, - = CW
+            angle: 0                    //@private angle in rads of beam source, 0 = horizontal. + = CCW, - = CW
         } );
 
         var sourceModel = this;

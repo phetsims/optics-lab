@@ -19,7 +19,8 @@ define( function( require ) {
       diameter: diameter,             //@private
       radius: radiusCurvature,       //@private
       index: index,                  //@private
-      f: 500
+      f: 500,
+      angle: 0                        //tilt angle of component, 0 = optic axis is horizontal, + angle is CW
     } );
 
     var componentModel = this;
@@ -54,6 +55,9 @@ define( function( require ) {
       componentModel.f = R/( 2 * ( n - 1 ));
       componentModel.mainModel.processRays();
     });
+    this.angleProperty.link( function(){
+      componentModel.mainModel.processRays();
+    });
   }
 
   return inherit( PropertySet, ComponentModel, {
@@ -83,6 +87,10 @@ define( function( require ) {
       setPosition: function( position ) {   //position is vector2
         this.position = position;
         //console.log( 'component position is ' + position );
+        this.mainModel.processRays();
+      },
+      setAngle: function( angleInRads ){
+        this.angle = angleInRads;
         this.mainModel.processRays();
       }
     }

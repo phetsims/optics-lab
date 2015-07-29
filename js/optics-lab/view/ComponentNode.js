@@ -8,13 +8,13 @@ define( function( require ) {
   // modules
   var ComponentGraphic = require( 'OPTICS_LAB/optics-lab/view/ComponentGraphic' );
   var inherit = require( 'PHET_CORE/inherit' );
-  //var Circle = require( 'SCENERY/nodes/Circle' );
+  var Circle = require( 'SCENERY/nodes/Circle' );
   //var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   //var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Property = require( 'AXON/Property' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  //var Vector2 = require( 'DOT/Vector2' );
+  var Vector2 = require( 'DOT/Vector2' );
 
 
   // images
@@ -56,9 +56,13 @@ define( function( require ) {
     //myHandle.children = [ marker1, marker2 ];
     //function ComponentGraphic( type, diameter, radius(of curvature), index, mainView )
     this.componentGraphic = new ComponentGraphic( this.type, height, radius, index );
+    var height = this.pieceModel.diameter;   //if type = 'beam_source'
+    var angle = this.pieceModel.angle;
+    this.rotationHandle = new Circle( 5, { x: Math.sin( angle )*height/2, y: Math.cos( angle )*height/2, fill: 'yellow' });
     //myHandle.addChild( componentGraphic );
     //componentNode.addChild( myHandle );
     componentNode.addChild( this.componentGraphic );
+    componentNode.addChild( this.rotationHandle );
 
 
 
@@ -88,10 +92,35 @@ define( function( require ) {
         }
       } ) );
 
+    this.rotationHandle.addInputListener ( new SimpleDragHandler ( {
+      allowTouchSnag: true,
+      //start function for testing only
+      start: function (e){
+        //console.log( 'mouse down' );
+        var mouseDownPosition = e.pointer.point;
+      },
+
+      drag: function(e){
+        var mousePosRelative =  componentNode.rotationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
+        var angle = mousePosRelative.angle() - Math.PI/2;  //angle = 0 when beam horizontal, CW is + angle
+        componentNode.pieceModel.setAngle( angle );
+        //console.log( 'position is ' + mousePosRelative );
+        console.log( 'rotation angle in degree is ' + angle*180/Math.PI );
+
+      }
+    }));//end this.rotationHandle.addInputListener()
+
     // Register for synchronization with pieceModel.
     this.pieceModel.positionProperty.link( function( position ) {
       componentNode.translation = position;
     } );
+    this.pieceModel.angleProperty.link( function( angle ){
+      componentNode.componentGraphic.rotation = angle;
+      var cosAngle = Math.cos( angle );
+      var sinAngle = Math.sin( angle );
+      var diameter = componentNode.pieceModel.diameter;
+      componentNode.rotationHandle.translation = new Vector2( -( diameter/2 )*sinAngle, ( diameter/2 )*cosAngle );
+    });
     this.pieceModel.diameterProperty.link( function( diameter ) {
       componentNode.componentGraphic.setDiameter( diameter );
     } );

@@ -89,9 +89,15 @@ define( function( require ) {
         for ( var j = 0; j < this.components.length; j++ ) {
           var compDiameter = this.components.get( j ).diameter;
           var compCenter = this.components.get( j ).position;
+          var compAngle = this.components.get( j ).angle;
+          var sinAngle = Math.sin( compAngle );
+          var cosAngle = Math.cos( compAngle );
           var thisIntersection = Util.lineSegmentIntersection(
             startPoint.x, startPoint.y, rayTip.x, rayTip.y,
-            compCenter.x, compCenter.y - compDiameter / 2, compCenter.x, compCenter.y + compDiameter / 2 );
+            compCenter.x - ( compDiameter / 2 )*sinAngle,
+            compCenter.y - ( compDiameter / 2 )*cosAngle,
+            compCenter.x + ( compDiameter / 2 )*sinAngle,
+            compCenter.y + ( compDiameter / 2 )*cosAngle );
           if( thisIntersection !== null ){
             var dist = thisIntersection.distance( startPoint );
             //console.log( 'dist = ' + dist );
