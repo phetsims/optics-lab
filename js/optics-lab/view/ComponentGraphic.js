@@ -126,7 +126,7 @@ define( function( require ) {
         this.path.fill = 'white';
         this.path.lineWidth = 2;
 
-        this.path.opacity = 0.95;
+        this.path.opacity = 0.85;
         this.path.setShape( this.shape );
         this.mirrorBackGraphic.visible = false;
       },//end drawLens()
