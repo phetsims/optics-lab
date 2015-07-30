@@ -106,7 +106,7 @@ define( function( require ) {
                 var h = this.height;
                 if ( this.nbrOfRays === 1 ) {
                     lowestPos = new Vector2( 0, 0 );
-                    deltaHeight = 0;
+                    deltaPos = new Vector2( 0, 0 );
                 }
                 else {
                     //lowestPos = new Vector2( 0, -this.height / 2 );   //in cm

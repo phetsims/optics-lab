@@ -105,7 +105,7 @@ define( function( require ) {
         var angle = mousePosRelative.angle() - Math.PI/2;  //angle = 0 when beam horizontal, CW is + angle
         componentNode.pieceModel.setAngle( angle );
         //console.log( 'position is ' + mousePosRelative );
-        console.log( 'rotation angle in degree is ' + angle*180/Math.PI );
+        //console.log( 'rotation angle in degree is ' + angle*180/Math.PI );
 
       }
     }));//end this.rotationHandle.addInputListener()

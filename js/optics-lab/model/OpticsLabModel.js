@@ -89,7 +89,7 @@ define( function( require ) {
         for ( var j = 0; j < this.components.length; j++ ) {
           var compDiameter = this.components.get( j ).diameter;
           var compCenter = this.components.get( j ).position;
-          var compAngle = this.components.get( j ).angle;
+          var compAngle = -this.components.get( j ).angle;
           var sinAngle = Math.sin( compAngle );
           var cosAngle = Math.cos( compAngle );
           var thisIntersection = Util.lineSegmentIntersection(
@@ -123,11 +123,19 @@ define( function( require ) {
       processIntersection: function( rayPath, intersection, segmentNbr, componentNbr ){
         var incomingRayDir = rayPath.dirs[ segmentNbr ];
         //console.log( 'rayDir in degs is ' + incomingRayDir.angle()*180/Math.PI );
-        var angleInRads = incomingRayDir.angle();
+        //var angleInRads = incomingRayDir.angle();
+        var incomingAngle =  incomingRayDir.angle();
         var newAngleInRads;  // = angleInRads + 0.1*( Math.random() - 0.5 );
         var component = this.components.get( componentNbr );
         var componentAngle = component.angle;
-        var r = ( intersection.y - component.position.y );
+        var componentNormal = new Vector2( Math.cos( componentAngle ), Math.sin( componentAngle )) ;
+        var componentParallel = new Vector2( -Math.sin( componentAngle ), Math.cos( componentAngle ) ) ;
+        //var angleInRads = incomingRayDir.angleBetween( componentNormal );  //NO GOOD: .angleBetween is always positive
+        var angleInRads = incomingAngle - componentAngle;
+        //var r = ( intersection.y - component.position.y );
+        //var r = intersection.distance( component.position );       //NO GOOD, distance is positive always
+        var r = ( intersection.minus( component.position )).dot(componentParallel);
+        //console.log( 'r = ' + r );
         var f = component.f;
         var tanTheta = Math.tan( angleInRads );
         //console.log( ' tanAngle is ' + tanTheta );
@@ -141,9 +149,9 @@ define( function( require ) {
           //console.log( 'It is a lens.' );
           //var fromLeft = false;  //true is ray is from left to right, false if reflected once by mirror
           if( fromLeft ){
-            newAngleInRads = - Math.atan( (r/f) - tanTheta );
+            newAngleInRads = - Math.atan( (r/f) - tanTheta ) + componentAngle;
           }else{
-            newAngleInRads = Math.PI + Math.atan( (r/f) + tanTheta );
+            newAngleInRads = Math.PI + Math.atan( (r/f) + tanTheta ) - componentAngle;
           }
 
           newDir = new Vector2.createPolar( 1, newAngleInRads );
@@ -153,7 +161,7 @@ define( function( require ) {
 
         }else if ( component.type === 'converging_mirror' ) {
           if( fromLeft ){
-            newAngleInRads = Math.PI + Math.atan( (r / f) - tanTheta );
+            newAngleInRads = Math.PI + Math.atan( (r / f) - tanTheta ) + componentAngle;
             //console.log( 'tanThetaIncoming = ' + tanTheta + '    Math.atan( (r/f) + tanTheta  = ' + Math.atan( (r / f) + tanTheta ));
             newDir = new Vector2.createPolar( 1, newAngleInRads );
             this.launchRay( rayPath, intersection, newDir );
@@ -162,7 +170,7 @@ define( function( require ) {
           //console.log( 'It is a curved mirror.' );
         }else if( component.type === 'diverging_mirror' ){
           if( fromLeft ){
-            newAngleInRads = Math.PI + Math.atan( (r / f) - tanTheta );
+            newAngleInRads = Math.PI + Math.atan( (r / f) - tanTheta )  + componentAngle;
             newDir = new Vector2.createPolar( 1, newAngleInRads );
             this.launchRay( rayPath, intersection, newDir );
           }
@@ -170,7 +178,7 @@ define( function( require ) {
           //code here
         }else if( component.type === 'plane_mirror' ){
           //console.log( 'It is a plane mirror.' );
-          newAngleInRads = Math.PI - angleInRads;
+          newAngleInRads = Math.PI - angleInRads  + componentAngle;
           newDir = new Vector2.createPolar( 1, newAngleInRads );
           this.launchRay( rayPath, intersection, newDir );
 
