@@ -30,6 +30,8 @@ define( function( require ) {
     this.sources = new ObservableArray();
     this.components = new ObservableArray();
     this.maxLength = 2000;  //maximum length of segment of rayPath
+    this.maxNbrIntersections = 100;  //maximum number of segments in a raypath, to prevent endless loops
+    this.intersectionCounter = 0;
 
     //this.sources = [];
     //this.components = [];
@@ -64,7 +66,7 @@ define( function( require ) {
       updateSourceLines: function( source ) {
         //var intersection;   //Vector2
         //var distanceToIntersection;   //Number = length of ray
-
+        this.intersectionCounter = 0;
         //loop thru all rayPaths of this source
         for ( var r = 0; r < source.rayPaths.length; r++ ) {
           var rayPath = source.rayPaths[ r ];
@@ -113,6 +115,7 @@ define( function( require ) {
           rayPath.addSegment( startPoint, intersection );
           var tailSegmentNbr = rayPath.segments.length - 1;
           this.processIntersection( rayPath, intersection, tailSegmentNbr , componentIntersectedIndex );
+          rayPath.nbrSegments += 1;  //increment segment counter to check for runaway raypath
         }
         else {
           rayPath.addSegment( startPoint, rayTip );   //rayPath ends
@@ -138,29 +141,17 @@ define( function( require ) {
         if( incomingRayDir.dot( componentNormal ) < 0 ){
           normalDirection = false;
         }
-        //var r;
+
         var r = ( intersection.minus( component.position )).dot(componentParallel);
 
-        //if( normalDirection ){
-        //  r = ( intersection.minus( component.position )).dot(componentParallel);
-        //}else{
-        //  r = -( intersection.minus( component.position )).dot(componentParallel);
-        //}
-        //console.log( 'normalDirection: ' + normalDirection );
-        //console.log( 'r = ' + r );
         var f = component.f;
         var tanTheta = Math.tan( angleInRads );
         //console.log( ' tanAngle is ' + tanTheta );
         var newDir;
-        //var fromLeft = false;  //true is ray is from left to right, true if reflected once by mirror
-        //var angleInDegrees = angleInRads*180/Math.PI;
-        //var magnitudeAngleInDegrees = Math.abs( angleInDegrees );
-        //if( magnitudeAngleInDegrees < 90 ){ fromLeft = true; }
-
-        if( component.type === 'converging_lens' || component.type === 'diverging_lens' ){
-          //console.log( 'It is a lens.' );
-          //var fromLeft = false;  //true is ray is from left to right, false if reflected once by mirror
-          //newAngleInRads = - Math.atan( (r/f) - tanTheta ) + componentAngle;
+        if( rayPath.nbrSegments > rayPath.maxNbrSegments ){
+          //do nothing, ray ends if too many segments
+          console.log( 'Max number of raypath segments exceeded' );
+        }else if( component.type === 'converging_lens' || component.type === 'diverging_lens' ){
           if( normalDirection ){
             newAngleInRads = - Math.atan( (r/f) - tanTheta ) + componentAngle;
           }else{
@@ -169,8 +160,6 @@ define( function( require ) {
           }
 
           newDir = new Vector2.createPolar( 1, newAngleInRads );
-          //newSegment = Vector2.createPolar( this.maxLength, newAngleInRads );
-          //rayPath.addSegment( intersection, intersection.plus( newSegment ));
           this.launchRay( rayPath, intersection, newDir );
 
         }else if ( component.type === 'converging_mirror' ) {

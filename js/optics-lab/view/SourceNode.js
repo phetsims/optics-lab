@@ -70,9 +70,9 @@ define( function( require ) {
         //sourceNode.addChild( this.translationHandle );
         //initialize rayNodes array
 
-        var rayFontObject = { stroke: this.rayColor, lineWidth: 2 } ;
+        var rayOptionsObject = { stroke: this.rayColor, lineWidth: 2, lineJoin: 'bevel' } ;
         for( var r = 0; r < this.maxNbrOfRays; r++ ){
-            this.rayNodes[ r ] = new Path( new Shape(), rayFontObject );
+            this.rayNodes[ r ] = new Path( new Shape(), rayOptionsObject );
             sourceNode.addChild( this.rayNodes[ r ] );
         }
 

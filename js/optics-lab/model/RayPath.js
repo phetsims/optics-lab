@@ -36,6 +36,8 @@ define( function( require ) {
     //this.mainModel = mainModel;
 
     this.maxLength = 2000;  //maximum length of rays in pixels
+    this.maxNbrSegments = 100;  //maximum number of segments in ray path, needed to prevent endless loops
+    this.nbrSegments = 0;    //number of segments in raypath, not to exceed this.maxNbrSegments
 
     //An array of Kite.Line segments.  Kite.Line functions include
     //getStart(), getEnd(), getStartTangent() which returns direction
@@ -54,12 +56,14 @@ define( function( require ) {
         this.segments = [];
         this.dirs = [];
         this.lengths = [];
+        this.nbrSegments = 0;
       },
       clearSegments: function(){
         this.segments = [];
       },
       addSegment: function( startPos, endPos ) {
         this.segments.push( new Line( startPos, endPos ) );
+        this.nbrSegments += 1;
         var deltaPos = endPos.minus( startPos );
         var dir = deltaPos.normalize();
         var length = deltaPos.magnitude();
