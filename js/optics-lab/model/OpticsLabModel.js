@@ -134,7 +134,14 @@ define( function( require ) {
         var angleInRads = incomingAngle - componentAngle;
         //var r = ( intersection.y - component.position.y );
         //var r = intersection.distance( component.position );       //NO GOOD, distance is positive always
-        var r = ( intersection.minus( component.position )).dot(componentParallel);
+        var r;
+        r = ( intersection.minus( component.position )).dot(componentParallel);
+        //if( angleInRads < Math.PI ){
+        //  r = ( intersection.minus( component.position )).dot(componentParallel);
+        //}else{
+        //  r = -( intersection.minus( component.position )).dot(componentParallel);
+        //}
+
         //console.log( 'r = ' + r );
         var f = component.f;
         var tanTheta = Math.tan( angleInRads );
@@ -148,7 +155,8 @@ define( function( require ) {
         if( component.type === 'converging_lens' || component.type === 'diverging_lens' ){
           //console.log( 'It is a lens.' );
           //var fromLeft = false;  //true is ray is from left to right, false if reflected once by mirror
-          if( fromLeft ){
+          //newAngleInRads = - Math.atan( (r/f) - tanTheta ) + componentAngle;
+          if( angleInRads < Math.PI ){
             newAngleInRads = - Math.atan( (r/f) - tanTheta ) + componentAngle;
           }else{
             newAngleInRads = Math.PI + Math.atan( (r/f) + tanTheta ) - componentAngle;

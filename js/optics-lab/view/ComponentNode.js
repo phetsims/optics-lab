@@ -123,6 +123,11 @@ define( function( require ) {
     });
     this.pieceModel.diameterProperty.link( function( diameter ) {
       componentNode.componentGraphic.setDiameter( diameter );
+      var angle = componentNode.pieceModel.angle;
+      var cosAngle = Math.cos( angle );
+      var sinAngle = Math.sin( angle );
+      //var diameter = componentNode.pieceModel.diameter;
+      componentNode.rotationHandle.translation = new Vector2( -( diameter/2 )*sinAngle, ( diameter/2 )*cosAngle );
     } );
     this.pieceModel.radiusProperty.link( function( R ) {
       componentNode.componentGraphic.setRadius( R );
