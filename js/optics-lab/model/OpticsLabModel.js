@@ -134,32 +134,38 @@ define( function( require ) {
         var angleInRads = incomingAngle - componentAngle;
         //var r = ( intersection.y - component.position.y );
         //var r = intersection.distance( component.position );       //NO GOOD, distance is positive always
-        var r;
-        r = ( intersection.minus( component.position )).dot(componentParallel);
-        //if( angleInRads < Math.PI ){
+        var normalDirection = true;
+        if( incomingRayDir.dot( componentNormal ) < 0 ){
+          normalDirection = false;
+        }
+        //var r;
+        var r = ( intersection.minus( component.position )).dot(componentParallel);
+
+        //if( normalDirection ){
         //  r = ( intersection.minus( component.position )).dot(componentParallel);
         //}else{
         //  r = -( intersection.minus( component.position )).dot(componentParallel);
         //}
-
+        //console.log( 'normalDirection: ' + normalDirection );
         //console.log( 'r = ' + r );
         var f = component.f;
         var tanTheta = Math.tan( angleInRads );
         //console.log( ' tanAngle is ' + tanTheta );
         var newDir;
-        var fromLeft = false;  //true is ray is from left to right, true if reflected once by mirror
-        var angleInDegrees = angleInRads*180/Math.PI;
-        var magnitudeAngleInDegrees = Math.abs( angleInDegrees );
-        if( magnitudeAngleInDegrees < 90 ){ fromLeft = true; }
+        //var fromLeft = false;  //true is ray is from left to right, true if reflected once by mirror
+        //var angleInDegrees = angleInRads*180/Math.PI;
+        //var magnitudeAngleInDegrees = Math.abs( angleInDegrees );
+        //if( magnitudeAngleInDegrees < 90 ){ fromLeft = true; }
 
         if( component.type === 'converging_lens' || component.type === 'diverging_lens' ){
           //console.log( 'It is a lens.' );
           //var fromLeft = false;  //true is ray is from left to right, false if reflected once by mirror
           //newAngleInRads = - Math.atan( (r/f) - tanTheta ) + componentAngle;
-          if( angleInRads < Math.PI ){
+          if( normalDirection ){
             newAngleInRads = - Math.atan( (r/f) - tanTheta ) + componentAngle;
           }else{
-            newAngleInRads = Math.PI + Math.atan( (r/f) + tanTheta ) - componentAngle;
+            //newAngleInRads = Math.PI + Math.atan( (r/f) + tanTheta ) - componentAngle;
+            newAngleInRads = Math.PI + Math.atan( (r/f) + tanTheta ) + componentAngle;
           }
 
           newDir = new Vector2.createPolar( 1, newAngleInRads );
@@ -168,7 +174,7 @@ define( function( require ) {
           this.launchRay( rayPath, intersection, newDir );
 
         }else if ( component.type === 'converging_mirror' ) {
-          if( fromLeft ){
+          if( normalDirection ){
             newAngleInRads = Math.PI + Math.atan( (r / f) - tanTheta ) + componentAngle;
             //console.log( 'tanThetaIncoming = ' + tanTheta + '    Math.atan( (r/f) + tanTheta  = ' + Math.atan( (r / f) + tanTheta ));
             newDir = new Vector2.createPolar( 1, newAngleInRads );
@@ -177,7 +183,7 @@ define( function( require ) {
 
           //console.log( 'It is a curved mirror.' );
         }else if( component.type === 'diverging_mirror' ){
-          if( fromLeft ){
+          if( normalDirection ){
             newAngleInRads = Math.PI + Math.atan( (r / f) - tanTheta )  + componentAngle;
             newDir = new Vector2.createPolar( 1, newAngleInRads );
             this.launchRay( rayPath, intersection, newDir );
@@ -186,9 +192,12 @@ define( function( require ) {
           //code here
         }else if( component.type === 'plane_mirror' ){
           //console.log( 'It is a plane mirror.' );
-          newAngleInRads = Math.PI - angleInRads  + componentAngle;
-          newDir = new Vector2.createPolar( 1, newAngleInRads );
-          this.launchRay( rayPath, intersection, newDir );
+          if( normalDirection ){
+            newAngleInRads = Math.PI - angleInRads  + componentAngle;
+            newDir = new Vector2.createPolar( 1, newAngleInRads );
+            this.launchRay( rayPath, intersection, newDir );
+          }
+
 
         }else if( component.type === 'simple_mask' ){
           //Do nothing. The rayPath ends at a mask.
