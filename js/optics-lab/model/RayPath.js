@@ -36,7 +36,7 @@ define( function( require ) {
     //this.mainModel = mainModel;
 
     this.maxLength = 2000;  //maximum length of rays in pixels
-    this.maxNbrSegments = 100;  //maximum number of segments in ray path, needed to prevent endless loops
+    this.maxNbrSegments = 50;  //maximum number of segments in ray path, needed to prevent endless loops
     this.nbrSegments = 0;    //number of segments in raypath, not to exceed this.maxNbrSegments
 
     //An array of Kite.Line segments.  Kite.Line functions include

@@ -139,6 +139,7 @@ define( function( require ) {
         var angleInRads = incomingAngle - componentAngle;
         //var r = ( intersection.y - component.position.y );
         //var r = intersection.distance( component.position );       //NO GOOD, distance is positive always
+        //normalDirection is true if the ray direction is along the direction of the component normal +/- 90 degrees
         var normalDirection = true;
         if( incomingRayDir.dot( componentNormal ) < 0 ){
           normalDirection = false;

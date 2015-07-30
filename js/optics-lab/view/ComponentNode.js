@@ -132,9 +132,9 @@ define( function( require ) {
     this.pieceModel.radiusProperty.link( function( R ) {
       componentNode.componentGraphic.setRadius( R );
     } );
-    this.pieceModel.fProperty.link( function( f ) {
-      componentNode.componentGraphic.setFocalLength( f );
-    } );
+    //this.pieceModel.fProperty.link( function( f ) {
+    //  componentNode.componentGraphic.setFocalLength( f );
+    //} );
     this.pieceModel.indexProperty.link( function( n ) {
       componentNode.componentGraphic.setIndex( n );
     } );

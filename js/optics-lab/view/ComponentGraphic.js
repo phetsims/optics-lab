@@ -198,10 +198,10 @@ define( function( require ) {
         this.addChild( maskGraphic );
         this.addChild( lineGraphic );
       },
-      setFocalLength: function( focalLength ){
-        this.f = focalLength;
-        this.makeDrawing();
-      },
+      //setFocalLength: function( focalLength ){
+      //  this.f = focalLength;
+      //  this.makeDrawing();
+      //},
       setDiameter: function( diameter ) {
         this.diameter = diameter;
         this.makeDrawing();
@@ -223,14 +223,6 @@ define( function( require ) {
         setFocalPointsVisibility: function (isVisible) {
           this.focalPtLeft.visible = isVisible;
           this.focalPtRight.visible = isVisible;
-          //if( this.type === 'converging_lens' || this.type === 'diverging_lens' ){
-          //  this.focalPtLeft.visible = isVisible;
-          //  this.focalPtRight.visible = isVisible;
-          //}else if( this.type === 'converging_mirror' || this.type === 'diverging_mirror'){
-          //  this.focalPtLeft.visible = isVisible;
-          //  this.focalPtRight.visible = false;
-          //}
-
           //console.log( 'focal points visibility = ' + isVisible );
         }
 
