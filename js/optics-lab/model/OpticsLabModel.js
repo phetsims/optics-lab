@@ -79,6 +79,7 @@ define( function( require ) {
       }, //end updateSourceLines()
 
       launchRay: function( rayPath, startPoint, direction ){
+        //console.log( 'launchRay called.' );
         //var rayPath = rayPath;
         //var startPoint = startPoint;
         var dir = direction;
@@ -120,6 +121,7 @@ define( function( require ) {
         else {
           rayPath.addSegment( startPoint, rayTip );   //rayPath ends
         }
+
       }, //end launchRay()
 
 
@@ -178,7 +180,6 @@ define( function( require ) {
             this.launchRay( rayPath, intersection, newDir );
           }
 
-          //code here
         }else if( component.type === 'plane_mirror' ){
           //console.log( 'It is a plane mirror.' );
           if( normalDirection ){

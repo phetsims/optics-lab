@@ -29,7 +29,7 @@ define( function( require ) {
     //this.model = model;
     this.type = type; // 'converging_lens'|'diverging_lens'|'converging_mirror'|'plane_mirror'|etc.
     if( this.type === 'converging_mirror' || this.type === 'diverging_mirror' ){
-      this.index = 2;
+      this.index = 2;  //needed so formula for focal length is correct in mirror case
     }
     //this.diameter = diameter;
     //this.n = index;  //index of refraction n > 1 , n and f set radius of lens
@@ -43,12 +43,12 @@ define( function( require ) {
       var R = componentModel.radius;   //R is signed.  + for converging lenses, - for diverging lenses
       var n = componentModel.index;
       componentModel.f = R/( 2 * ( n - 1 ));  //focal length gets correct sign from sign of radius R.
-      //console.log(  'R curvature = ' + R + '   f = ' + componentModel.f );
+      console.log(  'R curvature = ' + R + '   f = ' + componentModel.f );
       componentModel.mainModel.processRays();
     });
-    this.fProperty.link( function(){    //probably unused
-      componentModel.mainModel.processRays();
-    });
+    //this.fProperty.link( function(){    //probably unused
+    //  componentModel.mainModel.processRays();
+    //});
     this.indexProperty.link( function(){
       var R = componentModel.radius;
       var n = componentModel.index;
