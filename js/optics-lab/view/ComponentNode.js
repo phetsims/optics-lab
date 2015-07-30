@@ -56,7 +56,7 @@ define( function( require ) {
     //myHandle.children = [ marker1, marker2 ];
     //function ComponentGraphic( type, diameter, radius(of curvature), index, mainView )
     this.componentGraphic = new ComponentGraphic( this.type, height, radius, index );
-    var height = this.pieceModel.diameter;   //if type = 'beam_source'
+    //var height = this.pieceModel.diameter;   //if type = 'beam_source'
     var angle = this.pieceModel.angle;
     this.rotationHandle = new Circle( 5, { x: Math.sin( angle )*height/2, y: Math.cos( angle )*height/2, fill: 'yellow' });
     //myHandle.addChild( componentGraphic );
@@ -97,7 +97,7 @@ define( function( require ) {
       //start function for testing only
       start: function (e){
         //console.log( 'mouse down' );
-        var mouseDownPosition = e.pointer.point;
+        //var mouseDownPosition = e.pointer.point;
       },
 
       drag: function(e){

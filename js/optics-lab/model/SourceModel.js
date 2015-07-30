@@ -99,7 +99,7 @@ define( function( require ) {
                 //for beam source
                 var lowestPos;   //in cm
                 var startPos;
-                var deltaHeight;
+                //var deltaHeight;
                 var deltaPos;
                 var sinAngle = Math.sin( -this.angle );   //in screen coords, + angle is CW
                 var cosAngle = Math.cos( -this.angle );

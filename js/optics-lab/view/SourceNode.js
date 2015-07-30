@@ -111,7 +111,7 @@ define( function( require ) {
             //start function for testing only
             start: function (e){
                 //console.log( 'mouse down' );
-                var mouseDownPosition = e.pointer.point;
+                //var mouseDownPosition = e.pointer.point;
             },
 
             drag: function(e){
