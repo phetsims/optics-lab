@@ -52,7 +52,7 @@ define( function( require ) {
    * @constructor
    */
 
-  function ControlPanel( mainModel, mainView ) {
+  function ControlPanelManager( mainModel, mainView ) {
 
     Node.call( this );
     var controlPanel = this;
