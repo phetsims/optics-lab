@@ -45,7 +45,7 @@ define( function( require ) {
     // model-view transform
     this.modelViewTransform = ModelViewTransform2.createIdentity();
     this.controlPanel = new ControlPanel( this.mainModel, this );
-    //this.controlPanelManager = new ControlPanelManager( this.mainModel, this );
+    this.controlPanelManager = new ControlPanelManager( this.mainModel, this );
     opticsLabScreenView.addChild( this.controlPanel );
 
     this.toolDrawerPanel = new ToolDrawerPanel( opticsLabModel, opticsLabScreenView );

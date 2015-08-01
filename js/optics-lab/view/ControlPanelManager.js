@@ -80,48 +80,54 @@ define( function( require ) {
 
   }//end constructor
 
-  return inherit(Node, ControlPanelManager, {
+    return inherit(Node, ControlPanelManager, {
 
-        displayControlPanelForNewPiece: function ( piece ) {
-          //var newPanel = new SelectedPieceControlPanel( this.mainModel, this.mainView, piece );
-          //this.controlPanels.add( newPanel );
-          //this.pieces.add( piece );
-          //this.addChild( newPanel );
-          this.hideAllControlPanels();
-          newPanel.visible = true;
-        },
-        displayControlPanelForExistingPiece: function (piece) {
-          this.hideAllControlPanels();
+            displayControlPanelForNewPiece: function (piece) {
+                var newPanel = new SelectedPieceControlPanel( this.mainModel, this.mainView, piece);
+                this.controlPanels.add(newPanel);
+                this.pieces.add(piece);
+                this.addChild(newPanel);
+                this.hideAllControlPanels();
+                newPanel.visible = true;
+            },
+            displayControlPanelForExistingPiece: function (piece) {
+                this.hideAllControlPanels();
+                var panelIndex = this.getIndexOfPanelOfSelectedPiece();
+                this.controlPanels[ panelIndex].visible = true;
+            },
+            disposeOfControlPanelForDeletedPiece: function ( piece ) {
+                var panelIndex = this.getIndexOfPanelOfSelectedPiece();
+                var panelToDelete = this.controlPanels[ panelIndex ];
+                panelToDelete.visible = false;
+                panelToDelete.dispose();
+                this.controlPanels.remove( panelToDelete );
+                this.pieces.remove( piece );
+            },
+            hideAllControlPanels: function () {
+                for (var i = 0; i < this.controlPanels.length; i++) {
+                    this.controlPanels[i].visible = false;
+                }
+            },
+            getIndexOfPanelOfSelectedPiece: function () {
+                var selectedPanelIndex;
+                for (var i = 0; i < this.controlPanels.length; i++) {
+                    if ( this.controlPanels[i].selectedPiece = this.selectedPiece ) {
+                        selectedPanelIndex = i;
+                        return selectedPanelIndex;
+                    }
+                }
+            },
 
-        },
-        disposeOfControlPanelForDeletedPiece: function (piece) {
-
-        },
-        hideAllControlPanels: function(){
-           for( var i = 0; i < this.controlPanels.length; i++ ){
-             this.controlPanels[ i ].visible = false;
-           }
-        },
-        getIndexOfPanelOfSelectedPiece: function ( ) {
-          var selectedPanelIndex;
-          for (var i = 0; i < this.controlPanels.length; i++) {
-            if ( this.controlPanels[ i ].selectedPiece = this.selectedPiece ) {
-              selectedPanelIndex = i;
-              return selectedPanelIndex;
+            setControls: function () {
+                this.removeChild(this.displayPanel);
+                this.displayPanel = new Panel(this.content, this.panelOptions);
+                this.insertChild(0, this.displayPanel);
+            },
+            setTitleBar: function (titleString) {
+                this.panelTitle.text = titleString;
             }
-          }
-        },
-
-        setControls: function () {
-          this.removeChild(this.displayPanel);
-          this.displayPanel = new Panel(this.content, this.panelOptions);
-          this.insertChild(0, this.displayPanel);
-        },
-        setTitleBar: function (titleString) {
-          this.panelTitle.text = titleString;
-        }
 
 
-      }//end inherit
-  );
+        }//end inherit
+    );
 } );
