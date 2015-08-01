@@ -14,6 +14,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   //var Circle = require( 'SCENERY/nodes/Circle' );
   var ControlPanel = require( 'OPTICS_LAB/optics-lab/view/ControlPanel' );
+  var ControlPanelManager = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager' );
   var ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
   var ComponentNode = require( 'OPTICS_LAB/optics-lab/view/ComponentNode' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -44,6 +45,7 @@ define( function( require ) {
     // model-view transform
     this.modelViewTransform = ModelViewTransform2.createIdentity();
     this.controlPanel = new ControlPanel( this.mainModel, this );
+    //this.controlPanelManager = new ControlPanelManager( this.mainModel, this );
     opticsLabScreenView.addChild( this.controlPanel );
 
     this.toolDrawerPanel = new ToolDrawerPanel( opticsLabModel, opticsLabScreenView );

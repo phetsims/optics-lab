@@ -18,8 +18,8 @@ define( function( require ) {
       position: new Vector2( 0, 0 ),  //@private, position of source on stage
       diameter: diameter,             //@private
       radius: radiusCurvature,       //@private
-      index: index,                  //@private
-      f: 500,
+      index: index,                  //@private, index of refraction of lens
+      f: 500,                        //focal length of component of lens or mirror
       angle: 0                        //tilt angle of component, 0 = optic axis is horizontal, + angle is CW
     } );
 
