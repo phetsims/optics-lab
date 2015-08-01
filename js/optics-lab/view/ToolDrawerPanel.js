@@ -135,14 +135,7 @@ define( function( require ) {
             //var v1 = e.pointer.point;
             //toolDrawerPanel.mainView.
             pieceGrabbed.pieceModel.setPosition( position );
-            //if( pieceGrabbed.type === 'fan_source' || pieceGrabbed.type === 'beam_source'){
-            //  pieceGrabbed.pieceModel.setPosition( position );
-            //}else{
-            //  pieceGrabbed.pieceModel.setPosition( position );
-            //}
-              //sourceNode.pieceModel.setPosition( position );
             //console.log( 'dragging postion is ' + v1 );
-
           },
           end: function( e ){
             var vEnd = toolDrawerPanel.globalToParentPoint( e.pointer.point );

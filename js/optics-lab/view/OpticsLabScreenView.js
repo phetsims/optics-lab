@@ -41,9 +41,6 @@ define( function( require ) {
     var opticsLabScreenView = this;
     ScreenView.call( opticsLabScreenView, { layoutBounds: new Bounds2( 0, 0, 768, 504 ) } );
 
-    //var sources = [];
-    //var walls = [];
-
     // model-view transform
     this.modelViewTransform = ModelViewTransform2.createIdentity();
     this.controlPanel = new ControlPanel( this.mainModel, this );
@@ -84,22 +81,22 @@ define( function( require ) {
             //ComponentModel( mainModel, type, diameter, radiusCurvature, index )
             //radius of curvature R = 2*f*( n - 1 )
 
-            componentModel = new ComponentModel( this.mainModel, 'converging_lens', 200, 350, 1.8 );
+            componentModel = new ComponentModel( this.mainModel, 'converging_lens', 125, 350, 1.8 );
             break;
           case 'diverging_lens':
-            componentModel = new ComponentModel( this.mainModel, 'diverging_lens', 150, -300, 1.8 );
+            componentModel = new ComponentModel( this.mainModel, 'diverging_lens', 125, -300, 1.8 );
             break;
           case 'converging_mirror':
-            componentModel = new ComponentModel( this.mainModel, 'converging_mirror', 200, 300, undefined );
+            componentModel = new ComponentModel( this.mainModel, 'converging_mirror', 125, 300, undefined );
             break;
           case 'plane_mirror':
-            componentModel = new ComponentModel( this.mainModel, 'plane_mirror', 200, undefined, undefined );
+            componentModel = new ComponentModel( this.mainModel, 'plane_mirror', 125, undefined, undefined );
             break;
           case 'diverging_mirror':
-            componentModel = new ComponentModel( this.mainModel, 'diverging_mirror', 200, -300, undefined );
+            componentModel = new ComponentModel( this.mainModel, 'diverging_mirror', 125, -300, undefined );
             break;
           case 'simple_mask':
-            componentModel = new ComponentModel( this.mainModel, 'simple_mask', 100, 0, 0 );
+            componentModel = new ComponentModel( this.mainModel, 'simple_mask', 125, 0, 0 );
             break;
           case 'slit_mask':
             componentModel = new ComponentModel( this.mainModel, 'simple_mask', 100, 0, 0 );

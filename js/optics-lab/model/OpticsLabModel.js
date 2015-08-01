@@ -30,7 +30,8 @@ define( function( require ) {
                               // needed to ensure current processing to end before new processing begins
 
     this.sources = new ObservableArray();     //source of light rays
-    this.components = new ObservableArray();  //compoment = lens, mirror, or mask
+    this.components = new ObservableArray();  //component = lens, mirror, or mask
+    this.pieces = new ObservableArray();      //piece = source or component
     this.maxLength = 2000;  //maximum length of segment of rayPath
     this.maxNbrIntersections = 100;  //maximum number of segments in a raypath, to prevent endless loops
     this.intersectionCounter = 0;
@@ -43,11 +44,13 @@ define( function( require ) {
 
       addSource: function( source ) {
         this.sources.add( source );
+        this.pieces.add( source );
         source.setPosition( source.position );
         //this.sources.push( source );
       },
       addComponent: function( component ) {
         this.components.add( component );
+        this.pieces.add( component );
         //this.components.push( component );
       },
       removeSource: function( source ) {
@@ -129,7 +132,7 @@ define( function( require ) {
         //console.log( 'rayDir in degs is ' + incomingRayDir.angle()*180/Math.PI );
         //var angleInRads = incomingRayDir.angle();
         var incomingAngle =  incomingRayDir.angle();   //angle in rads between direction of ray and component normal
-        var newAngleInRads;
+        var outgoingAngle;
         var component = this.components.get( componentNbr );
         var componentAngle = component.angle;  //tilt of component = angle between horizontal and component normal
         var componentNormal = new Vector2( Math.cos( componentAngle ), Math.sin( componentAngle )) ;
@@ -146,45 +149,45 @@ define( function( require ) {
 
         var r = ( intersection.minus( component.position )).dot(componentParallel);
 
-        var f = component.f;
+        var f = component.f;   //f = focal length
         var tanTheta = Math.tan( angleInRads );
         //console.log( ' tanAngle is ' + tanTheta );
         var newDir;
         if( rayPath.nbrSegments > rayPath.maxNbrSegments ){
-          //do nothing, ray ends if too many segments
+          //do nothing, ray terminates if too many segments, probably caught in infinite reflection loop
           console.log( 'Max number of raypath segments exceeded' );
         }else if( component.type === 'converging_lens' || component.type === 'diverging_lens' ){
           if( normalDirection ){
-            newAngleInRads = - Math.atan( (r/f) - tanTheta ) + componentAngle;
+            outgoingAngle = - Math.atan( (r/f) - tanTheta ) + componentAngle;
           }else{
             //newAngleInRads = Math.PI + Math.atan( (r/f) + tanTheta ) - componentAngle;
-            newAngleInRads = Math.PI + Math.atan( (r/f) + tanTheta ) + componentAngle;
+            outgoingAngle = Math.PI + Math.atan( (r/f) + tanTheta ) + componentAngle;
           }
 
-          newDir = new Vector2.createPolar( 1, newAngleInRads );
+          newDir = new Vector2.createPolar( 1, outgoingAngle );
           this.launchRay( rayPath, intersection, newDir );
 
         }else if ( component.type === 'converging_mirror' ) {
           if( normalDirection ){
-            newAngleInRads = Math.PI + Math.atan( (r / f) - tanTheta ) + componentAngle;
+            outgoingAngle = Math.PI + Math.atan( (r / f) - tanTheta ) + componentAngle;
             //console.log( 'tanThetaIncoming = ' + tanTheta + '    Math.atan( (r/f) + tanTheta  = ' + Math.atan( (r / f) + tanTheta ));
-            newDir = new Vector2.createPolar( 1, newAngleInRads );
+            newDir = new Vector2.createPolar( 1, outgoingAngle );
             this.launchRay( rayPath, intersection, newDir );
           }
 
           //console.log( 'It is a curved mirror.' );
         }else if( component.type === 'diverging_mirror' ){
           if( normalDirection ){
-            newAngleInRads = Math.PI + Math.atan( (r / f) - tanTheta )  + componentAngle;
-            newDir = new Vector2.createPolar( 1, newAngleInRads );
+            outgoingAngle = Math.PI + Math.atan( (r / f) - tanTheta )  + componentAngle;
+            newDir = new Vector2.createPolar( 1, outgoingAngle );
             this.launchRay( rayPath, intersection, newDir );
           }
 
         }else if( component.type === 'plane_mirror' ){
           //console.log( 'It is a plane mirror.' );
           if( normalDirection ){
-            newAngleInRads = Math.PI - angleInRads  + componentAngle;
-            newDir = new Vector2.createPolar( 1, newAngleInRads );
+            outgoingAngle = Math.PI - angleInRads  + componentAngle;
+            newDir = new Vector2.createPolar( 1, outgoingAngle );
             this.launchRay( rayPath, intersection, newDir );
           }
 

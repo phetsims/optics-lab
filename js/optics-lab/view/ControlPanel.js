@@ -145,6 +145,7 @@ define( function( require ) {
         this.panelTitle.text = titleString;
       },
       //change the piece that this panel controls
+      // piece is the pieceNode
       setControlsForSelectedPiece: function( piece ) {
         if ( piece !== null ) {
           var pieceModel = piece.pieceModel;
