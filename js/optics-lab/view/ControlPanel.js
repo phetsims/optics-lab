@@ -28,8 +28,10 @@ define( function( require ) {
   var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HSlider = require( 'SUN/HSlider' );
+  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var ObservableArray = require( 'AXON/ObservableArray' );
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
@@ -56,6 +58,8 @@ define( function( require ) {
     var controlPanel = this;
     this.mainModel = mainModel;
     this.mainView = mainView;
+    this.displays = new ObservableArray();     //one display for each piece on the stage, only display of selected piece is visible
+    this.nbrOfDisplays;     //number of displays in displays array = number of pieces on stage
     this.expandedProperty = new Property( true );
 
 
@@ -68,7 +72,7 @@ define( function( require ) {
   } );
 
   //initialize ray color radio buttons
-    var fontInfo = { font: DISPLAY_FONT };
+    var fontInfo = { font: DISPLAY_FONT } ;
     this.whiteText = new Text( 'white', fontInfo );
     this.greenText = new Text( 'green', fontInfo );
     this.redText = new Text( 'red', fontInfo );
@@ -82,7 +86,7 @@ define( function( require ) {
     this.diameterText = new Text( 'diameter', fontInfo );
     this.radiusText = new Text( 'radius of curvature', fontInfo );
     this.focalLengthText = new Text( 'f : ', fontInfo );
-    this.focalLengthReadoutText = new Text( 'xxxxxxx', fontInfo );
+    this.focalLengthReadoutText = new Text( 'filler', fontInfo );
     this.indexText = new Text( 'refractive index', fontInfo );
     //this.showFocalPointsProperty = new Property( false );
     //
@@ -93,6 +97,7 @@ define( function( require ) {
 
     var spacing = 35;
     var fillerBox = new Text( '', {font: DISPLAY_FONT} );
+    //content of the current display
     this.content = new HBox( {
       children: [
           fillerBox
@@ -100,7 +105,7 @@ define( function( require ) {
       spacing: spacing
     } );
 
-    // All graphic elements, curves, axes, labels, etc are placed on display node, with visibility set by accordionBox button
+    // All controls are placed on display node, with visibility set by accordionBox button
     this.panelOptions = {
       fill: 'white',
       stroke: 'black',
@@ -126,20 +131,11 @@ define( function( require ) {
       controlPanel.displayPanel.visible = tOrF;
     } );
 
-    //this.selectedPiece.pieceModel.fProperty.link( function( focalLength ){
-    //    console.log( 'focal length is ' + focalLength.toFixed(0) )
-    //});
 
 
   }//end constructor
 
   return inherit( Node, ControlPanel, {
-      //resetAccordionBox: function(){
-      //  this.removeChild( this.accordionBox );
-      //  this.accordionBox = null;
-      //  this.accordionBox = new AccordionBox( this.content, this.accordionBoxOptions );
-      //  this.addChild( this.accordionBox );
-      //},//end setUpAccordionBox()
       setControls: function() {
         this.removeChild( this.displayPanel );
         this.displayPanel = new Panel( this.content, this.panelOptions );
@@ -148,24 +144,27 @@ define( function( require ) {
       setTitleBar: function( titleString ){
         this.panelTitle.text = titleString;
       },
-      //change the component that this panel controls
+      //change the piece that this panel controls
       setControlsForSelectedPiece: function( piece ) {
         if ( piece !== null ) {
-          var pieceModel;
+          var pieceModel = piece.pieceModel;
           var type = piece.type;
           var maxNbrRays;
           var nbrOfRaysVBox;
+          var nbrOfRaysHStrut;
           var diameterVBox;
           var fillerBox = new Text( ' ', {font: DISPLAY_FONT} );
           var sliderOptions = { trackSize: new Dimension2( 120, 5 ), thumbSize: new Dimension2( 12, 25 ) };
           if( type === 'fan_source' || type === 'beam_source' ){
-            pieceModel = piece.pieceModel;
+            //pieceModel = piece.pieceModel;
             maxNbrRays = pieceModel.maxNbrOfRays;
             var nbrOfRaysSlider = new HSlider( pieceModel.nbrOfRaysProperty, { min: 1, max: maxNbrRays }, sliderOptions );
             nbrOfRaysVBox = new VBox( { children: [ nbrOfRaysSlider, this.nbrOfRaysText ], align: 'center' } );
+            nbrOfRaysHStrut = new HStrut( 160 ) ;
+            //nbrOfRaysHStrut.addChild( nbrOfRaysVBox );
             this.setColorRadioButtonsForSourceNode( piece );
           }else{
-            pieceModel = piece.pieceModel;
+            //pieceModel = piece.pieceModel;
             var diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 50, max: 250 }, sliderOptions );
             diameterVBox = new VBox( { children: [ diameterSlider, this.diameterText ]});
             this.focalLengthReadoutText.text = pieceModel.f.toFixed(0);
@@ -178,6 +177,7 @@ define( function( require ) {
 
           var checkBoxOptions = { checkBoxColorBackground: 'white' };
           var spacing = 25;
+          //var spacing = new HStrut( 20 );
           //console.log( 'setControlsForSelectedPiece' + piece.type );
           var fHBox = new HBox( {children: [ this.focalLengthText, this.focalLengthReadoutText ], spacing: 2 })
           switch( type ){
@@ -234,7 +234,6 @@ define( function( require ) {
               this.content = new HBox( { children: [ fillerBox ] } );
               break;
           }//end switch()
-          //this.resetAccordionBox();
           this.setControls();
         }//end if (type != null)
       },// end setControlsForSelectedPiece()

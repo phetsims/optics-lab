@@ -26,9 +26,11 @@ define( function( require ) {
     PropertySet.call( this, {
       processRaysCount: 0            //@private, number of times processRays() called, flag for further processing
     } );
+    this.processingRays = false;  //true if rays are being processed,
+                              // needed to ensure current processing to end before new processing begins
 
-    this.sources = new ObservableArray();
-    this.components = new ObservableArray();
+    this.sources = new ObservableArray();     //source of light rays
+    this.components = new ObservableArray();  //compoment = lens, mirror, or mask
     this.maxLength = 2000;  //maximum length of segment of rayPath
     this.maxNbrIntersections = 100;  //maximum number of segments in a raypath, to prevent endless loops
     this.intersectionCounter = 0;
@@ -64,8 +66,7 @@ define( function( require ) {
         this.processRaysCount += 1;  //increment number of times processRays called
       },
       updateSourceLines: function( source ) {
-        //var intersection;   //Vector2
-        //var distanceToIntersection;   //Number = length of ray
+        this.processingRays = true;
         this.intersectionCounter = 0;
         //loop thru all rayPaths of this source
         for ( var r = 0; r < source.rayPaths.length; r++ ) {
@@ -76,18 +77,16 @@ define( function( require ) {
           this.launchRay( rayPath, startPoint, direction );
 
         }//end rayPath loop
+        this.processingRays = false;
       }, //end updateSourceLines()
 
       launchRay: function( rayPath, startPoint, direction ){
-        //console.log( 'launchRay called.' );
-        //var rayPath = rayPath;
-        //var startPoint = startPoint;
         var dir = direction;
         var intersection = null;
         var distanceToIntersection = this.maxLength;
         var rayTip = startPoint.plus( dir.timesScalar( this.maxLength ) );
 
-        //loop thru all components
+        //loop thru all components, checking for intersection of ray and component
         var componentIntersectedIndex;
         for ( var j = 0; j < this.components.length; j++ ) {
           var compDiameter = this.components.get( j ).diameter;
@@ -97,14 +96,14 @@ define( function( require ) {
           var cosAngle = Math.cos( compAngle );
           var thisIntersection = Util.lineSegmentIntersection(
             startPoint.x, startPoint.y, rayTip.x, rayTip.y,
-            compCenter.x - ( compDiameter / 2 )*sinAngle,
-            compCenter.y - ( compDiameter / 2 )*cosAngle,
-            compCenter.x + ( compDiameter / 2 )*sinAngle,
-            compCenter.y + ( compDiameter / 2 )*cosAngle );
+            compCenter.x - ( compDiameter / 2 ) * sinAngle,
+            compCenter.y - ( compDiameter / 2 ) * cosAngle,
+            compCenter.x + ( compDiameter / 2 ) * sinAngle,
+            compCenter.y + ( compDiameter / 2 ) * cosAngle );
           if( thisIntersection !== null ){
             var dist = thisIntersection.distance( startPoint );
             //console.log( 'dist = ' + dist );
-            if ( dist > 10 &&  dist < distanceToIntersection ) {    //have to be sure component does not intersect its own starting ray
+            if ( dist > 10 &&  dist < distanceToIntersection ) {    //> 10 to be sure component does not intersect its own starting ray
               distanceToIntersection = dist;
               intersection = thisIntersection;
               componentIntersectedIndex = j;
@@ -129,10 +128,10 @@ define( function( require ) {
         var incomingRayDir = rayPath.dirs[ segmentNbr ];
         //console.log( 'rayDir in degs is ' + incomingRayDir.angle()*180/Math.PI );
         //var angleInRads = incomingRayDir.angle();
-        var incomingAngle =  incomingRayDir.angle();
-        var newAngleInRads;  // = angleInRads + 0.1*( Math.random() - 0.5 );
+        var incomingAngle =  incomingRayDir.angle();   //angle in rads between direction of ray and component normal
+        var newAngleInRads;
         var component = this.components.get( componentNbr );
-        var componentAngle = component.angle;
+        var componentAngle = component.angle;  //tilt of component = angle between horizontal and component normal
         var componentNormal = new Vector2( Math.cos( componentAngle ), Math.sin( componentAngle )) ;
         var componentParallel = new Vector2( -Math.sin( componentAngle ), Math.cos( componentAngle ) ) ;
         //var angleInRads = incomingRayDir.angleBetween( componentNormal );  //NO GOOD: .angleBetween is always positive

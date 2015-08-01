@@ -192,7 +192,10 @@ define( function( require ) {
                         //this.rayPaths[ i ].addSegment( pos, endPos );
                     }
                 }
-                this.mainModel.processRays();
+                if( !this.mainModel.processingRays ) {
+                    this.mainModel.processRays();
+                }
+
             }, //end setPosition()
           setAngle: function( angleInRads ){
               this.angle = angleInRads;
