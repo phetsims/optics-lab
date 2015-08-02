@@ -97,8 +97,9 @@ define( function( require ) {
                     var position = sourceNode.globalToParentPoint( e.pointer.point );
                     if( sourceNode.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y )){
                         //console.log( 'delete this');
-                        sourceNode.mainView.removeSource( sourceNode );
-                        sourceNode.mainView.controlPanel.displayPanel.visible = false;
+                        sourceNode.mainView.removePiece( sourceNode );
+                        //sourceNode.mainView.removeSource( sourceNode );
+                        //sourceNode.mainView.controlPanel.displayPanel.visible = false;
                     }else{
                         //console.log( 'keep this' );
                     }

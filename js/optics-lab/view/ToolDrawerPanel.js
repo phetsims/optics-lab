@@ -141,9 +141,10 @@ define( function( require ) {
           end: function( e ){
             var vEnd = toolDrawerPanel.globalToParentPoint( e.pointer.point );
             if( toolDrawerPanel.visibleBounds.containsCoordinates( vEnd.x, vEnd.y )){
+              mainView.removePiece( pieceGrabbed );
               //pieceGrabbed.mainView.removeComponent( pieceGrabbed );
-              mainView.removeComponent( pieceGrabbed );
-              mainView.controlPanel.displayPanel.visible = false;
+              //mainView.removeComponent( pieceGrabbed );
+              //mainView.controlPanel.displayPanel.visible = false;
             }
           }
         }//end addInputListener

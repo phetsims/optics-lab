@@ -13,7 +13,7 @@ define( function( require ) {
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
   //var Circle = require( 'SCENERY/nodes/Circle' );
-  var ControlPanel = require( 'OPTICS_LAB/optics-lab/view/ControlPanel' );
+  //var ControlPanel = require( 'OPTICS_LAB/optics-lab/view/ControlPanel' );
   var ControlPanelManager = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager' );
   var ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
   var ComponentNode = require( 'OPTICS_LAB/optics-lab/view/ComponentNode' );
@@ -44,16 +44,16 @@ define( function( require ) {
 
     // model-view transform
     this.modelViewTransform = ModelViewTransform2.createIdentity();
-    this.controlPanel = new ControlPanel( this.mainModel, this );
+    //this.controlPanel = new ControlPanel( this.mainModel, this );
     this.controlPanelManager = new ControlPanelManager( this.mainModel, this );
-    opticsLabScreenView.addChild( this.controlPanel );
+    opticsLabScreenView.addChild( this.controlPanelManager );
 
     this.toolDrawerPanel = new ToolDrawerPanel( opticsLabModel, opticsLabScreenView );
     opticsLabScreenView.addChild( this.toolDrawerPanel );
 
     //Layout
-    this.controlPanel.left = 40;
-    this.controlPanel.top = 10;
+    this.controlPanelManager.left = 40;
+    this.controlPanelManager.top = 10;
     this.toolDrawerPanel.bottom = this.layoutBounds.bottom - 10;
     this.toolDrawerPanel.centerX = this.layoutBounds.centerX;
 
@@ -116,13 +116,14 @@ define( function( require ) {
       },//end addComponent()
       //A piece is either a source or a component
       addPiece: function( type, startPosition ) {
-        var piece;
+        var newPiece;
         if( type === 'fan_source' || type === 'beam_source' ){
-          piece = this.addSource( type, startPosition );
+          newPiece = this.addSource( type, startPosition );
         }else{
-          piece = this.addComponent( type, startPosition );
+          newPiece = this.addComponent( type, startPosition );
         }
-        return piece;
+        //this.controlPanelManager.displayControlPanelForNewPiece( newPiece );
+        return newPiece;
       },//end AddPiece
       removeSource: function( sourceNode ){
         //console.log( 'remove source called. source is ' + sourceNode );
@@ -136,6 +137,15 @@ define( function( require ) {
         this.removeChild( componentNode );
         var componentModel = componentNode.pieceModel;
         this.mainModel.removeComponent( componentModel );
+      },
+      removePiece: function( piece ){
+        var type = piece.type;
+        if( type === 'fan_source' || type === 'beam_source' ){
+          this.removeSource( piece );
+        }else{
+          this.removeComponent( piece );
+        }
+        //this.controlPanelManager.disposeOfControlPanelForDeletedPiece( piece );
       },
       setSelectedPiece: function ( piece ){
         //console.log( 'setSelectedPiece() called.' )

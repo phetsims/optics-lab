@@ -84,8 +84,9 @@ define( function( require ) {
         end: function( e ) {
           var position = componentNode.globalToParentPoint( e.pointer.point );
           if( componentNode.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y )){
-            componentNode.mainView.removeComponent( componentNode );
-            componentNode.mainView.controlPanel.displayPanel.visible = false;
+            componentNode.mainView.removePiece( componentNode );
+            //componentNode.mainView.removeComponent( componentNode );
+            //componentNode.mainView.controlPanel.displayPanel.visible = false;
           }else{
             //console.log( 'keep this' );
           }

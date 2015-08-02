@@ -29,6 +29,7 @@ define( function( require ) {
   //var HBox = require( 'SCENERY/nodes/HBox' );
   //var HSlider = require( 'SUN/HSlider' );
   //var HStrut = require( 'SCENERY/nodes/HStrut' );
+  var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ObservableArray = require( 'AXON/ObservableArray' );
@@ -83,15 +84,18 @@ define( function( require ) {
     return inherit(Node, ControlPanelManager, {
 
             displayControlPanelForNewPiece: function (piece) {
+
                 var newPanel = new SelectedPieceControlPanel( this.mainModel, this.mainView, piece);
                 this.controlPanels.add(newPanel);
-                this.pieces.add(piece);
-                this.addChild(newPanel);
-                this.hideAllControlPanels();
+                this.pieces.add( piece );
+
+                //var myCircle = new Circle( 20, { fill: 'red'} ) ;
+                this.addChild( newPanel );
+                //this.hideAllControlPanels();
                 newPanel.visible = true;
             },
             displayControlPanelForExistingPiece: function (piece) {
-                this.hideAllControlPanels();
+                //this.hideAllControlPanels();
                 var panelIndex = this.getIndexOfPanelOfSelectedPiece();
                 this.controlPanels[ panelIndex].visible = true;
             },
@@ -103,11 +107,11 @@ define( function( require ) {
                 this.controlPanels.remove( panelToDelete );
                 this.pieces.remove( piece );
             },
-            hideAllControlPanels: function () {
-                for (var i = 0; i < this.controlPanels.length; i++) {
-                    this.controlPanels[i].visible = false;
-                }
-            },
+            //hideAllControlPanels: function () {
+            //    for (var i = 0; i < this.controlPanels.length; i++) {
+            //        this.controlPanels[i].visible = false;
+            //    }
+            //},
             getIndexOfPanelOfSelectedPiece: function () {
                 var selectedPanelIndex;
                 for (var i = 0; i < this.controlPanels.length; i++) {

@@ -53,12 +53,12 @@ define( function ( require ) {
     function SelectedPieceControlPanel( mainModel, mainView, selectedPiece ) {
 
         Node.call( this );
-        var controlPanel = this;
+        var thisControlPanel = this;
         this.mainModel = mainModel;
         this.mainView = mainView;
         this.selectedPiece = selectedPiece;
         this.expandedProperty = new Property( true );
-        this.hSliders = []; //array of HSliders in the control panel, used solely for garbage collection
+        this.hSliders = []; //array of HSliders in this control panel, used solely for garbage collection
 
 
         //initialize source rays color radio buttons
@@ -83,16 +83,6 @@ define( function ( require ) {
             cursor: 'pointer'
         });
 
-        var spacing = 35;
-        var fillerBox = new Text('', {font: DISPLAY_FONT});
-
-        //diplay content
-        this.content = new HBox({
-            children: [
-                fillerBox
-            ],
-            spacing: spacing
-        });
 
         // All controls are placed on display node, with visibility set by expand/collapse button
         this.panelOptions = {
@@ -108,11 +98,32 @@ define( function ( require ) {
             minWidth: 0 // minimum width of the panel
         };
 
+        //test code follows
         //this.setControlsForSelectedPiece();
+        var spacing = 35;
+        var fillerBox = new Text( 'filler', {font: DISPLAY_FONT} );
+        //content of the current display
+        this.content = new HBox( {
+            children: [
+                fillerBox
+            ],
+            spacing: spacing
+        } );
+        this.displayPanel = new Panel(this.content, this.panelOptions);
+        this.children = [this.displayPanel, this.expandCollapseButton];
+        this.expandCollapseButton.left = 5;
+        this.expandCollapseButton.top = 5;
+        //end test code
 
         this.expandCollapseButton.expandedProperty.link( function( tOrF ) {
-            controlPanel.displayPanel.visible = tOrF;
+            thisControlPanel.displayPanel.visible = tOrF;
         });
+
+        //commented out for test
+        //this.mainView.selectedPieceProperty.link( function( piece ){
+        //    thisControlPanel.visible = ( piece === thisControlPanel.selectedPiece );
+        //    //console.log( 'calling setControls for piece ' + piece.type );
+        //} )
 
 
     }//end constructor
@@ -143,9 +154,9 @@ define( function ( require ) {
                     var diameterSlider = new HSlider(pieceModel.diameterProperty, {min: 50, max: 250}, sliderOptions);
                     var diameterVBox = new VBox({children: [diameterSlider, this.diameterText]});
                     this.focalLengthReadoutText.text = pieceModel.f.toFixed(0);
-                    var controlPanel = this;
+                    var thisControlPanel = this;
                     pieceModel.fProperty.link( function() {
-                        controlPanel.focalLengthReadoutText.text = pieceModel.f.toFixed(0);
+                        thisControlPanel.focalLengthReadoutText.text = pieceModel.f.toFixed(0);
                         //console.log( 'focalLength' + focalLength.toFixed(0)  );
                     })
                 }
