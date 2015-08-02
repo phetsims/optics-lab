@@ -52,16 +52,19 @@ define( function( require ) {
     this.mainView = mainView;
     this.controlPanels = new ObservableArray();     //one display for each piece on the stage, only display of selected piece is visible
     this.pieces = new ObservableArray();
+    this.selectedPiece = new Node();
     //this.expandedProperty = new Property( true );
 
 
-      //this.mainView.selectedPieceProperty.link(function (piece) {
-      //    if (piece !== null) {
-      //        this.selectedPiece = piece;
-      //        //controlPanelManager.setControlsForSelectedPiece( piece );
-      //    }
-      //    //console.log( 'calling setControls for piece ' + piece.type );
-      //});
+      this.mainView.selectedPieceProperty.link(function (piece) {
+          if (piece !== null) {
+              controlPanelManager.selectedPiece = piece;
+              //controlPanelManager.setControlsForSelectedPiece( piece );
+              console.log( 'calling mainView.selectedPieceProperty.link ' + piece.type );
+              console.log( 'controlPanelManager.selectedPiece.type is ' + controlPanelManager.selectedPiece.type );
+          }
+
+      });
 
       //need any content to initialize position
       var myCircle = new Circle( 25, { fill: 'yellow'} ) ;
@@ -78,8 +81,8 @@ define( function( require ) {
             displayControlPanelForNewPiece: function ( piece ) {
 
                 var newPanel = new SelectedPieceControlPanel( this.mainModel, this.mainView, piece);
-                //this.controlPanels.add(newPanel);
-                //this.pieces.add( piece );
+                this.controlPanels.add(newPanel);
+                this.pieces.add( piece );
 
                 //var myCircle = new Circle( 20, { fill: 'red'} ) ;
                 this.addChild( newPanel );
@@ -89,11 +92,11 @@ define( function( require ) {
             displayControlPanelForExistingPiece: function (piece) {
                 //this.hideAllControlPanels();
                 var panelIndex = this.getIndexOfPanelOfSelectedPiece();
-                this.controlPanels[ panelIndex].visible = true;
+                this.controlPanels.get(panelIndex).visible = true;
             },
             disposeOfControlPanelForDeletedPiece: function ( piece ) {
                 var panelIndex = this.getIndexOfPanelOfSelectedPiece();
-                var panelToDelete = this.controlPanels[ panelIndex ];
+                var panelToDelete = this.controlPanels.get( panelIndex );
                 panelToDelete.visible = false;
                 panelToDelete.dispose();
                 this.controlPanels.remove( panelToDelete );
@@ -101,13 +104,13 @@ define( function( require ) {
             },
             //hideAllControlPanels: function () {
             //    for (var i = 0; i < this.controlPanels.length; i++) {
-            //        this.controlPanels[i].visible = false;
+            //        this.controlPanels.get( i ).visible = false;
             //    }
             //},
             getIndexOfPanelOfSelectedPiece: function () {
                 var selectedPanelIndex;
                 for (var i = 0; i < this.controlPanels.length; i++) {
-                    if ( this.controlPanels[i].selectedPiece = this.selectedPiece ) {
+                    if ( this.controlPanels.get( i ).selectedPiece === this.selectedPiece ) {
                         selectedPanelIndex = i;
                         return selectedPanelIndex;
                     }
