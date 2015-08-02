@@ -129,12 +129,14 @@ define( function( require ) {
             //pieceGrabbed.mainView.setSelectedPiece( pieceGrabbed );
             mainView.setSelectedPiece( pieceGrabbed );
             //console.log( 'pieceGrabbed is ' + pieceGrabbed.type );
+            debugger;
           },
 
           drag: function( e ) {
             var position = toolDrawerPanel.globalToParentPoint( e.pointer.point );   //returns Vector2
             //var v1 = e.pointer.point;
             //toolDrawerPanel.mainView.
+
             pieceGrabbed.pieceModel.setPosition( position );
             //console.log( 'dragging postion is ' + v1 );
           },

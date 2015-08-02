@@ -19,16 +19,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  //var AquaRadioButton = require( 'SUN/AquaRadioButton' );
-  //var HSeparator = require( 'SUN/HSeparator' );
-  //var AccordionBox = require( 'SUN/AccordionBox' );
-  //var AquaRadioButton = require( 'SUN/AquaRadioButton' );
-  //var CheckBox = require( 'SUN/CheckBox' );
-  //var Dimension2 = require( 'DOT/Dimension2' );
-  //var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
-  //var HBox = require( 'SCENERY/nodes/HBox' );
-  //var HSlider = require( 'SUN/HSlider' );
-  //var HStrut = require( 'SCENERY/nodes/HStrut' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -65,14 +55,13 @@ define( function( require ) {
     this.expandedProperty = new Property( true );
 
 
-    this.mainView.selectedPieceProperty.link( function( piece ){
-      if( piece !== null ){
-        this.selectedPiece = piece;
-        //controlPanelManager.setControlsForSelectedPiece( piece );
-      }
-    //console.log( 'calling setControls for piece ' + piece.type );
-  } );
-
+      //this.mainView.selectedPieceProperty.link(function (piece) {
+      //    if (piece !== null) {
+      //        this.selectedPiece = piece;
+      //        //controlPanelManager.setControlsForSelectedPiece( piece );
+      //    }
+      //    //console.log( 'calling setControls for piece ' + piece.type );
+      //});
 
 
     // All controls are placed on display node, with visibility set by accordionBox button
@@ -85,14 +74,14 @@ define( function( require ) {
 
             displayControlPanelForNewPiece: function (piece) {
 
-                var newPanel = new SelectedPieceControlPanel( this.mainModel, this.mainView, piece);
-                this.controlPanels.add(newPanel);
-                this.pieces.add( piece );
+                //var newPanel = new SelectedPieceControlPanel( this.mainModel, this.mainView, piece);
+                //this.controlPanels.add(newPanel);
+                //this.pieces.add( piece );
 
-                //var myCircle = new Circle( 20, { fill: 'red'} ) ;
-                this.addChild( newPanel );
+                var myCircle = new Circle( 20, { fill: 'red'} ) ;
+                this.addChild( myCircle);//newPanel );
                 //this.hideAllControlPanels();
-                newPanel.visible = true;
+                //newPanel.visible = true;
             },
             displayControlPanelForExistingPiece: function (piece) {
                 //this.hideAllControlPanels();

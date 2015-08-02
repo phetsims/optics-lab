@@ -122,7 +122,8 @@ define( function( require ) {
         }else{
           newPiece = this.addComponent( type, startPosition );
         }
-        //this.controlPanelManager.displayControlPanelForNewPiece( newPiece );
+
+        this.controlPanelManager.displayControlPanelForNewPiece( newPiece );
         return newPiece;
       },//end AddPiece
       removeSource: function( sourceNode ){
