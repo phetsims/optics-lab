@@ -52,7 +52,7 @@ define( function( require ) {
     this.mainView = mainView;
     this.controlPanels = new ObservableArray();     //one display for each piece on the stage, only display of selected piece is visible
     this.pieces = new ObservableArray();
-    this.expandedProperty = new Property( true );
+    //this.expandedProperty = new Property( true );
 
 
       //this.mainView.selectedPieceProperty.link(function (piece) {
@@ -63,6 +63,9 @@ define( function( require ) {
       //    //console.log( 'calling setControls for piece ' + piece.type );
       //});
 
+      //need any content to initialize position
+      var myCircle = new Circle( 25, { fill: 'yellow'} ) ;
+      this.addChild( myCircle);//newPanel )
 
     // All controls are placed on display node, with visibility set by accordionBox button
 
@@ -72,14 +75,14 @@ define( function( require ) {
 
     return inherit(Node, ControlPanelManager, {
 
-            displayControlPanelForNewPiece: function (piece) {
+            displayControlPanelForNewPiece: function ( piece ) {
 
-                //var newPanel = new SelectedPieceControlPanel( this.mainModel, this.mainView, piece);
+                var newPanel = new SelectedPieceControlPanel( this.mainModel, this.mainView, piece);
                 //this.controlPanels.add(newPanel);
                 //this.pieces.add( piece );
 
-                var myCircle = new Circle( 20, { fill: 'red'} ) ;
-                this.addChild( myCircle);//newPanel );
+                //var myCircle = new Circle( 20, { fill: 'red'} ) ;
+                this.addChild( newPanel );
                 //this.hideAllControlPanels();
                 //newPanel.visible = true;
             },
@@ -109,16 +112,16 @@ define( function( require ) {
                         return selectedPanelIndex;
                     }
                 }
-            },
-
-            setControls: function () {
-                this.removeChild(this.displayPanel);
-                this.displayPanel = new Panel(this.content, this.panelOptions);
-                this.insertChild(0, this.displayPanel);
-            },
-            setTitleBar: function (titleString) {
-                this.panelTitle.text = titleString;
             }
+
+            //setControls: function () {
+            //    this.removeChild(this.displayPanel);
+            //    this.displayPanel = new Panel(this.content, this.panelOptions);
+            //    this.insertChild(0, this.displayPanel);
+            //},
+            //setTitleBar: function (titleString) {
+            //    this.panelTitle.text = titleString;
+            //}
 
 
         }//end inherit

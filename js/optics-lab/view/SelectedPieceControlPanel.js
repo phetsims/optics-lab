@@ -98,21 +98,22 @@ define( function ( require ) {
             minWidth: 0 // minimum width of the panel
         };
 
+
+        this.setControlsForSelectedPiece();
         //test code follows
-        //this.setControlsForSelectedPiece();
-        var spacing = 35;
-        var fillerBox = new Text( 'filler', {font: DISPLAY_FONT} );
-        //content of the current display
-        this.content = new HBox( {
-            children: [
-                fillerBox
-            ],
-            spacing: spacing
-        } );
-        this.displayPanel = new Panel(this.content, this.panelOptions);
-        this.children = [this.displayPanel, this.expandCollapseButton];
-        this.expandCollapseButton.left = 5;
-        this.expandCollapseButton.top = 5;
+        //var spacing = 35;
+        //var fillerBox = new Text( 'filler', {font: DISPLAY_FONT} );
+        ////content of the current display
+        //this.content = new HBox( {
+        //    children: [
+        //        fillerBox
+        //    ],
+        //    spacing: spacing
+        //} );
+        //this.displayPanel = new Panel(this.content, this.panelOptions);
+        //this.children = [this.displayPanel, this.expandCollapseButton];
+        //this.expandCollapseButton.left = 5;
+        //this.expandCollapseButton.top = 5;
         //end test code
 
         this.expandCollapseButton.expandedProperty.link( function( tOrF ) {

@@ -129,7 +129,6 @@ define( function( require ) {
             //pieceGrabbed.mainView.setSelectedPiece( pieceGrabbed );
             mainView.setSelectedPiece( pieceGrabbed );
             //console.log( 'pieceGrabbed is ' + pieceGrabbed.type );
-            debugger;
           },
 
           drag: function( e ) {
