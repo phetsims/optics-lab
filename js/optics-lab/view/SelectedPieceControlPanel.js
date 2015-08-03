@@ -114,7 +114,7 @@ define( function ( require ) {
         //this.children = [this.displayPanel, this.expandCollapseButton];
         //this.expandCollapseButton.left = 5;
         //this.expandCollapseButton.top = 5;
-        //end test code
+        ////end test code
 
         this.expandCollapseButton.expandedProperty.link( function( tOrF ) {
             thisControlPanel.displayPanel.visible = tOrF;
@@ -186,7 +186,7 @@ define( function ( require ) {
                 switch (type) {
                     case 'fan_source':
                         var spreadSlider = new HSlider(pieceModel.spreadProperty, {min: 2, max: 180}, sliderOptions);
-                        var spreadVBox = vBoxMaker( [spreadSlider, this.spreadText] );
+                        var spreadVBox = vBoxMaker( [ spreadSlider, this.spreadText ] );
                         this.content = hBoxMaker( [ fillerBox, nbrOfRaysVBox, spreadVBox, this.colorVBox1, this.colorVBox2] );
                         break;
                     case 'beam_source':

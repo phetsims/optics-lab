@@ -78,18 +78,13 @@ define( function( require ) {
             displayControlPanelForNewPiece: function ( piece ) {
 
                 var newPanel = new SelectedPieceControlPanel( this.mainModel, this.mainView, piece);
-                this.controlPanels.add(newPanel);
+                this.controlPanels.add( newPanel );
                 this.pieces.add( piece );
 
                 //var myCircle = new Circle( 20, { fill: 'red'} ) ;
                 this.addChild( newPanel );
                 //this.hideAllControlPanels();
                 //newPanel.visible = true;
-            },
-            displayControlPanelForExistingPiece: function (piece) {
-                //this.hideAllControlPanels();
-                var panelIndex = this.getIndexOfPanelOfSelectedPiece();
-                this.controlPanels.get(panelIndex).visible = true;
             },
             disposeOfControlPanelForDeletedPiece: function ( piece ) {
                 var panelIndex = this.getIndexOfPanelOfSelectedPiece();
