@@ -26,6 +26,7 @@ define( function( require ) {
   var Panel = require( 'SUN/Panel' );
   //var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SelectedPieceControlPanel = require( 'OPTICS_LAB/optics-lab/view/SelectedPieceControlPanel' );
   //var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'OPTICS_LAB/optics-lab/common/Util' );
@@ -67,8 +68,9 @@ define( function( require ) {
       });
 
       //need any content to initialize position
-      var myCircle = new Circle( 25, { fill: 'yellow'} ) ;
-      this.addChild( myCircle);//newPanel )
+      //var myCircle = new Circle( 25, { fill: 'yellow'} ) ;
+      var filler = new Rectangle( 0, 0, 10, 10, { fill: 'yellow', opacity: 0.0 } );
+      this.addChild( filler );
 
     // All controls are placed on display node, with visibility set by accordionBox button
 
