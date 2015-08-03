@@ -106,7 +106,7 @@ define( function( require ) {
           if( thisIntersection !== null ){
             var dist = thisIntersection.distance( startPoint );
             //console.log( 'dist = ' + dist );
-            if ( dist > 10 &&  dist < distanceToIntersection ) {    //> 10 to be sure component does not intersect its own starting ray
+            if ( dist > 2 &&  dist < distanceToIntersection ) {    //> 10 to be sure component does not intersect its own starting ray
               distanceToIntersection = dist;
               intersection = thisIntersection;
               componentIntersectedIndex = j;
