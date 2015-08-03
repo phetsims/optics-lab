@@ -151,7 +151,6 @@ define( function( require ) {
 
       },
       setSelectedPiece: function ( piece ){
-        console.log( 'setSelectedPiece() called. piece.type is ' + piece.type ) ;
         this.selectedPieceProperty.value = piece;
         piece.moveToFront();
       }

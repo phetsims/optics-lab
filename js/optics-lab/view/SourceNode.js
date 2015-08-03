@@ -79,6 +79,7 @@ define( function( require ) {
 
 
         // When dragging, move the sample element
+        var mouseDownPosition;
         sourceNode.translationHandle.addInputListener( new SimpleDragHandler(
             {
                 // When dragging across it in a mobile device, pick it up
@@ -86,24 +87,21 @@ define( function( require ) {
 
                 start: function( e ){
                     sourceNode.mainView.setSelectedPiece( sourceNode );
+                    var position = sourceNode.globalToParentPoint( e.pointer.point );
+                    var currentNodePos = sourceNode.pieceModel.position;
+                    mouseDownPosition = position.minus( currentNodePos );
                 },
 
                 drag: function( e ){
                     var position = sourceNode.globalToParentPoint( e.pointer.point );
-                    //console.log( 'position = ' + position );
+                    position = position.minus( mouseDownPosition );
                     sourceNode.pieceModel.setPosition( position );
                 },
                 end: function( e ){
                     var position = sourceNode.globalToParentPoint( e.pointer.point );
                     if( sourceNode.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y )){
-                        //console.log( 'delete this');
                         sourceNode.mainView.removePiece( sourceNode );
-                        //sourceNode.mainView.removeSource( sourceNode );
-                        //sourceNode.mainView.controlPanel.displayPanel.visible = false;
-                    }else{
-                        //console.log( 'keep this' );
                     }
-
                 }
             } ) );//end translationHandle.addInputListener()
 
@@ -111,16 +109,13 @@ define( function( require ) {
             allowTouchSnag: true,
             //start function for testing only
             start: function (e){
-                //console.log( 'mouse down' );
-                //var mouseDownPosition = e.pointer.point;
+                sourceNode.mainView.setSelectedPiece( sourceNode );
             },
 
             drag: function(e){
                 var mousePosRelative =  sourceNode.translationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
                 var angle = mousePosRelative.angle() - Math.PI/2;  //angle = 0 when beam horizontal, CW is + angle
                 sourceNode.pieceModel.setAngle( angle );
-                //console.log( 'position is ' + mousePosRelative );
-                //console.log( 'rotation angle in degree is ' + angle*180/Math.PI );
 
             }
         }));//end this.rotationHandle.addInputListener()
@@ -128,8 +123,6 @@ define( function( require ) {
         // Register for synchronization with pieceModel and mainModel.
         this.pieceModel.positionProperty.link( function( position ) {
             sourceNode.translation = position;
-            //console.log( 'source callback, position is ' + position );
-            //sourceNode.drawRays();
         } );
 
         this.pieceModel.angleProperty.link( function( angle ){

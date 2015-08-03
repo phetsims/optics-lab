@@ -142,11 +142,8 @@ define( function( require ) {
           end: function( e ){
             var vEnd = toolDrawerPanel.globalToParentPoint( e.pointer.point );
             if( toolDrawerPanel.visibleBounds.containsCoordinates( vEnd.x, vEnd.y )){
-              console.log( 'toolDrawer end called. mainView.selectedPiece.type is ' +  mainView.selectedPiece.type);
+              //console.log( 'toolDrawer end called. mainView.selectedPiece.type is ' +  mainView.selectedPiece.type);
               mainView.removePiece( pieceGrabbed );
-              //pieceGrabbed.mainView.removeComponent( pieceGrabbed );
-              //mainView.removeComponent( pieceGrabbed );
-              //mainView.controlPanel.displayPanel.visible = false;
             }
           }
         }//end addInputListener

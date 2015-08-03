@@ -68,16 +68,23 @@ define( function( require ) {
 
 
     // When dragging, move the sample element
+    var mouseDownPosition;
     componentNode.addInputListener( new SimpleDragHandler(
       {
         // When dragging across it in a mobile device, pick it up
         allowTouchSnag: true,
         start: function( e ){
           componentNode.mainView.setSelectedPiece( componentNode );
+          var position = componentNode.globalToParentPoint( e.pointer.point );
+          var currentNodePos = componentNode.pieceModel.position;
+          mouseDownPosition = position.minus( currentNodePos );
+          //componentNode.mouseDownPosition = e.pointer.point;
+          //console.log( '   posGlobalToParent = ' + position + ' relPos' + mouseDownPosition );
         },
 
         drag: function( e ){
           var position = componentNode.globalToParentPoint( e.pointer.point );
+          position = position.minus( mouseDownPosition );
           //console.log( 'component position = ' + position );
           componentNode.pieceModel.setPosition( position );
         },
@@ -97,6 +104,7 @@ define( function( require ) {
       allowTouchSnag: true,
       //start function for testing only
       start: function (e){
+        componentNode.mainView.setSelectedPiece( componentNode );
         //console.log( 'mouse down' );
         //var mouseDownPosition = e.pointer.point;
       },

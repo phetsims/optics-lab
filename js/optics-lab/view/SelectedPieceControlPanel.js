@@ -134,6 +134,7 @@ define( function ( require ) {
         setTitleBar: function( titleString ){
             this.panelTitle.text = titleString;
         },
+
         //change the piece that this panel controls
         setControlsForSelectedPiece: function () {
             if ( this.selectedPiece !== null ) {
@@ -144,6 +145,20 @@ define( function ( require ) {
                 var nbrOfRaysVBox;
                 var diameterVBox;
                 var sliderOptions = {trackSize: new Dimension2(120, 5), thumbSize: new Dimension2(12, 25)};
+                var vBoxMaker = function( childrenArray ){
+                    return new VBox( {
+                        children: childrenArray,
+                        align: 'center',
+                        resize: false
+                    });
+                };
+                var hBoxMaker = function( childrenArray ){
+                   return new HBox({
+                       children: childrenArray,
+                       spacing: spacing,
+                       resize: false
+                   });
+                };
                 if ( type === 'fan_source' || type === 'beam_source' ) {
                     //pieceModel = piece.pieceModel;
                     var maxNbrRays = pieceModel.maxNbrOfRays;
@@ -151,11 +166,11 @@ define( function ( require ) {
                         min: 1,
                         max: maxNbrRays
                     }, sliderOptions );
-                    nbrOfRaysVBox = new VBox({children: [nbrOfRaysSlider, this.nbrOfRaysText], align: 'center'});
+                    nbrOfRaysVBox = vBoxMaker( [ nbrOfRaysSlider, this.nbrOfRaysText ] );
                     this.setColorRadioButtonsForSourceNode(piece);
                 } else {   //if piece = component
                     var diameterSlider = new HSlider(pieceModel.diameterProperty, {min: 50, max: 250}, sliderOptions);
-                    diameterVBox = new VBox({children: [diameterSlider, this.diameterText]});
+                    diameterVBox = vBoxMaker( [ diameterSlider, this.diameterText ] );
                     this.focalLengthReadoutText.text = pieceModel.f.toFixed(0);
                     var thisControlPanel = this;
                     pieceModel.fProperty.link( function() {
@@ -167,95 +182,64 @@ define( function ( require ) {
                 var checkBoxOptions = {checkBoxColorBackground: 'white'};
                 var spacing = 25;
                 //console.log( 'setControlsForSelectedPiece' + piece.type );
-                var focalLengthHBox = new HBox({
-                    children: [this.focalLengthText, this.focalLengthReadoutText],
-                    spacing: 2
-                });
+                var focalLengthHBox = hBoxMaker( [ this.focalLengthText, this.focalLengthReadoutText ] );
                 switch (type) {
                     case 'fan_source':
                         var spreadSlider = new HSlider(pieceModel.spreadProperty, {min: 2, max: 180}, sliderOptions);
-                        var spreadVBox = new VBox({children: [spreadSlider, this.spreadText], align: 'center'});
-                        this.content = new HBox({
-                            children: [ fillerBox, nbrOfRaysVBox, spreadVBox, this.colorVBox1, this.colorVBox2],
-                            spacing: spacing,
-                            resize: false
-                        });
+                        var spreadVBox = vBoxMaker( [spreadSlider, this.spreadText] );
+                        this.content = hBoxMaker( [ fillerBox, nbrOfRaysVBox, spreadVBox, this.colorVBox1, this.colorVBox2] );
                         break;
                     case 'beam_source':
                         var heightSlider = new HSlider(pieceModel.heightProperty, {min: 50, max: 250}, sliderOptions);
-                        var heightVBox = new VBox({children: [heightSlider, this.heightText], align: 'center'});
-                        this.content = new HBox({
-                            children: [fillerBox, nbrOfRaysVBox, heightVBox, this.colorVBox1, this.colorVBox2],
-                            spacing: spacing,
-                            resize: false
-                        });
+                        var heightVBox = vBoxMaker( [heightSlider, this.heightText] );
+                        this.content = hBoxMaker( [fillerBox, nbrOfRaysVBox, heightVBox, this.colorVBox1, this.colorVBox2] );
                         break;
                     case 'converging_lens':
                         //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
                         //radius of curvature R = 2*f*( n - 1 )
                         var radiusSlider = new HSlider(pieceModel.radiusProperty, {min: 100, max: 800}, sliderOptions);
                         this.hSliders.push(radiusSlider);
-                        var radiusVBox = new VBox({children: [radiusSlider, this.radiusText], align: 'center'});
+                        var radiusVBox = vBoxMaker( [radiusSlider, this.radiusText] );
                         var indexSlider = new HSlider(pieceModel.indexProperty, {min: 1.4, max: 3}, sliderOptions);
                         this.hSliders.push(indexSlider);
-                        var indexVBox = new VBox({children: [indexSlider, this.indexText], align: 'center'});
+                        var indexVBox = vBoxMaker( [ indexSlider, this.indexText ] );
                         var focalPtCheckBox = new CheckBox(this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions);
-                        this.content = new HBox({
-                            children: [fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox],
-                            spacing: spacing,
-                            resize: false
-                        });
+                        this.content = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ] );
                         break;
                     case 'diverging_lens':
                         //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
                         //radius of curvature R = 2*f*( n - 1 )
                         radiusSlider = new HSlider(pieceModel.radiusProperty, {min: -100, max: -800}, sliderOptions);
                         this.hSliders.push(radiusSlider);
-                        radiusVBox = new VBox({children: [radiusSlider, this.radiusText], align: 'center'});
+                        radiusVBox = vBoxMaker( [radiusSlider, this.radiusText] );
                         indexSlider = new HSlider(pieceModel.indexProperty, {min: 1.4, max: 3}, sliderOptions);
                         this.hSliders.push(indexSlider);
-                        indexVBox = new VBox({children: [indexSlider, this.indexText], align: 'center'});
+                        indexVBox = vBoxMaker( [ indexSlider, this.indexText ] );
                         focalPtCheckBox = new CheckBox(this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions);
-                        this.content = new HBox({
-                            children: [fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox],
-                            spacing: spacing,
-                            resize: false
-                        });
+                        this.content = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ] );
                         break;
                     case 'converging_mirror':
                         radiusSlider = new HSlider(pieceModel.radiusProperty, {min: 200, max: 1600}, sliderOptions);
                         this.hSliders.push(radiusSlider);
-                        radiusVBox = new VBox({children: [radiusSlider, this.radiusText], align: 'center'});
+                        radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
                         focalPtCheckBox = new CheckBox(this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions);
-                        this.content = new HBox({
-                            children: [fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox],
-                            spacing: spacing,
-                            resize: false
-                        });
+                        this.content = hBoxMaker( [fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox] );
                         break;
                     case 'plane_mirror':
-                        this.content = new HBox({children: [fillerBox, diameterVBox], spacing: spacing});
+                        this.content = hBoxMaker( [fillerBox, diameterVBox] );
                         break;
                     case 'diverging_mirror':
                         radiusSlider = new HSlider(pieceModel.radiusProperty, {min: -200, max: -1600}, sliderOptions);
                         this.hSliders.push(radiusSlider);
-                        radiusVBox = new VBox({children: [radiusSlider, this.radiusText], align: 'center'});
+                        radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
                         focalPtCheckBox = new CheckBox(this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions);
-                        this.content = new HBox({
-                            children: [fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox],
-                            spacing: spacing,
-                            resize: false
-                        });
+                        this.content = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox ] );
                         break;
                     case 'simple_mask':
-                        this.content = new HBox({children: [fillerBox, diameterVBox],
-                            spacing: spacing,
-                            resize: false});
-
+                        this.content = hBoxMaker( [fillerBox, diameterVBox] );
                         break;
                     case 'slit_mask':
-                        this.content = new HBox({children: [fillerBox],
-                            resize: false});
+                        this.content = hBoxMaker( [fillerBox] );
                         break;
 
                 }//end switch()

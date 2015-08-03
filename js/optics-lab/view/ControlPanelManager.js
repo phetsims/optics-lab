@@ -59,11 +59,7 @@ define( function( require ) {
       this.mainView.selectedPieceProperty.link(function (piece) {
           if (piece !== null) {
               controlPanelManager.selectedPiece = piece;
-              //controlPanelManager.setControlsForSelectedPiece( piece );
-              console.log( 'calling mainView.selectedPieceProperty.link ' + piece.type );
-              console.log( 'controlPanelManager.selectedPiece.type is ' + controlPanelManager.selectedPiece.type );
           }
-
       });
 
       //need any content to initialize position
