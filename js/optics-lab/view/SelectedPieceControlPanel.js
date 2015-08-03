@@ -121,10 +121,10 @@ define( function ( require ) {
         });
 
         //commented out for test
-        //this.mainView.selectedPieceProperty.link( function( piece ){
-        //    thisControlPanel.visible = ( piece === thisControlPanel.selectedPiece );
-        //    //console.log( 'calling setControls for piece ' + piece.type );
-        //} )
+        this.mainView.selectedPieceProperty.link( function( piece ){
+            thisControlPanel.visible = ( piece === thisControlPanel.selectedPiece );
+            //console.log( 'calling setControls for piece ' + piece.type );
+        } )
 
 
     }//end constructor

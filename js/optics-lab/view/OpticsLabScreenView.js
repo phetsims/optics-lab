@@ -13,7 +13,7 @@ define( function( require ) {
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
   //var Circle = require( 'SCENERY/nodes/Circle' );
-  var ControlPanel = require( 'OPTICS_LAB/optics-lab/view/ControlPanel' );
+  //var ControlPanel = require( 'OPTICS_LAB/optics-lab/view/ControlPanel' );
   var ControlPanelManager = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager' );
   var ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
   var ComponentNode = require( 'OPTICS_LAB/optics-lab/view/ComponentNode' );
@@ -142,15 +142,16 @@ define( function( require ) {
       },
       removePiece: function( piece ){
         var type = piece.type;
+        this.controlPanelManager.disposeOfControlPanelForDeletedPiece( piece );
         if( type === 'fan_source' || type === 'beam_source' ){
           this.removeSource( piece );
         }else{
           this.removeComponent( piece );
         }
-        //this.controlPanelManager.disposeOfControlPanelForDeletedPiece( piece );
+
       },
       setSelectedPiece: function ( piece ){
-        //console.log( 'setSelectedPiece() called.' )
+        console.log( 'setSelectedPiece() called. piece.type is ' + piece.type ) ;
         this.selectedPieceProperty.value = piece;
         piece.moveToFront();
       }
