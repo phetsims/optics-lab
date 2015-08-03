@@ -19,17 +19,16 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Circle = require( 'SCENERY/nodes/Circle' );
+  //var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ObservableArray = require( 'AXON/ObservableArray' );
-  var Panel = require( 'SUN/Panel' );
   //var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Property = require( 'AXON/Property' );
+  //var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SelectedPieceControlPanel = require( 'OPTICS_LAB/optics-lab/view/SelectedPieceControlPanel' );
   //var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'OPTICS_LAB/optics-lab/common/Util' );
+  //var Util = require( 'OPTICS_LAB/optics-lab/common/Util' );
   //var VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants

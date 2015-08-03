@@ -28,7 +28,7 @@ define( function( require ) {
   var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HSlider = require( 'SUN/HSlider' );
-  var HStrut = require( 'SCENERY/nodes/HStrut' );
+  //var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ObservableArray = require( 'AXON/ObservableArray' );
@@ -152,7 +152,6 @@ define( function( require ) {
           var type = piece.type;
           var maxNbrRays;
           var nbrOfRaysVBox;
-          var nbrOfRaysHStrut;
           var diameterVBox;
           var fillerBox = new Text( ' ', {font: DISPLAY_FONT} );
           var sliderOptions = { trackSize: new Dimension2( 120, 5 ), thumbSize: new Dimension2( 12, 25 ) };
@@ -169,14 +168,14 @@ define( function( require ) {
             pieceModel.fProperty.link( function( focalLength ){
               controlPanel.focalLengthReadoutText.text = pieceModel.f.toFixed(0);
               //console.log( 'focalLength' + focalLength.toFixed(0)  );
-            })
+            });
           }
 
           var checkBoxOptions = { checkBoxColorBackground: 'white' };
           var spacing = 25;
           //var spacing = new HStrut( 20 );
           //console.log( 'setControlsForSelectedPiece' + piece.type );
-          var focalLengthHBox = new HBox( {children: [ this.focalLengthText, this.focalLengthReadoutText ], spacing: 2 })
+          var focalLengthHBox = new HBox( {children: [ this.focalLengthText, this.focalLengthReadoutText ], spacing: 2 });
           switch( type ){
 
             case 'fan_source':
