@@ -40,7 +40,7 @@ define( function( require ) {
 
         this.type = type; //'fan_source'|'beam_source'
         this.maxLength = 2000;  //maximum length of rays in pixels
-        this.maxNbrOfRays = 20;
+        this.maxNbrOfRays = mainModel.maxNbrOfRaysFromASource;
 
         if( type === 'fan_source' ){
             this.spread = spread;

@@ -33,6 +33,7 @@ define( function( require ) {
     this.components = new ObservableArray();  //component = lens, mirror, or mask
     this.pieces = new ObservableArray();      //piece = source or component
     this.maxLength = 2000;  //maximum length of segment of rayPath
+    this.maxNbrOfRaysFromASource = 20;
     this.maxNbrIntersections = 100;  //maximum number of segments in a raypath, to prevent endless loops
     this.intersectionCounter = 0;
 

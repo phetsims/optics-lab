@@ -53,16 +53,17 @@ define( function ( require ) {
    * @param selectedPiece
    * @constructor
    */
-  function ControlPanelMaker( mainModel, mainView, type ) {
+  function   ControlPanels( mainModel, mainView, type ) {
 
     Node.call( this );
-    var  controlPanelMaker = this;
+    var controlPanels = this;
     this.mainModel = mainModel;
     this.mainView = mainView;
     this.type = type;
+    this.controlPanelArray = [];
     //this.selectedPiece = selectedPiece;
     //this.expandedProperty = new Property( true );
-    this.hSliders = []; //array of HSliders in this control panel, used solely for garbage collection
+    //this.hSliders = []; //array of HSliders in this control panel, used solely for garbage collection
 
 
     var fontInfo = {font: DISPLAY_FONT};
@@ -101,6 +102,10 @@ define( function ( require ) {
       minWidth: 0 // minimum width of the panel
     };
 
+    //Properties for Sliders, CheckBoxes, and Radio Buttons
+    this.nbrOfRaysProperty = new Property( 10 );
+    this.diameterProperty = new Property( 100 );
+
 
     //
     // this.setControlsForSelectedPiece();
@@ -133,18 +138,18 @@ define( function ( require ) {
 
   }//end constructor
 
-  return inherit( Node, ControlPanelMaker, {
+  return inherit( Node,   ControlPanels, {
 
     setTitleBar: function( titleString ){
       this.panelTitle.text = titleString;
     },
 
     //change the piece that this panel controls
-    setControlsForSelectedPiece: function () {
-      if ( this.selectedPiece !== null ) {
-        var piece = this.selectedPiece;
-        var pieceModel = piece.pieceModel;
-        var type = piece.type;
+    createControlPanel: function ( type ) {
+
+        //var piece = this.selectedPiece;
+        //var pieceModel = piece.pieceModel;
+        //var type = piece.type;
         var fillerBox = new Text(' ', {font: DISPLAY_FONT});
         var nbrOfRaysVBox;
         var diameterVBox;
@@ -164,16 +169,15 @@ define( function ( require ) {
           });
         };
         if ( type === 'fan_source' || type === 'beam_source' ) {
-          //pieceModel = piece.pieceModel;
-          var maxNbrRays = pieceModel.maxNbrOfRays;
-          var nbrOfRaysSlider = new HSlider( pieceModel.nbrOfRaysProperty, {
+          var maxNbrRays = this.mainModel.maxNbrOfRaysFromASource;
+          var nbrOfRaysSlider = new HSlider( this.nbrOfRaysProperty, {
             min: 1,
             max: maxNbrRays
           }, sliderOptions );
           nbrOfRaysVBox = vBoxMaker( [ nbrOfRaysSlider, this.nbrOfRaysText ] );
           this.setColorRadioButtonsForSourceNode(piece);
         } else {   //if piece = component
-          var diameterSlider = new HSlider(pieceModel.diameterProperty, {min: 50, max: 250}, sliderOptions);
+          var diameterSlider = new HSlider( this.diameterProperty, {min: 50, max: 250}, sliderOptions);
           diameterVBox = vBoxMaker( [ diameterSlider, this.diameterText ] );
           this.focalLengthReadoutText.text = pieceModel.f.toFixed(0);
           var  controlPanelMaker = this;
@@ -251,7 +255,7 @@ define( function ( require ) {
         this.children = [this.displayPanel, this.expandCollapseButton];
         this.expandCollapseButton.left = 5;
         this.expandCollapseButton.top = 5;
-      }//end if (type != null)
+
     }, // end setControlsForSelectedPiece()
 
     setColorRadioButtonsForSourceNode: function (sourceNode) {
@@ -273,12 +277,6 @@ define( function ( require ) {
       });
     },
 
-    //for GC
-    dispose: function () {
-      for (var i = 0; i < this.hSliders.length; i++) {
-        this.hSliders[i].dispose();
-      }
-    }
 
   });//end inherit
 });

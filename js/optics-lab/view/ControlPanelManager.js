@@ -94,11 +94,7 @@ define( function( require ) {
                 this.controlPanels.remove( panelToDelete );
                 this.pieces.remove( piece );
             },
-            //hideAllControlPanels: function () {
-            //    for (var i = 0; i < this.controlPanels.length; i++) {
-            //        this.controlPanels.get( i ).visible = false;
-            //    }
-            //},
+
             getIndexOfPanelOfSelectedPiece: function () {
                 var selectedPanelIndex;
                 for (var i = 0; i < this.controlPanels.length; i++) {
