@@ -61,6 +61,20 @@ define( function ( require ) {
     this.mainView = mainView;
     this.type = type;
     this.controlPanelArray = [];
+    var typeArray = [
+      'fan_source',
+      'beam_source',
+      'converging_lens',
+      'diverging_lens',
+      'converging_mirror',
+      'plane_mirror',
+      'diverging_mirror',
+      'simple_mask',
+      'slit_mask'
+    ];
+    for ( var i = 0; i < typeArray.length; i++ ){
+      this.controlPanelArray[ i ] = this.createControlPanel( typeArray[ i ] );
+    }
     //this.selectedPiece = selectedPiece;
     //this.expandedProperty = new Property( true );
     //this.hSliders = []; //array of HSliders in this control panel, used solely for garbage collection
