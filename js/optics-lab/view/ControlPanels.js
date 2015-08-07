@@ -53,13 +53,12 @@ define( function ( require ) {
    * @param selectedPiece
    * @constructor
    */
-  function   ControlPanels( mainModel, mainView, type ) {
+  function   ControlPanels( mainModel, mainView ) {
 
     Node.call( this );
     var controlPanels = this;
-    this.mainModel = mainModel;
-    this.mainView = mainView;
-    this.type = type;
+    var mainModel = mainModel;
+    var mainView = mainView;
     this.controlPanelArray = [];
     var typeArray = [
       'fan_source',
@@ -72,38 +71,30 @@ define( function ( require ) {
       'simple_mask',
       'slit_mask'
     ];
-    for ( var i = 0; i < typeArray.length; i++ ){
-      this.controlPanelArray[ i ] = this.createControlPanel( typeArray[ i ] );
-    }
-    //this.selectedPiece = selectedPiece;
-    //this.expandedProperty = new Property( true );
-    //this.hSliders = []; //array of HSliders in this control panel, used solely for garbage collection
+
 
 
     var fontInfo = {font: DISPLAY_FONT};
-    this.whiteText = new Text('white', fontInfo);
-    this.greenText = new Text('green', fontInfo);
-    this.redText = new Text('red', fontInfo);
-    this.yellowText = new Text('yellow', fontInfo);
+    var whiteText = new Text('white', fontInfo);
+    var greenText = new Text('green', fontInfo);
+    var redText = new Text('red', fontInfo);
+    var yellowText = new Text('yellow', fontInfo);
 
     fontInfo = {font: DISPLAY_FONT, fill: TEXT_COLOR};
-    this.nbrOfRaysText = new Text('number of rays', fontInfo);
-    this.focalPointsText = new Text('focal points', fontInfo);
-    this.heightText = new Text('height', fontInfo);
-    this.spreadText = new Text('spread', fontInfo);
-    this.diameterText = new Text('diameter', fontInfo);
-    this.radiusText = new Text('radius of curvature', fontInfo);
-    this.focalLengthText = new Text('f : ', fontInfo);
-    this.focalLengthReadoutText = new Text('filler', fontInfo);
-    this.indexText = new Text('refractive index', fontInfo);
-    this.expandCollapseButton = new ExpandCollapseButton(this.expandedProperty, {
-      sideLength: 15,
-      cursor: 'pointer'
-    });
+    var nbrOfRaysText = new Text('number of rays', fontInfo);
+    var focalPointsText = new Text('focal points', fontInfo);
+    var heightText = new Text('height', fontInfo);
+    var spreadText = new Text('spread', fontInfo);
+    var diameterText = new Text('diameter', fontInfo);
+    var radiusText = new Text('radius of curvature', fontInfo);
+    var focalLengthText = new Text('f : ', fontInfo);
+    var focalLengthReadoutText = new Text('filler', fontInfo);
+    var indexText = new Text('refractive index', fontInfo);
+
 
 
     // All controls are placed on display node, with visibility set by expand/collapse button
-    this.panelOptions = {
+    var panelOptions = {
       fill: 'white',
       stroke: 'black',
       lineWidth: 1, // width of the background border
@@ -117,53 +108,137 @@ define( function ( require ) {
     };
 
     //Properties for Sliders, CheckBoxes, and Radio Buttons
-    this.nbrOfRaysProperty = new Property( 10 );
-    this.diameterProperty = new Property( 100 );
+    var nbrOfRaysProperty = new Property( 10 );
+    var diameterProperty = new Property( 100 );
+    var radiusOfCurvatureProperty = new Property( 100 );
+    var indexOfRefractionProperty = new Property( 1.5 );
+
+    for ( var i = 0; i < typeArray.length; i++ ){
+      this.controlPanelArray[ i ] = makeControlPanel( typeArray[ i ] );
+    }
+
+    var vBoxMaker = function( childrenArray ){
+      return new VBox( {
+        children: childrenArray,
+        align: 'center',
+        resize: false
+      });
+    };
+    var hBoxMaker = function( childrenArray ){
+      return new HBox({
+        children: childrenArray,
+        spacing: spacing,
+        resize: false
+      });
+
+    function makeControlPanel( type ){
+      
+      //Properties for Sliders, CheckBoxes, and Radio Buttons
+      var expandedProperty = new Property( false );
+      this.nbrOfRaysProperty = new Property( 10 );
+      this.diameterProperty = new Property( 100 );
+      this.radiusOfCurvatureProperty = new Property( 100 );
+      this.indexOfRefractionProperty = new Property( 1.5 );
+      var controlPanel = new Node();
+      var panelContent = new Node();
+      switch (type) {
+        case 'fan_source':
+
+          break;
+        case 'beam_source':
+          
+          break;
+        case 'fan_source':
+          var spreadSlider = new HSlider(pieceModel.spreadProperty, {min: 2, max: 180}, sliderOptions);
+          var spreadVBox = vBoxMaker( [ spreadSlider, this.spreadText ] );
+          panelContent = hBoxMaker( [ fillerBox, nbrOfRaysVBox, spreadVBox, this.colorVBox1, this.colorVBox2] );
+          break;
+        case 'beam_source':
+          var heightSlider = new HSlider(pieceModel.heightProperty, {min: 50, max: 250}, sliderOptions);
+          var heightVBox = vBoxMaker( [heightSlider, this.heightText] );
+          panelContent = hBoxMaker( [fillerBox, nbrOfRaysVBox, heightVBox, this.colorVBox1, this.colorVBox2] );
+          break;
+        case 'converging_lens':
+          //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
+          //radius of curvature R = 2*f*( n - 1 )
+          var radiusSlider = new HSlider(pieceModel.radiusProperty, {min: 100, max: 800}, sliderOptions);
+          this.hSliders.push(radiusSlider);
+          var radiusVBox = vBoxMaker( [radiusSlider, this.radiusText] );
+          var indexSlider = new HSlider(pieceModel.indexProperty, {min: 1.4, max: 3}, sliderOptions);
+          this.hSliders.push(indexSlider);
+          var indexVBox = vBoxMaker( [ indexSlider, this.indexText ] );
+          var focalPtCheckBox = new CheckBox(this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions);
+          panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ] );
+          break;
+        case 'diverging_lens':
+          //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
+          //radius of curvature R = 2*f*( n - 1 )
+          radiusSlider = new HSlider(pieceModel.radiusProperty, {min: -100, max: -800}, sliderOptions);
+          this.hSliders.push(radiusSlider);
+          radiusVBox = vBoxMaker( [radiusSlider, this.radiusText] );
+          indexSlider = new HSlider(pieceModel.indexProperty, {min: 1.4, max: 3}, sliderOptions);
+          this.hSliders.push(indexSlider);
+          indexVBox = vBoxMaker( [ indexSlider, this.indexText ] );
+          focalPtCheckBox = new CheckBox(this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions);
+          panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ] );
+          break;
+        case 'converging_mirror':
+          radiusSlider = new HSlider(pieceModel.radiusProperty, {min: 200, max: 1600}, sliderOptions);
+          this.hSliders.push(radiusSlider);
+          radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
+          focalPtCheckBox = new CheckBox(this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions);
+          panelContent = hBoxMaker( [fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox] );
+          break;
+        case 'plane_mirror':
+          panelContent = hBoxMaker( [fillerBox, diameterVBox] );
+          break;
+        case 'diverging_mirror':
+          radiusSlider = new HSlider(pieceModel.radiusProperty, {min: -200, max: -1600}, sliderOptions);
+          this.hSliders.push(radiusSlider);
+          radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
+          focalPtCheckBox = new CheckBox(this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions);
+          panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox ] );
+          break;
+        case 'simple_mask':
+          panelContent = hBoxMaker( [fillerBox, diameterVBox] );
+          break;
+        case 'slit_mask':
+          panelContent = hBoxMaker( [fillerBox] );
+          break;
+
+      }//end switch()
+      var expandCollapseButton = new ExpandCollapseButton( expandedProperty, {
+        sideLength: 15,
+        cursor: 'pointer'
+      });
+      var displayPanel = new Panel( panelContent, panelOptions );
+      controlPanel.children = [ displayPanel, expandCollapseButton ];
+      expandCollapseButton.left = 5;
+      expandCollapseButton.top = 5;
+      return controlPanel;
+    }//end makeControlPanel( type )
 
 
-    //
-    // this.setControlsForSelectedPiece();
-    //test code follows
-    //var spacing = 35;
-    //var fillerBox = new Text( 'filler', {font: DISPLAY_FONT} );
-    ////content of the current display
-    //this.content = new HBox( {
-    //    children: [
-    //        fillerBox
-    //    ],
-    //    spacing: spacing
+
+    //this.expandCollapseButton.expandedProperty.link( function( tOrF ) {
+    //   controlPanelMaker.displayPanel.visible = tOrF;
+    //});
+
+
+    //this.mainView.selectedPieceProperty.link( function( piece ){
+    //   controlPanelMaker.visible = ( piece ===  controlPanelMaker.selectedPiece );
+    //  //console.log( 'calling setControls for piece ' + piece.type );
     //} );
-    //this.displayPanel = new Panel(this.content, this.panelOptions);
-    //this.children = [this.displayPanel, this.expandCollapseButton];
-    //this.expandCollapseButton.left = 5;
-    //this.expandCollapseButton.top = 5;
-    ////end test code
-
-    this.expandCollapseButton.expandedProperty.link( function( tOrF ) {
-       controlPanelMaker.displayPanel.visible = tOrF;
-    });
-
-    //commented out for test
-    this.mainView.selectedPieceProperty.link( function( piece ){
-       controlPanelMaker.visible = ( piece ===  controlPanelMaker.selectedPiece );
-      //console.log( 'calling setControls for piece ' + piece.type );
-    } );
 
 
   }//end constructor
 
   return inherit( Node,   ControlPanels, {
 
-    setTitleBar: function( titleString ){
-      this.panelTitle.text = titleString;
-    },
 
     //change the piece that this panel controls
     createControlPanel: function ( type ) {
 
-        //var piece = this.selectedPiece;
-        //var pieceModel = piece.pieceModel;
-        //var type = piece.type;
         var fillerBox = new Text(' ', {font: DISPLAY_FONT});
         var nbrOfRaysVBox;
         var diameterVBox;
@@ -209,12 +284,12 @@ define( function ( require ) {
           case 'fan_source':
             var spreadSlider = new HSlider(pieceModel.spreadProperty, {min: 2, max: 180}, sliderOptions);
             var spreadVBox = vBoxMaker( [ spreadSlider, this.spreadText ] );
-            this.content = hBoxMaker( [ fillerBox, nbrOfRaysVBox, spreadVBox, this.colorVBox1, this.colorVBox2] );
+            panelContent = hBoxMaker( [ fillerBox, nbrOfRaysVBox, spreadVBox, this.colorVBox1, this.colorVBox2] );
             break;
           case 'beam_source':
             var heightSlider = new HSlider(pieceModel.heightProperty, {min: 50, max: 250}, sliderOptions);
             var heightVBox = vBoxMaker( [heightSlider, this.heightText] );
-            this.content = hBoxMaker( [fillerBox, nbrOfRaysVBox, heightVBox, this.colorVBox1, this.colorVBox2] );
+            panelContent = hBoxMaker( [fillerBox, nbrOfRaysVBox, heightVBox, this.colorVBox1, this.colorVBox2] );
             break;
           case 'converging_lens':
             //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
@@ -226,7 +301,7 @@ define( function ( require ) {
             this.hSliders.push(indexSlider);
             var indexVBox = vBoxMaker( [ indexSlider, this.indexText ] );
             var focalPtCheckBox = new CheckBox(this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions);
-            this.content = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ] );
+            panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ] );
             break;
           case 'diverging_lens':
             //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
@@ -238,34 +313,34 @@ define( function ( require ) {
             this.hSliders.push(indexSlider);
             indexVBox = vBoxMaker( [ indexSlider, this.indexText ] );
             focalPtCheckBox = new CheckBox(this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions);
-            this.content = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ] );
+            panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ] );
             break;
           case 'converging_mirror':
             radiusSlider = new HSlider(pieceModel.radiusProperty, {min: 200, max: 1600}, sliderOptions);
             this.hSliders.push(radiusSlider);
             radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
             focalPtCheckBox = new CheckBox(this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions);
-            this.content = hBoxMaker( [fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox] );
+            panelContent = hBoxMaker( [fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox] );
             break;
           case 'plane_mirror':
-            this.content = hBoxMaker( [fillerBox, diameterVBox] );
+            panelContent = hBoxMaker( [fillerBox, diameterVBox] );
             break;
           case 'diverging_mirror':
             radiusSlider = new HSlider(pieceModel.radiusProperty, {min: -200, max: -1600}, sliderOptions);
             this.hSliders.push(radiusSlider);
             radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
             focalPtCheckBox = new CheckBox(this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions);
-            this.content = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox ] );
+            panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox ] );
             break;
           case 'simple_mask':
-            this.content = hBoxMaker( [fillerBox, diameterVBox] );
+            panelContent = hBoxMaker( [fillerBox, diameterVBox] );
             break;
           case 'slit_mask':
-            this.content = hBoxMaker( [fillerBox] );
+            panelContent = hBoxMaker( [fillerBox] );
             break;
 
         }//end switch()
-        this.displayPanel = new Panel(this.content, this.panelOptions);
+        this.displayPanel = new Panel(panelContent, this.panelOptions);
         this.children = [this.displayPanel, this.expandCollapseButton];
         this.expandCollapseButton.left = 5;
         this.expandCollapseButton.top = 5;
