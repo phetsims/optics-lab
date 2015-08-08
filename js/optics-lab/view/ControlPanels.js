@@ -6,12 +6,12 @@
  * contains sliders to set height or spread of source or diameter, focal length (if lens or mirror)
  * and index  of refraction (if lens)
  * Piece:  Controls
- * fan_source: spread in degrees
- * beam_source: height in cm
- * converging_lens: diameter in cm,/radius of curvature in cm/index of refraction (no units)
- * diverging_lens: diameter/radius/index
- * converging_mirror: diameter/radius
- * diverging_mirror: diameter/radius
+ * fan_source: nbr of rays / spread in degrees / color of rays
+ * beam_source: nbr of rays / width in cm / color of rays
+ * converging_lens: diameter in cm /radius of curvature in cm/ index of refraction (no units)/ focal points checkBox/ focal length readout
+ * diverging_lens: diameter/radius/index/focal points checkbox/focal length readout
+ * converging_mirror: diameter/radius/focal points checkbox/focal length readout
+ * diverging_mirror: diameter/radius/focal points checkbox/focal length readout
  * plane_mirror: diameter
  * simple_mask: diameter
  * slit_mask: diameter/ slit width
@@ -83,7 +83,7 @@ define( function ( require ) {
     fontInfo = {font: DISPLAY_FONT, fill: TEXT_COLOR};
     var nbrOfRaysText = new Text('number of rays', fontInfo);
     var focalPointsText = new Text('focal points', fontInfo);
-    var heightText = new Text('height', fontInfo);
+    var widthText = new Text('width', fontInfo);
     var spreadText = new Text('spread', fontInfo);
     var diameterText = new Text('diameter', fontInfo);
     var radiusText = new Text('radius of curvature', fontInfo);
@@ -107,15 +107,15 @@ define( function ( require ) {
       minWidth: 0 // minimum width of the panel
     };
 
-    //Properties for Sliders, CheckBoxes, and Radio Buttons
-    var nbrOfRaysProperty = new Property( 10 );
-    var diameterProperty = new Property( 100 );
-    var radiusOfCurvatureProperty = new Property( 100 );
-    var indexOfRefractionProperty = new Property( 1.5 );
 
     for ( var i = 0; i < typeArray.length; i++ ){
       this.controlPanelArray[ i ] = makeControlPanel( typeArray[ i ] );
     }
+
+    var sliderOptions = {
+      trackSize: new Dimension2(120, 5),
+      thumbSize: new Dimension2(12, 25)
+    };
 
     var vBoxMaker = function( childrenArray ){
       return new VBox( {
@@ -124,6 +124,7 @@ define( function ( require ) {
         resize: false
       });
     };
+    var spacing = 20;
     var hBoxMaker = function( childrenArray ){
       return new HBox({
         children: childrenArray,
@@ -132,71 +133,77 @@ define( function ( require ) {
       });
 
     function makeControlPanel( type ){
-      
+
       //Properties for Sliders, CheckBoxes, and Radio Buttons
       var expandedProperty = new Property( false );
-      this.nbrOfRaysProperty = new Property( 10 );
-      this.diameterProperty = new Property( 100 );
-      this.radiusOfCurvatureProperty = new Property( 100 );
-      this.indexOfRefractionProperty = new Property( 1.5 );
+      var nbrOfRaysProperty = new Property( 10 );
+      var spreadProperty = new Property( 20 );
+      var widthProperty = new Property( 50 );
+      var colorProperty = new Property( 'white' );
+      var diameterProperty = new Property( 100 );
+      var radiusOfCurvatureProperty = new Property( 100 );
+      var indexOfRefractionProperty = new Property( 1.5 );
+      var showFocalPointsProperty = new Property( false );
+
+      var fillerBox = new Text(' ', {font: DISPLAY_FONT});
+
+      //Create Sliders with Text labels
+      var maxNbrRays = this.mainModel.maxNbrOfRaysFromASource;
+      var nbrOfRaysSlider = new HSlider( nbrOfRaysProperty, { min: 1, max: maxNbrRays }, sliderOptions );
+      var nbrOfRaysVBox = vBoxMaker( [ nbrOfRaysSlider, nbrOfRaysText ] );
+
+      var spreadSlider = new HSlider( spreadProperty, { min: 2, max: 180 }, sliderOptions);
+      var spreadVBox = vBoxMaker( [ spreadSlider, this.spreadText ] );
+
+      var widthSlider = new HSlider( widthProperty, { min: 50, max: 250 }, sliderOptions);
+      var widthVBox = vBoxMaker( [widthSlider, widthText] );
+
+      var radioButtonOptions = {radius: 8, fontSize: 12, deselectedColor: 'white'};
+      var whiteColorRadioButton = new AquaRadioButton( colorProperty, 'white', whiteText, radioButtonOptions);
+      var greenColorRadioButton = new AquaRadioButton( colorProperty, 'green', greenText, radioButtonOptions);
+      var redColorRadioButton = new AquaRadioButton( colorProperty, 'red', redText, radioButtonOptions);
+      var yellowColorRadioButton = new AquaRadioButton( colorProperty, 'yellow', yellowText, radioButtonOptions);
+
+      var colorVBox1 = vBoxMaker( [ whiteColorRadioButton, greenColorRadioButton ] );
+      var colorVBox2 = vBoxMaker( [ redColorRadioButton, yellowColorRadioButton ] );
+
+      var diameterSlider = new HSlider( diameterProperty, {min: 50, max: 250}, sliderOptions);
+      var diameterVBox = vBoxMaker( [ diameterSlider, this.diameterText ] );
+
+      var radiusSlider = new HSlider( radiusOfCurvatureProperty, {min: 100, max: 800}, sliderOptions);
+      var radiusVBox = vBoxMaker( [radiusSlider, radiusText] );
+
+      var indexSlider = new HSlider( indexOfRefractionProperty, {min: 1.4, max: 3}, sliderOptions);
+      var indexVBox = vBoxMaker( [ indexSlider, indexText ] );
+
+      var checkBoxOptions = { checkBoxColorBackground: 'white' };
+      var focalPtCheckBox = new CheckBox( focalPointsText, showFocalPointsProperty, checkBoxOptions);
+
+
       var controlPanel = new Node();
       var panelContent = new Node();
       switch (type) {
         case 'fan_source':
-
+          panelContent = hBoxMaker( [ fillerBox, nbrOfRaysVBox, spreadVBox, colorVBox1, colorVBox2 ] );
           break;
         case 'beam_source':
-          
-          break;
-        case 'fan_source':
-          var spreadSlider = new HSlider(pieceModel.spreadProperty, {min: 2, max: 180}, sliderOptions);
-          var spreadVBox = vBoxMaker( [ spreadSlider, this.spreadText ] );
-          panelContent = hBoxMaker( [ fillerBox, nbrOfRaysVBox, spreadVBox, this.colorVBox1, this.colorVBox2] );
-          break;
-        case 'beam_source':
-          var heightSlider = new HSlider(pieceModel.heightProperty, {min: 50, max: 250}, sliderOptions);
-          var heightVBox = vBoxMaker( [heightSlider, this.heightText] );
-          panelContent = hBoxMaker( [fillerBox, nbrOfRaysVBox, heightVBox, this.colorVBox1, this.colorVBox2] );
+          panelContent = hBoxMaker( [ fillerBox, nbrOfRaysVBox, widthVBox, colorVBox1, colorVBox2 ] );
           break;
         case 'converging_lens':
           //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
           //radius of curvature R = 2*f*( n - 1 )
-          var radiusSlider = new HSlider(pieceModel.radiusProperty, {min: 100, max: 800}, sliderOptions);
-          this.hSliders.push(radiusSlider);
-          var radiusVBox = vBoxMaker( [radiusSlider, this.radiusText] );
-          var indexSlider = new HSlider(pieceModel.indexProperty, {min: 1.4, max: 3}, sliderOptions);
-          this.hSliders.push(indexSlider);
-          var indexVBox = vBoxMaker( [ indexSlider, this.indexText ] );
-          var focalPtCheckBox = new CheckBox(this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions);
           panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ] );
           break;
         case 'diverging_lens':
-          //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
-          //radius of curvature R = 2*f*( n - 1 )
-          radiusSlider = new HSlider(pieceModel.radiusProperty, {min: -100, max: -800}, sliderOptions);
-          this.hSliders.push(radiusSlider);
-          radiusVBox = vBoxMaker( [radiusSlider, this.radiusText] );
-          indexSlider = new HSlider(pieceModel.indexProperty, {min: 1.4, max: 3}, sliderOptions);
-          this.hSliders.push(indexSlider);
-          indexVBox = vBoxMaker( [ indexSlider, this.indexText ] );
-          focalPtCheckBox = new CheckBox(this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions);
           panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ] );
           break;
         case 'converging_mirror':
-          radiusSlider = new HSlider(pieceModel.radiusProperty, {min: 200, max: 1600}, sliderOptions);
-          this.hSliders.push(radiusSlider);
-          radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
-          focalPtCheckBox = new CheckBox(this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions);
           panelContent = hBoxMaker( [fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox] );
           break;
         case 'plane_mirror':
           panelContent = hBoxMaker( [fillerBox, diameterVBox] );
           break;
         case 'diverging_mirror':
-          radiusSlider = new HSlider(pieceModel.radiusProperty, {min: -200, max: -1600}, sliderOptions);
-          this.hSliders.push(radiusSlider);
-          radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
-          focalPtCheckBox = new CheckBox(this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions);
           panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox ] );
           break;
         case 'simple_mask':
