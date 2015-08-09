@@ -278,41 +278,8 @@ define( function( require ) {
                         break;
                 }//end switch
             }//end linkControls()
-            //displayControlPanelForNewPiece: function ( piece ) {
-            //
-            //    var newPanel = new SelectedPieceControlPanel( this.mainModel, this.mainView, piece);
-            //    this.controlPanels.push(newPanel);
-            //    this.pieces.add( piece );
-            //
-            //    //var myCircle = new Circle( 20, { fill: 'red'} ) ;
-            //    this.addChild( newPanel );
-            //    //this.hideAllControlPanels();
-            //    //newPanel.visible = true;
-            //},
-            //disposeOfControlPanelForDeletedPiece: function ( piece ) {
-            //    var panelIndex = this.getIndexOfPanelOfSelectedPiece();
-            //    var panelToDelete = this.controlPanels.get( panelIndex );
-            //    panelToDelete.visible = false;
-            //    panelToDelete.dispose();
-            //    this.controlPanels.remove( panelToDelete );
-            //    this.pieces.remove( piece );
-            //},
 
-            //getIndexOfPanelOfSelectedPiece: function () {
-            //    var selectedPanelIndex;
-            //    for (var i = 0; i < this.controlPanels.length; i++) {
-            //        if ( this.controlPanels.get( i ).selectedPiece === this.selectedPiece ) {
-            //            selectedPanelIndex = i;
-            //            return selectedPanelIndex;
-            //        }
-            //    }
-            //}
 
-            //setControls: function () {
-            //    this.removeChild(this.displayPanel);
-            //    this.displayPanel = new Panel(this.content, this.panelOptions);
-            //    this.insertChild(0, this.displayPanel);
-            //},
             //setTitleBar: function (titleString) {
             //    this.panelTitle.text = titleString;
             //}
