@@ -13,7 +13,7 @@ define( function( require ) {
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
   //var Circle = require( 'SCENERY/nodes/Circle' );
-  //var ControlPanel = require( 'OPTICS_LAB/optics-lab/view/ControlPanel' );
+  var ControlPanel2 = require( 'OPTICS_LAB/optics-lab/view/ControlPanel2' );
   var ControlPanelManager = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager' );
   var ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
   var ComponentNode = require( 'OPTICS_LAB/optics-lab/view/ComponentNode' );
@@ -52,6 +52,10 @@ define( function( require ) {
 
     this.toolDrawerPanel = new ToolDrawerPanel( opticsLabModel, opticsLabScreenView );
     opticsLabScreenView.addChild( this.toolDrawerPanel );
+
+    //test code, to be deleted
+    opticsLabScreenView.addChild( new ControlPanel2( opticsLabModel, this, 'fan_source' ));
+    //end test code
 
     //Layout
     this.controlPanelManager.left = 40;       //this line crashes sim unless controlPanelManager has graphic content

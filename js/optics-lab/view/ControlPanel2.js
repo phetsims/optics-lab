@@ -54,7 +54,6 @@ define( function ( require ) {
      * @constructor
      */
     function   ControlPanel2( mainModel, mainView, type ) {
-
         Node.call( this );
         var controlPanel2 = this;
         var mainModel = mainModel;
@@ -134,25 +133,25 @@ define( function ( require ) {
         };
 
         //Properties for Sliders, CheckBoxes, and Radio Buttons
-        this.expandedProperty = new Property();
-        this.nbrOfRaysProperty = new Property();
-        this.spreadProperty = new Property();
-        this.widthProperty = new Property();
-        this.colorProperty = new Property();
-        this.diameterProperty = new Property();
-        this.radiusOfCurvatureProperty = new Property();
-        this.indexOfRefractionProperty = new Property();
-        this.showFocalPointsProperty = new Property();
+        this.expandedProperty = new Property( false );
+        this.nbrOfRaysProperty = new Property( 10 );
+        this.spreadProperty = new Property( 20 );
+        this.widthProperty = new Property( 50 );
+        this.colorProperty = new Property( 'white' );
+        this.diameterProperty = new Property( 50 );
+        this.radiusOfCurvatureProperty = new Property( 150 );
+        this.indexOfRefractionProperty = new Property( 2 );
+        this.showFocalPointsProperty = new Property( 'false' );
 
         var fillerBox = new Text(' ', {font: DISPLAY_FONT});
 
         //Create Sliders with Text labels
-        var maxNbrRays = this.mainModel.maxNbrOfRaysFromASource;
+        var maxNbrRays = mainModel.maxNbrOfRaysFromASource;
         var nbrOfRaysSlider = new HSlider(this.nbrOfRaysProperty, {min: 1, max: maxNbrRays}, sliderOptions);
         var nbrOfRaysVBox = vBoxMaker([nbrOfRaysSlider, nbrOfRaysText]);
 
         var spreadSlider = new HSlider(this.spreadProperty, {min: 2, max: 180}, sliderOptions);
-        var spreadVBox = vBoxMaker([spreadSlider, this.spreadText]);
+        var spreadVBox = vBoxMaker([spreadSlider, spreadText]);
 
         var widthSlider = new HSlider(this.widthProperty, {min: 50, max: 250}, sliderOptions);
         var widthVBox = vBoxMaker([widthSlider, widthText]);
@@ -167,7 +166,7 @@ define( function ( require ) {
         var colorVBox2 = vBoxMaker([redColorRadioButton, yellowColorRadioButton]);
 
         var diameterSlider = new HSlider(this.diameterProperty, {min: 50, max: 250}, sliderOptions);
-        var diameterVBox = vBoxMaker([diameterSlider, this.diameterText]);
+        var diameterVBox = vBoxMaker([diameterSlider, diameterText]);
 
         var radiusSlider = new HSlider(this.radiusOfCurvatureProperty, {min: 100, max: 800}, sliderOptions);
         var radiusVBox = vBoxMaker([radiusSlider, radiusText]);
@@ -179,6 +178,7 @@ define( function ( require ) {
         var focalPtCheckBox = new CheckBox(focalPointsText, this.showFocalPointsProperty, checkBoxOptions);
 
         var panelContent = new Node();
+
         switch (type) {
             case 'fan_source':
                 panelContent = hBoxMaker([fillerBox, nbrOfRaysVBox, spreadVBox, colorVBox1, colorVBox2]);
@@ -211,16 +211,16 @@ define( function ( require ) {
                 break;
 
         }//end switch()
-        var expandCollapseButton = new ExpandCollapseButton(expandedProperty, {
+        var expandCollapseButton = new ExpandCollapseButton( this.expandedProperty, {
             sideLength: 15,
             cursor: 'pointer'
         });
         var displayPanel = new Panel( panelContent, panelOptions );
-        this.children = [ displayPanel, expandCollapseButton ];
+        controlPanel2.children = [ displayPanel, expandCollapseButton ];
         expandCollapseButton.left = 5;
         expandCollapseButton.top = 5;
 
-        this.mainView.selectedPieceTypeProperty.link( function( piece ){
+        mainView.selectedPieceTypeProperty.link( function( piece ){
             controlPanel2.visible = ( piece.type === controlPanel2.type );
             //console.log( 'calling setControls for piece ' + piece.type );
         } );
