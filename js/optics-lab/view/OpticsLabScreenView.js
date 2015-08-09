@@ -15,6 +15,7 @@ define( function( require ) {
   //var Circle = require( 'SCENERY/nodes/Circle' );
   var ControlPanel2 = require( 'OPTICS_LAB/optics-lab/view/ControlPanel2' );
   var ControlPanelManager = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager' );
+  var ControlPanelManager2 = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager2' );
   var ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
   var ComponentNode = require( 'OPTICS_LAB/optics-lab/view/ComponentNode' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -47,7 +48,7 @@ define( function( require ) {
     this.modelViewTransform = ModelViewTransform2.createIdentity();
    // this.controlPanel = new ControlPanel( this.mainModel, this );
     //opticsLabScreenView.addChild( this.controlPanel );
-    this.controlPanelManager = new ControlPanelManager( this.mainModel, this );
+    this.controlPanelManager = new ControlPanelManager2( this.mainModel, this );
     opticsLabScreenView.addChild( this.controlPanelManager );
 
     this.toolDrawerPanel = new ToolDrawerPanel( opticsLabModel, opticsLabScreenView );
@@ -129,7 +130,7 @@ define( function( require ) {
           newPiece = this.addComponent( type, startPosition );
         }
 
-        this.controlPanelManager.displayControlPanelForNewPiece( newPiece );
+        //this.controlPanelManager.displayControlPanelForNewPiece( newPiece );
         return newPiece;
       },//end AddPiece
       removeSource: function( sourceNode ){
@@ -147,7 +148,7 @@ define( function( require ) {
       },
       removePiece: function( piece ){
         var type = piece.type;
-        this.controlPanelManager.disposeOfControlPanelForDeletedPiece( piece );
+        //this.controlPanelManager.disposeOfControlPanelForDeletedPiece( piece );
         if( type === 'fan_source' || type === 'beam_source' ){
           this.removeSource( piece );
         }else{

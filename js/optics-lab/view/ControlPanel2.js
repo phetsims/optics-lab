@@ -228,9 +228,9 @@ define( function ( require ) {
         expandCollapseButton.left = 5;
         expandCollapseButton.top = 5;
 
-        mainView.selectedPieceTypeProperty.link( function( piece ){
-            if( piece !== null ){
-                controlPanel2.visible = ( piece.type === controlPanel2.type );
+        mainView.selectedPieceTypeProperty.link( function( type ){
+            if( type !== null ){
+                controlPanel2.visible = ( type === controlPanel2.type );
             }
 
             //console.log( 'calling setControls for piece ' + piece.type );
