@@ -30,7 +30,7 @@ define( function( require ) {
             position: position,         //@private, position of source on stage
             nbrOfRays: nbrOfRays,       //@private, number of rays
             spread: spread,             //spread of point source (fan source) in degrees
-            height: height,              //height of source, if beam
+            width: height,              //width of source, if beam
             angle: 0                    //@private angle in rads of beam source, 0 = horizontal. + = CCW, - = CW
         } );
 
@@ -59,7 +59,7 @@ define( function( require ) {
             sourceModel.createRays();
             sourceModel.mainModel.processRays();
         });
-        this.heightProperty.link( function(){
+        this.widthProperty.link( function(){
             sourceModel.createRays();
             sourceModel.mainModel.processRays();
         });
@@ -103,7 +103,7 @@ define( function( require ) {
                 var deltaPos;
                 var sinAngle = Math.sin( -this.angle );   //in screen coords, + angle is CW
                 var cosAngle = Math.cos( -this.angle );
-                var h = this.height;
+                var h = this.width;
                 if ( this.nbrOfRays === 1 ) {
                     lowestPos = new Vector2( 0, 0 );
                     deltaPos = new Vector2( 0, 0 );
@@ -153,9 +153,9 @@ define( function( require ) {
                     this.mainModel.processRays();
                 }
             },
-            setWidthOfBeam: function( heightInCm ){
+            setWidthOfBeam: function( widthInCm ){
                 if( this.type === 'beam_source' ){
-                    this.height = heightInCm;
+                    this.width = widthInCm;
                     this.createRays();
                     this.mainModel.processRays();
                 }
@@ -174,7 +174,7 @@ define( function( require ) {
                         var deltaPos;
                         var sinAngle = Math.sin( -this.angle );   //in screen coords, + angle is CW
                         var cosAngle = Math.cos( -this.angle );
-                        var h = this.height;
+                        var h = this.width;
                         if( this.nbrOfRays === 1 ){
                             lowestPos = new Vector2( 0, 0 );
                             deltaPos = new Vector2( 0, 0 );

@@ -83,6 +83,7 @@ define( function( require ) {
             if (piece !== null) {
                 controlPanelManager2.selectedPiece = piece;
                 controlPanelManager2.selectedPieceType = piece.type;
+                controlPanelManager2.linkControls();
             }
         });
 
@@ -105,8 +106,30 @@ define( function( require ) {
     }//end constructor
 
     return inherit(Node, ControlPanelManager2, {
-
-
+            getIndex: function (type) {
+                var index;
+                for (var i = 0; i < this.typeArray.length; i++) {
+                    if (this.typeArray[i] === this.controlPanels[i].type) {
+                        index = i;
+                    }
+                }
+                return index;
+            },
+            linkControls: function(){
+                var type = this.selectedPieceType;
+                var piece = this.selectedPiece;
+                var controlPanel = this.controlPanels[ this.getIndex( type )];
+                switch( type ){
+                    case 'fan_source':
+                        controlPanel.nbrOfRaysProperty = piece.pieceModel.nbrOfRaysProperty;
+                        controlPanel.spreadProperty = piece.pieceModel.spreadProperty;
+                        break;
+                    case 'beam_source':
+                        break;
+                    case 'converging_lens':
+                        break;
+                }//end switch
+            }//end linkControls()
             //displayControlPanelForNewPiece: function ( piece ) {
             //
             //    var newPanel = new SelectedPieceControlPanel( this.mainModel, this.mainView, piece);

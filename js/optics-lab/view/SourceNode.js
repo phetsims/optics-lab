@@ -154,10 +154,10 @@ define( function( require ) {
             }
         });
 
-        this.pieceModel.heightProperty.link( function( height ){
+        this.pieceModel.widthProperty.link( function( width ){
             //console.log( 'source callback, height is ' + height );
             if( sourceNode.type === 'beam_source' ){
-                sourceNode.setHeight( height );
+                sourceNode.setWidth( width );
                 sourceNode.setRayNodes();
                 sourceModel.mainModel.processRays();
             }
@@ -256,7 +256,7 @@ define( function( require ) {
         //        parentNode.removeChild( this.rayNodes[ i ] );
         //    }i
         //},
-        setHeight: function( height ){
+        setWidth: function( height ){
             this.settingHeight = true;
             var cosAngle = Math.cos( this.pieceModel.angle );
             var sinAngle = Math.sin( this.pieceModel.angle );
