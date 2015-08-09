@@ -195,8 +195,6 @@ define( function ( require ) {
                 panelContent = hBoxMaker([fillerBox, nbrOfRaysVBox, widthVBox, colorVBox1, colorVBox2]);
                 break;
             case 'converging_lens':
-                //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
-                //radius of curvature R = 2*f*( n - 1 )
                 panelContent = hBoxMaker([fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox]);
                 break;
             case 'diverging_lens':
@@ -228,10 +226,11 @@ define( function ( require ) {
         expandCollapseButton.left = 5;
         expandCollapseButton.top = 5;
 
-        mainView.selectedPieceTypeProperty.link( function( type ){
-            if( type !== null ){
-                controlPanel2.visible = ( type === controlPanel2.type );
-            }
+        mainView.selectedPieceTypeProperty.lazyLink( function( type ){
+            controlPanel2.visible = ( type === controlPanel2.type );
+            //if( type !== null ){
+            //
+            //}
 
             //console.log( 'calling setControls for piece ' + piece.type );
         } );

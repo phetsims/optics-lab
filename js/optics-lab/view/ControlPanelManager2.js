@@ -59,6 +59,12 @@ define( function( require ) {
         this.pieces = new ObservableArray();
         this.selectedPiece = new Node();
         this.selectedPieceType;
+        this.previousRaysUpdate;
+        this.previousSpreadUpdate;
+        this.previousColorUpdate;
+        this.previousDiameterUpdate;
+        this.previousRadiusOfCurvatureUpdate;
+        this.previousIndexOfRefractionUpdate;
         //this.expandedProperty = new Property( true );
         this.typeArray = [
             'fan_source',
@@ -79,12 +85,15 @@ define( function( require ) {
         }
 
 
-        this.mainView.selectedPieceProperty.link(function (piece) {
-            if (piece !== null) {
-                controlPanelManager2.selectedPiece = piece;
-                controlPanelManager2.selectedPieceType = piece.type;
-                controlPanelManager2.linkControls();
-            }
+        this.mainView.selectedPieceProperty.lazyLink(function (piece) {
+            controlPanelManager2.selectedPiece = piece;
+            controlPanelManager2.selectedPieceType = piece.type;
+            controlPanelManager2.linkControls();
+            //if (piece !== null) {
+            //    controlPanelManager2.selectedPiece = piece;
+            //    controlPanelManager2.selectedPieceType = piece.type;
+            //    controlPanelManager2.linkControls();
+            //}
         });
 
         //this.mainView.selectedPieceTypeProperty.link(function ( type ) {
@@ -101,15 +110,13 @@ define( function( require ) {
 
         // All controls are placed on display node, with visibility set by accordionBox button
 
-
-
     }//end constructor
 
     return inherit(Node, ControlPanelManager2, {
             getIndex: function (type) {
                 var index;
                 for (var i = 0; i < this.typeArray.length; i++) {
-                    if (this.typeArray[i] === this.controlPanels[i].type) {
+                    if ( this.controlPanels[i].type === type ) {
                         index = i;
                     }
                 }
@@ -119,14 +126,102 @@ define( function( require ) {
                 var type = this.selectedPieceType;
                 var piece = this.selectedPiece;
                 var controlPanel = this.controlPanels[ this.getIndex( type )];
+                var controlPanelManager = this;
+
+                function raysUpdate( nbrOfRays ){
+                    piece.pieceModel.nbrOfRaysProperty.value = Math.round( nbrOfRays );
+                }
+                function spreadUpdate( spread ){
+                    piece.pieceModel.spreadProperty.value = Math.round( spread );
+                }
+                function colorUpdate( colorString ){
+                    piece.colorProperty.value = colorString;
+                }
+                function widthUpdate( width ){
+                    piece.pieceModel.widthProperty.value = width;
+                }
+                function diameterUpdate( diameter ){
+                    piece.pieceModel.diameterProperty.value = diameter;
+                }
+                function radiusOfCurvatureUpdate( radius ){
+                    piece.pieceModel.radiusProperty.value = radius;
+                }
+                function indexOfRefractionUpdate( index ){
+                    piece.pieceModel.indexProperty.value = index;
+                }
+                var resetPanel = function( property, previousUpdate, update, attribute ){
+                    property.unlink( previousUpdate );
+                    property.value = attribute;
+                    property.link( update );
+                    //previousUpdate = update;
+                };
+                //var lastRaysUpdate;
                 switch( type ){
                     case 'fan_source':
-                        controlPanel.nbrOfRaysProperty = piece.pieceModel.nbrOfRaysProperty;
-                        controlPanel.spreadProperty = piece.pieceModel.spreadProperty;
+                        resetPanel(
+                            controlPanel.nbrOfRaysProperty,
+                            controlPanelManager.previousRaysUpdate,
+                            raysUpdate,
+                            piece.pieceModel.nbrOfRays
+                        );
+                        //controlPanel.nbrOfRaysProperty.unlink( this.previousRaysUpdate );
+                        //controlPanel.nbrOfRaysProperty.value = piece.pieceModel.nbrOfRays;
+                        //controlPanel.nbrOfRaysProperty.link( raysUpdate );
+                        this.previousRaysUpdate = raysUpdate;
+                        //resetPanel(
+                        //    controlPanel.spreadProperty,
+                        //    controlPanelManager.previousSpreadUpdate,
+                        //    spreadUpdate,
+                        //    piece.pieceModel.spread
+                        //);
+                        controlPanel.spreadProperty.unlink( this.previousSpreadUpdate );
+                        controlPanel.spreadProperty.value = piece.pieceModel.spread;
+                        controlPanel.spreadProperty.link( spreadUpdate );
+                        this.previousSpreadUpdate = spreadUpdate;
+                        controlPanel.colorProperty.unlink( this.previousColorUpdate );
+                        controlPanel.colorProperty.value = piece.colorProperty.value;
+                        controlPanel.colorProperty.link( colorUpdate );
+                        this.previousColorUpdate = colorUpdate;
                         break;
                     case 'beam_source':
+                        controlPanel.nbrOfRaysProperty.unlink( this.previousRaysUpdate );
+                        controlPanel.nbrOfRaysProperty.value = piece.pieceModel.nbrOfRays;
+                        controlPanel.nbrOfRaysProperty.link( raysUpdate );
+                        this.previousRaysUpdate = raysUpdate;
+                        controlPanel.widthProperty.unlink( this.previousWidthUpdate );
+                        controlPanel.widthProperty.value = piece.pieceModel.width;
+                        controlPanel.widthProperty.link( widthUpdate );
+                        this.previousWidthUpdate = widthUpdate;
+                        controlPanel.colorProperty.unlink( this.previousColorUpdate );
+                        controlPanel.colorProperty.value = piece.colorProperty.value;
+                        controlPanel.colorProperty.link( colorUpdate );
+                        this.previousColorUpdate = colorUpdate;
                         break;
                     case 'converging_lens':
+                        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
+                        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
+                        controlPanel.diameterProperty.link( diameterUpdate );
+                        this.previousDiameterUpdate = diameterUpdate;
+                        controlPanel.radiusOfCurvatureProperty.unlink( this.previousRadiusOfCurvatureUpdate );
+                        controlPanel.radiusOfCurvatureProperty.value = piece.pieceModel.radius;
+                        controlPanel.radiusOfCurvatureProperty.link( radiusOfCurvatureUpdate );
+                        this.previousRadiusOfCurvatureUpdate = radiusOfCurvatureUpdate;
+                        controlPanel.indexOfRefractionProperty.unlink( this.previousIndexOfRefractionUpdate );
+                        controlPanel.indexOfRefractionProperty.value = piece.pieceModel.index;
+                        controlPanel.indexOfRefractionProperty.link( indexOfRefractionUpdate );
+                        this.previousIndexOfRefractionUpdate = indexOfRefractionUpdate;
+                        break;
+                    case 'diverging_lens':
+                        break;
+                    case 'converging_mirror':
+                        break;
+                    case 'plane_mirror':
+                        break;
+                    case 'diverging_mirror':
+                        break;
+                    case 'simple_mask':
+                        break;
+                    case 'slit_mask':
                         break;
                 }//end switch
             }//end linkControls()
