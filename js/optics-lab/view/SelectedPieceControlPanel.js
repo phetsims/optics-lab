@@ -120,7 +120,7 @@ define( function ( require ) {
             thisControlPanel.displayPanel.visible = tOrF;
         });
 
-        //commented out for test
+
         this.mainView.selectedPieceProperty.link( function( piece ){
             thisControlPanel.visible = ( piece === thisControlPanel.selectedPiece );
             //console.log( 'calling setControls for piece ' + piece.type );

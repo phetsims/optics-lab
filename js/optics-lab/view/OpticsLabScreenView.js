@@ -54,7 +54,7 @@ define( function( require ) {
     opticsLabScreenView.addChild( this.toolDrawerPanel );
 
     //test code, to be deleted
-    opticsLabScreenView.addChild( new ControlPanel2( opticsLabModel, this, 'fan_source' ));
+    //opticsLabScreenView.addChild( new ControlPanel2( opticsLabModel, this, 'beam_source' ));
     //end test code
 
     //Layout

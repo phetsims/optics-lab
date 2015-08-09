@@ -123,6 +123,13 @@ define( function ( require ) {
                 resize: false
             });
         };
+        var vBoxMaker2 = function( childrenArray ){
+            return new VBox( {
+                children: childrenArray,
+                align: 'left',
+                resize: false
+            });
+        };
         var spacing = 20;
         var hBoxMaker = function( childrenArray ){
             return new HBox({
@@ -133,7 +140,7 @@ define( function ( require ) {
         };
 
         //Properties for Sliders, CheckBoxes, and Radio Buttons
-        this.expandedProperty = new Property( false );
+        this.expandedProperty = new Property( true );
         this.nbrOfRaysProperty = new Property( 10 );
         this.spreadProperty = new Property( 20 );
         this.widthProperty = new Property( 50 );
@@ -162,8 +169,8 @@ define( function ( require ) {
         var redColorRadioButton = new AquaRadioButton(this.colorProperty, 'red', redText, radioButtonOptions);
         var yellowColorRadioButton = new AquaRadioButton(this.colorProperty, 'yellow', yellowText, radioButtonOptions);
 
-        var colorVBox1 = vBoxMaker([whiteColorRadioButton, greenColorRadioButton]);
-        var colorVBox2 = vBoxMaker([redColorRadioButton, yellowColorRadioButton]);
+        var colorVBox1 = vBoxMaker2([whiteColorRadioButton, greenColorRadioButton]);
+        var colorVBox2 = vBoxMaker2([redColorRadioButton, yellowColorRadioButton]);
 
         var diameterSlider = new HSlider(this.diameterProperty, {min: 50, max: 250}, sliderOptions);
         var diameterVBox = vBoxMaker([diameterSlider, diameterText]);
@@ -177,6 +184,7 @@ define( function ( require ) {
         var checkBoxOptions = {checkBoxColorBackground: 'white'};
         var focalPtCheckBox = new CheckBox(focalPointsText, this.showFocalPointsProperty, checkBoxOptions);
 
+        var focalLengthHBox = hBoxMaker( [ focalLengthText, focalLengthReadoutText])
         var panelContent = new Node();
 
         switch (type) {
@@ -221,9 +229,19 @@ define( function ( require ) {
         expandCollapseButton.top = 5;
 
         mainView.selectedPieceTypeProperty.link( function( piece ){
-            controlPanel2.visible = ( piece.type === controlPanel2.type );
+            if( piece !== null ){
+                controlPanel2.visible = ( piece.type === controlPanel2.type );
+            }
+
             //console.log( 'calling setControls for piece ' + piece.type );
         } );
+        expandCollapseButton.expandedProperty.link( function( tOrF ) {
+            displayPanel.visible = tOrF;
+            //if( displayPanel !== null ){
+            //    displayPanel.visible = tOrF;
+            //}
+        });
+
 
         }//end constructor
 
