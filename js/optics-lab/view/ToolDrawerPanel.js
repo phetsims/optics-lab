@@ -128,6 +128,7 @@ define( function( require ) {
             pieceGrabbed = mainView.addPiece( type, startPosition );
             //pieceGrabbed.mainView.setSelectedPiece( pieceGrabbed );
             mainView.setSelectedPiece( pieceGrabbed );
+            mainView.setSelectedPieceType( pieceGrabbed );
             //console.log( 'pieceGrabbed is ' + pieceGrabbed.type );
           },
 

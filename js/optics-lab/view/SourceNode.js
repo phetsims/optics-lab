@@ -88,6 +88,7 @@ define( function( require ) {
 
                 start: function( e ){
                     sourceNode.mainView.setSelectedPiece( sourceNode );
+                    sourceNode.mainView.setSelectedPieceType( sourceNode );
                     var position = sourceNode.globalToParentPoint( e.pointer.point );
                     var currentNodePos = sourceNode.pieceModel.position;
                     mouseDownPosition = position.minus( currentNodePos );
@@ -111,6 +112,7 @@ define( function( require ) {
             //start function for testing only
             start: function (e){
                 sourceNode.mainView.setSelectedPiece( sourceNode );
+                sourceNode.mainView.setSelectedPieceType( sourceNode );
             },
 
             drag: function(e){

@@ -38,6 +38,7 @@ define( function( require ) {
 
     this.mainModel = opticsLabModel;
     this.selectedPieceProperty = new Property( null );
+    this.selectedPieceTypeProperty = new Property( null );
 
     var opticsLabScreenView = this;
     ScreenView.call( opticsLabScreenView, { layoutBounds: new Bounds2( 0, 0, 768, 504 ) } );
@@ -150,10 +151,18 @@ define( function( require ) {
         }
 
       },
+
+
       setSelectedPiece: function ( piece ){
         this.selectedPieceProperty.value = piece;
         piece.moveToFront();
+      },
+      setSelectedPieceType: function( piece ){
+        this.selectedPieceTypeProperty.value = piece.type;
+        //console.log( 'piece type is ' + piece.type );
+        piece.moveToFront();
       }
+
     }
   );
 } );

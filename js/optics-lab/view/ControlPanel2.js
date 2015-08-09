@@ -59,19 +59,19 @@ define( function ( require ) {
         var controlPanel2 = this;
         var mainModel = mainModel;
         var mainView = mainView;
+        this.type = type;
         //this.controlPanelArray = [];
-        var typeArray = [
-            'fan_source',
-            'beam_source',
-            'converging_lens',
-            'diverging_lens',
-            'converging_mirror',
-            'plane_mirror',
-            'diverging_mirror',
-            'simple_mask',
-            'slit_mask'
-        ];
-
+        //var typeArray = [
+        //    'fan_source',
+        //    'beam_source',
+        //    'converging_lens',
+        //    'diverging_lens',
+        //    'converging_mirror',
+        //    'plane_mirror',
+        //    'diverging_mirror',
+        //    'simple_mask',
+        //    'slit_mask'
+        //];
 
 
         var fontInfo = {font: DISPLAY_FONT};
@@ -133,54 +133,51 @@ define( function ( require ) {
             })
         };
 
-
         //Properties for Sliders, CheckBoxes, and Radio Buttons
-        var expandedProperty = new Property(false);
-        var nbrOfRaysProperty = new Property(10);
-        var spreadProperty = new Property(20);
-        var widthProperty = new Property(50);
-        var colorProperty = new Property('white');
-        var diameterProperty = new Property(100);
-        var radiusOfCurvatureProperty = new Property(100);
-        var indexOfRefractionProperty = new Property(1.5);
-        var showFocalPointsProperty = new Property(false);
+        this.expandedProperty = new Property();
+        this.nbrOfRaysProperty = new Property();
+        this.spreadProperty = new Property();
+        this.widthProperty = new Property();
+        this.colorProperty = new Property();
+        this.diameterProperty = new Property();
+        this.radiusOfCurvatureProperty = new Property();
+        this.indexOfRefractionProperty = new Property();
+        this.showFocalPointsProperty = new Property();
 
         var fillerBox = new Text(' ', {font: DISPLAY_FONT});
 
         //Create Sliders with Text labels
         var maxNbrRays = this.mainModel.maxNbrOfRaysFromASource;
-        var nbrOfRaysSlider = new HSlider(nbrOfRaysProperty, {min: 1, max: maxNbrRays}, sliderOptions);
+        var nbrOfRaysSlider = new HSlider(this.nbrOfRaysProperty, {min: 1, max: maxNbrRays}, sliderOptions);
         var nbrOfRaysVBox = vBoxMaker([nbrOfRaysSlider, nbrOfRaysText]);
 
-        var spreadSlider = new HSlider(spreadProperty, {min: 2, max: 180}, sliderOptions);
+        var spreadSlider = new HSlider(this.spreadProperty, {min: 2, max: 180}, sliderOptions);
         var spreadVBox = vBoxMaker([spreadSlider, this.spreadText]);
 
-        var widthSlider = new HSlider(widthProperty, {min: 50, max: 250}, sliderOptions);
+        var widthSlider = new HSlider(this.widthProperty, {min: 50, max: 250}, sliderOptions);
         var widthVBox = vBoxMaker([widthSlider, widthText]);
 
         var radioButtonOptions = {radius: 8, fontSize: 12, deselectedColor: 'white'};
-        var whiteColorRadioButton = new AquaRadioButton(colorProperty, 'white', whiteText, radioButtonOptions);
-        var greenColorRadioButton = new AquaRadioButton(colorProperty, 'green', greenText, radioButtonOptions);
-        var redColorRadioButton = new AquaRadioButton(colorProperty, 'red', redText, radioButtonOptions);
-        var yellowColorRadioButton = new AquaRadioButton(colorProperty, 'yellow', yellowText, radioButtonOptions);
+        var whiteColorRadioButton = new AquaRadioButton(this.colorProperty, 'white', whiteText, radioButtonOptions);
+        var greenColorRadioButton = new AquaRadioButton(this.colorProperty, 'green', greenText, radioButtonOptions);
+        var redColorRadioButton = new AquaRadioButton(this.colorProperty, 'red', redText, radioButtonOptions);
+        var yellowColorRadioButton = new AquaRadioButton(this.colorProperty, 'yellow', yellowText, radioButtonOptions);
 
         var colorVBox1 = vBoxMaker([whiteColorRadioButton, greenColorRadioButton]);
         var colorVBox2 = vBoxMaker([redColorRadioButton, yellowColorRadioButton]);
 
-        var diameterSlider = new HSlider(diameterProperty, {min: 50, max: 250}, sliderOptions);
+        var diameterSlider = new HSlider(this.diameterProperty, {min: 50, max: 250}, sliderOptions);
         var diameterVBox = vBoxMaker([diameterSlider, this.diameterText]);
 
-        var radiusSlider = new HSlider(radiusOfCurvatureProperty, {min: 100, max: 800}, sliderOptions);
+        var radiusSlider = new HSlider(this.radiusOfCurvatureProperty, {min: 100, max: 800}, sliderOptions);
         var radiusVBox = vBoxMaker([radiusSlider, radiusText]);
 
-        var indexSlider = new HSlider(indexOfRefractionProperty, {min: 1.4, max: 3}, sliderOptions);
+        var indexSlider = new HSlider(this.indexOfRefractionProperty, {min: 1.4, max: 3}, sliderOptions);
         var indexVBox = vBoxMaker([indexSlider, indexText]);
 
         var checkBoxOptions = {checkBoxColorBackground: 'white'};
-        var focalPtCheckBox = new CheckBox(focalPointsText, showFocalPointsProperty, checkBoxOptions);
+        var focalPtCheckBox = new CheckBox(focalPointsText, this.showFocalPointsProperty, checkBoxOptions);
 
-
-        var controlPanel = new Node();
         var panelContent = new Node();
         switch (type) {
             case 'fan_source':
@@ -218,52 +215,19 @@ define( function ( require ) {
             sideLength: 15,
             cursor: 'pointer'
         });
-        var displayPanel = new Panel(panelContent, panelOptions);
-        this.children = [displayPanel, expandCollapseButton];
+        var displayPanel = new Panel( panelContent, panelOptions );
+        this.children = [ displayPanel, expandCollapseButton ];
         expandCollapseButton.left = 5;
         expandCollapseButton.top = 5;
 
-
-
-
-
-            //this.expandCollapseButton.expandedProperty.link( function( tOrF ) {
-            //   controlPanelMaker.displayPanel.visible = tOrF;
-            //});
-
-
-            //this.mainView.selectedPieceProperty.link( function( piece ){
-            //   controlPanelMaker.visible = ( piece ===  controlPanelMaker.selectedPiece );
-            //  //console.log( 'calling setControls for piece ' + piece.type );
-            //} );
-
+        this.mainView.selectedPieceTypeProperty.link( function( piece ){
+            controlPanel2.visible = ( piece.type === controlPanel2.type );
+            //console.log( 'calling setControls for piece ' + piece.type );
+        } );
 
         }//end constructor
 
         return inherit( Node, ControlPanel2, {
-
-
-
-
-            setColorRadioButtonsForSourceNode: function (sourceNode) {
-                var radioButtonOptions = {radius: 8, fontSize: 12, deselectedColor: 'white'};
-                var whiteColorRadioButton = new AquaRadioButton(sourceNode.colorProperty, 'white', this.whiteText, radioButtonOptions);
-                var greenColorRadioButton = new AquaRadioButton(sourceNode.colorProperty, 'green', this.greenText, radioButtonOptions);
-                var redColorRadioButton = new AquaRadioButton(sourceNode.colorProperty, 'red', this.redText, radioButtonOptions);
-                var yellowColorRadioButton = new AquaRadioButton(sourceNode.colorProperty, 'yellow', this.yellowText, radioButtonOptions);
-                var spacing = 5;
-                this.colorVBox1 = new VBox({
-                    children: [whiteColorRadioButton, greenColorRadioButton],
-                    align: 'left',
-                    spacing: spacing
-                });
-                this.colorVBox2 = new VBox({
-                    children: [redColorRadioButton, yellowColorRadioButton],
-                    align: 'left',
-                    spacing: spacing
-                });
-            }
-
 
         });//end inherit
     });

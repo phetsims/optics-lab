@@ -75,6 +75,7 @@ define( function( require ) {
         allowTouchSnag: true,
         start: function( e ){
           componentNode.mainView.setSelectedPiece( componentNode );
+          componentNode.mainView.setSelectedPieceType( componentNode );
           var position = componentNode.globalToParentPoint( e.pointer.point );
           var currentNodePos = componentNode.pieceModel.position;
           mouseDownPosition = position.minus( currentNodePos );
@@ -105,6 +106,7 @@ define( function( require ) {
       //start function for testing only
       start: function (e){
         componentNode.mainView.setSelectedPiece( componentNode );
+        componentNode.mainView.setSelectedPieceType( componentNode );
         //console.log( 'mouse down' );
         //var mouseDownPosition = e.pointer.point;
       },

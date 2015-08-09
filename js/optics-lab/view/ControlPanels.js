@@ -125,12 +125,13 @@ define( function ( require ) {
       });
     };
     var spacing = 20;
-    var hBoxMaker = function( childrenArray ){
+    var hBoxMaker = function( childrenArray ) {
       return new HBox({
         children: childrenArray,
         spacing: spacing,
         resize: false
       });
+    };
 
     function makeControlPanel( type ){
 
@@ -282,7 +283,7 @@ define( function ( require ) {
             //console.log( 'focalLength' + focalLength.toFixed(0)  );
           });
         }
-
+        var panelContent = new Node();
         var checkBoxOptions = {checkBoxColorBackground: 'white'};
         var spacing = 25;
         //console.log( 'setControlsForSelectedPiece' + piece.type );
