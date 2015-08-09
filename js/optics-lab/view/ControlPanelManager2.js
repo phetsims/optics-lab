@@ -65,6 +65,7 @@ define( function( require ) {
         this.previousDiameterUpdate;
         this.previousRadiusOfCurvatureUpdate;
         this.previousIndexOfRefractionUpdate;
+        this.showFocalPointsUpdate;
         //this.expandedProperty = new Property( true );
         this.typeArray = [
             'fan_source',
@@ -89,19 +90,8 @@ define( function( require ) {
             controlPanelManager2.selectedPiece = piece;
             controlPanelManager2.selectedPieceType = piece.type;
             controlPanelManager2.linkControls();
-            //if (piece !== null) {
-            //    controlPanelManager2.selectedPiece = piece;
-            //    controlPanelManager2.selectedPieceType = piece.type;
-            //    controlPanelManager2.linkControls();
-            //}
         });
 
-        //this.mainView.selectedPieceTypeProperty.link(function ( type ) {
-        //    if (piece !== null) {
-        //        controlPanelManager2.selectedPieceType = type;
-        //
-        //    }
-        //});
 
         //need any content to initialize position
         //var myCircle = new Circle( 25, { fill: 'yellow'} ) ;
@@ -148,6 +138,9 @@ define( function( require ) {
                 }
                 function indexOfRefractionUpdate( index ){
                     piece.pieceModel.indexProperty.value = index;
+                }
+                function showFocalPointsUpdate( tOrF ){
+                    piece.showFocalPointsProperty.value = tOrF;
                 }
                 var resetPanel = function( property, previousUpdate, update, attribute ){
                     property.unlink( previousUpdate );
@@ -210,6 +203,10 @@ define( function( require ) {
                         controlPanel.indexOfRefractionProperty.value = piece.pieceModel.index;
                         controlPanel.indexOfRefractionProperty.link( indexOfRefractionUpdate );
                         this.previousIndexOfRefractionUpdate = indexOfRefractionUpdate;
+                        controlPanel.showFocalPointsProperty.unlink( this.previousShowFocalPointsUpdate );
+                        controlPanel.showFocalPointsProperty.value = piece.showFocalPointsProperty.value;
+                        controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
+                        this.previousShowFocalPointsUpdate = showFocalPointsUpdate;
                         break;
                     case 'diverging_lens':
                         break;
