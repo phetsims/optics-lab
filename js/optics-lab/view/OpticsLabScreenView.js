@@ -160,6 +160,7 @@ define( function( require ) {
 
       setSelectedPiece: function ( piece ){
         this.selectedPieceProperty.value = piece;
+        this.selectedPieceTypeProperty.value = piece.type;
         piece.moveToFront();
       },
       setSelectedPieceType: function( piece ){

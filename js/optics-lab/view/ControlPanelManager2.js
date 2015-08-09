@@ -65,7 +65,8 @@ define( function( require ) {
         this.previousDiameterUpdate;
         this.previousRadiusOfCurvatureUpdate;
         this.previousIndexOfRefractionUpdate;
-        this.showFocalPointsUpdate;
+        this.previousShowFocalPointsUpdate;
+        this.previousDisplayFocalLengthUpdate;
         //this.expandedProperty = new Property( true );
         this.typeArray = [
             'fan_source',
@@ -142,6 +143,9 @@ define( function( require ) {
                 function showFocalPointsUpdate( tOrF ){
                     piece.showFocalPointsProperty.value = tOrF;
                 }
+                function displayFocalLength( focalLength ){
+
+                }
                 var resetPanel = function( property, previousUpdate, update, attribute ){
                     property.unlink( previousUpdate );
                     property.value = attribute;
@@ -209,16 +213,68 @@ define( function( require ) {
                         this.previousShowFocalPointsUpdate = showFocalPointsUpdate;
                         break;
                     case 'diverging_lens':
+                        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
+                        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
+                        controlPanel.diameterProperty.link( diameterUpdate );
+                        this.previousDiameterUpdate = diameterUpdate;
+                        controlPanel.radiusOfCurvatureProperty.unlink( this.previousRadiusOfCurvatureUpdate );
+                        controlPanel.radiusOfCurvatureProperty.value = piece.pieceModel.radius;
+                        controlPanel.radiusOfCurvatureProperty.link( radiusOfCurvatureUpdate );
+                        this.previousRadiusOfCurvatureUpdate = radiusOfCurvatureUpdate;
+                        controlPanel.indexOfRefractionProperty.unlink( this.previousIndexOfRefractionUpdate );
+                        controlPanel.indexOfRefractionProperty.value = piece.pieceModel.index;
+                        controlPanel.indexOfRefractionProperty.link( indexOfRefractionUpdate );
+                        this.previousIndexOfRefractionUpdate = indexOfRefractionUpdate;
+                        controlPanel.showFocalPointsProperty.unlink( this.previousShowFocalPointsUpdate );
+                        controlPanel.showFocalPointsProperty.value = piece.showFocalPointsProperty.value;
+                        controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
+                        this.previousShowFocalPointsUpdate = showFocalPointsUpdate;
                         break;
                     case 'converging_mirror':
+                        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
+                        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
+                        controlPanel.diameterProperty.link( diameterUpdate );
+                        this.previousDiameterUpdate = diameterUpdate;
+                        controlPanel.radiusOfCurvatureProperty.unlink( this.previousRadiusOfCurvatureUpdate );
+                        controlPanel.radiusOfCurvatureProperty.value = piece.pieceModel.radius;
+                        controlPanel.radiusOfCurvatureProperty.link( radiusOfCurvatureUpdate );
+                        this.previousRadiusOfCurvatureUpdate = radiusOfCurvatureUpdate;
+                        controlPanel.showFocalPointsProperty.unlink( this.previousShowFocalPointsUpdate );
+                        controlPanel.showFocalPointsProperty.value = piece.showFocalPointsProperty.value;
+                        controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
+                        this.previousShowFocalPointsUpdate = showFocalPointsUpdate;
                         break;
                     case 'plane_mirror':
+                        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
+                        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
+                        controlPanel.diameterProperty.link( diameterUpdate );
+                        this.previousDiameterUpdate = diameterUpdate;
                         break;
                     case 'diverging_mirror':
+                        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
+                        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
+                        controlPanel.diameterProperty.link( diameterUpdate );
+                        this.previousDiameterUpdate = diameterUpdate;
+                        controlPanel.radiusOfCurvatureProperty.unlink( this.previousRadiusOfCurvatureUpdate );
+                        controlPanel.radiusOfCurvatureProperty.value = piece.pieceModel.radius;
+                        controlPanel.radiusOfCurvatureProperty.link( radiusOfCurvatureUpdate );
+                        this.previousRadiusOfCurvatureUpdate = radiusOfCurvatureUpdate;
+                        controlPanel.showFocalPointsProperty.unlink( this.previousShowFocalPointsUpdate );
+                        controlPanel.showFocalPointsProperty.value = piece.showFocalPointsProperty.value;
+                        controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
+                        this.previousShowFocalPointsUpdate = showFocalPointsUpdate;
                         break;
                     case 'simple_mask':
+                        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
+                        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
+                        controlPanel.diameterProperty.link( diameterUpdate );
+                        this.previousDiameterUpdate = diameterUpdate;
                         break;
                     case 'slit_mask':
+                        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
+                        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
+                        controlPanel.diameterProperty.link( diameterUpdate );
+                        this.previousDiameterUpdate = diameterUpdate;
                         break;
                 }//end switch
             }//end linkControls()

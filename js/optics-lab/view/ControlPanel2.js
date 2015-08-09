@@ -87,7 +87,7 @@ define( function ( require ) {
         var diameterText = new Text('diameter', fontInfo);
         var radiusText = new Text('radius of curvature', fontInfo);
         var focalLengthText = new Text('f : ', fontInfo);
-        var focalLengthReadoutText = new Text('filler', fontInfo);
+        this.focalLengthReadoutText = new Text('filler', fontInfo);
         var indexText = new Text('refractive index', fontInfo);
 
 
@@ -178,13 +178,16 @@ define( function ( require ) {
         var radiusSlider = new HSlider(this.radiusOfCurvatureProperty, {min: 100, max: 800}, sliderOptions);
         var radiusVBox = vBoxMaker([radiusSlider, radiusText]);
 
+        var radiusSlider2 = new HSlider(this.radiusOfCurvatureProperty, {min: -100, max: -800}, sliderOptions);
+        var radiusVBox2 = vBoxMaker([radiusSlider2, radiusText]);
+
         var indexSlider = new HSlider(this.indexOfRefractionProperty, {min: 1.4, max: 3}, sliderOptions);
         var indexVBox = vBoxMaker([indexSlider, indexText]);
 
         var checkBoxOptions = {checkBoxColorBackground: 'white'};
         var focalPtCheckBox = new CheckBox(focalPointsText, this.showFocalPointsProperty, checkBoxOptions);
 
-        var focalLengthHBox = hBoxMaker( [ focalLengthText, focalLengthReadoutText])
+        var focalLengthHBox = hBoxMaker( [ focalLengthText, this.focalLengthReadoutText])
         var panelContent = new Node();
 
         switch (type) {
@@ -198,7 +201,7 @@ define( function ( require ) {
                 panelContent = hBoxMaker([fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox]);
                 break;
             case 'diverging_lens':
-                panelContent = hBoxMaker([fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox]);
+                panelContent = hBoxMaker([fillerBox, diameterVBox, radiusVBox2, indexVBox, focalPtCheckBox, focalLengthHBox]);
                 break;
             case 'converging_mirror':
                 panelContent = hBoxMaker([fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox]);
@@ -207,7 +210,7 @@ define( function ( require ) {
                 panelContent = hBoxMaker([fillerBox, diameterVBox]);
                 break;
             case 'diverging_mirror':
-                panelContent = hBoxMaker([fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox]);
+                panelContent = hBoxMaker([fillerBox, diameterVBox, radiusVBox2, focalPtCheckBox, focalLengthHBox]);
                 break;
             case 'simple_mask':
                 panelContent = hBoxMaker([fillerBox, diameterVBox]);
@@ -240,6 +243,12 @@ define( function ( require ) {
             //    displayPanel.visible = tOrF;
             //}
         });
+        //if( type !== 'fan_source' && type !== 'beam_source' ){
+        //    mainView.selectedPieceProperty.lazyLink( function( piece ){
+        //       var fValue = piece.pieceModel.f;
+        //       controlPanel2.focalLengthReadoutText.text = fValue.toFixed( 0 );
+        //    });
+        //}
 
 
         }//end constructor
