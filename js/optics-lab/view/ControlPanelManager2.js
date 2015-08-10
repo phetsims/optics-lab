@@ -152,18 +152,18 @@ define( function( require ) {
                     property.link( update );
                     //previousUpdate = update;
                 };
-                //var lastRaysUpdate;
+
                 switch( type ){
                     case 'fan_source':
-                        resetPanel(
-                            controlPanel.nbrOfRaysProperty,
-                            controlPanelManager.previousRaysUpdate,
-                            raysUpdate,
-                            piece.pieceModel.nbrOfRays
-                        );
-                        //controlPanel.nbrOfRaysProperty.unlink( this.previousRaysUpdate );
-                        //controlPanel.nbrOfRaysProperty.value = piece.pieceModel.nbrOfRays;
-                        //controlPanel.nbrOfRaysProperty.link( raysUpdate );
+                        //resetPanel(
+                        //    controlPanel.nbrOfRaysProperty,
+                        //    controlPanelManager.previousRaysUpdate,
+                        //    raysUpdate,
+                        //    piece.pieceModel.nbrOfRays
+                        //);
+                        controlPanel.nbrOfRaysProperty.unlink( this.previousRaysUpdate );
+                        controlPanel.nbrOfRaysProperty.value = piece.pieceModel.nbrOfRays;
+                        controlPanel.nbrOfRaysProperty.link( raysUpdate );
                         this.previousRaysUpdate = raysUpdate;
                         //resetPanel(
                         //    controlPanel.spreadProperty,
