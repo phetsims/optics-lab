@@ -55,7 +55,7 @@ define( function ( require ) {
      */
     function   ControlPanel2( mainModel, mainView, type ) {
         Node.call( this );
-        var controlPanel2 = this;
+        var controlPanel = this;
         var mainModel = mainModel;
         var mainView = mainView;
         this.type = type;
@@ -225,18 +225,23 @@ define( function ( require ) {
             cursor: 'pointer'
         });
         var displayPanel = new Panel( panelContent, panelOptions );
-        controlPanel2.children = [ displayPanel, expandCollapseButton ];
+        controlPanel.children = [ displayPanel, expandCollapseButton ];
         expandCollapseButton.left = 5;
         expandCollapseButton.top = 5;
 
-        mainView.selectedPieceTypeProperty.lazyLink( function( type ){
-            controlPanel2.visible = ( type === controlPanel2.type );
-            //if( type !== null ){
-            //
-            //}
-
-            //console.log( 'calling setControls for piece ' + piece.type );
-        } );
+        //mainView.selectedPieceTypeProperty.lazyLink( function( type ){
+        //    controlPanel.visible = ( type === controlPanel.type );
+        //    //if( type !== null ){
+        //    //
+        //    //}
+        //
+        //    //console.log( 'calling setControls for piece ' + piece.type );
+        //} );
+        
+        mainView.selectedPieceProperty.lazyLink( function( piece ){
+            controlPanel.visible = ( piece.type === controlPanel.type );
+            controlPanel.linkToPiece( piece );
+        });
         expandCollapseButton.expandedProperty.link( function( tOrF ) {
             displayPanel.visible = tOrF;
             //if( displayPanel !== null ){
@@ -246,7 +251,7 @@ define( function ( require ) {
         //if( type !== 'fan_source' && type !== 'beam_source' ){
         //    mainView.selectedPieceProperty.lazyLink( function( piece ){
         //       var fValue = piece.pieceModel.f;
-        //       controlPanel2.focalLengthReadoutText.text = fValue.toFixed( 0 );
+        //       controlPanel.focalLengthReadoutText.text = fValue.toFixed( 0 );
         //    });
         //}
 
@@ -254,6 +259,21 @@ define( function ( require ) {
         }//end constructor
 
         return inherit( Node, ControlPanel2, {
+            linkToPiece: function( piece ){
+                
+            },
+            resetProperties: function(){
+                this.expandedProperty.value = true ;
+                this.nbrOfRaysProperty.value  = 10 ;
+                this.spreadProperty.value  = 20 ;
+                this.widthProperty.value  = 50 ;
+                this.colorProperty.value  = 'white';
+                this.diameterProperty.value  = 50 ;
+                this.radiusOfCurvatureProperty.value  = 150 ;
+                this.indexOfRefractionProperty.value  = 2 ;
+                this.showFocalPointsProperty.value  = 'false' ;
+                console.log('resetProperties called');
+            }
 
         });//end inherit
     });

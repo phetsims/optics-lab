@@ -50,20 +50,20 @@ define( function( require ) {
             this.height = height;
         }
 
-        this.nbrOfRaysProperty.link( function(){
+        this.nbrOfRaysProperty.lazyLink( function(){
             //debugger;
             sourceModel.createRays();
             sourceModel.mainModel.processRays();
         });
-        this.spreadProperty.link( function(){
+        this.spreadProperty.lazyLink( function(){
             sourceModel.createRays();
             sourceModel.mainModel.processRays();
         });
-        this.widthProperty.link( function(){
+        this.widthProperty.lazyLink( function(){
             sourceModel.createRays();
             sourceModel.mainModel.processRays();
         });
-        this.angleProperty.link( function(){
+        this.angleProperty.lazyLink( function(){
             sourceModel.createRays();
             sourceModel.mainModel.processRays();
         });

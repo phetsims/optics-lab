@@ -129,6 +129,10 @@ define( function( require ) {
         }else{
           newPiece = this.addComponent( type, startPosition );
         }
+        //since it is a new piece, have to reset its control panel settings
+        var panelIndex = this.controlPanelManager.getIndex( newPiece.type );
+        var controlPanelOfThisType = this.controlPanelManager.controlPanels[ panelIndex ];
+        controlPanelOfThisType.resetProperties();
 
         //this.controlPanelManager.displayControlPanelForNewPiece( newPiece );
         return newPiece;
