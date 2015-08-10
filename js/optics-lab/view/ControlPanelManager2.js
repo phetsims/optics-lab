@@ -37,10 +37,6 @@ define( function( require ) {
     //var VBox = require( 'SCENERY/nodes/VBox' );
 
     // constants
-    //var DISPLAY_FONT = new PhetFont( 12 );
-    //var TEXT_COLOR = Util.TEXT_COLOR;
-    //var PANEL_COLOR = Util.PANEL_COLOR;
-    //var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
 
 
     /**
@@ -150,133 +146,203 @@ define( function( require ) {
                     property.unlink( previousUpdate );
                     property.value = attribute;
                     property.link( update );
-                    //previousUpdate = update;
+                    //controlPanelManager.previousUpdate = update;
                 };
+              function unlinkAll(){
+                controlPanel.nbrOfRaysProperty.unlink( controlPanelManager.previousRaysUpdate );
+                controlPanel.spreadProperty.unlink( controlPanelManager.previousSpreadUpdate );
+                controlPanel.colorProperty.unlink( controlPanelManager.previousColorUpdate );
+                controlPanel.widthProperty.unlink( controlPanelManager.previousWidthUpdate );
+                controlPanel.diameterProperty.unlink( controlPanelManager.previousDiameterUpdate );
+                controlPanel.radiusOfCurvatureProperty.unlink( controlPanelManager.previousRadiusOfCurvatureUpdate );
+                controlPanel.indexOfRefractionProperty.unlink( controlPanelManager.previousIndexOfRefractionUpdate );
+                controlPanel.showFocalPointsProperty.unlink( controlPanelManager.previousShowFocalPointsUpdate );
+              }
+              function setAllPanelsAndLinkAll(){
+                if( piece.pieceModel.nbrOfRays !== undefined ){
+                  controlPanel.nbrOfRaysProperty.value = piece.pieceModel.nbrOfRays;
+                  controlPanel.nbrOfRaysProperty.link( raysUpdate );
+                }
+                if( piece.pieceModel.spread !== undefined ){
+                  controlPanel.spreadProperty.value = piece.pieceModel.spread;
+                  controlPanel.spreadProperty.link( spreadUpdate );
+                }
+                if( piece.colorProperty !== undefined ){
+                  controlPanel.colorProperty.value = piece.colorProperty.value;
+                  controlPanel.colorProperty.link( colorUpdate );
+                }
+                if( piece.pieceModel.width !== undefined ){
+                  controlPanel.widthProperty.value = piece.pieceModel.width;
+                  controlPanel.widthProperty.link( widthUpdate );
+                }
+                if( piece.pieceModel.diameter !== undefined ){
+                  controlPanel.diameterProperty.value = piece.pieceModel.diameter;
+                  controlPanel.diameterProperty.link( diameterUpdate );
+                }
+                if( piece.pieceModel.radius !== undefined ){
+                  controlPanel.radiusOfCurvatureProperty.value = piece.pieceModel.radius;
+                  controlPanel.radiusOfCurvatureProperty.link( radiusOfCurvatureUpdate );
+                }
+                if( piece.pieceModel.index !== undefined ){
+                  controlPanel.indexOfRefractionProperty.value = piece.pieceModel.index;
+                  controlPanel.indexOfRefractionProperty.link( indexOfRefractionUpdate );
+                }
+                if( piece.showFocalPointsProperty !== undefined ){
+                  controlPanel.showFocalPointsProperty.value = piece.showFocalPointsProperty.value;
+                  controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
+                }
+              }
+              //function linkAll(){
+              //  controlPanel.nbrOfRaysProperty.link( raysUpdate );
+              //  controlPanel.spreadProperty.link( spreadUpdate );
+              //  controlPanel.colorProperty.link( colorUpdate );
+              //  controlPanel.widthProperty.link( widthUpdate );
+              //  controlPanel.diameterProperty.link( diameterUpdate );
+              //  controlPanel.radiusOfCurvatureProperty.link( radiusOfCurvatureUpdate );
+              //  controlPanel.indexOfRefractionProperty.link( indexOfRefractionUpdate );
+              //  controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
+              //}
+              function setPreviousUpdates(){
+                controlPanelManager.previousRaysUpdate = raysUpdate;
+                controlPanelManager.previousSpreadUpdate = spreadUpdate;
+                controlPanelManager.previousColorUpdate = colorUpdate;
+                controlPanelManager.previousWidthUpdate = widthUpdate;
+                controlPanelManager.previousDiameterUpdate = diameterUpdate;
+                controlPanelManager.previousRadiusOfCurvatureUpdate = radiusOfCurvatureUpdate;
+                controlPanelManager.previousIndexOfRefractionUpdate = indexOfRefractionUpdate;
+                controlPanelManager.previousShowFocalPointsUpdate = showFocalPointsUpdate;
 
-                switch( type ){
-                    case 'fan_source':
-                        //resetPanel(
-                        //    controlPanel.nbrOfRaysProperty,
-                        //    controlPanelManager.previousRaysUpdate,
-                        //    raysUpdate,
-                        //    piece.pieceModel.nbrOfRays
-                        //);
-                        controlPanel.nbrOfRaysProperty.unlink( this.previousRaysUpdate );
-                        controlPanel.nbrOfRaysProperty.value = piece.pieceModel.nbrOfRays;
-                        controlPanel.nbrOfRaysProperty.link( raysUpdate );
-                        this.previousRaysUpdate = raysUpdate;
-                        //resetPanel(
-                        //    controlPanel.spreadProperty,
-                        //    controlPanelManager.previousSpreadUpdate,
-                        //    spreadUpdate,
-                        //    piece.pieceModel.spread
-                        //);
-                        controlPanel.spreadProperty.unlink( this.previousSpreadUpdate );
-                        controlPanel.spreadProperty.value = piece.pieceModel.spread;
-                        controlPanel.spreadProperty.link( spreadUpdate );
-                        this.previousSpreadUpdate = spreadUpdate;
-                        controlPanel.colorProperty.unlink( this.previousColorUpdate );
-                        controlPanel.colorProperty.value = piece.colorProperty.value;
-                        controlPanel.colorProperty.link( colorUpdate );
-                        this.previousColorUpdate = colorUpdate;
-                        break;
-                    case 'beam_source':
-                        controlPanel.nbrOfRaysProperty.unlink( this.previousRaysUpdate );
-                        controlPanel.nbrOfRaysProperty.value = piece.pieceModel.nbrOfRays;
-                        controlPanel.nbrOfRaysProperty.link( raysUpdate );
-                        this.previousRaysUpdate = raysUpdate;
-                        controlPanel.widthProperty.unlink( this.previousWidthUpdate );
-                        controlPanel.widthProperty.value = piece.pieceModel.width;
-                        controlPanel.widthProperty.link( widthUpdate );
-                        this.previousWidthUpdate = widthUpdate;
-                        controlPanel.colorProperty.unlink( this.previousColorUpdate );
-                        controlPanel.colorProperty.value = piece.colorProperty.value;
-                        controlPanel.colorProperty.link( colorUpdate );
-                        this.previousColorUpdate = colorUpdate;
-                        break;
-                    case 'converging_lens':
-                        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
-                        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
-                        controlPanel.diameterProperty.link( diameterUpdate );
-                        this.previousDiameterUpdate = diameterUpdate;
-                        controlPanel.radiusOfCurvatureProperty.unlink( this.previousRadiusOfCurvatureUpdate );
-                        controlPanel.radiusOfCurvatureProperty.value = piece.pieceModel.radius;
-                        controlPanel.radiusOfCurvatureProperty.link( radiusOfCurvatureUpdate );
-                        this.previousRadiusOfCurvatureUpdate = radiusOfCurvatureUpdate;
-                        controlPanel.indexOfRefractionProperty.unlink( this.previousIndexOfRefractionUpdate );
-                        controlPanel.indexOfRefractionProperty.value = piece.pieceModel.index;
-                        controlPanel.indexOfRefractionProperty.link( indexOfRefractionUpdate );
-                        this.previousIndexOfRefractionUpdate = indexOfRefractionUpdate;
-                        controlPanel.showFocalPointsProperty.unlink( this.previousShowFocalPointsUpdate );
-                        controlPanel.showFocalPointsProperty.value = piece.showFocalPointsProperty.value;
-                        controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
-                        this.previousShowFocalPointsUpdate = showFocalPointsUpdate;
-                        break;
-                    case 'diverging_lens':
-                        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
-                        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
-                        controlPanel.diameterProperty.link( diameterUpdate );
-                        this.previousDiameterUpdate = diameterUpdate;
-                        controlPanel.radiusOfCurvatureProperty.unlink( this.previousRadiusOfCurvatureUpdate );
-                        controlPanel.radiusOfCurvatureProperty.value = piece.pieceModel.radius;
-                        controlPanel.radiusOfCurvatureProperty.link( radiusOfCurvatureUpdate );
-                        this.previousRadiusOfCurvatureUpdate = radiusOfCurvatureUpdate;
-                        controlPanel.indexOfRefractionProperty.unlink( this.previousIndexOfRefractionUpdate );
-                        controlPanel.indexOfRefractionProperty.value = piece.pieceModel.index;
-                        controlPanel.indexOfRefractionProperty.link( indexOfRefractionUpdate );
-                        this.previousIndexOfRefractionUpdate = indexOfRefractionUpdate;
-                        controlPanel.showFocalPointsProperty.unlink( this.previousShowFocalPointsUpdate );
-                        controlPanel.showFocalPointsProperty.value = piece.showFocalPointsProperty.value;
-                        controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
-                        this.previousShowFocalPointsUpdate = showFocalPointsUpdate;
-                        break;
-                    case 'converging_mirror':
-                        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
-                        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
-                        controlPanel.diameterProperty.link( diameterUpdate );
-                        this.previousDiameterUpdate = diameterUpdate;
-                        controlPanel.radiusOfCurvatureProperty.unlink( this.previousRadiusOfCurvatureUpdate );
-                        controlPanel.radiusOfCurvatureProperty.value = piece.pieceModel.radius;
-                        controlPanel.radiusOfCurvatureProperty.link( radiusOfCurvatureUpdate );
-                        this.previousRadiusOfCurvatureUpdate = radiusOfCurvatureUpdate;
-                        controlPanel.showFocalPointsProperty.unlink( this.previousShowFocalPointsUpdate );
-                        controlPanel.showFocalPointsProperty.value = piece.showFocalPointsProperty.value;
-                        controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
-                        this.previousShowFocalPointsUpdate = showFocalPointsUpdate;
-                        break;
-                    case 'plane_mirror':
-                        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
-                        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
-                        controlPanel.diameterProperty.link( diameterUpdate );
-                        this.previousDiameterUpdate = diameterUpdate;
-                        break;
-                    case 'diverging_mirror':
-                        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
-                        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
-                        controlPanel.diameterProperty.link( diameterUpdate );
-                        this.previousDiameterUpdate = diameterUpdate;
-                        controlPanel.radiusOfCurvatureProperty.unlink( this.previousRadiusOfCurvatureUpdate );
-                        controlPanel.radiusOfCurvatureProperty.value = piece.pieceModel.radius;
-                        controlPanel.radiusOfCurvatureProperty.link( radiusOfCurvatureUpdate );
-                        this.previousRadiusOfCurvatureUpdate = radiusOfCurvatureUpdate;
-                        controlPanel.showFocalPointsProperty.unlink( this.previousShowFocalPointsUpdate );
-                        controlPanel.showFocalPointsProperty.value = piece.showFocalPointsProperty.value;
-                        controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
-                        this.previousShowFocalPointsUpdate = showFocalPointsUpdate;
-                        break;
-                    case 'simple_mask':
-                        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
-                        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
-                        controlPanel.diameterProperty.link( diameterUpdate );
-                        this.previousDiameterUpdate = diameterUpdate;
-                        break;
-                    case 'slit_mask':
-                        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
-                        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
-                        controlPanel.diameterProperty.link( diameterUpdate );
-                        this.previousDiameterUpdate = diameterUpdate;
-                        break;
-                }//end switch
+              }
+              unlinkAll();
+              setAllPanelsAndLinkAll();
+              //linkAll();
+              setPreviousUpdates();
+
+                //switch( type ){
+                //    case 'fan_source':
+                //        //resetPanel(
+                //        //    controlPanel.nbrOfRaysProperty,
+                //        //    controlPanelManager.previousRaysUpdate,
+                //        //    raysUpdate,
+                //        //    piece.pieceModel.nbrOfRays
+                //        //);
+                //        //controlPanel.nbrOfRaysProperty.unlink( this.previousRaysUpdate );
+                //        controlPanel.nbrOfRaysProperty.value = piece.pieceModel.nbrOfRays;
+                //        controlPanel.nbrOfRaysProperty.link( raysUpdate );
+                //        this.previousRaysUpdate = raysUpdate;
+                //        //resetPanel(
+                //        //    controlPanel.spreadProperty,
+                //        //    controlPanelManager.previousSpreadUpdate,
+                //        //    spreadUpdate,
+                //        //    piece.pieceModel.spread
+                //        //);
+                //        //controlPanel.spreadProperty.unlink( this.previousSpreadUpdate );
+                //        controlPanel.spreadProperty.value = piece.pieceModel.spread;
+                //        controlPanel.spreadProperty.link( spreadUpdate );
+                //        this.previousSpreadUpdate = spreadUpdate;
+                //
+                //        //controlPanel.colorProperty.unlink( this.previousColorUpdate );
+                //        controlPanel.colorProperty.value = piece.colorProperty.value;
+                //        controlPanel.colorProperty.link( colorUpdate );
+                //        this.previousColorUpdate = colorUpdate;
+                //        break;
+                //    case 'beam_source':
+                //        //controlPanel.nbrOfRaysProperty.unlink( this.previousRaysUpdate );
+                //        controlPanel.nbrOfRaysProperty.value = piece.pieceModel.nbrOfRays;
+                //        controlPanel.nbrOfRaysProperty.link( raysUpdate );
+                //        this.previousRaysUpdate = raysUpdate;
+                //        //controlPanel.widthProperty.unlink( this.previousWidthUpdate );
+                //        controlPanel.widthProperty.value = piece.pieceModel.width;
+                //        controlPanel.widthProperty.link( widthUpdate );
+                //        this.previousWidthUpdate = widthUpdate;
+                //        //controlPanel.colorProperty.unlink( this.previousColorUpdate );
+                //        controlPanel.colorProperty.value = piece.colorProperty.value;
+                //        controlPanel.colorProperty.link( colorUpdate );
+                //        this.previousColorUpdate = colorUpdate;
+                //        break;
+                //    case 'converging_lens':
+                //        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
+                //        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
+                //        controlPanel.diameterProperty.link( diameterUpdate );
+                //        this.previousDiameterUpdate = diameterUpdate;
+                //        controlPanel.radiusOfCurvatureProperty.unlink( this.previousRadiusOfCurvatureUpdate );
+                //        controlPanel.radiusOfCurvatureProperty.value = piece.pieceModel.radius;
+                //        controlPanel.radiusOfCurvatureProperty.link( radiusOfCurvatureUpdate );
+                //        this.previousRadiusOfCurvatureUpdate = radiusOfCurvatureUpdate;
+                //        controlPanel.indexOfRefractionProperty.unlink( this.previousIndexOfRefractionUpdate );
+                //        controlPanel.indexOfRefractionProperty.value = piece.pieceModel.index;
+                //        controlPanel.indexOfRefractionProperty.link( indexOfRefractionUpdate );
+                //        this.previousIndexOfRefractionUpdate = indexOfRefractionUpdate;
+                //        controlPanel.showFocalPointsProperty.unlink( this.previousShowFocalPointsUpdate );
+                //        controlPanel.showFocalPointsProperty.value = piece.showFocalPointsProperty.value;
+                //        controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
+                //        this.previousShowFocalPointsUpdate = showFocalPointsUpdate;
+                //        break;
+                //    case 'diverging_lens':
+                //        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
+                //        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
+                //        controlPanel.diameterProperty.link( diameterUpdate );
+                //        this.previousDiameterUpdate = diameterUpdate;
+                //        controlPanel.radiusOfCurvatureProperty.unlink( this.previousRadiusOfCurvatureUpdate );
+                //        controlPanel.radiusOfCurvatureProperty.value = piece.pieceModel.radius;
+                //        controlPanel.radiusOfCurvatureProperty.link( radiusOfCurvatureUpdate );
+                //        this.previousRadiusOfCurvatureUpdate = radiusOfCurvatureUpdate;
+                //        controlPanel.indexOfRefractionProperty.unlink( this.previousIndexOfRefractionUpdate );
+                //        controlPanel.indexOfRefractionProperty.value = piece.pieceModel.index;
+                //        controlPanel.indexOfRefractionProperty.link( indexOfRefractionUpdate );
+                //        this.previousIndexOfRefractionUpdate = indexOfRefractionUpdate;
+                //        controlPanel.showFocalPointsProperty.unlink( this.previousShowFocalPointsUpdate );
+                //        controlPanel.showFocalPointsProperty.value = piece.showFocalPointsProperty.value;
+                //        controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
+                //        this.previousShowFocalPointsUpdate = showFocalPointsUpdate;
+                //        break;
+                //    case 'converging_mirror':
+                //        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
+                //        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
+                //        controlPanel.diameterProperty.link( diameterUpdate );
+                //        this.previousDiameterUpdate = diameterUpdate;
+                //        controlPanel.radiusOfCurvatureProperty.unlink( this.previousRadiusOfCurvatureUpdate );
+                //        controlPanel.radiusOfCurvatureProperty.value = piece.pieceModel.radius;
+                //        controlPanel.radiusOfCurvatureProperty.link( radiusOfCurvatureUpdate );
+                //        this.previousRadiusOfCurvatureUpdate = radiusOfCurvatureUpdate;
+                //        controlPanel.showFocalPointsProperty.unlink( this.previousShowFocalPointsUpdate );
+                //        controlPanel.showFocalPointsProperty.value = piece.showFocalPointsProperty.value;
+                //        controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
+                //        this.previousShowFocalPointsUpdate = showFocalPointsUpdate;
+                //        break;
+                //    case 'plane_mirror':
+                //        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
+                //        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
+                //        controlPanel.diameterProperty.link( diameterUpdate );
+                //        this.previousDiameterUpdate = diameterUpdate;
+                //        break;
+                //    case 'diverging_mirror':
+                //        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
+                //        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
+                //        controlPanel.diameterProperty.link( diameterUpdate );
+                //        this.previousDiameterUpdate = diameterUpdate;
+                //        controlPanel.radiusOfCurvatureProperty.unlink( this.previousRadiusOfCurvatureUpdate );
+                //        controlPanel.radiusOfCurvatureProperty.value = piece.pieceModel.radius;
+                //        controlPanel.radiusOfCurvatureProperty.link( radiusOfCurvatureUpdate );
+                //        this.previousRadiusOfCurvatureUpdate = radiusOfCurvatureUpdate;
+                //        controlPanel.showFocalPointsProperty.unlink( this.previousShowFocalPointsUpdate );
+                //        controlPanel.showFocalPointsProperty.value = piece.showFocalPointsProperty.value;
+                //        controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
+                //        this.previousShowFocalPointsUpdate = showFocalPointsUpdate;
+                //        break;
+                //    case 'simple_mask':
+                //        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
+                //        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
+                //        controlPanel.diameterProperty.link( diameterUpdate );
+                //        this.previousDiameterUpdate = diameterUpdate;
+                //        break;
+                //    case 'slit_mask':
+                //        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
+                //        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
+                //        controlPanel.diameterProperty.link( diameterUpdate );
+                //        this.previousDiameterUpdate = diameterUpdate;
+                //        break;
+                //}//end switch
             }//end linkControls()
 
 
