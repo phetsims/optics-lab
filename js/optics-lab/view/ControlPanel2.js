@@ -262,6 +262,7 @@ define( function ( require ) {
             linkToPiece: function( piece ){
                 
             },
+
             resetProperties: function(){
                 this.expandedProperty.value = true ;
                 this.nbrOfRaysProperty.value  = 10 ;
