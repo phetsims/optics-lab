@@ -31,7 +31,9 @@ define( function( require ) {
             nbrOfRays: nbrOfRays,       //@private, number of rays
             spread: spread,             //spread of point source (fan source) in degrees
             width: height,              //width of source, if beam
-            angle: 0                    //@private angle in rads of beam source, 0 = horizontal. + = CCW, - = CW
+            angle: 0,                   //@private angle in rads of beam source, 0 = horizontal. + = CCW, - = CW
+            color: '#FFF'               //@private color of ray in the view (not really part of the model, but it
+                                        //is convenient to put all the Properties of a Source in one place)
         } );
 
         var sourceModel = this;
@@ -67,6 +69,7 @@ define( function( require ) {
             sourceModel.createRays();
             sourceModel.mainModel.processRays();
         });
+
 
 
 

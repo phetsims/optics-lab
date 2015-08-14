@@ -240,7 +240,13 @@ define( function ( require ) {
         
         mainView.selectedPieceProperty.lazyLink( function( piece ){
             controlPanel.visible = ( piece.type === controlPanel.type );
-            controlPanel.linkToPiece( piece );
+            console.log( 'selectPieceProperty.link called' );
+            if( controlPanel.type === piece.type ){
+                controlPanel.linkToPiece( piece );
+            }else{
+                controlPanel.unlinkToOldPiece();
+            }
+
         });
         expandCollapseButton.expandedProperty.link( function( tOrF ) {
             displayPanel.visible = tOrF;
@@ -262,7 +268,9 @@ define( function ( require ) {
             linkToPiece: function( piece ){
                 
             },
+            unlinkToOldPiece: function(){
 
+            },
             resetProperties: function(){
                 this.expandedProperty.value = true ;
                 this.nbrOfRaysProperty.value  = 10 ;
