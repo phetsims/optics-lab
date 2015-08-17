@@ -241,12 +241,11 @@ define( function ( require ) {
         mainView.selectedPieceProperty.lazyLink( function( piece ){
             controlPanel.visible = ( piece.type === controlPanel.type );
             console.log( 'selectPieceProperty.link called' );
-            if( controlPanel.type === piece.type ){
+            controlPanel.unlinkToOldPiece();
+            
+            if( controlPanel.visible ){
                 controlPanel.linkToPiece( piece );
-            }else{
-                controlPanel.unlinkToOldPiece();
             }
-
         });
         expandCollapseButton.expandedProperty.link( function( tOrF ) {
             displayPanel.visible = tOrF;
