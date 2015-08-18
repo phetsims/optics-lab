@@ -2,11 +2,6 @@
   "name": "optics-lab",
   "version": "1.0.0-dev.9",
   "license": "GPLv3",
-  "requirejsNamespace": "OPTICS_LAB",
-  "simTitleStringKey": "OPTICS_LAB/optics-lab.name",
-  "phetLibs": [
-    "optics-lab"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/phetsims/optics-lab.git"
@@ -17,5 +12,12 @@
     "grunt-contrib-jshint": "~0.6.4",
     "uglify-js": "~2.4.0",
     "requirejs": "~2.1.8"
+  },
+  "phet": {
+    "requirejsNamespace": "OPTICS_LAB",
+    "simTitleStringKey": "OPTICS_LAB/optics-lab.name",
+    "phetLibs": [
+      "optics-lab"
+    ]
   }
 }
