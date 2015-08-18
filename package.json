@@ -15,9 +15,6 @@
   },
   "phet": {
     "requirejsNamespace": "OPTICS_LAB",
-    "simTitleStringKey": "OPTICS_LAB/optics-lab.name",
-    "phetLibs": [
-      "optics-lab"
-    ]
+    "simTitleStringKey": "OPTICS_LAB/optics-lab.name"
   }
 }
