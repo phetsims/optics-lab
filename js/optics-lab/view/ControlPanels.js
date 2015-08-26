@@ -102,32 +102,6 @@ define( function ( require ) {
       minWidth: 0 // minimum width of the panel
     };
 
-
-    for ( var i = 0; i < typeArray.length; i++ ){
-      this.controlPanelArray[ i ] = makeControlPanel( typeArray[ i ] );
-    }
-
-    var sliderOptions = {
-      trackSize: new Dimension2(120, 5),
-      thumbSize: new Dimension2(12, 25)
-    };
-
-    var vBoxMaker = function( childrenArray ){
-      return new VBox( {
-        children: childrenArray,
-        align: 'center',
-        resize: false
-      });
-    };
-    var spacing = 20;
-    var hBoxMaker = function( childrenArray ) {
-      return new HBox({
-        children: childrenArray,
-        spacing: spacing,
-        resize: false
-      });
-    };
-
     function makeControlPanel( type ){
 
       //Properties for Sliders, CheckBoxes, and Radio Buttons
@@ -222,6 +196,30 @@ define( function ( require ) {
     }//end makeControlPanel( type )
 
 
+    for ( var i = 0; i < typeArray.length; i++ ){
+      this.controlPanelArray[ i ] = makeControlPanel( typeArray[ i ] );
+    }
+
+    var sliderOptions = {
+      trackSize: new Dimension2(120, 5),
+      thumbSize: new Dimension2(12, 25)
+    };
+
+    var vBoxMaker = function( childrenArray ){
+      return new VBox( {
+        children: childrenArray,
+        align: 'center',
+        resize: false
+      });
+    };
+    var spacing = 20;
+    var hBoxMaker = function( childrenArray ) {
+      return new HBox({
+        children: childrenArray,
+        spacing: spacing,
+        resize: false
+      });
+    };
 
     //this.expandCollapseButton.expandedProperty.link( function( tOrF ) {
     //   controlPanelMaker.displayPanel.visible = tOrF;
