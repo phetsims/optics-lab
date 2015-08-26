@@ -82,14 +82,11 @@ define( function ( require ) {
     var focalPointsText = new Text('focal points', fontInfo);
     var widthText = new Text('width', fontInfo);
     var radiusText = new Text('radius of curvature', fontInfo);
-
+    var spreadText = new Text('spread', fontInfo);
+    var diameterText = new Text('diameter', fontInfo);
+    var focalLengthText = new Text('f : ', fontInfo);
+    var focalLengthReadoutText = new Text('filler', fontInfo);
     var indexText = new Text('refractive index', fontInfo);
-
-    //TODO optics-lab#3 defined but never used
-    //var spreadText = new Text('spread', fontInfo);
-    //var diameterText = new Text('diameter', fontInfo);
-    //var focalLengthText = new Text('f : ', fontInfo);
-    //var focalLengthReadoutText = new Text('filler', fontInfo);
 
     // All controls are placed on display node, with visibility set by expand/collapse button
     var panelOptions = {
@@ -147,12 +144,12 @@ define( function ( require ) {
       var fillerBox = new Text(' ', {font: DISPLAY_FONT});
 
       //Create Sliders with Text labels
-      var maxNbrRays = this.mainModel.maxNbrOfRaysFromASource;
+      var maxNbrRays = mainModel.maxNbrOfRaysFromASource;
       var nbrOfRaysSlider = new HSlider( nbrOfRaysProperty, { min: 1, max: maxNbrRays }, sliderOptions );
       var nbrOfRaysVBox = vBoxMaker( [ nbrOfRaysSlider, nbrOfRaysText ] );
 
       var spreadSlider = new HSlider( spreadProperty, { min: 2, max: 180 }, sliderOptions);
-      var spreadVBox = vBoxMaker( [ spreadSlider, this.spreadText ] );
+      var spreadVBox = vBoxMaker( [ spreadSlider, spreadText ] );
 
       var widthSlider = new HSlider( widthProperty, { min: 50, max: 250 }, sliderOptions);
       var widthVBox = vBoxMaker( [widthSlider, widthText] );
@@ -167,7 +164,7 @@ define( function ( require ) {
       var colorVBox2 = vBoxMaker( [ redColorRadioButton, yellowColorRadioButton ] );
 
       var diameterSlider = new HSlider( diameterProperty, {min: 50, max: 250}, sliderOptions);
-      var diameterVBox = vBoxMaker( [ diameterSlider, this.diameterText ] );
+      var diameterVBox = vBoxMaker( [ diameterSlider, diameterText ] );
 
       var radiusSlider = new HSlider( radiusOfCurvatureProperty, {min: 100, max: 800}, sliderOptions);
       var radiusVBox = vBoxMaker( [radiusSlider, radiusText] );
@@ -285,7 +282,7 @@ define( function ( require ) {
         var checkBoxOptions = {checkBoxColorBackground: 'white'};
         var spacing = 25;
         //console.log( 'setControlsForSelectedPiece' + piece.type );
-        var focalLengthHBox = hBoxMaker( [ this.focalLengthText, this.focalLengthReadoutText ] );
+        var focalLengthHBox = hBoxMaker( [ focalLengthText, focalLengthReadoutText ] );
         switch (type) {
           case 'fan_source':
             var spreadSlider = new HSlider(pieceModel.spreadProperty, {min: 2, max: 180}, sliderOptions);
