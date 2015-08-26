@@ -57,8 +57,6 @@ define( function ( require ) {
 
     Node.call( this );
     var controlPanels = this;
-    var mainModel = mainModel;
-    var mainView = mainView;
     this.controlPanelArray = [];
     var typeArray = [
       'fan_source',
