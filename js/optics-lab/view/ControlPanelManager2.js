@@ -29,7 +29,6 @@ define( function( require ) {
     var ObservableArray = require( 'AXON/ObservableArray' );
     //var PhetFont = require( 'SCENERY_PHET/PhetFont' );
     //var Property = require( 'AXON/Property' );
-    var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
     //var Text = require( 'SCENERY/nodes/Text' );
     //var Util = require( 'OPTICS_LAB/optics-lab/common/Util' );

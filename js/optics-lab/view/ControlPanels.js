@@ -56,7 +56,6 @@ define( function ( require ) {
   function   ControlPanels( mainModel, mainView ) {
 
     Node.call( this );
-    var controlPanels = this;
     this.controlPanelArray = [];
     var typeArray = [
       'fan_source',
@@ -82,14 +81,15 @@ define( function ( require ) {
     var nbrOfRaysText = new Text('number of rays', fontInfo);
     var focalPointsText = new Text('focal points', fontInfo);
     var widthText = new Text('width', fontInfo);
-    var spreadText = new Text('spread', fontInfo);
-    var diameterText = new Text('diameter', fontInfo);
     var radiusText = new Text('radius of curvature', fontInfo);
-    var focalLengthText = new Text('f : ', fontInfo);
-    var focalLengthReadoutText = new Text('filler', fontInfo);
+
     var indexText = new Text('refractive index', fontInfo);
 
-
+    //TODO optics-lab#3 defined but never used
+    //var spreadText = new Text('spread', fontInfo);
+    //var diameterText = new Text('diameter', fontInfo);
+    //var focalLengthText = new Text('f : ', fontInfo);
+    //var focalLengthReadoutText = new Text('filler', fontInfo);
 
     // All controls are placed on display node, with visibility set by expand/collapse button
     var panelOptions = {
