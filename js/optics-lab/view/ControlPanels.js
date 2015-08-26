@@ -84,8 +84,8 @@ define( function ( require ) {
     var radiusText = new Text('radius of curvature', fontInfo);
     var spreadText = new Text('spread', fontInfo);
     var diameterText = new Text('diameter', fontInfo);
-    var focalLengthText = new Text('f : ', fontInfo);
-    var focalLengthReadoutText = new Text('filler', fontInfo);
+    this.focalLengthText = new Text('f : ', fontInfo);
+    this.focalLengthReadoutText = new Text('filler', fontInfo);
     var indexText = new Text('refractive index', fontInfo);
 
     // All controls are placed on display node, with visibility set by expand/collapse button
@@ -282,7 +282,7 @@ define( function ( require ) {
         var checkBoxOptions = {checkBoxColorBackground: 'white'};
         var spacing = 25;
         //console.log( 'setControlsForSelectedPiece' + piece.type );
-        var focalLengthHBox = hBoxMaker( [ focalLengthText, focalLengthReadoutText ] );
+        var focalLengthHBox = hBoxMaker( [ this.focalLengthText, this.focalLengthReadoutText ] );
         switch (type) {
           case 'fan_source':
             var spreadSlider = new HSlider(pieceModel.spreadProperty, {min: 2, max: 180}, sliderOptions);
