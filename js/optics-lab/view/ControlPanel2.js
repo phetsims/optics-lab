@@ -242,7 +242,7 @@ define( function ( require ) {
             controlPanel.visible = ( piece.type === controlPanel.type );
             console.log( 'selectPieceProperty.link called' );
             controlPanel.unlinkToOldPiece();
-            
+
             if( controlPanel.visible ){
                 controlPanel.linkToPiece( piece );
             }
