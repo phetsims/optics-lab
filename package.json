@@ -14,7 +14,6 @@
     "requirejs": "~2.1.8"
   },
   "phet": {
-    "requirejsNamespace": "OPTICS_LAB",
-    "simTitleStringKey": "OPTICS_LAB/optics-lab.name"
+    "requirejsNamespace": "OPTICS_LAB"
   }
 }

@@ -29,8 +29,6 @@ define( function( require ) {
     var ObservableArray = require( 'AXON/ObservableArray' );
     //var PhetFont = require( 'SCENERY_PHET/PhetFont' );
     //var Property = require( 'AXON/Property' );
-    var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-    var SelectedPieceControlPanel = require( 'OPTICS_LAB/optics-lab/view/SelectedPieceControlPanel' );
 
     //var Text = require( 'SCENERY/nodes/Text' );
     //var Util = require( 'OPTICS_LAB/optics-lab/common/Util' );
@@ -139,15 +137,17 @@ define( function( require ) {
                 function showFocalPointsUpdate( tOrF ){
                     piece.showFocalPointsProperty.value = tOrF;
                 }
-                function displayFocalLength( focalLength ){
-
-                }
-                var resetPanel = function( property, previousUpdate, update, attribute ){
-                    property.unlink( previousUpdate );
-                    property.value = attribute;
-                    property.link( update );
-                    //controlPanelManager.previousUpdate = update;
-                };
+              //TODO optics-lab#3 defined but never used
+              //  function displayFocalLength( focalLength ){
+              //
+              //  }
+              //TODO optics-lab#3 defined but never used
+              //  var resetPanel = function( property, previousUpdate, update, attribute ){
+              //      property.unlink( previousUpdate );
+              //      property.value = attribute;
+              //      property.link( update );
+              //      //controlPanelManager.previousUpdate = update;
+              //  };
               function unlinkAll(){
                 controlPanel.nbrOfRaysProperty.unlink( controlPanelManager.previousRaysUpdate );
                 controlPanel.spreadProperty.unlink( controlPanelManager.previousSpreadUpdate );

@@ -56,8 +56,6 @@ define( function ( require ) {
     function   ControlPanel2( mainModel, mainView, type ) {
         Node.call( this );
         var controlPanel = this;
-        var mainModel = mainModel;
-        var mainView = mainView;
         this.type = type;
         //this.controlPanelArray = [];
         //var typeArray = [
@@ -136,7 +134,7 @@ define( function ( require ) {
                 children: childrenArray,
                 spacing: spacing,
                 resize: false
-            })
+            });
         };
 
         //Properties for Sliders, CheckBoxes, and Radio Buttons
@@ -187,7 +185,7 @@ define( function ( require ) {
         var checkBoxOptions = {checkBoxColorBackground: 'white'};
         var focalPtCheckBox = new CheckBox(focalPointsText, this.showFocalPointsProperty, checkBoxOptions);
 
-        var focalLengthHBox = hBoxMaker( [ focalLengthText, this.focalLengthReadoutText])
+        var focalLengthHBox = hBoxMaker( [ focalLengthText, this.focalLengthReadoutText]);
         var panelContent = new Node();
 
         switch (type) {

@@ -56,9 +56,6 @@ define( function ( require ) {
   function   ControlPanels( mainModel, mainView ) {
 
     Node.call( this );
-    var controlPanels = this;
-    var mainModel = mainModel;
-    var mainView = mainView;
     this.controlPanelArray = [];
     var typeArray = [
       'fan_source',
@@ -84,14 +81,12 @@ define( function ( require ) {
     var nbrOfRaysText = new Text('number of rays', fontInfo);
     var focalPointsText = new Text('focal points', fontInfo);
     var widthText = new Text('width', fontInfo);
+    var radiusText = new Text('radius of curvature', fontInfo);
     var spreadText = new Text('spread', fontInfo);
     var diameterText = new Text('diameter', fontInfo);
-    var radiusText = new Text('radius of curvature', fontInfo);
-    var focalLengthText = new Text('f : ', fontInfo);
-    var focalLengthReadoutText = new Text('filler', fontInfo);
+    this.focalLengthText = new Text('f : ', fontInfo);
+    this.focalLengthReadoutText = new Text('filler', fontInfo);
     var indexText = new Text('refractive index', fontInfo);
-
-
 
     // All controls are placed on display node, with visibility set by expand/collapse button
     var panelOptions = {
@@ -105,32 +100,6 @@ define( function ( require ) {
       backgroundPickable: false,
       align: 'left', // {string} horizontal of content in the pane, left|center|right
       minWidth: 0 // minimum width of the panel
-    };
-
-
-    for ( var i = 0; i < typeArray.length; i++ ){
-      this.controlPanelArray[ i ] = makeControlPanel( typeArray[ i ] );
-    }
-
-    var sliderOptions = {
-      trackSize: new Dimension2(120, 5),
-      thumbSize: new Dimension2(12, 25)
-    };
-
-    var vBoxMaker = function( childrenArray ){
-      return new VBox( {
-        children: childrenArray,
-        align: 'center',
-        resize: false
-      });
-    };
-    var spacing = 20;
-    var hBoxMaker = function( childrenArray ) {
-      return new HBox({
-        children: childrenArray,
-        spacing: spacing,
-        resize: false
-      });
     };
 
     function makeControlPanel( type ){
@@ -149,12 +118,12 @@ define( function ( require ) {
       var fillerBox = new Text(' ', {font: DISPLAY_FONT});
 
       //Create Sliders with Text labels
-      var maxNbrRays = this.mainModel.maxNbrOfRaysFromASource;
+      var maxNbrRays = mainModel.maxNbrOfRaysFromASource;
       var nbrOfRaysSlider = new HSlider( nbrOfRaysProperty, { min: 1, max: maxNbrRays }, sliderOptions );
       var nbrOfRaysVBox = vBoxMaker( [ nbrOfRaysSlider, nbrOfRaysText ] );
 
       var spreadSlider = new HSlider( spreadProperty, { min: 2, max: 180 }, sliderOptions);
-      var spreadVBox = vBoxMaker( [ spreadSlider, this.spreadText ] );
+      var spreadVBox = vBoxMaker( [ spreadSlider, spreadText ] );
 
       var widthSlider = new HSlider( widthProperty, { min: 50, max: 250 }, sliderOptions);
       var widthVBox = vBoxMaker( [widthSlider, widthText] );
@@ -169,7 +138,7 @@ define( function ( require ) {
       var colorVBox2 = vBoxMaker( [ redColorRadioButton, yellowColorRadioButton ] );
 
       var diameterSlider = new HSlider( diameterProperty, {min: 50, max: 250}, sliderOptions);
-      var diameterVBox = vBoxMaker( [ diameterSlider, this.diameterText ] );
+      var diameterVBox = vBoxMaker( [ diameterSlider, diameterText ] );
 
       var radiusSlider = new HSlider( radiusOfCurvatureProperty, {min: 100, max: 800}, sliderOptions);
       var radiusVBox = vBoxMaker( [radiusSlider, radiusText] );
@@ -227,6 +196,30 @@ define( function ( require ) {
     }//end makeControlPanel( type )
 
 
+    for ( var i = 0; i < typeArray.length; i++ ){
+      this.controlPanelArray[ i ] = makeControlPanel( typeArray[ i ] );
+    }
+
+    var sliderOptions = {
+      trackSize: new Dimension2(120, 5),
+      thumbSize: new Dimension2(12, 25)
+    };
+
+    var vBoxMaker = function( childrenArray ){
+      return new VBox( {
+        children: childrenArray,
+        align: 'center',
+        resize: false
+      });
+    };
+    var spacing = 20;
+    var hBoxMaker = function( childrenArray ) {
+      return new HBox({
+        children: childrenArray,
+        spacing: spacing,
+        resize: false
+      });
+    };
 
     //this.expandCollapseButton.expandedProperty.link( function( tOrF ) {
     //   controlPanelMaker.displayPanel.visible = tOrF;

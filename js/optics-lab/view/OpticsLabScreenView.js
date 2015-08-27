@@ -13,8 +13,8 @@ define( function( require ) {
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
   //var Circle = require( 'SCENERY/nodes/Circle' );
-  var ControlPanel2 = require( 'OPTICS_LAB/optics-lab/view/ControlPanel2' );
-  var ControlPanelManager = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager' );
+  //var ControlPanel2 = require( 'OPTICS_LAB/optics-lab/view/ControlPanel2' );
+  //var ControlPanelManager = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager' );
   var ControlPanelManager2 = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager2' );
   var ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
   var ComponentNode = require( 'OPTICS_LAB/optics-lab/view/ComponentNode' );
