@@ -4,7 +4,7 @@
 /**
  * Model for the 'Optics Lab' screen.
  *
- * @author Mike Dubson (PhET Interactive Simulations)
+ * @author Michael Dubson (PhET Interactive Simulations)
  */
 define( function( require ) {
   'use strict';
