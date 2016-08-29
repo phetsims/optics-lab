@@ -110,8 +110,10 @@ define( function ( require ) {
         //}
 
         var sliderOptions = {
-            trackSize: new Dimension2(120, 5),
-            thumbSize: new Dimension2(12, 25)
+            trackSize: new Dimension2( 120, 5 ),
+            thumbSize: new Dimension2( 12, 25 ),
+            thumbTouchAreaXDilation: 6,
+            thumbTouchAreaYDilation: 6
         };
 
         var vBoxMaker = function( childrenArray ){

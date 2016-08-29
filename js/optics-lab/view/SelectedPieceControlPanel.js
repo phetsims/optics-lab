@@ -144,7 +144,12 @@ define( function ( require ) {
                 var fillerBox = new Text(' ', {font: DISPLAY_FONT});
                 var nbrOfRaysVBox;
                 var diameterVBox;
-                var sliderOptions = {trackSize: new Dimension2(120, 5), thumbSize: new Dimension2(12, 25)};
+                var sliderOptions = {
+                    trackSize: new Dimension2(120, 5),
+                    thumbSize: new Dimension2(12, 25),
+                    thumbTouchAreaXDilation: 6,
+                    thumbTouchAreaYDilation: 6
+                };
                 var vBoxMaker = function( childrenArray ){
                     return new VBox( {
                         children: childrenArray,

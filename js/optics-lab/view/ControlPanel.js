@@ -154,7 +154,14 @@ define( function( require ) {
           var nbrOfRaysVBox;
           var diameterVBox;
           var fillerBox = new Text( ' ', {font: DISPLAY_FONT} );
-          var sliderOptions = { trackSize: new Dimension2( 120, 5 ), thumbSize: new Dimension2( 12, 25 ) };
+
+          var sliderOptions = {
+            trackSize: new Dimension2( 120, 5 ),
+            thumbSize: new Dimension2( 12, 25 ),
+            thumbTouchAreaXDilation: 6,
+            thumbTouchAreaYDilation: 6
+          };
+
           if( type === 'fan_source' || type === 'beam_source' ){
             maxNbrRays = pieceModel.maxNbrOfRays;
             var nbrOfRaysSlider = new HSlider( pieceModel.nbrOfRaysProperty, { min: 1, max: maxNbrRays }, sliderOptions );
