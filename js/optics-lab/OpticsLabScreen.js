@@ -14,11 +14,8 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
 
-  // strings
-  var opticsLabNameString = require( 'string!OPTICS_LAB/optics-lab.title' );
-
   function OpticsLabScreen() {
-    Screen.call( this, opticsLabNameString, null /* no icon, single-screen sim */,
+    Screen.call( this,
       function() { return new OpticsLabModel(); },
       function( model ) { return new OpticsLabScreenView( model ); },
       { backgroundColor: '#0000CC' }
