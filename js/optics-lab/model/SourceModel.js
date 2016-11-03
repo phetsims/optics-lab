@@ -17,10 +17,10 @@ define( function( require ) {
 
     /**
      * @param {OpticsLabModel} mainModel for this sim
-     * @param {String} type = 'fan_source'|'beam_source' = fan of diverging rays or beam of parallel rays
-     * @param {Number} nbrOfRays
-     * @param {Number} spread = for fan source, range of angles in degrees; for beam, spread is zero
-     * @param {Number} height = for beam source, range of y-position in cm; for fan, height is zero
+     * @param {string} type = 'fan_source'|'beam_source' = fan of diverging rays or beam of parallel rays
+     * @param {number} nbrOfRays
+     * @param {number} spread = for fan source, range of angles in degrees; for beam, spread is zero
+     * @param {number} height = for beam source, range of y-position in cm; for fan, height is zero
      * @constructor
      */
 
