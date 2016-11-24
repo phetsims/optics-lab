@@ -18,7 +18,7 @@ define( function( require ) {
     Screen.call( this,
       function() { return new OpticsLabModel(); },
       function( model ) { return new OpticsLabScreenView( model ); },
-      { backgroundColor: '#0000CC' }
+      { backgroundColorProperty: Property: new Property( Color.toColor( '#0000CC' ) ) }
     );
   }
 
