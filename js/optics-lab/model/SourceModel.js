@@ -1,3 +1,5 @@
+// Copyright 2016, University of Colorado Boulder
+
 /**
  * Model of source of light = array of rays
  * Rays are either a fan (point source) or a beam (parallel rays)

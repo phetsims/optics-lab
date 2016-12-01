@@ -1,3 +1,5 @@
+// Copyright 2016, University of Colorado Boulder
+
 /**
  * Color constants
  * Created by dubson on 7/12/2015.

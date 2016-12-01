@@ -1,3 +1,5 @@
+// Copyright 2016, University of Colorado Boulder
+
 /**
  * Draws graphic for lens, mirror, mask or other component
  * with adjustable focal length, diameter, etc.

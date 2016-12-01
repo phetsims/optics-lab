@@ -1,3 +1,5 @@
+// Copyright 2016, University of Colorado Boulder
+
 /**
  * Node for Source of light, which is either a fan of rays (point source)
  * or a parallel beam of rays

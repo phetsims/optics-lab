@@ -1,3 +1,5 @@
+// Copyright 2016, University of Colorado Boulder
+
 /**
  * Created by dubson on 8/3/2015.
  *

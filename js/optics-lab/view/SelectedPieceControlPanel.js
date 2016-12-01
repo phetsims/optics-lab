@@ -1,3 +1,5 @@
+// Copyright 2016, University of Colorado Boulder
+
 /**
  * Control panel for a particular source (fan or beam) or a particular component (lens, mirror, or mask)
  * contains sliders to set height or spread of source or diameter, focal length (if lens or mirror)

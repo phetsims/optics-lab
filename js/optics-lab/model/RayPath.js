@@ -1,3 +1,5 @@
+// Copyright 2016, University of Colorado Boulder
+
 /**
  * A RayPath is an array of line segments representing the path of a ray of light
  * starting from the source and bending at each component, ending at a mask or at infinity

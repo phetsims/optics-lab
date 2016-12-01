@@ -1,3 +1,5 @@
+// Copyright 2016, University of Colorado Boulder
+
 /**
  * Node for component, which can be either lens, mirror, plane mirror, or mask
  * Created by dubson on 6/30/2015.

@@ -1,3 +1,5 @@
+// Copyright 2016, University of Colorado Boulder
+
 /**
  * Toolbox for selecting light sources, lenses, mirrors, and masks
  * Click on icon to drag sources or component onto stage
