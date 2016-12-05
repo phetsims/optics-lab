@@ -48,7 +48,7 @@ define( function( require ) {
     function ControlPanelManager2( mainModel, mainView ) {
 
         Node.call( this );
-        var controlPanelManager2 = this;
+        var self = this;
         this.mainModel = mainModel;
         this.mainView = mainView;
         this.controlPanels = [];     //one display for each piece on the stage, only display of selected piece is visible
@@ -84,9 +84,9 @@ define( function( require ) {
 
 
         this.mainView.selectedPieceProperty.lazyLink(function (piece) {
-            controlPanelManager2.selectedPiece = piece;
-            controlPanelManager2.selectedPieceType = piece.type;
-            controlPanelManager2.linkControls();
+            self.selectedPiece = piece;
+            self.selectedPieceType = piece.type;
+            self.linkControls();
         });
 
 
@@ -113,7 +113,7 @@ define( function( require ) {
                 var type = this.selectedPieceType;
                 var piece = this.selectedPiece;
                 var controlPanel = this.controlPanels[ this.getIndex( type )];
-                var controlPanelManager = this;
+                var self = this;
 
                 function raysUpdate( nbrOfRays ){
                     piece.pieceModel.nbrOfRaysProperty.value = Math.round( nbrOfRays );
@@ -148,17 +148,17 @@ define( function( require ) {
               //      property.unlink( previousUpdate );
               //      property.value = attribute;
               //      property.link( update );
-              //      //controlPanelManager.previousUpdate = update;
+              //      //self.previousUpdate = update;
               //  };
               function unlinkAll(){
-                controlPanel.nbrOfRaysProperty.unlink( controlPanelManager.previousRaysUpdate );
-                controlPanel.spreadProperty.unlink( controlPanelManager.previousSpreadUpdate );
-                controlPanel.colorProperty.unlink( controlPanelManager.previousColorUpdate );
-                controlPanel.widthProperty.unlink( controlPanelManager.previousWidthUpdate );
-                controlPanel.diameterProperty.unlink( controlPanelManager.previousDiameterUpdate );
-                controlPanel.radiusOfCurvatureProperty.unlink( controlPanelManager.previousRadiusOfCurvatureUpdate );
-                controlPanel.indexOfRefractionProperty.unlink( controlPanelManager.previousIndexOfRefractionUpdate );
-                controlPanel.showFocalPointsProperty.unlink( controlPanelManager.previousShowFocalPointsUpdate );
+                controlPanel.nbrOfRaysProperty.unlink( self.previousRaysUpdate );
+                controlPanel.spreadProperty.unlink( self.previousSpreadUpdate );
+                controlPanel.colorProperty.unlink( self.previousColorUpdate );
+                controlPanel.widthProperty.unlink( self.previousWidthUpdate );
+                controlPanel.diameterProperty.unlink( self.previousDiameterUpdate );
+                controlPanel.radiusOfCurvatureProperty.unlink( self.previousRadiusOfCurvatureUpdate );
+                controlPanel.indexOfRefractionProperty.unlink( self.previousIndexOfRefractionUpdate );
+                controlPanel.showFocalPointsProperty.unlink( self.previousShowFocalPointsUpdate );
               }
               function setAllPanelsAndLinkAll(){
                 if( piece.pieceModel.nbrOfRays !== undefined ){
@@ -205,14 +205,14 @@ define( function( require ) {
               //  controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
               //}
               function setPreviousUpdates(){
-                controlPanelManager.previousRaysUpdate = raysUpdate;
-                controlPanelManager.previousSpreadUpdate = spreadUpdate;
-                controlPanelManager.previousColorUpdate = colorUpdate;
-                controlPanelManager.previousWidthUpdate = widthUpdate;
-                controlPanelManager.previousDiameterUpdate = diameterUpdate;
-                controlPanelManager.previousRadiusOfCurvatureUpdate = radiusOfCurvatureUpdate;
-                controlPanelManager.previousIndexOfRefractionUpdate = indexOfRefractionUpdate;
-                controlPanelManager.previousShowFocalPointsUpdate = showFocalPointsUpdate;
+                self.previousRaysUpdate = raysUpdate;
+                self.previousSpreadUpdate = spreadUpdate;
+                self.previousColorUpdate = colorUpdate;
+                self.previousWidthUpdate = widthUpdate;
+                self.previousDiameterUpdate = diameterUpdate;
+                self.previousRadiusOfCurvatureUpdate = radiusOfCurvatureUpdate;
+                self.previousIndexOfRefractionUpdate = indexOfRefractionUpdate;
+                self.previousShowFocalPointsUpdate = showFocalPointsUpdate;
 
               }
               unlinkAll();
@@ -224,7 +224,7 @@ define( function( require ) {
                 //    case 'fan_source':
                 //        //resetPanel(
                 //        //    controlPanel.nbrOfRaysProperty,
-                //        //    controlPanelManager.previousRaysUpdate,
+                //        //    self.previousRaysUpdate,
                 //        //    raysUpdate,
                 //        //    piece.pieceModel.nbrOfRays
                 //        //);
@@ -234,7 +234,7 @@ define( function( require ) {
                 //        this.previousRaysUpdate = raysUpdate;
                 //        //resetPanel(
                 //        //    controlPanel.spreadProperty,
-                //        //    controlPanelManager.previousSpreadUpdate,
+                //        //    self.previousSpreadUpdate,
                 //        //    spreadUpdate,
                 //        //    piece.pieceModel.spread
                 //        //);

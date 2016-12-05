@@ -38,7 +38,7 @@ define( function( require ) {
                                         //is convenient to put all the Properties of a Source in one place)
         } );
 
-        var sourceModel = this;
+        var self = this;
         this.mainModel = mainModel;
         this.sourceNumber;  //for testing
 
@@ -56,20 +56,20 @@ define( function( require ) {
 
         this.nbrOfRaysProperty.lazyLink( function(){
             //debugger;
-            sourceModel.createRays();
-            sourceModel.mainModel.processRays();
+            self.createRays();
+            self.mainModel.processRays();
         });
         this.spreadProperty.lazyLink( function(){
-            sourceModel.createRays();
-            sourceModel.mainModel.processRays();
+            self.createRays();
+            self.mainModel.processRays();
         });
         this.widthProperty.lazyLink( function(){
-            sourceModel.createRays();
-            sourceModel.mainModel.processRays();
+            self.createRays();
+            self.mainModel.processRays();
         });
         this.angleProperty.lazyLink( function(){
-            sourceModel.createRays();
-            sourceModel.mainModel.processRays();
+            self.createRays();
+            self.mainModel.processRays();
         });
 
 

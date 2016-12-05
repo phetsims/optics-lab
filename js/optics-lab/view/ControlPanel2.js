@@ -57,9 +57,9 @@ define( function ( require ) {
      */
     function   ControlPanel2( mainModel, mainView, type ) {
         Node.call( this );
-        var controlPanel = this;
+        var self = this;
         this.type = type;
-        //this.controlPanelArray = [];
+        //this.selfArray = [];
         //var typeArray = [
         //    'fan_source',
         //    'beam_source',
@@ -108,7 +108,7 @@ define( function ( require ) {
 
 
         //for ( var i = 0; i < typeArray.length; i++ ){
-        //    this.controlPanelArray[ i ] = makeControlPanel( typeArray[ i ] );
+        //    this.selfArray[ i ] = makeControlPanel( typeArray[ i ] );
         //}
 
         var sliderOptions = {
@@ -220,6 +220,8 @@ define( function ( require ) {
             case 'slit_mask':
                 panelContent = hBoxMaker([fillerBox]);
                 break;
+          default:
+              throw new Error( 'invalid type: ' + type );
 
         }//end switch()
         var expandCollapseButton = new ExpandCollapseButton( this.expandedProperty, {
@@ -227,12 +229,12 @@ define( function ( require ) {
             cursor: 'pointer'
         });
         var displayPanel = new Panel( panelContent, panelOptions );
-        controlPanel.children = [ displayPanel, expandCollapseButton ];
+        self.children = [ displayPanel, expandCollapseButton ];
         expandCollapseButton.left = 5;
         expandCollapseButton.top = 5;
 
         //mainView.selectedPieceTypeProperty.lazyLink( function( type ){
-        //    controlPanel.visible = ( type === controlPanel.type );
+        //    self.visible = ( type === self.type );
         //    //if( type !== null ){
         //    //
         //    //}
@@ -241,12 +243,12 @@ define( function ( require ) {
         //} );
         
         mainView.selectedPieceProperty.lazyLink( function( piece ){
-            controlPanel.visible = ( piece.type === controlPanel.type );
+            self.visible = ( piece.type === self.type );
             console.log( 'selectPieceProperty.link called' );
-            controlPanel.unlinkToOldPiece();
+            self.unlinkToOldPiece();
 
-            if( controlPanel.visible ){
-                controlPanel.linkToPiece( piece );
+            if( self.visible ){
+                self.linkToPiece( piece );
             }
         });
         expandCollapseButton.expandedProperty.link( function( tOrF ) {
@@ -258,7 +260,7 @@ define( function ( require ) {
         //if( type !== 'fan_source' && type !== 'beam_source' ){
         //    mainView.selectedPieceProperty.lazyLink( function( piece ){
         //       var fValue = piece.pieceModel.f;
-        //       controlPanel.focalLengthReadoutText.text = fValue.toFixed( 0 );
+        //       self.focalLengthReadoutText.text = fValue.toFixed( 0 );
         //    });
         //}
 

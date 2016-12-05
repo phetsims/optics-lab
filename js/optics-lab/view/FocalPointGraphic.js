@@ -26,8 +26,7 @@ define( function( require ) {
 
     function FocalPointGraphic( size ) {
 
-        var focalPointGraphic = this;
-        Node.call( focalPointGraphic );
+        Node.call( this );
 
         var R = Math.round( size/2 );
         if( size === undefined ){

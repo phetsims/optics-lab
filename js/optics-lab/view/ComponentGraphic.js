@@ -30,8 +30,7 @@ define( function( require ) {
    */
 
   function ComponentGraphic( type, diameter, radius, index ) {
-      var componentGraphic = this;
-      Node.call( componentGraphic );
+      Node.call( this );
 
     //PropertySet.call( this, {
     //  startPosition: startPosition             //@private, position of source on stage
@@ -83,8 +82,9 @@ define( function( require ) {
             break;
           case 'slit_mask':
             this.drawMask();
-
             break;
+          default:
+            throw new Error( 'invalid type: ' + this.type );
         }//end switch
       },  //end makeDrawing()
       clearDrawing: function() {

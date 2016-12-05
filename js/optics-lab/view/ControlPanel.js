@@ -57,7 +57,7 @@ define( function( require ) {
   function ControlPanel( mainModel, mainView ) {
 
     Node.call( this );
-    var controlPanel = this;
+    var self = this;
     this.mainModel = mainModel;
     this.mainView = mainView;
     this.displays = new ObservableArray();     //one display for each piece on the stage, only display of selected piece is visible
@@ -68,7 +68,7 @@ define( function( require ) {
     this.mainView.selectedPieceProperty.link( function( piece ){
       if( piece !== null ){
         this.selectedPiece = piece;
-        controlPanel.setControlsForSelectedPiece( piece );
+        self.setControlsForSelectedPiece( piece );
       }
     //console.log( 'calling setControls for piece ' + piece.type );
   } );
@@ -130,7 +130,7 @@ define( function( require ) {
 
 
     this.expandCollapseButton.expandedProperty.link( function ( tOrF ){
-      controlPanel.displayPanel.visible = tOrF;
+      self.displayPanel.visible = tOrF;
     } );
 
 
@@ -173,9 +173,9 @@ define( function( require ) {
             var diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 50, max: 250 }, sliderOptions );
             diameterVBox = new VBox( { children: [ diameterSlider, this.diameterText ]});
             this.focalLengthReadoutText.text = pieceModel.f.toFixed(0);
-            var controlPanel = this;
+            var self = this;
             pieceModel.fProperty.link( function( focalLength ){
-              controlPanel.focalLengthReadoutText.text = pieceModel.f.toFixed(0);
+              self.focalLengthReadoutText.text = pieceModel.f.toFixed(0);
               //console.log( 'focalLength' + focalLength.toFixed(0)  );
             });
           }
@@ -239,6 +239,8 @@ define( function( require ) {
             case 'slit_mask':
               this.content = new HBox( { children: [ fillerBox ] } );
               break;
+            default:
+              throw new Error( 'invalid type: ' + type );
           }//end switch()
           this.setControls();
         }//end if (type != null)

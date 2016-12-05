@@ -49,7 +49,7 @@ define( function( require ) {
   function ControlPanelManager( mainModel, mainView ) {
 
     Node.call( this );
-    var controlPanelManager = this;
+    var self = this;
     this.mainModel = mainModel;
     this.mainView = mainView;
     this.controlPanels = new ObservableArray();     //one display for each piece on the stage, only display of selected piece is visible
@@ -60,7 +60,7 @@ define( function( require ) {
 
       this.mainView.selectedPieceProperty.link(function (piece) {
           if (piece !== null) {
-              controlPanelManager.selectedPiece = piece;
+              self.selectedPiece = piece;
           }
       });
 

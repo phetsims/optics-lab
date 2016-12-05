@@ -8,7 +8,7 @@
 define( function( require ) {
   'use strict';
 
-  console.log( "hello" ); //test of console in browser: cntrl-shft-j
+  console.log( 'hello' ); //test of console in browser: cntrl-shft-j
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
@@ -41,21 +41,20 @@ define( function( require ) {
     this.selectedPieceProperty = new Property( null );
     this.selectedPieceTypeProperty = new Property( null );
 
-    var opticsLabScreenView = this;
-    ScreenView.call( opticsLabScreenView, { layoutBounds: new Bounds2( 0, 0, 768, 504 ) } );
+    ScreenView.call( this, { layoutBounds: new Bounds2( 0, 0, 768, 504 ) } );
 
     // model-view transform
     this.modelViewTransform = ModelViewTransform2.createIdentity();
    // this.controlPanel = new ControlPanel( this.mainModel, this );
-    //opticsLabScreenView.addChild( this.controlPanel );
+    //this.addChild( this.controlPanel );
     this.controlPanelManager = new ControlPanelManager2( this.mainModel, this );
-    opticsLabScreenView.addChild( this.controlPanelManager );
+    this.addChild( this.controlPanelManager );
 
-    this.toolDrawerPanel = new ToolDrawerPanel( opticsLabModel, opticsLabScreenView );
-    opticsLabScreenView.addChild( this.toolDrawerPanel );
+    this.toolDrawerPanel = new ToolDrawerPanel( opticsLabModel, this );
+    this.addChild( this.toolDrawerPanel );
 
     //test code, to be deleted
-    //opticsLabScreenView.addChild( new ControlPanel2( opticsLabModel, this, 'beam_source' ));
+    //this.addChild( new ControlPanel2( opticsLabModel, this, 'beam_source' ));
     //end test code
 
     //Layout
@@ -110,6 +109,8 @@ define( function( require ) {
           case 'slit_mask':
             componentModel = new ComponentModel( this.mainModel, 'simple_mask', 100, 0, 0 );
             break;
+          default:
+            throw new Error( 'invalid type: ' + type );
         }//end switch()
         var componentNode;
         if( componentModel !== undefined ){

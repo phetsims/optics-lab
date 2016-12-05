@@ -55,7 +55,7 @@ define( function ( require ) {
     function SelectedPieceControlPanel( mainModel, mainView, selectedPiece ) {
 
         Node.call( this );
-        var thisControlPanel = this;
+        var self = this;
         this.mainModel = mainModel;
         this.mainView = mainView;
         this.selectedPiece = selectedPiece;
@@ -119,12 +119,12 @@ define( function ( require ) {
         ////end test code
 
         this.expandCollapseButton.expandedProperty.link( function( tOrF ) {
-            thisControlPanel.displayPanel.visible = tOrF;
+            self.displayPanel.visible = tOrF;
         });
 
 
         this.mainView.selectedPieceProperty.link( function( piece ){
-            thisControlPanel.visible = ( piece === thisControlPanel.selectedPiece );
+            self.visible = ( piece === self.selectedPiece );
             //console.log( 'calling setControls for piece ' + piece.type );
         } );
 
@@ -179,9 +179,9 @@ define( function ( require ) {
                     var diameterSlider = new HSlider(pieceModel.diameterProperty, {min: 50, max: 250}, sliderOptions);
                     diameterVBox = vBoxMaker( [ diameterSlider, this.diameterText ] );
                     this.focalLengthReadoutText.text = pieceModel.f.toFixed(0);
-                    var thisControlPanel = this;
+                    var self = this;
                     pieceModel.fProperty.link( function() {
-                        thisControlPanel.focalLengthReadoutText.text = pieceModel.f.toFixed(0);
+                        self.focalLengthReadoutText.text = pieceModel.f.toFixed(0);
                         //console.log( 'focalLength' + focalLength.toFixed(0)  );
                     });
                 }
@@ -248,6 +248,8 @@ define( function ( require ) {
                     case 'slit_mask':
                         this.content = hBoxMaker( [fillerBox] );
                         break;
+                  default:
+                      throw new Error( 'invalid type: ' + type );
 
                 }//end switch()
                 this.displayPanel = new Panel(this.content, this.panelOptions);

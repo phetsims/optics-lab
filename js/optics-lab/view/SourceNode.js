@@ -32,7 +32,7 @@ define( function( require ) {
      */
     function SourceNode( mainModel, sourceModel, mainView ) {
 
-        var sourceNode = this;
+        var self = this;
         this.colorProperty = new Property ('white');  //sets color of rays
         this.sourceNumber;  //for testing
         this.mainModel = mainModel;
@@ -47,7 +47,7 @@ define( function( require ) {
         this.rayColor = '#fff';
         this.settingHeight = false; //flag used to prevent conflicting calls to set angle of translation handle
         // Call the super constructor
-        Node.call( sourceNode, {
+        Node.call( self, {
             // Show a cursor hand over the bar magnet
             cursor: 'pointer'
         } );
@@ -64,47 +64,47 @@ define( function( require ) {
         }else if ( sourceModel.type === 'beam_source' ){
             this.translationHandle = new Rectangle( -5, -height/2, 10, height, { fill: '#8F8', cursor: 'pointer' } );
             this.rotationHandle = new Circle( 5, { x: Math.sin( angle )*height/2, y: Math.cos( angle )*height/2, fill: 'yellow' });
-            sourceNode.addChild( this.rotationHandle );
+            self.addChild( this.rotationHandle );
             //this.translationHandle.addChild( this.rotationHandle );
         }
 
-        sourceNode.insertChild( 0, this.translationHandle );
-        //sourceNode.addChild( this.translationHandle );
+        self.insertChild( 0, this.translationHandle );
+        //self.addChild( this.translationHandle );
         //initialize rayNodes array
 
         //var rayOptionsObject = { stroke: this.rayColor, lineWidth: 1, lineJoin: 'bevel' } ;
         var rayOptionsObject = { stroke: 'black', lineWidth: 1.5, lineJoin: 'bevel' } ; //, lineDash: [ 5, 1 ]
         for( var r = 0; r < this.maxNbrOfRays; r++ ){
             this.rayNodes[ r ] = new Path( new Shape(), rayOptionsObject );
-            sourceNode.addChild( this.rayNodes[ r ] );
+            self.addChild( this.rayNodes[ r ] );
         }
 
 
 
         // When dragging, move the sample element
         var mouseDownPosition;
-        sourceNode.translationHandle.addInputListener( new SimpleDragHandler(
+        self.translationHandle.addInputListener( new SimpleDragHandler(
             {
                 // When dragging across it in a mobile device, pick it up
                 allowTouchSnag: true,
 
                 start: function( e ){
-                    sourceNode.mainView.setSelectedPiece( sourceNode );
-                    sourceNode.mainView.setSelectedPieceType( sourceNode );
-                    var position = sourceNode.globalToParentPoint( e.pointer.point );
-                    var currentNodePos = sourceNode.pieceModel.position;
+                    self.mainView.setSelectedPiece( self );
+                    self.mainView.setSelectedPieceType( self );
+                    var position = self.globalToParentPoint( e.pointer.point );
+                    var currentNodePos = self.pieceModel.position;
                     mouseDownPosition = position.minus( currentNodePos );
                 },
 
                 drag: function( e ){
-                    var position = sourceNode.globalToParentPoint( e.pointer.point );
+                    var position = self.globalToParentPoint( e.pointer.point );
                     position = position.minus( mouseDownPosition );
-                    sourceNode.pieceModel.setPosition( position );
+                    self.pieceModel.setPosition( position );
                 },
                 end: function( e ){
-                    var position = sourceNode.globalToParentPoint( e.pointer.point );
-                    if( sourceNode.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y )){
-                        sourceNode.mainView.removePiece( sourceNode );
+                    var position = self.globalToParentPoint( e.pointer.point );
+                    if( self.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y )){
+                        self.mainView.removePiece( self );
                     }
                 }
             } ) );//end translationHandle.addInputListener()
@@ -113,60 +113,60 @@ define( function( require ) {
             allowTouchSnag: true,
             //start function for testing only
             start: function (e){
-                sourceNode.mainView.setSelectedPiece( sourceNode );
-                sourceNode.mainView.setSelectedPieceType( sourceNode );
+                self.mainView.setSelectedPiece( self );
+                self.mainView.setSelectedPieceType( self );
             },
 
             drag: function(e){
-                var mousePosRelative =  sourceNode.translationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
+                var mousePosRelative =  self.translationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
                 var angle = mousePosRelative.angle() - Math.PI/2;  //angle = 0 when beam horizontal, CW is + angle
-                sourceNode.pieceModel.setAngle( angle );
+                self.pieceModel.setAngle( angle );
 
             }
         }));//end this.rotationHandle.addInputListener()
 
         // Register for synchronization with pieceModel and mainModel.
         this.pieceModel.positionProperty.link( function( position ) {
-            sourceNode.translation = position;
+            self.translation = position;
         } );
 
         this.pieceModel.angleProperty.link( function( angle ){
-            if( !sourceNode.settingHeight ){
-                sourceNode.translationHandle.rotation = angle;
+            if( !self.settingHeight ){
+                self.translationHandle.rotation = angle;
                 //console.log('calling angleProperty.link');
             }
 
             var cosAngle = Math.cos( angle );
             var sinAngle = Math.sin( angle );
-            var height = sourceNode.pieceModel.height;
-            sourceNode.rotationHandle.translation = new Vector2( -( height/2 )*sinAngle, ( height/2 )*cosAngle );
+            var height = self.pieceModel.height;
+            self.rotationHandle.translation = new Vector2( -( height/2 )*sinAngle, ( height/2 )*cosAngle );
             //debugger;
             //console.log( 'angle in degs is ' + angle*180/Math.PI );
         } );
 
         this.pieceModel.nbrOfRaysProperty.link( function( nbrOfRays ){
-            sourceNode.setRayNodes( nbrOfRays );
+            self.setRayNodes( nbrOfRays );
             sourceModel.mainModel.processRays();
         });
 
         this.pieceModel.spreadProperty.link( function( nbrOfRays ){
-            if( sourceNode.type === 'fan_source' ){
-                sourceNode.setRayNodes();
+            if( self.type === 'fan_source' ){
+                self.setRayNodes();
                 sourceModel.mainModel.processRays();
             }
         });
 
         this.pieceModel.widthProperty.link( function( width ){
             //console.log( 'source callback, height is ' + height );
-            if( sourceNode.type === 'beam_source' ){
-                sourceNode.setWidth( width );
-                sourceNode.setRayNodes();
+            if( self.type === 'beam_source' ){
+                self.setWidth( width );
+                self.setRayNodes();
                 sourceModel.mainModel.processRays();
             }
         });
 
         this.mainModel.processRaysCountProperty.link( function( count ) {
-            sourceNode.drawRays();
+            self.drawRays();
             //console.log( 'source callback, rays processed. Count is ' + count );
         });
         this.colorProperty.link( function( color ){
@@ -184,10 +184,12 @@ define( function( require ) {
                 case 'yellow':
                   colorCode = '#ff0';
                 break;
+              default:
+                  throw new Error( 'invalid color: ' + color );
             }
-            sourceNode.rayColor = colorCode;
-            for ( var i = 0; i < sourceNode.maxNbrOfRays; i++ ) {
-                sourceNode.rayNodes[ i ].strokeColor = colorCode;
+            self.rayColor = colorCode;
+            for ( var i = 0; i < self.maxNbrOfRays; i++ ) {
+                self.rayNodes[ i ].strokeColor = colorCode;
             }
         });
 

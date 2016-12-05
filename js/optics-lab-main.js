@@ -15,7 +15,7 @@ define( function( require ) {
   var SimLauncher = require( 'JOIST/SimLauncher' );
 
   // strings
-  var simTitle = require( 'string!OPTICS_LAB/optics-lab.title' );
+  var opticsLabTitleString = require( 'string!OPTICS_LAB/optics-lab.title' );
 
   var simOptions = {
     credits: {
@@ -28,7 +28,7 @@ define( function( require ) {
   };
 
   SimLauncher.launch( function() {
-    var sim = new Sim( simTitle, [ new OpticsLabScreen() ], simOptions );
+    var sim = new Sim( opticsLabTitleString, [ new OpticsLabScreen() ], simOptions );
     sim.start();
   } );
 } );

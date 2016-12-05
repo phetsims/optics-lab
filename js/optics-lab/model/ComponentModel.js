@@ -25,7 +25,7 @@ define( function( require ) {
       angle: 0                        //tilt angle of component, 0 = optic axis is horizontal, + angle is CW
     } );
 
-    var componentModel = this;
+    var self = this;
     this.mainModel = mainModel;
 
     //this.model = model;
@@ -38,27 +38,27 @@ define( function( require ) {
     //this.position = new Vector2( 0, 0 );
     //this.model.addComponent( this );
     this.diameterProperty.link( function(){
-      componentModel.mainModel.processRays();
+      self.mainModel.processRays();
     });
     this.radiusProperty.link( function( radius ){
       //console.log( 'radius is ' + radius );
-      var R = componentModel.radius;   //R is signed.  + for converging lenses, - for diverging lenses
-      var n = componentModel.index;
-      componentModel.f = R/( 2 * ( n - 1 ));  //focal length gets correct sign from sign of radius R.
-      //console.log(  'R curvature = ' + R + '   f = ' + componentModel.f );
-      componentModel.mainModel.processRays();
+      var R = self.radius;   //R is signed.  + for converging lenses, - for diverging lenses
+      var n = self.index;
+      self.f = R/( 2 * ( n - 1 ));  //focal length gets correct sign from sign of radius R.
+      //console.log(  'R curvature = ' + R + '   f = ' + self.f );
+      self.mainModel.processRays();
     });
     //this.fProperty.link( function(){    //probably unused
-    //  componentModel.mainModel.processRays();
+    //  self.mainModel.processRays();
     //});
     this.indexProperty.link( function(){
-      var R = componentModel.radius;
-      var n = componentModel.index;
-      componentModel.f = R/( 2 * ( n - 1 ));
-      componentModel.mainModel.processRays();
+      var R = self.radius;
+      var n = self.index;
+      self.f = R/( 2 * ( n - 1 ));
+      self.mainModel.processRays();
     });
     this.angleProperty.link( function(){
-      componentModel.mainModel.processRays();
+      self.mainModel.processRays();
     });
   }
 

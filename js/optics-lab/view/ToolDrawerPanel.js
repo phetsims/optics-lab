@@ -43,7 +43,7 @@ define( function( require ) {
 
     this.mainModel = mainModel; //OpticsLabModel
     this.mainView = mainView;  //OpticsLabScreenView
-    var toolDrawerPanel = this;
+    var self = this;
 
     //var nodeOptions = { fill: 'red', cursor: 'pointer' };
 
@@ -125,7 +125,7 @@ define( function( require ) {
 
 
           start: function( e ) {
-            var startPosition = toolDrawerPanel.globalToParentPoint( e.pointer.point );
+            var startPosition = self.globalToParentPoint( e.pointer.point );
             var type = typeArray[ index ];
             pieceGrabbed = mainView.addPiece( type, startPosition );
             //pieceGrabbed.mainView.setSelectedPiece( pieceGrabbed );
@@ -135,16 +135,16 @@ define( function( require ) {
           },
 
           drag: function( e ) {
-            var position = toolDrawerPanel.globalToParentPoint( e.pointer.point );   //returns Vector2
+            var position = self.globalToParentPoint( e.pointer.point );   //returns Vector2
             //var v1 = e.pointer.point;
-            //toolDrawerPanel.mainView.
+            //self.mainView.
 
             pieceGrabbed.pieceModel.setPosition( position );
             //console.log( 'dragging postion is ' + v1 );
           },
           end: function( e ){
-            var vEnd = toolDrawerPanel.globalToParentPoint( e.pointer.point );
-            if( toolDrawerPanel.visibleBounds.containsCoordinates( vEnd.x, vEnd.y )){
+            var vEnd = self.globalToParentPoint( e.pointer.point );
+            if( self.visibleBounds.containsCoordinates( vEnd.x, vEnd.y )){
               //console.log( 'toolDrawer end called. mainView.selectedPiece.type is ' +  mainView.selectedPiece.type);
               mainView.removePiece( pieceGrabbed );
             }

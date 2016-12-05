@@ -30,7 +30,7 @@ define( function( require ) {
    */
   function ComponentNode( componentModel, mainView ) {
 
-    var componentNode = this;
+    var self = this;
     this.pieceModel =  componentModel;
     this.mainView = mainView;
     this.modelViewTransform = mainView.modelViewTransform;
@@ -62,41 +62,41 @@ define( function( require ) {
     var angle = this.pieceModel.angle;
     this.rotationHandle = new Circle( 5, { x: Math.sin( angle )*height/2, y: Math.cos( angle )*height/2, fill: 'yellow' });
     //myHandle.addChild( componentGraphic );
-    //componentNode.addChild( myHandle );
-    componentNode.addChild( this.componentGraphic );
-    componentNode.addChild( this.rotationHandle );
+    //self.addChild( myHandle );
+    self.addChild( this.componentGraphic );
+    self.addChild( this.rotationHandle );
 
 
 
 
     // When dragging, move the sample element
     var mouseDownPosition;
-    componentNode.addInputListener( new SimpleDragHandler(
+    self.addInputListener( new SimpleDragHandler(
       {
         // When dragging across it in a mobile device, pick it up
         allowTouchSnag: true,
         start: function( e ){
-          componentNode.mainView.setSelectedPiece( componentNode );
-          componentNode.mainView.setSelectedPieceType( componentNode );
-          var position = componentNode.globalToParentPoint( e.pointer.point );
-          var currentNodePos = componentNode.pieceModel.position;
+          self.mainView.setSelectedPiece( self );
+          self.mainView.setSelectedPieceType( self );
+          var position = self.globalToParentPoint( e.pointer.point );
+          var currentNodePos = self.pieceModel.position;
           mouseDownPosition = position.minus( currentNodePos );
-          //componentNode.mouseDownPosition = e.pointer.point;
+          //self.mouseDownPosition = e.pointer.point;
           //console.log( '   posGlobalToParent = ' + position + ' relPos' + mouseDownPosition );
         },
 
         drag: function( e ){
-          var position = componentNode.globalToParentPoint( e.pointer.point );
+          var position = self.globalToParentPoint( e.pointer.point );
           position = position.minus( mouseDownPosition );
           //console.log( 'component position = ' + position );
-          componentNode.pieceModel.setPosition( position );
+          self.pieceModel.setPosition( position );
         },
         end: function( e ) {
-          var position = componentNode.globalToParentPoint( e.pointer.point );
-          if( componentNode.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y )){
-            componentNode.mainView.removePiece( componentNode );
-            //componentNode.mainView.removeComponent( componentNode );
-            //componentNode.mainView.controlPanel.displayPanel.visible = false;
+          var position = self.globalToParentPoint( e.pointer.point );
+          if( self.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y )){
+            self.mainView.removePiece( self );
+            //self.mainView.removeComponent( self );
+            //self.mainView.controlPanel.displayPanel.visible = false;
           }else{
             //console.log( 'keep this' );
           }
@@ -107,16 +107,16 @@ define( function( require ) {
       allowTouchSnag: true,
       //start function for testing only
       start: function (e){
-        componentNode.mainView.setSelectedPiece( componentNode );
-        componentNode.mainView.setSelectedPieceType( componentNode );
+        self.mainView.setSelectedPiece( self );
+        self.mainView.setSelectedPieceType( self );
         //console.log( 'mouse down' );
         //var mouseDownPosition = e.pointer.point;
       },
 
       drag: function(e){
-        var mousePosRelative =  componentNode.rotationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
+        var mousePosRelative =  self.rotationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
         var angle = mousePosRelative.angle() - Math.PI/2;  //angle = 0 when beam horizontal, CW is + angle
-        componentNode.pieceModel.setAngle( angle );
+        self.pieceModel.setAngle( angle );
         //console.log( 'position is ' + mousePosRelative );
         //console.log( 'rotation angle in degree is ' + angle*180/Math.PI );
 
@@ -125,42 +125,42 @@ define( function( require ) {
 
     // Register for synchronization with pieceModel.
     this.pieceModel.positionProperty.link( function( position ) {
-      componentNode.translation = position;
+      self.translation = position;
     } );
     this.pieceModel.angleProperty.link( function( angle ){
-      componentNode.componentGraphic.rotation = angle;
+      self.componentGraphic.rotation = angle;
       var cosAngle = Math.cos( angle );
       var sinAngle = Math.sin( angle );
-      var diameter = componentNode.pieceModel.diameter;
-      componentNode.rotationHandle.translation = new Vector2( -( diameter/2 )*sinAngle, ( diameter/2 )*cosAngle );
+      var diameter = self.pieceModel.diameter;
+      self.rotationHandle.translation = new Vector2( -( diameter/2 )*sinAngle, ( diameter/2 )*cosAngle );
     });
     this.pieceModel.diameterProperty.link( function( diameter ) {
-      componentNode.componentGraphic.setDiameter( diameter );
-      var angle = componentNode.pieceModel.angle;
+      self.componentGraphic.setDiameter( diameter );
+      var angle = self.pieceModel.angle;
       var cosAngle = Math.cos( angle );
       var sinAngle = Math.sin( angle );
-      //var diameter = componentNode.pieceModel.diameter;
-      componentNode.rotationHandle.translation = new Vector2( -( diameter/2 )*sinAngle, ( diameter/2 )*cosAngle );
+      //var diameter = self.pieceModel.diameter;
+      self.rotationHandle.translation = new Vector2( -( diameter/2 )*sinAngle, ( diameter/2 )*cosAngle );
     } );
     this.pieceModel.radiusProperty.link( function( R ) {
-      componentNode.componentGraphic.setRadius( R );
+      self.componentGraphic.setRadius( R );
     } );
     //this.pieceModel.fProperty.link( function( f ) {
-    //  componentNode.componentGraphic.setFocalLength( f );
+    //  self.componentGraphic.setFocalLength( f );
     //} );
     this.pieceModel.indexProperty.link( function( n ) {
-      componentNode.componentGraphic.setIndex( n );
+      self.componentGraphic.setIndex( n );
     } );
     //this.mainView.controlPanel.showFocalPointsProperty.link( function( isVisible ){
     //  //console.log( 'focal points visibility = ' + isVisible );
-    //  componentNode.componentGraphic.setFocalPointsVisibility( isVisible );
+    //  self.componentGraphic.setFocalPointsVisibility( isVisible );
     //} ) ;
     this.showFocalPointsProperty.link( function( isVisible ){
-      componentNode.componentGraphic.setFocalPointsVisibility( isVisible );
+      self.componentGraphic.setFocalPointsVisibility( isVisible );
     } ) ;
 
     this.pieceModel.fProperty.link( function( focalLength ){
-      componentNode.componentGraphic.setFocalPointPositions( focalLength );
+      self.componentGraphic.setFocalPointPositions( focalLength );
     });
 
   }
