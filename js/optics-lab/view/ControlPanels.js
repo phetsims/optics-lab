@@ -48,6 +48,10 @@ define( function ( require ) {
   //var PANEL_COLOR = Util.PANEL_COLOR;
   //var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
 
+  //TODO these were added here because they are undefined and failing lint, see https://github.com/phetsims/optics-lab/issues/6
+  var focalLengthHBox;
+  var piece;
+  var pieceModel;
 
   /**
    * @param mainModel
