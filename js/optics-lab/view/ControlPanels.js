@@ -184,6 +184,8 @@ define( function ( require ) {
         case 'slit_mask':
           panelContent = hBoxMaker( [fillerBox] );
           break;
+        default:
+          throw new Error( 'invalid type: ' + type );
 
       }//end switch()
       var expandCollapseButton = new ExpandCollapseButton( expandedProperty, {
@@ -224,12 +226,12 @@ define( function ( require ) {
     };
 
     //this.expandCollapseButton.expandedProperty.link( function( tOrF ) {
-    //   controlPanelMaker.displayPanel.visible = tOrF;
+    //   self.displayPanel.visible = tOrF;
     //});
 
 
     //this.mainView.selectedPieceProperty.link( function( piece ){
-    //   controlPanelMaker.visible = ( piece ===  controlPanelMaker.selectedPiece );
+    //   self.visible = ( piece ===  self.selectedPiece );
     //  //console.log( 'calling setControls for piece ' + piece.type );
     //} );
 
@@ -277,9 +279,9 @@ define( function ( require ) {
           var diameterSlider = new HSlider( this.diameterProperty, {min: 50, max: 250}, sliderOptions);
           diameterVBox = vBoxMaker( [ diameterSlider, this.diameterText ] );
           this.focalLengthReadoutText.text = pieceModel.f.toFixed(0);
-          var  controlPanelMaker = this;
+          var  self = this;
           pieceModel.fProperty.link( function() {
-             controlPanelMaker.focalLengthReadoutText.text = pieceModel.f.toFixed(0);
+             self.focalLengthReadoutText.text = pieceModel.f.toFixed(0);
             //console.log( 'focalLength' + focalLength.toFixed(0)  );
           });
         }
@@ -346,7 +348,8 @@ define( function ( require ) {
           case 'slit_mask':
             panelContent = hBoxMaker( [fillerBox] );
             break;
-
+          default:
+            throw new Error( 'invalid type: ' + type );
         }//end switch()
         this.displayPanel = new Panel(panelContent, this.panelOptions);
         this.children = [this.displayPanel, this.expandCollapseButton];
