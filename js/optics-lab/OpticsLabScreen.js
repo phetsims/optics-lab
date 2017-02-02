@@ -14,13 +14,12 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
   var Property = require( 'AXON/Property' );
-  var Color = require( 'SCENERY/util/Color' );
 
   function OpticsLabScreen() {
     Screen.call( this,
       function() { return new OpticsLabModel(); },
       function( model ) { return new OpticsLabScreenView( model ); },
-      { backgroundColorProperty: new Property( Color.toColor( '#0000CC' ) ) }
+      { backgroundColorProperty: new Property( '#0000CC' ) }
     );
   }
 
