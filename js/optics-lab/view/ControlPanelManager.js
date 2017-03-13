@@ -29,7 +29,6 @@ define( function( require ) {
   //var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SelectedPieceControlPanel = require( 'OPTICS_LAB/optics-lab/view/SelectedPieceControlPanel' );
-  //var Text = require( 'SCENERY/nodes/Text' );
   //var Util = require( 'OPTICS_LAB/optics-lab/common/Util' );
   //var VBox = require( 'SCENERY/nodes/VBox' );
 

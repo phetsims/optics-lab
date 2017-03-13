@@ -32,7 +32,6 @@ define( function( require ) {
     //var PhetFont = require( 'SCENERY_PHET/PhetFont' );
     //var Property = require( 'AXON/Property' );
 
-    //var Text = require( 'SCENERY/nodes/Text' );
     //var Util = require( 'OPTICS_LAB/optics-lab/common/Util' );
     //var VBox = require( 'SCENERY/nodes/VBox' );
 
