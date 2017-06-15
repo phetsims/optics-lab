@@ -2,10 +2,9 @@
 
 /**
  * Color constants
- * Created by dubson on 7/12/2015.
+ *
+ * @author Michael Dubson (PhET Interactive Simulations)
  */
-
-
 define( function( require ) {
   'use strict';
 

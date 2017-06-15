@@ -45,7 +45,7 @@ define( function( require ) {
 
     // model-view transform
     this.modelViewTransform = ModelViewTransform2.createIdentity();
-   // this.controlPanel = new ControlPanel( this.mainModel, this );
+    // this.controlPanel = new ControlPanel( this.mainModel, this );
     //this.addChild( this.controlPanel );
     this.controlPanelManager = new ControlPanelManager2( this.mainModel, this );
     this.addChild( this.controlPanelManager );
@@ -66,13 +66,14 @@ define( function( require ) {
 
   }//end constructor
 
-  return inherit( ScreenView, OpticsLabScreenView,{
-      addSource: function( type, startPosition ){
+  return inherit( ScreenView, OpticsLabScreenView, {
+      addSource: function( type, startPosition ) {
         var sourceModel;
-        if ( type === 'fan_source' ){
+        if ( type === 'fan_source' ) {
           //SourceModel( mainModel, type, nbrOfRays, position, spread, height )
           sourceModel = new SourceModel( this.mainModel, 'fan_source', 10, startPosition, 45, 0 );
-        }else{
+        }
+        else {
           sourceModel = new SourceModel( this.mainModel, 'beam_source', 10, startPosition, 0, 50 );
         }
         this.mainModel.addSource( sourceModel );
@@ -82,9 +83,9 @@ define( function( require ) {
         return sourceNode;
         //sourceNode.addRayNodesToParent( this );
       },
-      addComponent: function( type, startPosition ){
+      addComponent: function( type, startPosition ) {
         var componentModel;
-        switch( type ){
+        switch( type ) {
           case 'converging_lens':
             //ComponentModel( mainModel, type, diameter, radiusCurvature, index )
             //radius of curvature R = 2*f*( n - 1 )
@@ -113,9 +114,9 @@ define( function( require ) {
             throw new Error( 'invalid type: ' + type );
         }//end switch()
         var componentNode;
-        if( componentModel !== undefined ){
+        if ( componentModel !== undefined ) {
           this.mainModel.addComponent( componentModel );
-          componentNode = new ComponentNode( componentModel, this);
+          componentNode = new ComponentNode( componentModel, this );
           this.addChild( componentNode );
           componentModel.setPosition( startPosition );
         }
@@ -125,9 +126,10 @@ define( function( require ) {
       //A piece is either a source or a component
       addPiece: function( type, startPosition ) {
         var newPiece;
-        if( type === 'fan_source' || type === 'beam_source' ){
+        if ( type === 'fan_source' || type === 'beam_source' ) {
           newPiece = this.addSource( type, startPosition );
-        }else{
+        }
+        else {
           newPiece = this.addComponent( type, startPosition );
         }
         //since it is a new piece, have to reset its control panel settings
@@ -138,37 +140,38 @@ define( function( require ) {
         //this.controlPanelManager.displayControlPanelForNewPiece( newPiece );
         return newPiece;
       },//end AddPiece
-      removeSource: function( sourceNode ){
+      removeSource: function( sourceNode ) {
         //console.log( 'remove source called. source is ' + sourceNode );
         var sourceModel = sourceNode.pieceModel;
         //sourceNode.removeRayNodesFromParent( this );
         this.removeChild( sourceNode );
         this.mainModel.removeSource( sourceModel );
       },
-      removeComponent: function( componentNode ){
-          //console.log( 'remove component ' + componentNode );
+      removeComponent: function( componentNode ) {
+        //console.log( 'remove component ' + componentNode );
         this.removeChild( componentNode );
         var componentModel = componentNode.pieceModel;
         this.mainModel.removeComponent( componentModel );
       },
-      removePiece: function( piece ){
+      removePiece: function( piece ) {
         var type = piece.type;
         //this.controlPanelManager.disposeOfControlPanelForDeletedPiece( piece );
-        if( type === 'fan_source' || type === 'beam_source' ){
+        if ( type === 'fan_source' || type === 'beam_source' ) {
           this.removeSource( piece );
-        }else{
+        }
+        else {
           this.removeComponent( piece );
         }
 
       },
 
 
-      setSelectedPiece: function ( piece ){
+      setSelectedPiece: function( piece ) {
         this.selectedPieceProperty.value = piece;
         this.selectedPieceTypeProperty.value = piece.type;
         piece.moveToFront();
       },
-      setSelectedPieceType: function( piece ){
+      setSelectedPieceType: function( piece ) {
         this.selectedPieceTypeProperty.value = piece.type;
         //console.log( 'piece type is ' + piece.type );
         piece.moveToFront();

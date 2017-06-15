@@ -1,18 +1,16 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * Created by Duso on 6/28/2015.
+ * @author Michael Dubson (PhET Interactive Simulations)
  */
-
 define( function( require ) {
-    'use strict';
+  'use strict';
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   //var Ray2 = require( 'DOT/Ray2' );
   var Vector2 = require( 'DOT/Vector2' );
-
 
   function ComponentModel( mainModel, type, diameter, radiusCurvature, index ) {
 
@@ -30,46 +28,47 @@ define( function( require ) {
 
     //this.model = model;
     this.type = type; // 'converging_lens'|'diverging_lens'|'converging_mirror'|'plane_mirror'|etc.
-    if( this.type === 'converging_mirror' || this.type === 'diverging_mirror' ){
+    if ( this.type === 'converging_mirror' || this.type === 'diverging_mirror' ) {
       this.index = 2;  //needed so formula for focal length is correct in mirror case
     }
     //this.diameter = diameter;
     //this.n = index;  //index of refraction n > 1 , n and f set radius of lens
     //this.position = new Vector2( 0, 0 );
     //this.model.addComponent( this );
-    this.diameterProperty.link( function(){
+    this.diameterProperty.link( function() {
       self.mainModel.processRays();
-    });
-    this.radiusProperty.link( function( radius ){
+    } );
+    this.radiusProperty.link( function( radius ) {
       //console.log( 'radius is ' + radius );
       var R = self.radius;   //R is signed.  + for converging lenses, - for diverging lenses
       var n = self.index;
-      self.f = R/( 2 * ( n - 1 ));  //focal length gets correct sign from sign of radius R.
+      self.f = R / ( 2 * ( n - 1 ));  //focal length gets correct sign from sign of radius R.
       //console.log(  'R curvature = ' + R + '   f = ' + self.f );
       self.mainModel.processRays();
-    });
+    } );
     //this.fProperty.link( function(){    //probably unused
     //  self.mainModel.processRays();
     //});
-    this.indexProperty.link( function(){
+    this.indexProperty.link( function() {
       var R = self.radius;
       var n = self.index;
-      self.f = R/( 2 * ( n - 1 ));
+      self.f = R / ( 2 * ( n - 1 ));
       self.mainModel.processRays();
-    });
-    this.angleProperty.link( function(){
+    } );
+    this.angleProperty.link( function() {
       self.mainModel.processRays();
-    });
+    } );
   }
 
   return inherit( PropertySet, ComponentModel, {
       updateFocalLength: function() {
         if ( this.type === 'converging_lens' || this.type === 'diverging_lens' ) {
-          this.f = ( this.radius/2 )/( this.index - 1 );
+          this.f = ( this.radius / 2 ) / ( this.index - 1 );
         }
-        else if( this.type === 'converging_mirror' || this.type === 'diverging_mirror'  ) {
-          this.f =  this.radius/2 ;
-        }else{
+        else if ( this.type === 'converging_mirror' || this.type === 'diverging_mirror' ) {
+          this.f = this.radius / 2;
+        }
+        else {
           console.log( 'ERROR: plane mirrors and masks do not have finite focal length.' );
         }
         this.mainModel.processRays();
@@ -78,22 +77,22 @@ define( function( require ) {
         this.diameter = diameter;
         this.mainModel.processRays();
       },
-      setRadius: function( radius ){
+      setRadius: function( radius ) {
         this.radius = radius;
         this.mainModel.processRays();
       },
-      setIndex: function ( index ){
+      setIndex: function( index ) {
         this.index = index;
         this.mainModel.processRays();
       },
       setPosition: function( position ) {   //position is vector2
         this.position = position;
         //console.log( 'component position is ' + position );
-        if( !this.mainModel.processingRays ) {
+        if ( !this.mainModel.processingRays ) {
           this.mainModel.processRays();
         }
       },
-      setAngle: function( angleInRads ){
+      setAngle: function( angleInRads ) {
         this.angle = angleInRads;
         this.mainModel.processRays();
       }

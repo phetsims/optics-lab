@@ -1,9 +1,9 @@
-// Copyright 2014-2015, University of Colorado Boulder
+// Copyright 2016, University of Colorado Boulder
 
 /**
  * The 'Optics Lab' screen. Conforms to the contract specified in joist/Screen.
  *
- * @author Chris Malley (PixelZoom, Inc.)
+ * @author Michael Dubson (PhET Interactive Simulations)
  */
 define( function( require ) {
   'use strict';

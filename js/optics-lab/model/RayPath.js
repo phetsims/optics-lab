@@ -3,9 +3,9 @@
 /**
  * A RayPath is an array of line segments representing the path of a ray of light
  * starting from the source and bending at each component, ending at a mask or at infinity
- * Created by dubson on 7/5/2015.
+ *
+ * @author Michael Dubson (PhET Interactive Simulations)
  */
-
 define( function( require ) {
   'use strict';
 
@@ -24,7 +24,6 @@ define( function( require ) {
    * @param startDir
    * @constructor
    */
-
   function RayPath( relativeStartPos, startDir ) {
 
     //PropertySet.call( this, {
@@ -60,7 +59,7 @@ define( function( require ) {
         this.lengths = [];
         this.nbrSegments = 0;
       },
-      clearSegments: function(){
+      clearSegments: function() {
         this.segments = [];
       },
       addSegment: function( startPos, endPos ) {
@@ -72,23 +71,23 @@ define( function( require ) {
         this.dirs.push( dir );
         this.lengths.push( length );
       },
-      getShape: function(){
+      getShape: function() {
         this.shape = new Shape();
         this.shape.moveToPoint( this.segments[ 0 ].getStart() );
-        for ( var i = 0; i < this.segments.length; i++ ){
-          this.shape.lineToPoint( this.segments[i].getEnd() );
+        for ( var i = 0; i < this.segments.length; i++ ) {
+          this.shape.lineToPoint( this.segments[ i ].getEnd() );
         }
         return this.shape;
       },
-      getRelativeShape: function(){
+      getRelativeShape: function() {
 
         var shape = new Shape();
         shape.moveToPoint( this.relativeStartPos );
         var startPoint = this.segments[ 0 ].getStart();
         var nextAbsolutePoint;
         var nextRelativePoint;
-        for ( var i = 0; i < this.segments.length; i++ ){
-          nextAbsolutePoint = this.segments[i].getEnd();
+        for ( var i = 0; i < this.segments.length; i++ ) {
+          nextAbsolutePoint = this.segments[ i ].getEnd();
           nextRelativePoint = this.relativeStartPos.plus( nextAbsolutePoint.minus( startPoint ) );
           shape.lineToPoint( nextRelativePoint );
         }

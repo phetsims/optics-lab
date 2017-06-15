@@ -4,9 +4,9 @@
  * Toolbox for selecting light sources, lenses, mirrors, and masks
  * Click on icon to drag sources or component onto stage
  * Drag component back to toolbox to delete from stage
- * Created by dubson on 7/14/2015.
+ *
+ * @author Michael Dubson (PhET Interactive Simulations)
  */
-
 define( function( require ) {
   'use strict';
 
@@ -47,7 +47,7 @@ define( function( require ) {
 
     //var nodeOptions = { fill: 'red', cursor: 'pointer' };
 
-    var fanSourceIcon = new Node( );
+    var fanSourceIcon = new Node();
     var beamSourceIcon = new Node();
     var convergingLensIcon = new Node();
     var divergingLensIcon = new Node();
@@ -107,8 +107,7 @@ define( function( require ) {
     ];
 
 
-
-    var nodeSetup = function( element, index, array ){
+    var nodeSetup = function( element, index, array ) {
       //Rectangle = function Rectangle( x, y, width, height, arcWidth, arcHeight, options )
       var xCorner = -8;
       var yCorner = textArray[ index ].height;
@@ -116,7 +115,11 @@ define( function( require ) {
       var elementHeight = textArray[ index ].height + 10;
       var pieceGrabbed;
       element.addChild( textArray[ index ] );
-      element.addChild( new Rectangle( xCorner, -yCorner, elementWidth, elementHeight, { fill:'green', cursor: 'pointer', opacity: 0.1 }));
+      element.addChild( new Rectangle( xCorner, -yCorner, elementWidth, elementHeight, {
+        fill: 'green',
+        cursor: 'pointer',
+        opacity: 0.1
+      } ) );
 
       element.addInputListener( new SimpleDragHandler(
         {
@@ -142,63 +145,62 @@ define( function( require ) {
             pieceGrabbed.pieceModel.setPosition( position );
             //console.log( 'dragging postion is ' + v1 );
           },
-          end: function( e ){
+          end: function( e ) {
             var vEnd = self.globalToParentPoint( e.pointer.point );
-            if( self.visibleBounds.containsCoordinates( vEnd.x, vEnd.y )){
+            if ( self.visibleBounds.containsCoordinates( vEnd.x, vEnd.y ) ) {
               //console.log( 'toolDrawer end called. mainView.selectedPiece.type is ' +  mainView.selectedPiece.type);
               mainView.removePiece( pieceGrabbed );
             }
           }
         }//end addInputListener
 
-      ));
+      ) );
     }; //end nodeSetup
 
 
     nodeArray.forEach( nodeSetup );
 
 
-
     var spacing = 5;
     var sourceVBox = new VBox( {
-      children:[
+      children: [
         fanSourceIcon,
         beamSourceIcon
       ],
       align: 'left',
       spacing: spacing
-    });
+    } );
     var lensVBox = new VBox( {
-      children:[
+      children: [
         convergingLensIcon,
         divergingLensIcon
       ],
       align: 'left',
       spacing: spacing
-    });
+    } );
     var curvedMirrorVBox = new VBox( {
-      children:[
+      children: [
         convergingMirrorIcon,
         divergingMirrorIcon
       ],
       align: 'left',
       spacing: spacing
-    });
+    } );
     var planeMirrorVBox = new VBox( {
-      children:[
+      children: [
         planeMirrorIcon,
       ],
       align: 'left',
       spacing: spacing
-    });
+    } );
     var maskVBox = new VBox( {
-      children:[
+      children: [
         simpleMaskIcon,
         slitMaskIcon
       ],
       align: 'left',
       spacing: spacing
-    });
+    } );
     //var toolVBox = new VBox( {
     //  children:[
     //    rulerCheckBox,
@@ -209,17 +211,16 @@ define( function( require ) {
     //});
     spacing = 10;
     var content = new HBox( {
-      children:[
+      children: [
         sourceVBox,
         lensVBox,
         planeMirrorVBox,
         curvedMirrorVBox,
         maskVBox
       ],
-      align:'top',
+      align: 'top',
       spacing: spacing
-    });
-
+    } );
 
 
     //PropertySet.call( this, {
@@ -230,8 +231,6 @@ define( function( require ) {
     Panel.call( this, content, { xMargin: 15, yMargin: 5, lineWidth: 2, fill: PANEL_COLOR } );
   }//end constructor
 
-  return inherit( Panel, ToolDrawerPanel, {
-
-    }//end inherit
+  return inherit( Panel, ToolDrawerPanel, {}//end inherit
   );
 } );

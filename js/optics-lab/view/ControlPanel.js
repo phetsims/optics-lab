@@ -13,10 +13,9 @@
  * plane_mirror: diameter
  * simple_mask: diameter
  * slit_mask: diameter/ slit width
- * Created by dubson on 7/12/2015.
+ *
+ * @author Michael Dubson (PhET Interactive Simulations)
  */
-
-
 define( function( require ) {
   'use strict';
 

@@ -13,10 +13,9 @@
  * plane_mirror: diameter
  * simple_mask: diameter
  * slit_mask: diameter/ slit width
- * Created by dubson on 7/12/2015.
+ *
+ * @author Michael Dubson (PhET Interactive Simulations)
  */
-
-
 define( function( require ) {
   'use strict';
 
@@ -57,65 +56,64 @@ define( function( require ) {
     //this.expandedProperty = new Property( true );
 
 
-      this.mainView.selectedPieceProperty.link(function (piece) {
-          if (piece !== null) {
-              self.selectedPiece = piece;
-          }
-      });
+    this.mainView.selectedPieceProperty.link( function( piece ) {
+      if ( piece !== null ) {
+        self.selectedPiece = piece;
+      }
+    } );
 
-      //need any content to initialize position
-      //var myCircle = new Circle( 25, { fill: 'yellow'} ) ;
-      var filler = new Rectangle( 0, 0, 10, 10, { fill: 'yellow', opacity: 0.0 } );
-      this.addChild( filler );
+    //need any content to initialize position
+    //var myCircle = new Circle( 25, { fill: 'yellow'} ) ;
+    var filler = new Rectangle( 0, 0, 10, 10, { fill: 'yellow', opacity: 0.0 } );
+    this.addChild( filler );
 
     // All controls are placed on display node, with visibility set by accordionBox button
 
 
-
   }//end constructor
 
-    return inherit(Node, ControlPanelManager, {
+  return inherit( Node, ControlPanelManager, {
 
-            displayControlPanelForNewPiece: function ( piece ) {
+      displayControlPanelForNewPiece: function( piece ) {
 
-                var newPanel = new SelectedPieceControlPanel( this.mainModel, this.mainView, piece);
-                this.controlPanels.add( newPanel );
-                this.pieces.add( piece );
+        var newPanel = new SelectedPieceControlPanel( this.mainModel, this.mainView, piece );
+        this.controlPanels.add( newPanel );
+        this.pieces.add( piece );
 
-                //var myCircle = new Circle( 20, { fill: 'red'} ) ;
-                this.addChild( newPanel );
-                //this.hideAllControlPanels();
-                //newPanel.visible = true;
-            },
-            disposeOfControlPanelForDeletedPiece: function ( piece ) {
-                var panelIndex = this.getIndexOfPanelOfSelectedPiece();
-                var panelToDelete = this.controlPanels.get( panelIndex );
-                panelToDelete.visible = false;
-                panelToDelete.dispose();
-                this.controlPanels.remove( panelToDelete );
-                this.pieces.remove( piece );
-            },
+        //var myCircle = new Circle( 20, { fill: 'red'} ) ;
+        this.addChild( newPanel );
+        //this.hideAllControlPanels();
+        //newPanel.visible = true;
+      },
+      disposeOfControlPanelForDeletedPiece: function( piece ) {
+        var panelIndex = this.getIndexOfPanelOfSelectedPiece();
+        var panelToDelete = this.controlPanels.get( panelIndex );
+        panelToDelete.visible = false;
+        panelToDelete.dispose();
+        this.controlPanels.remove( panelToDelete );
+        this.pieces.remove( piece );
+      },
 
-            getIndexOfPanelOfSelectedPiece: function () {
-                var selectedPanelIndex;
-                for (var i = 0; i < this.controlPanels.length; i++) {
-                    if ( this.controlPanels.get( i ).selectedPiece === this.selectedPiece ) {
-                        selectedPanelIndex = i;
-                        return selectedPanelIndex;
-                    }
-                }
-            }
+      getIndexOfPanelOfSelectedPiece: function() {
+        var selectedPanelIndex;
+        for ( var i = 0; i < this.controlPanels.length; i++ ) {
+          if ( this.controlPanels.get( i ).selectedPiece === this.selectedPiece ) {
+            selectedPanelIndex = i;
+            return selectedPanelIndex;
+          }
+        }
+      }
 
-            //setControls: function () {
-            //    this.removeChild(this.displayPanel);
-            //    this.displayPanel = new Panel(this.content, this.panelOptions);
-            //    this.insertChild(0, this.displayPanel);
-            //},
-            //setTitleBar: function (titleString) {
-            //    this.panelTitle.text = titleString;
-            //}
+      //setControls: function () {
+      //    this.removeChild(this.displayPanel);
+      //    this.displayPanel = new Panel(this.content, this.panelOptions);
+      //    this.insertChild(0, this.displayPanel);
+      //},
+      //setTitleBar: function (titleString) {
+      //    this.panelTitle.text = titleString;
+      //}
 
 
-        }//end inherit
-    );
+    }//end inherit
+  );
 } );

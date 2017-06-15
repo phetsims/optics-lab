@@ -3,9 +3,9 @@
 /**
  * Draws graphic for lens, mirror, mask or other component
  * with adjustable focal length, diameter, etc.
- * Created by Dubson on 7/9/2015.
+ *
+ * @author Michael Dubson (PhET Interactive Simulations)
  */
-
 define( function( require ) {
   'use strict';
 
@@ -28,9 +28,8 @@ define( function( require ) {
    *
    * @constructor
    */
-
   function ComponentGraphic( type, diameter, radius, index ) {
-      Node.call( this );
+    Node.call( this );
 
     //PropertySet.call( this, {
     //  startPosition: startPosition             //@private, position of source on stage
@@ -39,10 +38,10 @@ define( function( require ) {
     this.diameter = diameter;    //starting direction of the first segment, the one thing that never changes
     this.radius = radius;   //radius of curvature of each surface of lens
     this.index = index;     //index of refraction
-    this.f = this.radius/( 2*( this.index - 1 ));
+    this.f = this.radius / ( 2 * ( this.index - 1 ));
 
 
-    this.mirrorBackGraphic = new Rectangle( 0, -0.5, 20, 1, {fill:'red'} );
+    this.mirrorBackGraphic = new Rectangle( 0, -0.5, 20, 1, { fill: 'red' } );
     this.shape = new Shape();
     this.path = new Path( this.shape );
     this.focalPtRight = new FocalPointGraphic( 15 );
@@ -58,8 +57,8 @@ define( function( require ) {
   }
 
   return inherit( Node, ComponentGraphic, {
-      makeDrawing: function(){
-        switch( this.type ){
+      makeDrawing: function() {
+        switch( this.type ) {
           case 'converging_lens':
             this.drawLens();
             break;
@@ -96,20 +95,21 @@ define( function( require ) {
         var fudge1 = 1;   //fudge factor to make lens radius big enough to be apparent to eye
         var fudge2 = 2;   //fudge factor to make adjust range of index of refraction
         //fudge * 2 * Math.abs( this.f ) * ( this.n - 1 );  //radius of curvature of lens surface
-        var n = fudge2*this.index;
-        if( this.type === 'converging_lens' ){
-          R = fudge1*this.radius;
-        }else{
-          R = -fudge1*this.radius;   //radius has sign, R is positive
+        var n = fudge2 * this.index;
+        if ( this.type === 'converging_lens' ) {
+          R = fudge1 * this.radius;
         }
-        this.f = ( this.radius / 2 )* ( 1 / ( n - 1 ) );  //f takes sign of R
+        else {
+          R = -fudge1 * this.radius;   //radius has sign, R is positive
+        }
+        this.f = ( this.radius / 2 ) * ( 1 / ( n - 1 ) );  //f takes sign of R
         var h = this.diameter / 2;                          //h = height = radius of lens
         var theta = Math.asin( h / R );                     //magnitude of startAngle and endAngle
         var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
         if ( this.f > 0 ) {
           this.shape
-            //.moveTo( 0, -h )
-            //arc: function( centerX, centerY, radius, startAngle, endAngle, anticlockwise )
+          //.moveTo( 0, -h )
+          //arc: function( centerX, centerY, radius, startAngle, endAngle, anticlockwise )
             .arc( -C, 0, R, theta, -theta, true )//arc( -diameter, 0,)
             .arc( C, 0, R, -Math.PI + theta, Math.PI - theta, true );
           //.close();
@@ -117,7 +117,7 @@ define( function( require ) {
         else if ( this.f < 0 ) {
           var w = 5;
           this.shape
-            //.moveTo( 0, 0)
+          //.moveTo( 0, 0)
             .arc( -w - R, 0, R, theta, -theta, true )
             .lineToRelative( 2 * ( w + ( R - C )) )
             .arc( w + R, 0, R, -Math.PI + theta, Math.PI - theta, true )
@@ -132,18 +132,19 @@ define( function( require ) {
         this.path.setShape( this.shape );
         this.mirrorBackGraphic.visible = false;
       },//end drawLens()
-      drawCurvedMirror: function( ) {
+      drawCurvedMirror: function() {
         //this.removeAllChildren();
         var fudge = 1;
-        var R = fudge*this.radius;
+        var R = fudge * this.radius;
         //var f = this.radius/2;
         var h = this.diameter / 2;                          //h = height = radius of lens
         var theta = Math.asin( h / R );                     //magnitude of startAngle and endAngle
         var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
         this.shape = new Shape();
-        if( this.type === 'diverging_mirror'){
+        if ( this.type === 'diverging_mirror' ) {
           this.shape.arc( C, 0, R, -Math.PI + theta, Math.PI - theta, true );
-        }else{
+        }
+        else {
           this.shape.arc( -C, 0, R, theta, -theta, true );
         }
         this.path.stroke = 'white';
@@ -152,7 +153,7 @@ define( function( require ) {
         this.path.setShape( this.shape );
         //var w = 20;
         //this.mirrorBackGraphic = new Rectangle( 0, -h, w, 2*h, {fill:'red'} );
-        this.mirrorBackGraphic.setScaleMagnitude( 1, 2*h );
+        this.mirrorBackGraphic.setScaleMagnitude( 1, 2 * h );
         this.mirrorBackGraphic.visible = true;
         //this.children = [ mirrorBackGraphic, this.path, this.focalPtLeft, this.focalPtRight ];
       },
@@ -178,25 +179,25 @@ define( function( require ) {
       //drawConvergingMirror: function(){
       //
       //},
-      drawPlaneMirror: function( ) {
+      drawPlaneMirror: function() {
         this.removeAllChildren();
         var w = 20;
         var height = this.diameter;
         //Rectangle( x, y, width, height, arcWidth, arcHeight, options )
-        var maskGraphic = new Rectangle( 0, -height/2, w, height, {fill:'red'} );
+        var maskGraphic = new Rectangle( 0, -height / 2, w, height, { fill: 'red' } );
         //Line( x1, y1, x2, y2, options )
-        var lineGraphic = new Line( 0, -height/2, 0, height/2, { stroke: '#FFF', lineWidth: 4} );
+        var lineGraphic = new Line( 0, -height / 2, 0, height / 2, { stroke: '#FFF', lineWidth: 4 } );
         this.addChild( maskGraphic );
         this.addChild( lineGraphic );
       },
-      drawMask: function(){
+      drawMask: function() {
         this.removeAllChildren();
         var w = 20;
         var height = this.diameter;
         //Rectangle( x, y, width, height, arcWidth, arcHeight, options )
-        var maskGraphic = new Rectangle( 0, -height/2, w, height, {fill:'green'} );
+        var maskGraphic = new Rectangle( 0, -height / 2, w, height, { fill: 'green' } );
         //Line( x1, y1, x2, y2, options )
-        var lineGraphic = new Line( 0, -height/2, 0, height/2, { stroke: 'black', lineWidth: 4} );
+        var lineGraphic = new Line( 0, -height / 2, 0, height / 2, { stroke: 'black', lineWidth: 4 } );
         this.addChild( maskGraphic );
         this.addChild( lineGraphic );
       },
@@ -212,21 +213,21 @@ define( function( require ) {
         this.radius = R;
         this.makeDrawing();
       },
-        setIndex: function (index) {
-          //console.log( 'index is ' + index );
-          this.index = index;
-          this.makeDrawing();
-        },
-        setFocalPointPositions: function( distance ){
-          this.focalPtLeft.x = -distance;
-          this.focalPtRight.x = distance;
-          //console.log( 'focal points distance = ' + distance );
-        },
-        setFocalPointsVisibility: function (isVisible) {
-          this.focalPtLeft.visible = isVisible;
-          this.focalPtRight.visible = isVisible;
-          //console.log( 'focal points visibility = ' + isVisible );
-        }
+      setIndex: function( index ) {
+        //console.log( 'index is ' + index );
+        this.index = index;
+        this.makeDrawing();
+      },
+      setFocalPointPositions: function( distance ) {
+        this.focalPtLeft.x = -distance;
+        this.focalPtRight.x = distance;
+        //console.log( 'focal points distance = ' + distance );
+      },
+      setFocalPointsVisibility: function( isVisible ) {
+        this.focalPtLeft.visible = isVisible;
+        this.focalPtRight.visible = isVisible;
+        //console.log( 'focal points visibility = ' + isVisible );
+      }
 
 
     }//end inherit

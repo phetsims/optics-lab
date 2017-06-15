@@ -1,9 +1,9 @@
-// Copyright 2014-2015, University of Colorado Boulder
+// Copyright 2016, University of Colorado Boulder
 
 /**
  * Main entry point for the sim.
  *
- * @author Sam Reid (PhET Interactive Simulations)
+ * @author Michael Dubson (PhET Interactive Simulations)
  */
 define( function( require ) {
   'use strict';
