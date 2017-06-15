@@ -8,8 +8,6 @@
 define( function( require ) {
   'use strict';
 
-  console.log( 'hello' ); //test of console in browser: cntrl-shft-j
-
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
   //var Circle = require( 'SCENERY/nodes/Circle' );
