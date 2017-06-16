@@ -161,6 +161,7 @@ define( function( require ) {
     var indexVBox = vBoxMaker( [ indexSlider, indexText ] );
 
     var checkBoxOptions = { checkBoxColorBackground: 'white' };
+
     var focalPtCheckBox = new CheckBox( focalPointsText, this.showFocalPointsProperty, checkBoxOptions );
 
     var focalLengthHBox = hBoxMaker( [ focalLengthText, this.focalLengthReadoutText ] );
