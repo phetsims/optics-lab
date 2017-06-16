@@ -29,6 +29,7 @@ define( function( require ) {
   var ToolDrawerPanel = require( 'OPTICS_LAB/optics-lab/view/ToolDrawerPanel' );
   //var Util = require( 'DOT/Util' );
   //var Vector2 = require( 'DOT/Vector2' );
+  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
   /**
    * @constructor
@@ -63,6 +64,8 @@ define( function( require ) {
 
 
   }//end constructor
+
+  opticsLab.register( 'OpticsLabScreenView', OpticsLabScreenView );
 
   return inherit( ScreenView, OpticsLabScreenView, {
       addSource: function( type, startPosition ) {

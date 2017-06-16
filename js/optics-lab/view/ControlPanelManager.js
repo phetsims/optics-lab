@@ -30,6 +30,7 @@ define( function( require ) {
   var SelectedPieceControlPanel = require( 'OPTICS_LAB/optics-lab/view/SelectedPieceControlPanel' );
   //var Util = require( 'OPTICS_LAB/optics-lab/common/Util' );
   //var VBox = require( 'SCENERY/nodes/VBox' );
+  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
   // constants
   //var DISPLAY_FONT = new PhetFont( 12 );
@@ -71,6 +72,8 @@ define( function( require ) {
 
 
   }//end constructor
+
+  opticsLab.register( 'ControlPanelManager', ControlPanelManager );
 
   return inherit( Node, ControlPanelManager, {
 

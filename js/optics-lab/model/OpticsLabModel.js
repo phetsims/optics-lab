@@ -12,6 +12,7 @@ define( function( require ) {
   //var ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
+  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
   var PropertySet = require( 'AXON/PropertySet' );
   //var SourceModel = require( 'OPTICS_LAB/optics-lab/model/SourceModel' );
   var Util = require( 'DOT/Util' );
@@ -38,6 +39,8 @@ define( function( require ) {
     //this.sources = [];
     //this.components = [];
   }
+
+  opticsLab.register( 'OpticsLabModel', OpticsLabModel );
 
   return inherit( PropertySet, OpticsLabModel, {
 

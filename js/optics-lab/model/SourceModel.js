@@ -16,6 +16,7 @@ define( function( require ) {
   //var Ray2 = require( 'DOT/Ray2' );
   var RayPath = require( 'OPTICS_LAB/optics-lab/model/RayPath' );
   var Vector2 = require( 'DOT/Vector2' );
+  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
   /**
    * @param {OpticsLabModel} mainModel for this sim
@@ -81,6 +82,8 @@ define( function( require ) {
     //this.setPosition( position );
 
   }
+
+  opticsLab.register( 'SourceModel', SourceModel );
 
   return inherit( PropertySet, SourceModel, {
       createRays: function() {

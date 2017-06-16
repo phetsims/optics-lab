@@ -28,6 +28,7 @@ define( function( require ) {
   var VBox = require( 'SCENERY/nodes/VBox' );
   //var Vector2 = require( 'DOT/Vector2' );
   //var Shape = require( 'KITE/Shape' );
+  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
   //constants
   var DISPLAY_FONT = new PhetFont( 12 );
@@ -230,6 +231,9 @@ define( function( require ) {
 
     Panel.call( this, content, { xMargin: 15, yMargin: 5, lineWidth: 2, fill: PANEL_COLOR } );
   }//end constructor
+
+
+  opticsLab.register( 'ToolDrawerPanel', ToolDrawerPanel );
 
   return inherit( Panel, ToolDrawerPanel, {}//end inherit
   );

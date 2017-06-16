@@ -18,6 +18,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Vector2 = require( 'DOT/Vector2' );
+  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
 
   // images
@@ -168,6 +169,8 @@ define( function( require ) {
     } );
 
   }
+
+  opticsLab.register( 'ComponentNode', ComponentNode );
 
   return inherit( Node, ComponentNode );
 } );

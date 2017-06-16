@@ -27,7 +27,7 @@ define( function( require ) {
   var ObservableArray = require( 'AXON/ObservableArray' );
   //var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   //var Property = require( 'AXON/Property' );
-
+  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
   //var Util = require( 'OPTICS_LAB/optics-lab/common/Util' );
   //var VBox = require( 'SCENERY/nodes/VBox' );
 
@@ -93,6 +93,8 @@ define( function( require ) {
     // All controls are placed on display node, with visibility set by accordionBox button
 
   }//end constructor
+
+  opticsLab.register( 'ControlPanelManager2', ControlPanelManager2 );
 
   return inherit( Node, ControlPanelManager2, {
       getIndex: function( type ) {

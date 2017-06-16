@@ -9,6 +9,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
+  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
   //var Ray2 = require( 'DOT/Ray2' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -59,6 +60,8 @@ define( function( require ) {
       self.mainModel.processRays();
     } );
   }
+
+  opticsLab.register( 'ComponentModel', ComponentModel );
 
   return inherit( PropertySet, ComponentModel, {
       updateFocalLength: function() {

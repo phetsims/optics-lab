@@ -20,6 +20,7 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Vector2 = require( 'DOT/Vector2' );
+  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
   // images
 
@@ -198,6 +199,8 @@ define( function( require ) {
     } );
 
   }
+
+  opticsLab.register( 'SourceNode', SourceNode );
 
   return inherit( Node, SourceNode, {
     setRayNodes: function( nbrOfRays ) {

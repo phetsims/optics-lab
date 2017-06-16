@@ -37,7 +37,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'OPTICS_LAB/optics-lab/common/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
-
+  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
   // constants
   var DISPLAY_FONT = new PhetFont( 12 );
   var TEXT_COLOR = Util.TEXT_COLOR;
@@ -261,6 +261,8 @@ define( function( require ) {
 
 
   }//end constructor
+
+  opticsLab.register( 'ControlPanel2', ControlPanel2 );
 
   return inherit( Node, ControlPanel2, {
     linkToPiece: function( piece ) {

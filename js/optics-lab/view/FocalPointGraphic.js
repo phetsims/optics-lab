@@ -11,6 +11,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
   //var Shape = require( 'KITE/Shape' );
   //
@@ -39,6 +40,7 @@ define( function( require ) {
 
 
   }
+  opticsLab.register( 'FocalPointGraphic', FocalPointGraphic );
 
   return inherit( Node, FocalPointGraphic, {
       myFunction: function() {

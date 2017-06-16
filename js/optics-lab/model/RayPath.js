@@ -14,6 +14,7 @@ define( function( require ) {
   var Line = require( 'KITE/segments/Line' );
   //var PropertySet = require( 'AXON/PropertySet' );
   var Shape = require( 'KITE/Shape' );
+  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
   //
   // var Ray2 = require( 'DOT/Ray2' );
   //var Vector2 = require( 'DOT/Vector2' );
@@ -49,8 +50,9 @@ define( function( require ) {
 
     this.shape = new Shape();
 
-
   }
+
+  opticsLab.register( 'RayPath', RayPath );
 
   return inherit( Object, RayPath, {
       clearPath: function() {

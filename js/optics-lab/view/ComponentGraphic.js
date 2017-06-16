@@ -18,7 +18,7 @@ define( function( require ) {
   //var PropertySet = require( 'AXON/PropertySet' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
-
+  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
   //
 
   //var Vector2 = require( 'DOT/Vector2' );
@@ -55,6 +55,8 @@ define( function( require ) {
     //this.makeDrawing();
 
   }
+
+  opticsLab.register( 'ComponentGraphic', ComponentGraphic );
 
   return inherit( Node, ComponentGraphic, {
       makeDrawing: function() {

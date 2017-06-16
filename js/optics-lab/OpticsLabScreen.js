@@ -14,6 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
   var Property = require( 'AXON/Property' );
+  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
   function OpticsLabScreen() {
     Screen.call( this,
@@ -22,6 +23,8 @@ define( function( require ) {
       { backgroundColorProperty: new Property( '#0000CC' ) }
     );
   }
+
+  opticsLab.register( 'OpticsLabScreen', OpticsLabScreen );
 
   return inherit( Screen, OpticsLabScreen );
 } );
