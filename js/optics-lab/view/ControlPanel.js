@@ -64,16 +64,16 @@ define( function( require ) {
     this.expandedProperty = new Property( true );
 
 
-    this.mainView.selectedPieceProperty.link( function( piece ){
-      if( piece !== null ){
+    this.mainView.selectedPieceProperty.link( function( piece ) {
+      if ( piece !== null ) {
         this.selectedPiece = piece;
         self.setControlsForSelectedPiece( piece );
       }
-    //console.log( 'calling setControls for piece ' + piece.type );
-  } );
+      //console.log( 'calling setControls for piece ' + piece.type );
+    } );
 
-  //initialize ray color radio buttons
-    var fontInfo = { font: DISPLAY_FONT } ;
+    //initialize ray color radio buttons
+    var fontInfo = { font: DISPLAY_FONT };
     this.whiteText = new Text( 'white', fontInfo );
     this.greenText = new Text( 'green', fontInfo );
     this.redText = new Text( 'red', fontInfo );
@@ -94,14 +94,17 @@ define( function( require ) {
     //var diameterVBox = new VBox( { children: [ this.diameterSlider, this.diameterText ], align: 'center' } );
     //var focalLengthVBox = new VBox( { children: [ this.positivefSlider, this.focalLengthText ], align: 'center' } );
     //var indexVBox = new VBox( { children: [ this.indexSlider, this.indexText ], align: 'center' } );
-    this.expandCollapseButton = new ExpandCollapseButton( this.expandedProperty, { sideLength: 15, cursor: 'pointer' } );
+    this.expandCollapseButton = new ExpandCollapseButton( this.expandedProperty, {
+      sideLength: 15,
+      cursor: 'pointer'
+    } );
 
     var spacing = 35;
-    var fillerBox = new Text( '', {font: DISPLAY_FONT} );
+    var fillerBox = new Text( '', { font: DISPLAY_FONT } );
     //content of the current display
     this.content = new HBox( {
       children: [
-          fillerBox
+        fillerBox
       ],
       spacing: spacing
     } );
@@ -128,10 +131,9 @@ define( function( require ) {
     this.expandCollapseButton.top = 5;
 
 
-    this.expandCollapseButton.expandedProperty.link( function ( tOrF ){
+    this.expandCollapseButton.expandedProperty.link( function( tOrF ) {
       self.displayPanel.visible = tOrF;
     } );
-
 
 
   }//end constructor
@@ -142,7 +144,7 @@ define( function( require ) {
         this.displayPanel = new Panel( this.content, this.panelOptions );
         this.insertChild( 0, this.displayPanel );
       },
-      setTitleBar: function( titleString ){
+      setTitleBar: function( titleString ) {
         this.panelTitle.text = titleString;
       },
       //change the piece that this panel controls
@@ -154,7 +156,7 @@ define( function( require ) {
           var maxNbrRays;
           var nbrOfRaysVBox;
           var diameterVBox;
-          var fillerBox = new Text( ' ', {font: DISPLAY_FONT} );
+          var fillerBox = new Text( ' ', { font: DISPLAY_FONT } );
 
           var sliderOptions = {
             trackSize: new Dimension2( 120, 5 ),
@@ -163,38 +165,48 @@ define( function( require ) {
             thumbTouchAreaYDilation: 6
           };
 
-          if( type === 'fan_source' || type === 'beam_source' ){
+          if ( type === 'fan_source' || type === 'beam_source' ) {
             maxNbrRays = pieceModel.maxNbrOfRays;
             var nbrOfRaysSlider = new HSlider( pieceModel.nbrOfRaysProperty, { min: 1, max: maxNbrRays }, sliderOptions );
             nbrOfRaysVBox = new VBox( { children: [ nbrOfRaysSlider, this.nbrOfRaysText ], align: 'center' } );
             this.setColorRadioButtonsForSourceNode( piece );
-          }else{    //if component
+          }
+          else {    //if component
             var diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 50, max: 250 }, sliderOptions );
-            diameterVBox = new VBox( { children: [ diameterSlider, this.diameterText ]});
-            this.focalLengthReadoutText.text = pieceModel.f.toFixed(0);
+            diameterVBox = new VBox( { children: [ diameterSlider, this.diameterText ] } );
+            this.focalLengthReadoutText.text = pieceModel.f.toFixed( 0 );
             var self = this;
-            pieceModel.fProperty.link( function( focalLength ){
-              self.focalLengthReadoutText.text = pieceModel.f.toFixed(0);
+            pieceModel.fProperty.link( function( focalLength ) {
+              self.focalLengthReadoutText.text = pieceModel.f.toFixed( 0 );
               //console.log( 'focalLength' + focalLength.toFixed(0)  );
-            });
+            } );
           }
 
           var checkBoxOptions = { checkBoxColorBackground: 'white' };
           var spacing = 25;
           //var spacing = new HStrut( 20 );
           //console.log( 'setControlsForSelectedPiece' + piece.type );
-          var focalLengthHBox = new HBox( {children: [ this.focalLengthText, this.focalLengthReadoutText ], spacing: 2 });
-          switch( type ){
+          var focalLengthHBox = new HBox( {
+            children: [ this.focalLengthText, this.focalLengthReadoutText ],
+            spacing: 2
+          } );
+          switch( type ) {
 
             case 'fan_source':
               var spreadSlider = new HSlider( pieceModel.spreadProperty, { min: 2, max: 180 }, sliderOptions );
               var spreadVBox = new VBox( { children: [ spreadSlider, this.spreadText ], align: 'center' } );
-              this.content = new HBox( { children: [ fillerBox, nbrOfRaysVBox, spreadVBox, this.colorVBox1, this.colorVBox2 ], spacing: spacing } );
+              this.content = new HBox( {
+                children: [ fillerBox, nbrOfRaysVBox, spreadVBox, this.colorVBox1, this.colorVBox2 ],
+                spacing: spacing
+              } );
               break;
             case 'beam_source':
               var heightSlider = new HSlider( pieceModel.heightProperty, { min: 50, max: 250 }, sliderOptions );
               var heightVBox = new VBox( { children: [ heightSlider, this.heightText ], align: 'center' } );
-              this.content = new HBox( { children: [ fillerBox, nbrOfRaysVBox, heightVBox, this.colorVBox1, this.colorVBox2  ], spacing: spacing } );
+              this.content = new HBox( {
+                children: [ fillerBox, nbrOfRaysVBox, heightVBox, this.colorVBox1, this.colorVBox2 ],
+                spacing: spacing
+              } );
               break;
             case 'converging_lens':
               //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
@@ -204,7 +216,10 @@ define( function( require ) {
               var indexSlider = new HSlider( pieceModel.indexProperty, { min: 1.4, max: 3 }, sliderOptions );
               var indexVBox = new VBox( { children: [ indexSlider, this.indexText ], align: 'center' } );
               var focalPtCheckBox = new CheckBox( this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions );
-              this.content = new HBox( { children: [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ], spacing: spacing } );
+              this.content = new HBox( {
+                children: [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ],
+                spacing: spacing
+              } );
               break;
             case 'diverging_lens':
               //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
@@ -214,25 +229,34 @@ define( function( require ) {
               indexSlider = new HSlider( pieceModel.indexProperty, { min: 1.4, max: 3 }, sliderOptions );
               indexVBox = new VBox( { children: [ indexSlider, this.indexText ], align: 'center' } );
               focalPtCheckBox = new CheckBox( this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions );
-              this.content = new HBox( { children: [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ], spacing: spacing } );
+              this.content = new HBox( {
+                children: [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ],
+                spacing: spacing
+              } );
               break;
             case 'converging_mirror':
               radiusSlider = new HSlider( pieceModel.radiusProperty, { min: 200, max: 1600 }, sliderOptions );
               radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
               focalPtCheckBox = new CheckBox( this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions );
-              this.content = new HBox( { children: [ fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox ], spacing: spacing } );
+              this.content = new HBox( {
+                children: [ fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox ],
+                spacing: spacing
+              } );
               break;
             case 'plane_mirror':
-              this.content = new HBox( { children: [ fillerBox, diameterVBox], spacing: spacing } );
+              this.content = new HBox( { children: [ fillerBox, diameterVBox ], spacing: spacing } );
               break;
             case 'diverging_mirror':
               radiusSlider = new HSlider( pieceModel.radiusProperty, { min: -200, max: -1600 }, sliderOptions );
               radiusVBox = new VBox( { children: [ radiusSlider, this.radiusText ], align: 'center' } );
               focalPtCheckBox = new CheckBox( this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions );
-              this.content = new HBox( { children: [ fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox ], spacing: spacing } );
+              this.content = new HBox( {
+                children: [ fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox ],
+                spacing: spacing
+              } );
               break;
             case 'simple_mask':
-              this.content = new HBox( { children: [ fillerBox, diameterVBox], spacing: spacing } );
+              this.content = new HBox( { children: [ fillerBox, diameterVBox ], spacing: spacing } );
 
               break;
             case 'slit_mask':
@@ -244,15 +268,23 @@ define( function( require ) {
           this.setControls();
         }//end if (type != null)
       },// end setControlsForSelectedPiece()
-      setColorRadioButtonsForSourceNode: function( sourceNode ){
+      setColorRadioButtonsForSourceNode: function( sourceNode ) {
         var radioButtonOptions = { radius: 8, fontSize: 12, deselectedColor: 'white' };
         var whiteColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'white', this.whiteText, radioButtonOptions );
         var greenColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'green', this.greenText, radioButtonOptions );
         var redColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'red', this.redText, radioButtonOptions );
         var yellowColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'yellow', this.yellowText, radioButtonOptions );
         var spacing = 5;
-        this.colorVBox1 = new VBox( { children: [ whiteColorRadioButton, greenColorRadioButton ], align: 'left', spacing: spacing } );
-        this.colorVBox2 = new VBox( { children: [ redColorRadioButton, yellowColorRadioButton ], align: 'left', spacing: spacing  } );
+        this.colorVBox1 = new VBox( {
+          children: [ whiteColorRadioButton, greenColorRadioButton ],
+          align: 'left',
+          spacing: spacing
+        } );
+        this.colorVBox2 = new VBox( {
+          children: [ redColorRadioButton, yellowColorRadioButton ],
+          align: 'left',
+          spacing: spacing
+        } );
       }
 
 
