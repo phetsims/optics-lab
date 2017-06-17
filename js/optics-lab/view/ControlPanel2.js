@@ -250,7 +250,7 @@ define( function( require ) {
       this.diameterProperty.value = 50;
       this.radiusOfCurvatureProperty.value = 150;
       this.indexOfRefractionProperty.value = 2;
-      this.showFocalPointsProperty.value = 'false';
+      this.showFocalPointsProperty.value = false;
       console.log( 'resetProperties called' );
     }
 
