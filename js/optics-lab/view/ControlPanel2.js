@@ -124,7 +124,7 @@ define( function( require ) {
     this.diameterProperty = new Property( 50 );
     this.radiusOfCurvatureProperty = new Property( 150 );
     this.indexOfRefractionProperty = new Property( 2 );
-    this.showFocalPointsProperty = new Property( 'false' );
+    this.showFocalPointsProperty = new Property( false );
 
     var fillerBox = new Text( ' ', { font: DISPLAY_FONT } );
 
