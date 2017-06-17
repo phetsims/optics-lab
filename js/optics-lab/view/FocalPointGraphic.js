@@ -13,11 +13,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
-  //var Shape = require( 'KITE/Shape' );
-  //
-  // var Ray2 = require( 'DOT/Ray2' );
-  //var Vector2 = require( 'DOT/Vector2' );
-
   /**
    *
    * @param relativeStartPos
@@ -38,15 +33,9 @@ define( function( require ) {
     var line2 = new Line( R, -R, -R, R, strokeInfo );
     this.children = [ line1, line2 ];
 
-
   }
+
   opticsLab.register( 'FocalPointGraphic', FocalPointGraphic );
 
-  return inherit( Node, FocalPointGraphic, {
-      myFunction: function() {
-      }
-
-
-    }//end inherit
-  );
+  return inherit( Node, FocalPointGraphic );
 } );

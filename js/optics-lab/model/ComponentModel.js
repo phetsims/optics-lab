@@ -10,7 +10,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
-  //var Ray2 = require( 'DOT/Ray2' );
   var Vector2 = require( 'DOT/Vector2' );
 
   function ComponentModel( mainModel, type, diameter, radiusCurvature, index ) {
@@ -27,29 +26,20 @@ define( function( require ) {
     var self = this;
     this.mainModel = mainModel;
 
-    //this.model = model;
     this.type = type; // 'converging_lens'|'diverging_lens'|'converging_mirror'|'plane_mirror'|etc.
     if ( this.type === 'converging_mirror' || this.type === 'diverging_mirror' ) {
       this.index = 2;  //needed so formula for focal length is correct in mirror case
     }
-    //this.diameter = diameter;
-    //this.n = index;  //index of refraction n > 1 , n and f set radius of lens
-    //this.position = new Vector2( 0, 0 );
-    //this.model.addComponent( this );
     this.diameterProperty.link( function() {
       self.mainModel.processRays();
     } );
     this.radiusProperty.link( function( radius ) {
-      //console.log( 'radius is ' + radius );
       var R = self.radius;   //R is signed.  + for converging lenses, - for diverging lenses
       var n = self.index;
       self.f = R / ( 2 * ( n - 1 ));  //focal length gets correct sign from sign of radius R.
-      //console.log(  'R curvature = ' + R + '   f = ' + self.f );
       self.mainModel.processRays();
     } );
-    //this.fProperty.link( function(){    //probably unused
-    //  self.mainModel.processRays();
-    //});
+
     this.indexProperty.link( function() {
       var R = self.radius;
       var n = self.index;

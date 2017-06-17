@@ -27,10 +27,8 @@ define( function( require ) {
   var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HSlider = require( 'SUN/HSlider' );
-  //var HStrut = require('SCENERY/nodes/HStrut');
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  //var ObservableArray = require('AXON/ObservableArray');
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
@@ -38,11 +36,10 @@ define( function( require ) {
   var Util = require( 'OPTICS_LAB/optics-lab/common/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
+
   // constants
   var DISPLAY_FONT = new PhetFont( 12 );
   var TEXT_COLOR = Util.TEXT_COLOR;
-  //var PANEL_COLOR = Util.PANEL_COLOR;
-  //var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
 
 
   /**
@@ -55,19 +52,6 @@ define( function( require ) {
     Node.call( this );
     var self = this;
     this.type = type;
-    //this.selfArray = [];
-    //var typeArray = [
-    //    'fan_source',
-    //    'beam_source',
-    //    'converging_lens',
-    //    'diverging_lens',
-    //    'converging_mirror',
-    //    'plane_mirror',
-    //    'diverging_mirror',
-    //    'simple_mask',
-    //    'slit_mask'
-    //];
-
 
     var fontInfo = { font: DISPLAY_FONT };
     var whiteText = new Text( 'white', fontInfo );
@@ -100,11 +84,6 @@ define( function( require ) {
       align: 'left', // {string} horizontal of content in the pane, left|center|right
       minWidth: 0 // minimum width of the panel
     };
-
-
-    //for ( var i = 0; i < typeArray.length; i++ ){
-    //    this.selfArray[ i ] = makeControlPanel( typeArray[ i ] );
-    //}
 
     var sliderOptions = {
       trackSize: new Dimension2( 120, 5 ),
@@ -227,15 +206,6 @@ define( function( require ) {
     self.children = [ displayPanel, expandCollapseButton ];
     expandCollapseButton.left = 5;
     expandCollapseButton.top = 5;
-
-    //mainView.selectedPieceTypeProperty.lazyLink( function( type ){
-    //    self.visible = ( type === self.type );
-    //    //if( type !== null ){
-    //    //
-    //    //}
-    //
-    //    //console.log( 'calling setControls for piece ' + piece.type );
-    //} );
 
     mainView.selectedPieceProperty.lazyLink( function( piece ) {
       self.visible = ( piece.type === self.type );

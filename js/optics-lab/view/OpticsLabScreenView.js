@@ -10,25 +10,16 @@ define( function( require ) {
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
-  //var Circle = require( 'SCENERY/nodes/Circle' );
-  //var ControlPanel2 = require( 'OPTICS_LAB/optics-lab/view/ControlPanel2' );
-  //var ControlPanelManager = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager' );
   var ControlPanelManager2 = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager2' );
   var ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
   var ComponentNode = require( 'OPTICS_LAB/optics-lab/view/ComponentNode' );
   var inherit = require( 'PHET_CORE/inherit' );
-  //var Line = require( 'SCENERY/nodes/Line' );
-  //var LinearFunction = require( 'DOT/LinearFunction' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var Property = require( 'AXON/Property' );
-  //var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  //var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var SourceNode = require( 'OPTICS_LAB/optics-lab/view/SourceNode' );
   var SourceModel = require( 'OPTICS_LAB/optics-lab/model/SourceModel' );
   var ToolDrawerPanel = require( 'OPTICS_LAB/optics-lab/view/ToolDrawerPanel' );
-  //var Util = require( 'DOT/Util' );
-  //var Vector2 = require( 'DOT/Vector2' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
   /**
@@ -44,17 +35,11 @@ define( function( require ) {
 
     // model-view transform
     this.modelViewTransform = ModelViewTransform2.createIdentity();
-    // this.controlPanel = new ControlPanel( this.mainModel, this );
-    //this.addChild( this.controlPanel );
     this.controlPanelManager = new ControlPanelManager2( this.mainModel, this );
     this.addChild( this.controlPanelManager );
 
     this.toolDrawerPanel = new ToolDrawerPanel( opticsLabModel, this );
     this.addChild( this.toolDrawerPanel );
-
-    //test code, to be deleted
-    //this.addChild( new ControlPanel2( opticsLabModel, this, 'beam_source' ));
-    //end test code
 
     //Layout
     this.controlPanelManager.left = 40;       //this line crashes sim unless controlPanelManager has graphic content
@@ -71,7 +56,6 @@ define( function( require ) {
       addSource: function( type, startPosition ) {
         var sourceModel;
         if ( type === 'fan_source' ) {
-          //SourceModel( mainModel, type, nbrOfRays, position, spread, height )
           sourceModel = new SourceModel( this.mainModel, 'fan_source', 10, startPosition, 45, 0 );
         }
         else {
@@ -88,9 +72,6 @@ define( function( require ) {
         var componentModel;
         switch( type ) {
           case 'converging_lens':
-            //ComponentModel( mainModel, type, diameter, radiusCurvature, index )
-            //radius of curvature R = 2*f*( n - 1 )
-
             componentModel = new ComponentModel( this.mainModel, 'converging_lens', 125, 350, 1.8 );
             break;
           case 'diverging_lens':
@@ -142,21 +123,17 @@ define( function( require ) {
         return newPiece;
       },//end AddPiece
       removeSource: function( sourceNode ) {
-        //console.log( 'remove source called. source is ' + sourceNode );
         var sourceModel = sourceNode.pieceModel;
-        //sourceNode.removeRayNodesFromParent( this );
         this.removeChild( sourceNode );
         this.mainModel.removeSource( sourceModel );
       },
       removeComponent: function( componentNode ) {
-        //console.log( 'remove component ' + componentNode );
         this.removeChild( componentNode );
         var componentModel = componentNode.pieceModel;
         this.mainModel.removeComponent( componentModel );
       },
       removePiece: function( piece ) {
         var type = piece.type;
-        //this.controlPanelManager.disposeOfControlPanelForDeletedPiece( piece );
         if ( type === 'fan_source' || type === 'beam_source' ) {
           this.removeSource( piece );
         }
@@ -174,7 +151,6 @@ define( function( require ) {
       },
       setSelectedPieceType: function( piece ) {
         this.selectedPieceTypeProperty.value = piece.type;
-        //console.log( 'piece type is ' + piece.type );
         piece.moveToFront();
       }
 

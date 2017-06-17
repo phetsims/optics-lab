@@ -20,18 +20,11 @@ define( function( require ) {
   'use strict';
 
   // modules
-  //var Circle = require( 'SCENERY/nodes/Circle' );
   var ControlPanel2 = require( 'OPTICS_LAB/optics-lab/view/ControlPanel2' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ObservableArray = require( 'AXON/ObservableArray' );
-  //var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  //var Property = require( 'AXON/Property' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
-  //var Util = require( 'OPTICS_LAB/optics-lab/common/Util' );
-  //var VBox = require( 'SCENERY/nodes/VBox' );
-
-  // constants
 
 
   /**
@@ -84,11 +77,6 @@ define( function( require ) {
       self.linkControls();
     } );
 
-
-    //need any content to initialize position
-    //var myCircle = new Circle( 25, { fill: 'yellow'} ) ;
-    //var filler = new Rectangle( 0, 0, 10, 10, { fill: 'yellow', opacity: 0.0 } );
-    //this.addChild( filler );
 
     // All controls are placed on display node, with visibility set by accordionBox button
 
@@ -144,17 +132,6 @@ define( function( require ) {
           piece.showFocalPointsProperty.value = tOrF;
         }
 
-        //TODO optics-lab#3 defined but never used
-        //  function displayFocalLength( focalLength ){
-        //
-        //  }
-        //TODO optics-lab#3 defined but never used
-        //  var resetPanel = function( property, previousUpdate, update, attribute ){
-        //      property.unlink( previousUpdate );
-        //      property.value = attribute;
-        //      property.link( update );
-        //      //self.previousUpdate = update;
-        //  };
         function unlinkAll() {
           controlPanel.nbrOfRaysProperty.unlink( self.previousRaysUpdate );
           controlPanel.spreadProperty.unlink( self.previousSpreadUpdate );
@@ -201,16 +178,6 @@ define( function( require ) {
           }
         }
 
-        //function linkAll(){
-        //  controlPanel.nbrOfRaysProperty.link( raysUpdate );
-        //  controlPanel.spreadProperty.link( spreadUpdate );
-        //  controlPanel.colorProperty.link( colorUpdate );
-        //  controlPanel.widthProperty.link( widthUpdate );
-        //  controlPanel.diameterProperty.link( diameterUpdate );
-        //  controlPanel.radiusOfCurvatureProperty.link( radiusOfCurvatureUpdate );
-        //  controlPanel.indexOfRefractionProperty.link( indexOfRefractionUpdate );
-        //  controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
-        //}
         function setPreviousUpdates() {
           self.previousRaysUpdate = raysUpdate;
           self.previousSpreadUpdate = spreadUpdate;

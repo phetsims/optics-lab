@@ -42,8 +42,6 @@ define( function( require ) {
   // constants
   var DISPLAY_FONT = new PhetFont( 12 );
   var TEXT_COLOR = Util.TEXT_COLOR;
-  //var PANEL_COLOR = Util.PANEL_COLOR;
-  //var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
 
   //TODO these were added here because they are undefined and failing lint, see https://github.com/phetsims/optics-lab/issues/6
   var focalLengthHBox;
@@ -162,8 +160,6 @@ define( function( require ) {
           panelContent = hBoxMaker( [ fillerBox, nbrOfRaysVBox, widthVBox, colorVBox1, colorVBox2 ] );
           break;
         case 'converging_lens':
-          //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
-          //radius of curvature R = 2*f*( n - 1 )
           panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ] );
           break;
         case 'diverging_lens':
@@ -225,17 +221,6 @@ define( function( require ) {
       } );
     };
 
-    //this.expandCollapseButton.expandedProperty.link( function( tOrF ) {
-    //   self.displayPanel.visible = tOrF;
-    //});
-
-
-    //this.mainView.selectedPieceProperty.link( function( piece ){
-    //   self.visible = ( piece ===  self.selectedPiece );
-    //  //console.log( 'calling setControls for piece ' + piece.type );
-    //} );
-
-
   }//end constructor
 
   opticsLab.register( 'ControlPanels', ControlPanels );
@@ -291,7 +276,6 @@ define( function( require ) {
       var panelContent = new Node();
       var checkBoxOptions = { checkBoxColorBackground: 'white' };
       var spacing = 25;
-      //console.log( 'setControlsForSelectedPiece' + piece.type );
       var focalLengthHBox = hBoxMaker( [ this.focalLengthText, this.focalLengthReadoutText ] );
       switch( type ) {
         case 'fan_source':
@@ -305,8 +289,6 @@ define( function( require ) {
           panelContent = hBoxMaker( [ fillerBox, nbrOfRaysVBox, heightVBox, this.colorVBox1, this.colorVBox2 ] );
           break;
         case 'converging_lens':
-          //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
-          //radius of curvature R = 2*f*( n - 1 )
           var radiusSlider = new HSlider( pieceModel.radiusProperty, { min: 100, max: 800 }, sliderOptions );
           this.hSliders.push( radiusSlider );
           var radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
@@ -317,8 +299,6 @@ define( function( require ) {
           panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ] );
           break;
         case 'diverging_lens':
-          //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
-          //radius of curvature R = 2*f*( n - 1 )
           radiusSlider = new HSlider( pieceModel.radiusProperty, { min: -100, max: -800 }, sliderOptions );
           this.hSliders.push( radiusSlider );
           radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
@@ -378,7 +358,7 @@ define( function( require ) {
         align: 'left',
         spacing: spacing
       } );
-    },
+    }
 
 
   } );//end inherit

@@ -9,12 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  //var ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
   var PropertySet = require( 'AXON/PropertySet' );
-  //var SourceModel = require( 'OPTICS_LAB/optics-lab/model/SourceModel' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -36,8 +34,6 @@ define( function( require ) {
     this.maxNbrIntersections = 100;  //maximum number of segments in a raypath, to prevent endless loops
     this.intersectionCounter = 0;
 
-    //this.sources = [];
-    //this.components = [];
   }
 
   opticsLab.register( 'OpticsLabModel', OpticsLabModel );
@@ -132,18 +128,13 @@ define( function( require ) {
       processIntersection: function( rayPath, intersection, segmentNbr, componentNbr ) {
         var incomingRayDir = rayPath.dirs[ segmentNbr ];
         //console.log( 'rayDir in degs is ' + incomingRayDir.angle()*180/Math.PI );
-        //var angleInRads = incomingRayDir.angle();
         var incomingAngle = incomingRayDir.angle();   //angle in rads between direction of ray and component normal
         var outgoingAngle;
         var component = this.components.get( componentNbr );
         var componentAngle = component.angle;  //tilt of component = angle between horizontal and component normal
         var componentNormal = new Vector2( Math.cos( componentAngle ), Math.sin( componentAngle ) );
         var componentParallel = new Vector2( -Math.sin( componentAngle ), Math.cos( componentAngle ) );
-        //var angleInRads = incomingRayDir.angleBetween( componentNormal );  //NO GOOD: .angleBetween is always positive
         var angleInRads = incomingAngle - componentAngle;
-        //var r = ( intersection.y - component.position.y );
-        //var r = intersection.distance( component.position );       //NO GOOD, distance is positive always
-        //normalDirection is true if the ray direction is along the direction of the component normal +/- 90 degrees
         var normalDirection = true;
         if ( incomingRayDir.dot( componentNormal ) < 0 ) {
           normalDirection = false;
@@ -153,7 +144,6 @@ define( function( require ) {
 
         var f = component.f;   //f = focal length
         var tanTheta = Math.tan( angleInRads );
-        //console.log( ' tanAngle is ' + tanTheta );
         var newDir;
         if ( rayPath.nbrSegments > rayPath.maxNbrSegments ) {
           //do nothing, ray terminates if too many segments, probably caught in infinite reflection loop
@@ -164,7 +154,6 @@ define( function( require ) {
             outgoingAngle = -Math.atan( (r / f) - tanTheta ) + componentAngle;
           }
           else {
-            //newAngleInRads = Math.PI + Math.atan( (r/f) + tanTheta ) - componentAngle;
             outgoingAngle = Math.PI + Math.atan( (r / f) + tanTheta ) + componentAngle;
           }
 
@@ -175,12 +164,10 @@ define( function( require ) {
         else if ( component.type === 'converging_mirror' ) {
           if ( normalDirection ) {
             outgoingAngle = Math.PI + Math.atan( (r / f) - tanTheta ) + componentAngle;
-            //console.log( 'tanThetaIncoming = ' + tanTheta + '    Math.atan( (r/f) + tanTheta  = ' + Math.atan( (r / f) + tanTheta ));
             newDir = new Vector2.createPolar( 1, outgoingAngle );
             this.launchRay( rayPath, intersection, newDir );
           }
 
-          //console.log( 'It is a curved mirror.' );
         }
         else if ( component.type === 'diverging_mirror' ) {
           if ( normalDirection ) {
@@ -191,7 +178,6 @@ define( function( require ) {
 
         }
         else if ( component.type === 'plane_mirror' ) {
-          //console.log( 'It is a plane mirror.' );
           if ( normalDirection ) {
             outgoingAngle = Math.PI - angleInRads + componentAngle;
             newDir = new Vector2.createPolar( 1, outgoingAngle );
@@ -202,7 +188,6 @@ define( function( require ) {
         }
         else if ( component.type === 'simple_mask' ) {
           //Do nothing. The rayPath ends at a mask.
-          //console.log( 'It is a mask.' );
         }
         else {
           console.log( 'ERROR: intersection component is unknown.' );

@@ -15,13 +15,9 @@ define( function( require ) {
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
-  //var PropertySet = require( 'AXON/PropertySet' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
-  //
-
-  //var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * {vector2] startDir = direction of starting ray
@@ -31,9 +27,6 @@ define( function( require ) {
   function ComponentGraphic( type, diameter, radius, index ) {
     Node.call( this );
 
-    //PropertySet.call( this, {
-    //  startPosition: startPosition             //@private, position of source on stage
-    //} );
     this.type = type;
     this.diameter = diameter;    //starting direction of the first segment, the one thing that never changes
     this.radius = radius;   //radius of curvature of each surface of lens
@@ -48,11 +41,7 @@ define( function( require ) {
     this.focalPtLeft = new FocalPointGraphic( 15 );
     this.focalPtRight.visible = true;
     this.focalPtLeft.visible = true;
-    //this.addChild( this.focalPtLeft );
-    //this.addChild( this.focalPtRight );
-    //this.addChild( this.path );
     this.children = [ this.mirrorBackGraphic, this.path, this.focalPtLeft, this.focalPtRight ];
-    //this.makeDrawing();
 
   }
 
@@ -68,14 +57,12 @@ define( function( require ) {
             this.drawLens();
             break;
           case 'converging_mirror':
-            //this.drawPlaneMirror();
             this.drawCurvedMirror();
             break;
           case 'plane_mirror':
             this.drawPlaneMirror();
             break;
           case 'diverging_mirror':
-            //this.drawDivergingMirror();
             this.drawCurvedMirror();
             break;
           case 'simple_mask':
@@ -110,22 +97,17 @@ define( function( require ) {
         var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
         if ( this.f > 0 ) {
           this.shape
-          //.moveTo( 0, -h )
-          //arc: function( centerX, centerY, radius, startAngle, endAngle, anticlockwise )
             .arc( -C, 0, R, theta, -theta, true )//arc( -diameter, 0,)
             .arc( C, 0, R, -Math.PI + theta, Math.PI - theta, true );
-          //.close();
         }
         else if ( this.f < 0 ) {
           var w = 5;
           this.shape
-          //.moveTo( 0, 0)
             .arc( -w - R, 0, R, theta, -theta, true )
             .lineToRelative( 2 * ( w + ( R - C )) )
             .arc( w + R, 0, R, -Math.PI + theta, Math.PI - theta, true )
             .close();
         }
-        //this.path.options = { stroke: 'yellow', fill: 'white', lineWidth: 2, opacity: 0.95 };
         this.path.stroke = 'yellow';
         this.path.fill = 'white';
         this.path.lineWidth = 2;
@@ -135,10 +117,8 @@ define( function( require ) {
         this.mirrorBackGraphic.visible = false;
       },//end drawLens()
       drawCurvedMirror: function() {
-        //this.removeAllChildren();
         var fudge = 1;
         var R = fudge * this.radius;
-        //var f = this.radius/2;
         var h = this.diameter / 2;                          //h = height = radius of lens
         var theta = Math.asin( h / R );                     //magnitude of startAngle and endAngle
         var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
@@ -157,30 +137,7 @@ define( function( require ) {
         //this.mirrorBackGraphic = new Rectangle( 0, -h, w, 2*h, {fill:'red'} );
         this.mirrorBackGraphic.setScaleMagnitude( 1, 2 * h );
         this.mirrorBackGraphic.visible = true;
-        //this.children = [ mirrorBackGraphic, this.path, this.focalPtLeft, this.focalPtRight ];
       },
-      //drawDivergingMirror: function(){
-      //  this.removeAllChildren();
-      //  var fudge = 1;
-      //  var R = fudge*this.radius;
-      //  var f = this.radius/2;
-      //  var h = this.diameter / 2;                          //h = height = radius of lens
-      //  var theta = Math.asin( h / R );                     //magnitude of startAngle and endAngle
-      //  var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
-      //  this.shape = new Shape();
-      //  this.shape.arc( C, 0, R, -Math.PI + theta, Math.PI - theta, true );
-      //  this.path.stroke = 'white';
-      //  this.path.lineWidth = 8;
-      //  //this.path.opacity = 0.95;
-      //  this.path.setShape( this.shape );
-      //  var w = 20;
-      //  var mirrorBackGraphic = new Rectangle( 0, -h, w, 2*h, {fill:'red'} );
-      //  this.children = [ mirrorBackGraphic, this.path ];
-      //
-      //},
-      //drawConvergingMirror: function(){
-      //
-      //},
       drawPlaneMirror: function() {
         this.removeAllChildren();
         var w = 20;
@@ -196,17 +153,11 @@ define( function( require ) {
         this.removeAllChildren();
         var w = 20;
         var height = this.diameter;
-        //Rectangle( x, y, width, height, arcWidth, arcHeight, options )
         var maskGraphic = new Rectangle( 0, -height / 2, w, height, { fill: 'green' } );
-        //Line( x1, y1, x2, y2, options )
         var lineGraphic = new Line( 0, -height / 2, 0, height / 2, { stroke: 'black', lineWidth: 4 } );
         this.addChild( maskGraphic );
         this.addChild( lineGraphic );
       },
-      //setFocalLength: function( focalLength ){
-      //  this.f = focalLength;
-      //  this.makeDrawing();
-      //},
       setDiameter: function( diameter ) {
         this.diameter = diameter;
         this.makeDrawing();
@@ -216,19 +167,16 @@ define( function( require ) {
         this.makeDrawing();
       },
       setIndex: function( index ) {
-        //console.log( 'index is ' + index );
         this.index = index;
         this.makeDrawing();
       },
       setFocalPointPositions: function( distance ) {
         this.focalPtLeft.x = -distance;
         this.focalPtRight.x = distance;
-        //console.log( 'focal points distance = ' + distance );
       },
       setFocalPointsVisibility: function( isVisible ) {
         this.focalPtLeft.visible = isVisible;
         this.focalPtRight.visible = isVisible;
-        //console.log( 'focal points visibility = ' + isVisible );
       }
 
 

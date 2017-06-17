@@ -11,9 +11,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  //var Line = require( 'KITE/segments/Line' );
   var PropertySet = require( 'AXON/PropertySet' );
-  //var Ray2 = require( 'DOT/Ray2' );
   var RayPath = require( 'OPTICS_LAB/optics-lab/model/RayPath' );
   var Vector2 = require( 'DOT/Vector2' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
@@ -57,7 +55,6 @@ define( function( require ) {
     }
 
     this.nbrOfRaysProperty.lazyLink( function() {
-      //debugger;
       self.createRays();
       self.mainModel.processRays();
     } );
@@ -79,7 +76,6 @@ define( function( require ) {
 
     this.createRays();
 
-    //this.setPosition( position );
 
   }
 
@@ -102,12 +98,10 @@ define( function( require ) {
         var theta = ( lowestAngle ) * Math.PI / 180; //in radians
         var dir = new Vector2( Math.cos( theta ), Math.sin( theta ) );
         var relativeStartPos = new Vector2( 0, 0 );
-        //var endPosition = this.position.plus( dir.timesScalar( this.maxLength ));
 
         //for beam source
         var lowestPos;   //in cm
         var startPos;
-        //var deltaHeight;
         var deltaPos;
         var sinAngle = Math.sin( -this.angle );   //in screen coords, + angle is CW
         var cosAngle = Math.cos( -this.angle );
@@ -117,14 +111,11 @@ define( function( require ) {
           deltaPos = new Vector2( 0, 0 );
         }
         else {
-          //lowestPos = new Vector2( 0, -this.height / 2 );   //in cm
-          //deltaHeight = this.height / ( this.nbrOfRays - 1 );
           lowestPos = new Vector2( h * sinAngle / 2, h * cosAngle / 2 );
           deltaPos = new Vector2( -h * sinAngle / ( this.nbrOfRays - 1 ), -h * cosAngle / ( this.nbrOfRays - 1 ) );
 
         }
         startPos = lowestPos;
-        //var deltaPos = new Vector2( 0, deltaHeight );
 
 
         //loop through and initialize all rayPaths of the source
@@ -143,10 +134,8 @@ define( function( require ) {
             dir = new Vector2( cosAngle, -sinAngle );
             relativeStartPos = lowestPos.plus( deltaPos.timesScalar( i ) );
             startPos = this.position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
-            //endPosition = startPos.plus( dir.timesScalar( this.maxLength ));
             this.rayPaths[ i ] = new RayPath( relativeStartPos, dir );
             this.rayPaths[ i ].startPos = startPos;
-            //this.rayPaths[i].addSegment( startPos, endPosition );
           }
         }
       }, //end createRays()
@@ -172,12 +161,8 @@ define( function( require ) {
       setPosition: function( position ) {   //position = Vector2
         this.position = position;
         for ( var i = 0; i < this.rayPaths.length; i++ ) {
-          //var dir = this.rayPaths[ i ].startDir;
-          //this.rayPaths[ i ].clearPath();
           if ( this.type === 'fan_source' ) {
             this.rayPaths[ i ].startPos = position;
-            //var endPos = position.plus( dir.timesScalar( this.maxLength ));
-            //this.rayPaths[ i ].addSegment( position, endPos );
           }
           else if ( this.type === 'beam_source' ) {
             var lowestPos;
@@ -195,12 +180,10 @@ define( function( require ) {
             }
             var relativePos = lowestPos.plus( deltaPos.timesScalar( i ) );
             var pos = position.plus( relativePos );
-            //endPos = pos.plus( dir.timesScalar( this.maxLength ));
             this.rayPaths[ i ].relativeStartPos = relativePos;
             this.rayPaths[ i ].startPos = pos;
             this.rayPaths[ i ].startDir.x = cosAngle;
             this.rayPaths[ i ].startDir.y = -sinAngle;
-            //this.rayPaths[ i ].addSegment( pos, endPos );
           }
         }
         if ( !this.mainModel.processingRays ) {

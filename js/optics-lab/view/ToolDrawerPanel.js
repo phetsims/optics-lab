@@ -11,23 +11,15 @@ define( function( require ) {
   'use strict';
 
   // modules
-  //var Bounds2 = require( 'DOT/Bounds2' );
-  //var CheckBox = require( 'SUN/CheckBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var HBox = require( 'SCENERY/nodes/HBox' );
-  //var HStrut = require( 'SCENERY/nodes/HStrut' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  //var Path = require( 'SCENERY/nodes/Path' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  //var SourceNode = require( 'OPTICS_LAB/optics-lab/view/SourceNode' );
-  //var SourceModel = require( 'OPTICS_LAB/optics-lab/model/SourceModel' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
-  //var Vector2 = require( 'DOT/Vector2' );
-  //var Shape = require( 'KITE/Shape' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
   //constants
@@ -46,7 +38,6 @@ define( function( require ) {
     this.mainView = mainView;  //OpticsLabScreenView
     var self = this;
 
-    //var nodeOptions = { fill: 'red', cursor: 'pointer' };
 
     var fanSourceIcon = new Node();
     var beamSourceIcon = new Node();
@@ -57,8 +48,6 @@ define( function( require ) {
     var divergingMirrorIcon = new Node();
     var simpleMaskIcon = new Node();
     var slitMaskIcon = new Node();
-    //var rulerCheckBox = new CheckBox();
-    //var protractorCheckBox = new CheckBox();
 
     var fontInfo = { font: DISPLAY_FONT };
     var fanSourceText = new Text( 'fan source', fontInfo );
@@ -109,7 +98,6 @@ define( function( require ) {
 
 
     var nodeSetup = function( element, index, array ) {
-      //Rectangle = function Rectangle( x, y, width, height, arcWidth, arcHeight, options )
       var xCorner = -8;
       var yCorner = textArray[ index ].height;
       var elementWidth = textArray[ index ].width + 16;
@@ -140,16 +128,12 @@ define( function( require ) {
 
           drag: function( e ) {
             var position = self.globalToParentPoint( e.pointer.point );   //returns Vector2
-            //var v1 = e.pointer.point;
-            //self.mainView.
 
             pieceGrabbed.pieceModel.setPosition( position );
-            //console.log( 'dragging postion is ' + v1 );
           },
           end: function( e ) {
             var vEnd = self.globalToParentPoint( e.pointer.point );
             if ( self.visibleBounds.containsCoordinates( vEnd.x, vEnd.y ) ) {
-              //console.log( 'toolDrawer end called. mainView.selectedPiece.type is ' +  mainView.selectedPiece.type);
               mainView.removePiece( pieceGrabbed );
             }
           }
@@ -202,14 +186,6 @@ define( function( require ) {
       align: 'left',
       spacing: spacing
     } );
-    //var toolVBox = new VBox( {
-    //  children:[
-    //    rulerCheckBox,
-    //    protractorCheckBox
-    //  ],
-    //  align: 'left',
-    //  spacing: spacing
-    //});
     spacing = 10;
     var content = new HBox( {
       children: [
@@ -222,12 +198,6 @@ define( function( require ) {
       align: 'top',
       spacing: spacing
     } );
-
-
-    //PropertySet.call( this, {
-    //  startPosition: startPosition             //@private, position of source on stage
-    //} );
-
 
     Panel.call( this, content, { xMargin: 15, yMargin: 5, lineWidth: 2, fill: PANEL_COLOR } );
   }//end constructor

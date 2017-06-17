@@ -71,14 +71,10 @@ define( function( require ) {
         fill: 'yellow'
       } );
       self.addChild( this.rotationHandle );
-      //this.translationHandle.addChild( this.rotationHandle );
     }
 
     self.insertChild( 0, this.translationHandle );
-    //self.addChild( this.translationHandle );
-    //initialize rayNodes array
 
-    //var rayOptionsObject = { stroke: this.rayColor, lineWidth: 1, lineJoin: 'bevel' } ;
     var rayOptionsObject = { stroke: 'black', lineWidth: 1.5, lineJoin: 'bevel' }; //, lineDash: [ 5, 1 ]
     for ( var r = 0; r < this.maxNbrOfRays; r++ ) {
       this.rayNodes[ r ] = new Path( new Shape(), rayOptionsObject );
@@ -145,8 +141,6 @@ define( function( require ) {
       var sinAngle = Math.sin( angle );
       var height = self.pieceModel.height;
       self.rotationHandle.translation = new Vector2( -( height / 2 ) * sinAngle, ( height / 2 ) * cosAngle );
-      //debugger;
-      //console.log( 'angle in degs is ' + angle*180/Math.PI );
     } );
 
     this.pieceModel.nbrOfRaysProperty.link( function( nbrOfRays ) {
@@ -172,7 +166,6 @@ define( function( require ) {
 
     this.mainModel.processRaysCountProperty.link( function( count ) {
       self.drawRays();
-      //console.log( 'source callback, rays processed. Count is ' + count );
     } );
     this.colorProperty.link( function( color ) {
       var colorCode;            //switch ( color )
@@ -234,40 +227,18 @@ define( function( require ) {
         }
         else if ( this.pieceModel.type === 'beam_source' ) {
 
-          //console.log( 'ray' + i + '  rayStart is ' + relativeRayStart + '  rayEnd is ' + relativeRayEnd );
-          //var rayNode = new Line( relativeRayStart, relativeRayEnd, rayFontObject );
           this.relativeRayStarts[ r ] = relativeRayStart;
           rayShape.lineToPoint( relativeRayEnd );
         }
         this.rayNodes[ r ].setShape( rayShape );
-        //var rayNode = new Path( rayShape, rayFontObject );
-
-        //this.rayNodes.push( rayNode );
-        //this.translationHandle.addChild( rayNode );   //want to work with absolute coords
       }//end rayPath loop
     },//end setRayNodes()
     drawRays: function() {
       for ( var i = 0; i < this.pieceModel.rayPaths.length; i++ ) {
-        //console.log( 'drawing rays for source ' + this.sourceNumber );
         var shape = this.pieceModel.rayPaths[ i ].getRelativeShape();//getShape();
         this.rayNodes[ i ].setShape( shape );
-        //var centerStartPt = this.pieceModel.position;
-        //var absoluteRayEndPt = this.pieceModel.rayPaths[ i ].segments[ 0 ].getEnd();
-        //var relativeRayEndPt = absoluteRayEndPt.minus( centerStartPt );
-        //this.rayNodes[ i ].setPoint2( relativeRayEndPt );
-        //this.rayNodes[ i ].setPoint2( dir.timesScalar( length ) );
       }
     },
-    //addRayNodesToParent: function( parentNode ){
-    //    for ( var i = 0; i < this.rayNodes.length; i++ ) {
-    //        parentNode.addChild( this.rayNodes[ i ] );
-    //    }
-    //},
-    //removeRayNodesFromParent: function( parentNode ){
-    //    for ( var i = this.rayNodes.length - 1; i >= 0 ; i-- ) {
-    //        parentNode.removeChild( this.rayNodes[ i ] );
-    //    }i
-    //},
     setWidth: function( height ) {
       this.settingHeight = true;
       var cosAngle = Math.cos( this.pieceModel.angle );
@@ -276,18 +247,10 @@ define( function( require ) {
       this.translationHandle.rotation = 0;
       //
       this.translationHandle.setRect( -5, -height / 2, 10, height );
-      //this.translationHandle.setScaleMagnitude( 1 , height/this.defaultHeight );
-      //this.removeChild( this.translationHandle );
       this.translationHandle.rotation = this.pieceModel.angle;
-      //this.translationHandle = new Rectangle( -5, -height/2, 10, height, { fill: '#8F8' } );
-      //this.insertChild( 0, this.translationHandle );
-      //this.translationHandle.rotation = this.pieceModel.angle;
 
       this.rotationHandle.translation = new Vector2( ( -height / 2 ) * sinAngle, ( height / 2 ) * cosAngle );
       this.settingHeight = false;
-      //console.log( 'cosAngle is ' + cosAngle );
-      //this.rotationHandle.x = ( height/2 )*sinAngle;
-      //this.rotationHandle.y = ( height/2 )*cosAngle;
     },
     setColor: function( color ) {
       for ( var i = 0; i < this.pieceModel.rayPaths.length; i++ ) {

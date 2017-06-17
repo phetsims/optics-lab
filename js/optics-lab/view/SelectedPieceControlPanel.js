@@ -27,10 +27,8 @@ define( function( require ) {
   var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HSlider = require( 'SUN/HSlider' );
-  //var HStrut = require('SCENERY/nodes/HStrut');
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  //var ObservableArray = require('AXON/ObservableArray');
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
@@ -42,9 +40,6 @@ define( function( require ) {
   // constants
   var DISPLAY_FONT = new PhetFont( 12 );
   var TEXT_COLOR = Util.TEXT_COLOR;
-  //var PANEL_COLOR = Util.PANEL_COLOR;
-  //var BACKGROUND_COLOR = Util.BACKGROUND_COLOR;
-
 
   /**
    * @param mainModel
@@ -102,21 +97,6 @@ define( function( require ) {
 
 
     this.setControlsForSelectedPiece();
-    //test code follows
-    //var spacing = 35;
-    //var fillerBox = new Text( 'filler', {font: DISPLAY_FONT} );
-    ////content of the current display
-    //this.content = new HBox( {
-    //    children: [
-    //        fillerBox
-    //    ],
-    //    spacing: spacing
-    //} );
-    //this.displayPanel = new Panel(this.content, this.panelOptions);
-    //this.children = [this.displayPanel, this.expandCollapseButton];
-    //this.expandCollapseButton.left = 5;
-    //this.expandCollapseButton.top = 5;
-    ////end test code
 
     this.expandCollapseButton.expandedProperty.link( function( tOrF ) {
       self.displayPanel.visible = tOrF;
@@ -125,7 +105,6 @@ define( function( require ) {
 
     this.mainView.selectedPieceProperty.link( function( piece ) {
       self.visible = ( piece === self.selectedPiece );
-      //console.log( 'calling setControls for piece ' + piece.type );
     } );
 
 

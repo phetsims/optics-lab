@@ -12,16 +12,12 @@ define( function( require ) {
   var ComponentGraphic = require( 'OPTICS_LAB/optics-lab/view/ComponentGraphic' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Circle = require( 'SCENERY/nodes/Circle' );
-  //var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
-  //var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Property = require( 'AXON/Property' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Vector2 = require( 'DOT/Vector2' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
-
-  // images
 
 
   /**
@@ -45,30 +41,17 @@ define( function( require ) {
       cursor: 'pointer'
     } );
 
-    // Add the rectangle graphic
-    //Rectangle( x, y, width, height, arcWidth, arcHeight, options )
-    //var xPos = this.pieceModel.position.x;
-    //var yPos = this.pieceModel.position.y;
     var height = this.pieceModel.diameter;
     var radius = this.pieceModel.radius;    //radius of curvature
-    //var f = this.pieceModel.f;
     var index = this.pieceModel.index;
-    //var myHandle = new Rectangle( xPos, yPos - height/2, 15, height, { fill: 'red' } );
-    //var marker1 = new Line( xPos, yPos, xPos + 15, yPos, { stroke: 'yellow' });
-    //var centerLine = new Line( xPos, yPos - height/2, xPos, yPos + height/2, { stroke: 'blue' });
 
-    //myHandle.children = [ marker1, marker2 ];
-    //function ComponentGraphic( type, diameter, radius(of curvature), index, mainView )
     this.componentGraphic = new ComponentGraphic( this.type, height, radius, index );
-    //var height = this.pieceModel.diameter;   //if type = 'beam_source'
     var angle = this.pieceModel.angle;
     this.rotationHandle = new Circle( 5, {
       x: Math.sin( angle ) * height / 2,
       y: Math.cos( angle ) * height / 2,
       fill: 'yellow'
     } );
-    //myHandle.addChild( componentGraphic );
-    //self.addChild( myHandle );
     self.addChild( this.componentGraphic );
     self.addChild( this.rotationHandle );
 
@@ -86,24 +69,19 @@ define( function( require ) {
           var currentNodePos = self.pieceModel.position;
           mouseDownPosition = position.minus( currentNodePos );
           //self.mouseDownPosition = e.pointer.point;
-          //console.log( '   posGlobalToParent = ' + position + ' relPos' + mouseDownPosition );
         },
 
         drag: function( e ) {
           var position = self.globalToParentPoint( e.pointer.point );
           position = position.minus( mouseDownPosition );
-          //console.log( 'component position = ' + position );
           self.pieceModel.setPosition( position );
         },
         end: function( e ) {
           var position = self.globalToParentPoint( e.pointer.point );
           if ( self.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y ) ) {
             self.mainView.removePiece( self );
-            //self.mainView.removeComponent( self );
-            //self.mainView.controlPanel.displayPanel.visible = false;
           }
           else {
-            //console.log( 'keep this' );
           }
         }
       } ) );
@@ -114,16 +92,12 @@ define( function( require ) {
       start: function( e ) {
         self.mainView.setSelectedPiece( self );
         self.mainView.setSelectedPieceType( self );
-        //console.log( 'mouse down' );
-        //var mouseDownPosition = e.pointer.point;
       },
 
       drag: function( e ) {
         var mousePosRelative = self.rotationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
         var angle = mousePosRelative.angle() - Math.PI / 2;  //angle = 0 when beam horizontal, CW is + angle
         self.pieceModel.setAngle( angle );
-        //console.log( 'position is ' + mousePosRelative );
-        //console.log( 'rotation angle in degree is ' + angle*180/Math.PI );
 
       }
     } ) );//end this.rotationHandle.addInputListener()
@@ -150,16 +124,9 @@ define( function( require ) {
     this.pieceModel.radiusProperty.link( function( R ) {
       self.componentGraphic.setRadius( R );
     } );
-    //this.pieceModel.fProperty.link( function( f ) {
-    //  self.componentGraphic.setFocalLength( f );
-    //} );
     this.pieceModel.indexProperty.link( function( n ) {
       self.componentGraphic.setIndex( n );
     } );
-    //this.mainView.controlPanel.showFocalPointsProperty.link( function( isVisible ){
-    //  //console.log( 'focal points visibility = ' + isVisible );
-    //  self.componentGraphic.setFocalPointsVisibility( isVisible );
-    //} ) ;
     this.showFocalPointsProperty.link( function( isVisible ) {
       self.componentGraphic.setFocalPointsVisibility( isVisible );
     } );

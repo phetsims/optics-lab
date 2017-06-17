@@ -12,12 +12,8 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'KITE/segments/Line' );
-  //var PropertySet = require( 'AXON/PropertySet' );
   var Shape = require( 'KITE/Shape' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
-  //
-  // var Ray2 = require( 'DOT/Ray2' );
-  //var Vector2 = require( 'DOT/Vector2' );
 
   /**
    *
@@ -27,22 +23,16 @@ define( function( require ) {
    */
   function RayPath( relativeStartPos, startDir ) {
 
-    //PropertySet.call( this, {
-    //  startPosition: startPosition             //@private, position of source on stage
-    //} );
     this.startPos;  //starting position of Path in absolute coordinates
     this.startDir = startDir;    //starting direction of the first segment, changes upon rotation of source
     this.relativeStartPos = relativeStartPos;  //starting position, relative to source center, of the first segment
 
     this.rayPath = this;
-    //this.mainModel = mainModel;
 
     this.maxLength = 2000;  //maximum length of rays in pixels
     this.maxNbrSegments = 50;  //maximum number of segments in ray path, needed to prevent endless loops
     this.nbrSegments = 0;    //number of segments in raypath, not to exceed this.maxNbrSegments
 
-    //An array of Kite.Line segments.  Kite.Line functions include
-    //getStart(), getEnd(), getStartTangent() which returns direction
 
     this.segments = [];     //an array of line segments
     this.dirs = [];         //array of directions, corresponding to the segments
