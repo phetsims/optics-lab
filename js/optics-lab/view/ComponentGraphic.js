@@ -18,6 +18,7 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * {vector2] startDir = direction of starting ray
@@ -92,7 +93,8 @@ define( function( require ) {
         }
         this.f = ( this.radius / 2 ) * ( 1 / ( n - 1 ) );  //f takes sign of R
         var h = this.diameter / 2;                          //h = height = radius of lens
-        var theta = Math.asin( h / R );                     //magnitude of startAngle and endAngle
+        //  temporary fixed for theta, see #12   set the maximum ratio to be one
+        var theta = Math.asin( Util.clamp( h / R, -1, 1 ) );                     //magnitude of startAngle and endAngle
         var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
         if ( this.f > 0 ) {
           this.shape
@@ -120,7 +122,7 @@ define( function( require ) {
         var R = fudge * this.radius;
         var h = this.diameter / 2;          //h = height = radius of lens
         //  temporary fixed for theta, see #12   set the maximum ratio to be one
-        var theta = Math.asin( Math.min( 1, h / R ) );                     //magnitude of startAngle and endAngle
+        var theta = Math.asin( Util.clamp( h / R, -1, 1 ) ); //magnitude of startAngle and endAngle
         var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
         this.shape = new Shape();
         if ( this.type === 'diverging_mirror' ) {
