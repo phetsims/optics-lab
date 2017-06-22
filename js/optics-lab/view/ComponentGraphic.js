@@ -33,7 +33,6 @@ define( function( require ) {
     this.index = index;     //index of refraction
     this.f = this.radius / ( 2 * ( this.index - 1 ));
 
-
     this.mirrorBackGraphic = new Rectangle( 0, -0.5, 20, 1, { fill: 'red' } );
     this.shape = new Shape();
     this.path = new Path( this.shape );
@@ -119,8 +118,9 @@ define( function( require ) {
       drawCurvedMirror: function() {
         var fudge = 1;
         var R = fudge * this.radius;
-        var h = this.diameter / 2;                          //h = height = radius of lens
-        var theta = Math.asin( h / R );                     //magnitude of startAngle and endAngle
+        var h = this.diameter / 2;          //h = height = radius of lens
+        //  temporary fixed for theta, see #12   set the maximum ratio to be one
+        var theta = Math.asin( Math.min( 1, h / R ) );                     //magnitude of startAngle and endAngle
         var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
         this.shape = new Shape();
         if ( this.type === 'diverging_mirror' ) {
@@ -178,7 +178,6 @@ define( function( require ) {
         this.focalPtLeft.visible = isVisible;
         this.focalPtRight.visible = isVisible;
       }
-
 
     }//end inherit
   );
