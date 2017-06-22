@@ -81,8 +81,6 @@ define( function( require ) {
           if ( self.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y ) ) {
             self.mainView.removePiece( self );
           }
-          else {
-          }
         }
       } ) );
 
