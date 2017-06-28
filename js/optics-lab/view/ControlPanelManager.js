@@ -82,6 +82,11 @@ define( function( require ) {
   opticsLab.register( 'ControlPanelManager', ControlPanelManager );
 
   return inherit( Node, ControlPanelManager, {
+    /**
+     *
+     * @param {string} type
+     * @returns {number}
+     */
     getIndex: function( type ) {
       var index;
       for ( var i = 0; i < this.typeArray.length; i++ ) {
@@ -91,6 +96,9 @@ define( function( require ) {
       }
       return index;
     },
+    /**
+     * @private
+     */
     linkControls: function() {
       var type = this.selectedPieceType;
       var piece = this.selectedPiece;

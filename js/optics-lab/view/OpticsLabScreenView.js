@@ -54,6 +54,14 @@ define( function( require ) {
   opticsLab.register( 'OpticsLabScreenView', OpticsLabScreenView );
 
   return inherit( ScreenView, OpticsLabScreenView, {
+
+    /**
+     *
+     * @param {string} type
+     * @param {Vector2} startPosition
+     * @returns {SourceNode}
+     * @private
+     */
     addSource: function( type, startPosition ) {
       var sourceModel;
       if ( type === 'fan_source' ) {
@@ -69,6 +77,14 @@ define( function( require ) {
       return sourceNode;
       //sourceNode.addRayNodesToParent( this );
     },
+
+    /**
+     *
+     * @param {string} type
+     * @param {Vector2} startPosition
+     * @returns {ComponentNode}
+     * @private
+     */
     addComponent: function( type, startPosition ) {
       var componentModel;
       switch( type ) {
@@ -107,6 +123,14 @@ define( function( require ) {
 
     },//end addComponent()
     //A piece is either a source or a component
+
+    /**
+     *
+     * @param {string} type
+     * @param {Vector2} startPosition
+     * @returns {ComponentNode|SourceNode}
+     * @public
+     */
     addPiece: function( type, startPosition ) {
       var newPiece;
       if ( type === 'fan_source' || type === 'beam_source' ) {
@@ -123,16 +147,34 @@ define( function( require ) {
       //this.controlPanelManager.displayControlPanelForNewPiece( newPiece );
       return newPiece;
     },//end AddPiece
+
+    /**
+     *
+     * @param {SourceNode} sourceNode
+     * @private
+     */
     removeSource: function( sourceNode ) {
       var sourceModel = sourceNode.pieceModel;
       this.removeChild( sourceNode );
       this.mainModel.removeSource( sourceModel );
     },
+
+    /**
+     *
+     * @param {ComponentNode} componentNode
+     * @private
+     */
     removeComponent: function( componentNode ) {
       this.removeChild( componentNode );
       var componentModel = componentNode.pieceModel;
       this.mainModel.removeComponent( componentModel );
     },
+
+    /**
+     *
+     * @param {SourceModel|ComponentModel} piece
+     * @public
+     */
     removePiece: function( piece ) {
       var type = piece.type;
       if ( type === 'fan_source' || type === 'beam_source' ) {
@@ -144,11 +186,22 @@ define( function( require ) {
 
     },
 
+    /**
+     *
+     * @param {SourceModel|ComponentModel} piece
+     * @public
+     */
     setSelectedPiece: function( piece ) {
       this.selectedPieceProperty.value = piece;
       this.selectedPieceTypeProperty.value = piece.type;
       piece.moveToFront();
     },
+
+    /**
+     *
+     * @param {SourceModel|ComponentModel} piece
+     * @public
+     */
     setSelectedPieceType: function( piece ) {
       this.selectedPieceTypeProperty.value = piece.type;
       piece.moveToFront();

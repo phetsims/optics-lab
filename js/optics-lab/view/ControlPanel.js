@@ -236,12 +236,23 @@ define( function( require ) {
   opticsLab.register( 'ControlPanel', ControlPanel );
 
   return inherit( Node, ControlPanel, {
+    /**
+     *
+     * @param {SourceNode|ComponentNode} piece
+     */
     linkToPiece: function( piece ) {
 
     },
+    /**
+     *
+     */
     unlinkToOldPiece: function() {
 
     },
+
+    /**
+     * @public
+     */
     resetProperties: function() {
       this.expandedProperty.value = true;
       this.nbrOfRaysProperty.value = 10;

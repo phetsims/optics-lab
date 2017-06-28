@@ -115,11 +115,19 @@ define( function( require ) {
 
   return inherit( Node, SelectedPieceControlPanel, {
 
+    /**
+     *
+     * @param {string} titleString
+     * @public
+     */
     setTitleBar: function( titleString ) {
       this.panelTitle.text = titleString;
     },
 
-    //change the piece that this panel controls
+    /**
+     * change the piece that this panel controls
+     * @private
+     */
     setControlsForSelectedPiece: function() {
       if ( this.selectedPiece !== null ) {
         var piece = this.selectedPiece;
@@ -242,6 +250,11 @@ define( function( require ) {
       }//end if (type != null)
     }, // end setControlsForSelectedPiece()
 
+    /**
+     *
+     * @param {SourceNode} sourceNode
+     * @private
+     */
     setColorRadioButtonsForSourceNode: function( sourceNode ) {
       var radioButtonOptions = { radius: 8, fontSize: 12, deselectedColor: 'white' };
       var whiteColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'white', this.whiteText, radioButtonOptions );
@@ -261,7 +274,9 @@ define( function( require ) {
       } );
     },
 
-    //for GC
+    /**
+     *  @public
+     */
     dispose: function() {
       for ( var i = 0; i < this.hSliders.length; i++ ) {
         this.hSliders[ i ].dispose();

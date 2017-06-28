@@ -193,6 +193,11 @@ define( function( require ) {
   opticsLab.register( 'SourceNode', SourceNode );
 
   return inherit( Node, SourceNode, {
+    /**
+     *
+     * @param {number} nbrOfRays
+     * @private
+     */
     setRayNodes: function( nbrOfRays ) {
       //this.translationHandle.removeAllChildren();
       //this.rayNodes = [];
@@ -230,12 +235,20 @@ define( function( require ) {
         this.rayNodes[ r ].setShape( rayShape );
       }//end rayPath loop
     },//end setRayNodes()
+    /**
+     * @private
+     */
     drawRays: function() {
       for ( var i = 0; i < this.pieceModel.rayPaths.length; i++ ) {
         var shape = this.pieceModel.rayPaths[ i ].getRelativeShape();//getShape();
         this.rayNodes[ i ].setShape( shape );
       }
     },
+    /**
+     * Sets the width of the beam source
+     * @param {number} height
+     * @private
+     */
     setWidth: function( height ) {
       this.settingHeight = true;
       var cosAngle = Math.cos( this.pieceModel.angle );
@@ -249,6 +262,11 @@ define( function( require ) {
       this.rotationHandle.translation = new Vector2( ( -height / 2 ) * sinAngle, ( height / 2 ) * cosAngle );
       this.settingHeight = false;
     },
+    /**
+     * sets the color of the light rays
+     * @param {string|Color} color
+     * @private
+     */
     setColor: function( color ) {
       for ( var i = 0; i < this.pieceModel.rayPaths.length; i++ ) {
         this.rayNodes[ i ].strokeColor = color;

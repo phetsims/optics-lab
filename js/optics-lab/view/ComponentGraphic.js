@@ -52,6 +52,9 @@ define( function( require ) {
   opticsLab.register( 'ComponentGraphic', ComponentGraphic );
 
   return inherit( Node, ComponentGraphic, {
+    /**
+     * @private
+     */
     makeDrawing: function() {
       switch( this.type ) {
         case 'converging_lens':
@@ -82,6 +85,9 @@ define( function( require ) {
     clearDrawing: function() {
 
     },
+    /**
+     * @private
+     */
     drawLens: function() {
       this.shape = new Shape();
       var R;  //same as this.radius = radius of curvature of lens, not to be confused with half-diameter of lens
@@ -144,6 +150,9 @@ define( function( require ) {
       this.mirrorBackGraphic.setScaleMagnitude( 1, 2 * h );
       this.mirrorBackGraphic.visible = true;
     },
+    /**
+     * @private
+     */
     drawPlaneMirror: function() {
       this.removeAllChildren();
       var w = 20;
@@ -155,6 +164,9 @@ define( function( require ) {
       this.addChild( maskGraphic );
       this.addChild( lineGraphic );
     },
+    /**
+     * @private
+     */
     drawMask: function() {
       this.removeAllChildren();
       var w = 20;
@@ -164,22 +176,49 @@ define( function( require ) {
       this.addChild( maskGraphic );
       this.addChild( lineGraphic );
     },
+    /**
+     *
+     * @param {number} diameter
+     * @public
+     */
     setDiameter: function( diameter ) {
       this.diameter = diameter;
       this.makeDrawing();
     },
+    /**
+     *
+     * @param {number} R
+     * @public
+     */
     setRadius: function( R ) {
       this.radius = R;
       this.makeDrawing();
     },
+
+    /**
+     * Sets the index of refraction of the component
+     * @param {number} index
+     * @public
+     */
     setIndex: function( index ) {
       this.index = index;
       this.makeDrawing();
     },
+    /**
+     *
+     * @param {number} distance
+     * @public
+     */
     setFocalPointPositions: function( distance ) {
       this.focalPtLeft.x = -distance;
       this.focalPtRight.x = distance;
     },
+
+    /**
+     *
+     * @param {boolean} isVisible
+     * @public
+     */
     setFocalPointsVisibility: function( isVisible ) {
       this.focalPtLeft.visible = isVisible;
       this.focalPtRight.visible = isVisible;
