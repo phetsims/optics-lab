@@ -34,8 +34,8 @@ define( function( require ) {
 
     this.type = type;
     this.diameter = diameter;    //starting direction of the first segment, the one thing that never changes
-    this.radius = radius;   //radius of curvature of each surface of lens
-    this.index = index;     //index of refraction
+    this.radius = radius;   // radius of curvature of each surface of lens
+    this.index = index;     // index of refraction
     this.f = this.radius / ( 2 * ( this.index - 1 ));
 
     this.mirrorBackGraphic = new Rectangle( 0, -0.5, 20, 1, { fill: 'red' } );
@@ -82,6 +82,9 @@ define( function( require ) {
           throw new Error( 'invalid type: ' + this.type );
       }//end switch
     },  //end makeDrawing()
+    /**
+     * @private
+     */
     clearDrawing: function() {
 
     },
@@ -127,6 +130,9 @@ define( function( require ) {
       this.path.setShape( this.shape );
       this.mirrorBackGraphic.visible = false;
     },//end drawLens()
+    /**
+     * @private
+     */
     drawCurvedMirror: function() {
       var fudge = 1;
       var R = fudge * this.radius;

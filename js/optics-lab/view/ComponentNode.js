@@ -54,7 +54,6 @@ define( function( require ) {
     self.addChild( this.componentGraphic );
     self.addChild( this.rotationHandle );
 
-
     // When dragging, move the sample element
     var mouseDownPosition;
     self.addInputListener( new SimpleDragHandler(
@@ -129,7 +128,9 @@ define( function( require ) {
     } );
 
     this.pieceModel.fProperty.link( function( focalLength ) {
-      self.componentGraphic.setFocalPointPositions( focalLength );
+      if ( focalLength ) {
+        self.componentGraphic.setFocalPointPositions( focalLength );
+      }
     } );
 
   }
