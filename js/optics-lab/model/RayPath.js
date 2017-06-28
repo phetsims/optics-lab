@@ -45,15 +45,27 @@ define( function( require ) {
   opticsLab.register( 'RayPath', RayPath );
 
   return inherit( Object, RayPath, {
+    /**
+     * @public
+     */
     clearPath: function() {
       this.segments = [];
       this.dirs = [];
       this.lengths = [];
       this.nbrSegments = 0;
     },
+    /**
+     *
+     */
     clearSegments: function() {
       this.segments = [];
     },
+    /**
+     *
+     * @param {Vector2} startPos
+     * @param {Vector2} endPos
+     * @public
+     */
     addSegment: function( startPos, endPos ) {
       this.segments.push( new Line( startPos, endPos ) );
       this.nbrSegments += 1;
@@ -63,6 +75,10 @@ define( function( require ) {
       this.dirs.push( dir );
       this.lengths.push( length );
     },
+    /**
+     *
+     * @returns {Shape}
+     */
     getShape: function() {
       this.shape = new Shape();
       this.shape.moveToPoint( this.segments[ 0 ].getStart() );
@@ -71,6 +87,11 @@ define( function( require ) {
       }
       return this.shape;
     },
+    /**
+     *
+     * @returns {Shape}
+     * @public
+     */
     getRelativeShape: function() {
 
       var shape = new Shape();

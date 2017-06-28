@@ -82,6 +82,10 @@ define( function( require ) {
   opticsLab.register( 'SourceModel', SourceModel );
 
   return inherit( PropertySet, SourceModel, {
+
+    /**
+     *
+     */
     createRays: function() {
       this.rayPaths = [];  //clear any current rays
       this.nbrOfRays = Math.round( this.nbrOfRays );  //slider may produce non-integer number of rays
@@ -138,11 +142,22 @@ define( function( require ) {
         }
       }
     }, //end createRays()
+    /**
+     *
+     * @param {number} nbrOfRays
+     * @private
+     */
     setNbrOfRays: function( nbrOfRays ) {
       this.nbrOfRays = nbrOfRays;
       this.createRays();
       this.mainModel.processRays();
     },
+
+    /**
+     *
+     * @param {number} angleInDegrees
+     * @private
+     */
     setSpreadOfFan: function( angleInDegrees ) {
       if ( this.type === 'fan_source' ) {
         this.spread = angleInDegrees;
@@ -150,6 +165,12 @@ define( function( require ) {
         this.mainModel.processRays();
       }
     },
+
+    /**
+     *
+     * @param {number} widthInCm
+     * @private
+     */
     setWidthOfBeam: function( widthInCm ) {
       if ( this.type === 'beam_source' ) {
         this.width = widthInCm;
@@ -157,6 +178,11 @@ define( function( require ) {
         this.mainModel.processRays();
       }
     },
+    /**
+     * Sets the position of the source
+     * @param {Vector2} position
+     * @public
+     */
     setPosition: function( position ) {   //position = Vector2
       this.position = position;
       for ( var i = 0; i < this.rayPaths.length; i++ ) {
@@ -190,6 +216,11 @@ define( function( require ) {
       }
 
     }, //end setPosition()
+    /**
+     * Sets the rotation angle of the source of light
+     * @param {number} angleInRads - angle in radians
+     * @public
+     */
     setAngle: function( angleInRads ) {
       this.angle = angleInRads;
       if ( this.type === 'beam_source' ) {

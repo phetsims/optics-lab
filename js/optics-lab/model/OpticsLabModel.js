@@ -44,25 +44,49 @@ define( function( require ) {
 
   return inherit( PropertySet, OpticsLabModel, {
 
+    /**
+     * Adds a source of light to the model
+     * @param {SourceModel} source
+     * @public
+     */
     addSource: function( source ) {
       this.sources.add( source );
       this.pieces.add( source );
       source.setPosition( source.position );
       //this.sources.push( source );
     },
+    /**
+     * Adds a component (lens/mirror) to the model
+     * @param {ComponentModel} component
+     * @public
+     */
     addComponent: function( component ) {
       this.components.add( component );
       this.pieces.add( component );
       //this.components.push( component );
     },
+    /**
+     * Removes a source of light from the model
+     * @param {SourceModel} source
+     * @public
+     */
     removeSource: function( source ) {
       this.sources.remove( source );
       this.processRays();
     },
+    /**
+     * Removes a component (mirror/lens) from the model
+     * @param {ComponentModel} component
+     * @public
+     */
     removeComponent: function( component ) {
       this.components.remove( component );
       this.processRays();
     },
+
+    /**
+     * @public
+     */
     processRays: function() {
       //loop through all sources
       for ( var i = 0; i < this.sources.length; i++ ) {
@@ -70,6 +94,11 @@ define( function( require ) {
       }
       this.processRaysCount += 1;  //increment number of times processRays called
     },
+    /**
+     *
+     * @param {SourceModel} source
+     * @private
+     */
     updateSourceLines: function( source ) {
       this.processingRays = true;
       this.intersectionCounter = 0;
@@ -85,6 +114,13 @@ define( function( require ) {
       this.processingRays = false;
     }, //end updateSourceLines()
 
+    /**
+     *
+     * @param {RayPath} rayPath
+     * @param {Vector2} startPoint
+     * @param {Vector2} direction
+     * @private
+     */
     launchRay: function( rayPath, startPoint, direction ) {
       var dir = direction;
       var intersection = null;
@@ -128,6 +164,14 @@ define( function( require ) {
 
     }, //end launchRay()
 
+    /**
+     *
+     * @param {RayPath} rayPath
+     * @param {Vector2} intersection
+     * @param {number} segmentNbr
+     * @param {number} componentNbr
+     * @private
+     */
     processIntersection: function( rayPath, intersection, segmentNbr, componentNbr ) {
       var incomingRayDir = rayPath.dirs[ segmentNbr ];
       //console.log( 'rayDir in degs is ' + incomingRayDir.angle()*180/Math.PI );

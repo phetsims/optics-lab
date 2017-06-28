@@ -1,6 +1,8 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
+ * Model type for a component such as a Mirror, or a Lens
+ *
  * @author Michael Dubson (PhET Interactive Simulations)
  */
 define( function( require ) {
@@ -64,6 +66,9 @@ define( function( require ) {
   opticsLab.register( 'ComponentModel', ComponentModel );
 
   return inherit( PropertySet, ComponentModel, {
+    /**
+     *
+     */
     updateFocalLength: function() {
       if ( this.type === 'converging_lens' || this.type === 'diverging_lens' ) {
         this.f = ( this.radius / 2 ) / ( this.index - 1 );
@@ -76,18 +81,39 @@ define( function( require ) {
       }
       this.mainModel.processRays();
     },
+    /**
+     * Sets the diameter of the component
+     * @param {number} diameter
+     * @public
+     */
     setDiameter: function( diameter ) {
       this.diameter = diameter;
       this.mainModel.processRays();
     },
+
+    /**
+     * Sets the radius of the component
+     * @param {number} radius
+     * @public
+     */
     setRadius: function( radius ) {
       this.radius = radius;
       this.mainModel.processRays();
     },
+    /**
+     * Sets the index of refraction of the component
+     * @param {number} index
+     * @public
+     */
     setIndex: function( index ) {
       this.index = index;
       this.mainModel.processRays();
     },
+    /**
+     * Sets the position of the component
+     * @param {Vector2} position
+     * @public
+     */
     setPosition: function( position ) {   //position is vector2
       this.position = position;
       //console.log( 'component position is ' + position );
@@ -95,6 +121,12 @@ define( function( require ) {
         this.mainModel.processRays();
       }
     },
+
+    /**
+     * Sets the rotation angle of the component (with respect to its center)
+     * @param {number} angleInRads
+     * @public
+     */
     setAngle: function( angleInRads ) {
       this.angle = angleInRads;
       this.mainModel.processRays();
