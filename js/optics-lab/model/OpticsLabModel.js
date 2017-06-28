@@ -204,14 +204,14 @@ define( function( require ) {
           outgoingAngle = Math.PI + Math.atan( (r / f) + tanTheta ) + componentAngle;
         }
 
-        newDir = new Vector2.createPolar( 1, outgoingAngle );
+        newDir = Vector2.createPolar( 1, outgoingAngle );
         this.launchRay( rayPath, intersection, newDir );
 
       }
       else if ( component.type === 'converging_mirror' ) {
         if ( normalDirection ) {
           outgoingAngle = Math.PI + Math.atan( (r / f) - tanTheta ) + componentAngle;
-          newDir = new Vector2.createPolar( 1, outgoingAngle );
+          newDir = Vector2.createPolar( 1, outgoingAngle );
           this.launchRay( rayPath, intersection, newDir );
         }
 
@@ -219,7 +219,7 @@ define( function( require ) {
       else if ( component.type === 'diverging_mirror' ) {
         if ( normalDirection ) {
           outgoingAngle = Math.PI + Math.atan( (r / f) - tanTheta ) + componentAngle;
-          newDir = new Vector2.createPolar( 1, outgoingAngle );
+          newDir = Vector2.createPolar( 1, outgoingAngle );
           this.launchRay( rayPath, intersection, newDir );
         }
 
@@ -227,7 +227,7 @@ define( function( require ) {
       else if ( component.type === 'plane_mirror' ) {
         if ( normalDirection ) {
           outgoingAngle = Math.PI - angleInRads + componentAngle;
-          newDir = new Vector2.createPolar( 1, outgoingAngle );
+          newDir = Vector2.createPolar( 1, outgoingAngle );
           this.launchRay( rayPath, intersection, newDir );
         }
 
