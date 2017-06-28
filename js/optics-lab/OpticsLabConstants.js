@@ -1,7 +1,7 @@
 // Copyright 2016, University of Colorado Boulder
 
 /**
- * Color constants
+ * Constants for the simulation Optics Lab
  *
  * @author Michael Dubson (PhET Interactive Simulations)
  */
@@ -12,7 +12,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
-  return opticsLab.register( 'Util', {
+  return opticsLab.register( 'OpticsLabConstants', {
     // layout bounds used throughout the simulation for laying out the screens
     LAYOUT_BOUNDS: new Bounds2( 0, 0, 768, 464 ),
     BACKGROUND_COLOR: '#0000CC', //'#FFFF99', //'#FFECB3',  //'#EFE', //

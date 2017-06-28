@@ -323,5 +323,5 @@ define( function( require ) {
     //    this.panelTitle.text = titleString;
     //}
 
-  }//end inherit);
+  } );
 } );

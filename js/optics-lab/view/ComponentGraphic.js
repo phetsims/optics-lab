@@ -185,5 +185,5 @@ define( function( require ) {
       this.focalPtRight.visible = isVisible;
     }
 
-  }//end inherit);
+  } );
 } );

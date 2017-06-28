@@ -33,13 +33,13 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'OPTICS_LAB/optics-lab/common/Util' );
+  var OpticsLabConstants = require( 'OPTICS_LAB/optics-lab/OpticsLabConstants' );
   var VBox = require( 'SCENERY/nodes/VBox' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
   // constants
   var DISPLAY_FONT = new PhetFont( 12 );
-  var TEXT_COLOR = Util.TEXT_COLOR;
+  var TEXT_COLOR = OpticsLabConstants.TEXT_COLOR;
 
   /**
    * @extends {Node}
