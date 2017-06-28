@@ -20,7 +20,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ControlPanel2 = require( 'OPTICS_LAB/optics-lab/view/ControlPanel2' );
+  var ControlPanel = require( 'OPTICS_LAB/optics-lab/view/ControlPanel' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ObservableArray = require( 'AXON/ObservableArray' );
@@ -32,7 +32,7 @@ define( function( require ) {
    * @param {OpticsLabScreenView} mainView
    * @constructor
    */
-  function ControlPanelManager2( mainModel, mainView ) {
+  function ControlPanelManager( mainModel, mainView ) {
 
     Node.call( this );
     var self = this;
@@ -64,7 +64,7 @@ define( function( require ) {
     ];
 
     for ( var i = 0; i < this.typeArray.length; i++ ) {
-      var newControlPanel = new ControlPanel2( mainModel, mainView, this.typeArray[ i ] );
+      var newControlPanel = new ControlPanel( mainModel, mainView, this.typeArray[ i ] );
       this.controlPanels[ i ] = newControlPanel;
       this.addChild( newControlPanel );
     }
@@ -79,9 +79,9 @@ define( function( require ) {
 
   }//end constructor
 
-  opticsLab.register( 'ControlPanelManager2', ControlPanelManager2 );
+  opticsLab.register( 'ControlPanelManager', ControlPanelManager );
 
-  return inherit( Node, ControlPanelManager2, {
+  return inherit( Node, ControlPanelManager, {
     getIndex: function( type ) {
       var index;
       for ( var i = 0; i < this.typeArray.length; i++ ) {

@@ -48,7 +48,7 @@ define( function( require ) {
    * @param {string} type
    * @constructor
    */
-  function ControlPanel2( mainModel, mainView, type ) {
+  function ControlPanel( mainModel, mainView, type ) {
     Node.call( this );
     var self = this;
     this.type = type;
@@ -233,9 +233,9 @@ define( function( require ) {
 
   }//end constructor
 
-  opticsLab.register( 'ControlPanel2', ControlPanel2 );
+  opticsLab.register( 'ControlPanel', ControlPanel );
 
-  return inherit( Node, ControlPanel2, {
+  return inherit( Node, ControlPanel, {
     linkToPiece: function( piece ) {
 
     },

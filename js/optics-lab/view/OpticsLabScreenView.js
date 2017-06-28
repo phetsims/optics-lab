@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
-  var ControlPanelManager2 = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager2' );
+  var ControlPanelManager = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager' );
   var ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
   var ComponentNode = require( 'OPTICS_LAB/optics-lab/view/ComponentNode' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -37,7 +37,7 @@ define( function( require ) {
 
     // model-view transform
     this.modelViewTransform = ModelViewTransform2.createIdentity();
-    this.controlPanelManager = new ControlPanelManager2( this.mainModel, this );
+    this.controlPanelManager = new ControlPanelManager( this.mainModel, this );
     this.addChild( this.controlPanelManager );
 
     this.toolDrawerPanel = new ToolDrawerPanel( opticsLabModel, this );
