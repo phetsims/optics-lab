@@ -20,8 +20,8 @@ define( function( require ) {
    * @param {OpticsLabModel} mainModel
    * @param {string} type
    * @param {number} diameter
-   * @param {number} radiusCurvature
-   * @param {number} index
+   * @param {number} [radiusCurvature] - plane mirrors do not have a radius of curvature
+   * @param {number} [index] - mirrors do not pass as index
    * @constructor
    */
   function ComponentModel( mainModel, type, diameter, radiusCurvature, index ) {
