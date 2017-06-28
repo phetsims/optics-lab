@@ -14,12 +14,10 @@ define( function( require ) {
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
   /**
-   *
-   * @param relativeStartPos
-   * @param startDir
+   * @extends {Node}
+   * @param {number} size
    * @constructor
    */
-
   function FocalPointGraphic( size ) {
 
     Node.call( this );

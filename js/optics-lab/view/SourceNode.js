@@ -12,7 +12,6 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Circle = require( 'SCENERY/nodes/Circle' );
-  //var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Property = require( 'AXON/Property' );
@@ -22,10 +21,8 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
-  // images
-
   /**
-   *
+   * @extends {Node}
    * @param {OpticsLabModel} mainModel
    * @param {SourceModel} sourceModel
    * @param {OpticsLabScreenView} mainView

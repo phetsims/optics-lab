@@ -26,13 +26,12 @@ define( function( require ) {
   var ObservableArray = require( 'AXON/ObservableArray' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
-
   /**
-   * {ComponentModel] pieceModel
-   *
+   * @extends {Node}
+   * @param {OpticsLabModel} mainModel
+   * @param {OpticsLabScreenView} mainView
    * @constructor
    */
-
   function ControlPanelManager2( mainModel, mainView ) {
 
     Node.call( this );

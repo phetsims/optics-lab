@@ -16,9 +16,10 @@ define( function( require ) {
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
   /**
+   * @extends {Object}
    *
-   * @param relativeStartPos
-   * @param startDir
+   * @param {Vector2} relativeStartPos
+   * @param {Vector2} startDir
    * @constructor
    */
   function RayPath( relativeStartPos, startDir ) {

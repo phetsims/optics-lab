@@ -42,8 +42,9 @@ define( function( require ) {
   var TEXT_COLOR = Util.TEXT_COLOR;
 
   /**
-   * @param mainModel
-   * @param mainView
+   * @extends {Node}
+   * @param {OpticsLabModel} mainModel
+   * @param {OpticsLabScreenView} mainView
    * @param selectedPiece
    * @constructor
    */

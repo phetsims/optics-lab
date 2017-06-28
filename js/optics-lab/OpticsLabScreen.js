@@ -16,6 +16,10 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
+  /**
+   * @extends {Screen}
+   * @constructor
+   */
   function OpticsLabScreen() {
     Screen.call( this,
       function() { return new OpticsLabModel(); },

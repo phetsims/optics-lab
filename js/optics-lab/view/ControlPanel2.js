@@ -41,11 +41,11 @@ define( function( require ) {
   var DISPLAY_FONT = new PhetFont( 12 );
   var TEXT_COLOR = Util.TEXT_COLOR;
 
-
   /**
-   * @param mainModel
-   * @param mainView
-   * @param selectedPiece
+   * @extends {Node}
+   * @param {OpticsLabModel} mainModel
+   * @param {OpticsLabScreenView} mainView
+   * @param {string} number
    * @constructor
    */
   function ControlPanel2( mainModel, mainView, type ) {

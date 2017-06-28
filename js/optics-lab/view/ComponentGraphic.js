@@ -21,8 +21,12 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   /**
-   * {vector2] startDir = direction of starting ray
+   * @extends {Node}
    *
+   * @param {string} type
+   * @param {number} diameter
+   * @param {number} radius
+   * @param {number} index
    * @constructor
    */
   function ComponentGraphic( type, diameter, radius, index ) {

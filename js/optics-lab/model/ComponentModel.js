@@ -12,6 +12,16 @@ define( function( require ) {
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
   var Vector2 = require( 'DOT/Vector2' );
 
+  /**
+   * @extends {PropertySet}
+   *
+   * @param {OpticsLabModel} mainModel
+   * @param {string} type
+   * @param {number} diameter
+   * @param {number} radiusCurvature
+   * @param {number} index
+   * @constructor
+   */
   function ComponentModel( mainModel, type, diameter, radiusCurvature, index ) {
 
     PropertySet.call( this, {

@@ -17,6 +17,8 @@ define( function( require ) {
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
   /**
+   * @extends {PropertySet}
+   *
    * @param {OpticsLabModel} mainModel for this sim
    * @param {string} type = 'fan_source'|'beam_source' = fan of diverging rays or beam of parallel rays
    * @param {number} nbrOfRays

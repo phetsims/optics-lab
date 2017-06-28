@@ -23,6 +23,8 @@ define( function( require ) {
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
   /**
+   * @extends {ScreenView}
+   * @param {OpticsLabModel} opticsLabModel
    * @constructor
    */
   function OpticsLabScreenView( opticsLabModel ) {

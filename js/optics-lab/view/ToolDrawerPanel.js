@@ -27,11 +27,11 @@ define( function( require ) {
   var PANEL_COLOR = '#ccc';
 
   /**
-   * {vector2] startDir = direction of starting ray
-   *
+   * @extends {Panel}
+   * @param {OpticsLabModel} mainModel
+   * @param {OpticsLabScreenView} mainView
    * @constructor
    */
-
   function ToolDrawerPanel( mainModel, mainView ) {
 
     this.mainModel = mainModel; //OpticsLabModel
@@ -205,6 +205,5 @@ define( function( require ) {
 
   opticsLab.register( 'ToolDrawerPanel', ToolDrawerPanel );
 
-  return inherit( Panel, ToolDrawerPanel, {}//end inherit
-  );
+  return inherit( Panel, ToolDrawerPanel );
 } );

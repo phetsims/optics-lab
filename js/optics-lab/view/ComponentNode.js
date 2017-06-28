@@ -18,12 +18,11 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
-
-
   /**
    * Constructor for ComponentNode which renders sample element as a scenery node.
-   * @param {sampleElement} sampleElement the pieceModel of the sampleElement
-   * @param {ModelViewTransform2} modelViewTransform the coordinate transform between pieceModel coordinates and view coordinates
+   * @extends {Node}
+   * @param {ComponentModel} componentModel
+   * @param {OpticsLabScreenView} mainView
    * @constructor
    */
   function ComponentNode( componentModel, mainView ) {
