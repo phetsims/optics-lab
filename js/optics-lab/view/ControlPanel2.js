@@ -45,7 +45,7 @@ define( function( require ) {
    * @extends {Node}
    * @param {OpticsLabModel} mainModel
    * @param {OpticsLabScreenView} mainView
-   * @param {string} number
+   * @param {string} type
    * @constructor
    */
   function ControlPanel2( mainModel, mainView, type ) {
