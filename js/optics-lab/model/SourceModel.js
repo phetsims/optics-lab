@@ -73,133 +73,129 @@ define( function( require ) {
       self.mainModel.processRays();
     } );
 
-
     this.rayPaths = [];    //an array of RayPaths
 
     this.createRays();
-
 
   }
 
   opticsLab.register( 'SourceModel', SourceModel );
 
   return inherit( PropertySet, SourceModel, {
-      createRays: function() {
-        this.rayPaths = [];  //clear any current rays
-        this.nbrOfRays = Math.round( this.nbrOfRays );  //slider may produce non-integer number of rays
-        //for fan source
-        var lowestAngle = -this.spread / 2;  //in degrees
-        var deltaAngle;
-        if ( this.nbrOfRays === 1 ) {
-          deltaAngle = 0;
-          lowestAngle = 0;  //if only one ray, ray is horizontal
-        }
-        else {
-          deltaAngle = this.spread / ( this.nbrOfRays - 1);    //in degrees
-        }
-        var theta = ( lowestAngle ) * Math.PI / 180; //in radians
-        var dir = new Vector2( Math.cos( theta ), Math.sin( theta ) );
-        var relativeStartPos = new Vector2( 0, 0 );
+    createRays: function() {
+      this.rayPaths = [];  //clear any current rays
+      this.nbrOfRays = Math.round( this.nbrOfRays );  //slider may produce non-integer number of rays
+      //for fan source
+      var lowestAngle = -this.spread / 2;  //in degrees
+      var deltaAngle;
+      if ( this.nbrOfRays === 1 ) {
+        deltaAngle = 0;
+        lowestAngle = 0;  //if only one ray, ray is horizontal
+      }
+      else {
+        deltaAngle = this.spread / ( this.nbrOfRays - 1);    //in degrees
+      }
+      var theta = ( lowestAngle ) * Math.PI / 180; //in radians
+      var dir = new Vector2( Math.cos( theta ), Math.sin( theta ) );
+      var relativeStartPos = new Vector2( 0, 0 );
 
-        //for beam source
-        var lowestPos;   //in cm
-        var startPos;
-        var deltaPos;
-        var sinAngle = Math.sin( -this.angle );   //in screen coords, + angle is CW
-        var cosAngle = Math.cos( -this.angle );
-        var h = this.width;
-        if ( this.nbrOfRays === 1 ) {
-          lowestPos = new Vector2( 0, 0 );
-          deltaPos = new Vector2( 0, 0 );
-        }
-        else {
-          lowestPos = new Vector2( h * sinAngle / 2, h * cosAngle / 2 );
-          deltaPos = new Vector2( -h * sinAngle / ( this.nbrOfRays - 1 ), -h * cosAngle / ( this.nbrOfRays - 1 ) );
+      //for beam source
+      var lowestPos;   //in cm
+      var startPos;
+      var deltaPos;
+      var sinAngle = Math.sin( -this.angle );   //in screen coords, + angle is CW
+      var cosAngle = Math.cos( -this.angle );
+      var h = this.width;
+      if ( this.nbrOfRays === 1 ) {
+        lowestPos = new Vector2( 0, 0 );
+        deltaPos = new Vector2( 0, 0 );
+      }
+      else {
+        lowestPos = new Vector2( h * sinAngle / 2, h * cosAngle / 2 );
+        deltaPos = new Vector2( -h * sinAngle / ( this.nbrOfRays - 1 ), -h * cosAngle / ( this.nbrOfRays - 1 ) );
 
-        }
-        startPos = lowestPos;
+      }
+      startPos = lowestPos;
 
-
-        //loop through and initialize all rayPaths of the source
-        for ( var i = 0; i < this.nbrOfRays; i++ ) {
-          if ( this.type === 'fan_source' ) {
-            theta = ( lowestAngle + i * deltaAngle ) * Math.PI / 180;  //in radians
-            relativeStartPos = new Vector2( 0, 0 );
-            dir = new Vector2( Math.cos( theta ), Math.sin( theta ) );
-            //endPosition = this.position.plus( dir.timesScalar( this.maxLength ));
-
-            this.rayPaths[ i ] = new RayPath( relativeStartPos, dir );
-            this.rayPaths[ i ].startPos = this.position;
-            //this.rayPaths[i].addSegment( this.position, endPosition );
-          }
-          else if ( this.type === 'beam_source' ) {
-            dir = new Vector2( cosAngle, -sinAngle );
-            relativeStartPos = lowestPos.plus( deltaPos.timesScalar( i ) );
-            startPos = this.position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
-            this.rayPaths[ i ] = new RayPath( relativeStartPos, dir );
-            this.rayPaths[ i ].startPos = startPos;
-          }
-        }
-      }, //end createRays()
-      setNbrOfRays: function( nbrOfRays ) {
-        this.nbrOfRays = nbrOfRays;
-        this.createRays();
-        this.mainModel.processRays();
-      },
-      setSpreadOfFan: function( angleInDegrees ) {
+      //loop through and initialize all rayPaths of the source
+      for ( var i = 0; i < this.nbrOfRays; i++ ) {
         if ( this.type === 'fan_source' ) {
-          this.spread = angleInDegrees;
-          this.createRays();
-          this.mainModel.processRays();
-        }
-      },
-      setWidthOfBeam: function( widthInCm ) {
-        if ( this.type === 'beam_source' ) {
-          this.width = widthInCm;
-          this.createRays();
-          this.mainModel.processRays();
-        }
-      },
-      setPosition: function( position ) {   //position = Vector2
-        this.position = position;
-        for ( var i = 0; i < this.rayPaths.length; i++ ) {
-          if ( this.type === 'fan_source' ) {
-            this.rayPaths[ i ].startPos = position;
-          }
-          else if ( this.type === 'beam_source' ) {
-            var lowestPos;
-            var deltaPos;
-            var sinAngle = Math.sin( -this.angle );   //in screen coords, + angle is CW
-            var cosAngle = Math.cos( -this.angle );
-            var h = this.width;
-            if ( this.nbrOfRays === 1 ) {
-              lowestPos = new Vector2( 0, 0 );
-              deltaPos = new Vector2( 0, 0 );
-            }
-            else {
-              lowestPos = new Vector2( h * sinAngle / 2, h * cosAngle / 2 );
-              deltaPos = new Vector2( -h * sinAngle / ( this.nbrOfRays - 1 ), -h * cosAngle / ( this.nbrOfRays - 1 ) );
-            }
-            var relativePos = lowestPos.plus( deltaPos.timesScalar( i ) );
-            var pos = position.plus( relativePos );
-            this.rayPaths[ i ].relativeStartPos = relativePos;
-            this.rayPaths[ i ].startPos = pos;
-            this.rayPaths[ i ].startDir.x = cosAngle;
-            this.rayPaths[ i ].startDir.y = -sinAngle;
-          }
-        }
-        if ( !this.mainModel.processingRays ) {
-          this.mainModel.processRays();
-        }
+          theta = ( lowestAngle + i * deltaAngle ) * Math.PI / 180;  //in radians
+          relativeStartPos = new Vector2( 0, 0 );
+          dir = new Vector2( Math.cos( theta ), Math.sin( theta ) );
+          //endPosition = this.position.plus( dir.timesScalar( this.maxLength ));
 
-      }, //end setPosition()
-      setAngle: function( angleInRads ) {
-        this.angle = angleInRads;
-        if ( this.type === 'beam_source' ) {
-          this.setPosition( this.position );
+          this.rayPaths[ i ] = new RayPath( relativeStartPos, dir );
+          this.rayPaths[ i ].startPos = this.position;
+          //this.rayPaths[i].addSegment( this.position, endPosition );
+        }
+        else if ( this.type === 'beam_source' ) {
+          dir = new Vector2( cosAngle, -sinAngle );
+          relativeStartPos = lowestPos.plus( deltaPos.timesScalar( i ) );
+          startPos = this.position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
+          this.rayPaths[ i ] = new RayPath( relativeStartPos, dir );
+          this.rayPaths[ i ].startPos = startPos;
         }
       }
+    }, //end createRays()
+    setNbrOfRays: function( nbrOfRays ) {
+      this.nbrOfRays = nbrOfRays;
+      this.createRays();
+      this.mainModel.processRays();
+    },
+    setSpreadOfFan: function( angleInDegrees ) {
+      if ( this.type === 'fan_source' ) {
+        this.spread = angleInDegrees;
+        this.createRays();
+        this.mainModel.processRays();
+      }
+    },
+    setWidthOfBeam: function( widthInCm ) {
+      if ( this.type === 'beam_source' ) {
+        this.width = widthInCm;
+        this.createRays();
+        this.mainModel.processRays();
+      }
+    },
+    setPosition: function( position ) {   //position = Vector2
+      this.position = position;
+      for ( var i = 0; i < this.rayPaths.length; i++ ) {
+        if ( this.type === 'fan_source' ) {
+          this.rayPaths[ i ].startPos = position;
+        }
+        else if ( this.type === 'beam_source' ) {
+          var lowestPos;
+          var deltaPos;
+          var sinAngle = Math.sin( -this.angle );   //in screen coords, + angle is CW
+          var cosAngle = Math.cos( -this.angle );
+          var h = this.width;
+          if ( this.nbrOfRays === 1 ) {
+            lowestPos = new Vector2( 0, 0 );
+            deltaPos = new Vector2( 0, 0 );
+          }
+          else {
+            lowestPos = new Vector2( h * sinAngle / 2, h * cosAngle / 2 );
+            deltaPos = new Vector2( -h * sinAngle / ( this.nbrOfRays - 1 ), -h * cosAngle / ( this.nbrOfRays - 1 ) );
+          }
+          var relativePos = lowestPos.plus( deltaPos.timesScalar( i ) );
+          var pos = position.plus( relativePos );
+          this.rayPaths[ i ].relativeStartPos = relativePos;
+          this.rayPaths[ i ].startPos = pos;
+          this.rayPaths[ i ].startDir.x = cosAngle;
+          this.rayPaths[ i ].startDir.y = -sinAngle;
+        }
+      }
+      if ( !this.mainModel.processingRays ) {
+        this.mainModel.processRays();
+      }
 
-    }//end inherit
-  );
+    }, //end setPosition()
+    setAngle: function( angleInRads ) {
+      this.angle = angleInRads;
+      if ( this.type === 'beam_source' ) {
+        this.setPosition( this.position );
+      }
+    }
+
+  } );
 } );

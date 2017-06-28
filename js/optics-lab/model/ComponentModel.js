@@ -64,41 +64,40 @@ define( function( require ) {
   opticsLab.register( 'ComponentModel', ComponentModel );
 
   return inherit( PropertySet, ComponentModel, {
-      updateFocalLength: function() {
-        if ( this.type === 'converging_lens' || this.type === 'diverging_lens' ) {
-          this.f = ( this.radius / 2 ) / ( this.index - 1 );
-        }
-        else if ( this.type === 'converging_mirror' || this.type === 'diverging_mirror' ) {
-          this.f = this.radius / 2;
-        }
-        else {
-          console.log( 'ERROR: plane mirrors and masks do not have finite focal length.' );
-        }
-        this.mainModel.processRays();
-      },
-      setDiameter: function( diameter ) {
-        this.diameter = diameter;
-        this.mainModel.processRays();
-      },
-      setRadius: function( radius ) {
-        this.radius = radius;
-        this.mainModel.processRays();
-      },
-      setIndex: function( index ) {
-        this.index = index;
-        this.mainModel.processRays();
-      },
-      setPosition: function( position ) {   //position is vector2
-        this.position = position;
-        //console.log( 'component position is ' + position );
-        if ( !this.mainModel.processingRays ) {
-          this.mainModel.processRays();
-        }
-      },
-      setAngle: function( angleInRads ) {
-        this.angle = angleInRads;
+    updateFocalLength: function() {
+      if ( this.type === 'converging_lens' || this.type === 'diverging_lens' ) {
+        this.f = ( this.radius / 2 ) / ( this.index - 1 );
+      }
+      else if ( this.type === 'converging_mirror' || this.type === 'diverging_mirror' ) {
+        this.f = this.radius / 2;
+      }
+      else {
+        console.log( 'ERROR: plane mirrors and masks do not have finite focal length.' );
+      }
+      this.mainModel.processRays();
+    },
+    setDiameter: function( diameter ) {
+      this.diameter = diameter;
+      this.mainModel.processRays();
+    },
+    setRadius: function( radius ) {
+      this.radius = radius;
+      this.mainModel.processRays();
+    },
+    setIndex: function( index ) {
+      this.index = index;
+      this.mainModel.processRays();
+    },
+    setPosition: function( position ) {   //position is vector2
+      this.position = position;
+      //console.log( 'component position is ' + position );
+      if ( !this.mainModel.processingRays ) {
         this.mainModel.processRays();
       }
+    },
+    setAngle: function( angleInRads ) {
+      this.angle = angleInRads;
+      this.mainModel.processRays();
     }
-  );
+  } );
 } );
