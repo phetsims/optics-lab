@@ -114,14 +114,14 @@ define( function( require ) {
       if ( this.f > 0 ) {
         this.shape
           .arc( -C, 0, R, theta, -theta, true )//arc( -diameter, 0,)
-          .arc( C, 0, R, -Math.PI + theta, Math.PI - theta, true );
+          .arc( C, 0, R, -Math.PI + theta, -Math.PI - theta, true );
       }
       else if ( this.f < 0 ) {
         var w = 5;
         this.shape
           .arc( -w - R, 0, R, theta, -theta, true )
           .lineToRelative( 2 * ( w + ( R - C )) )
-          .arc( w + R, 0, R, -Math.PI + theta, Math.PI - theta, true )
+          .arc( w + R, 0, R, -Math.PI + theta, -Math.PI - theta, true )
           .close();
       }
       this.path.stroke = 'yellow';
