@@ -155,7 +155,6 @@ define( function( require ) {
           compCenter.y + ( compDiameter / 2 ) * cosAngle );
         if ( thisIntersection !== null ) {
           var dist = thisIntersection.distance( startPoint );
-          //console.log( 'dist = ' + dist );
           if ( dist > 2 && dist < distanceToIntersection ) {    //> 10 to be sure component does not intersect its own starting ray
             distanceToIntersection = dist;
             intersection = thisIntersection;
@@ -186,7 +185,6 @@ define( function( require ) {
      */
     processIntersection: function( rayPath, intersection, segmentNbr, componentNbr ) {
       var incomingRayDir = rayPath.dirs[ segmentNbr ];
-      //console.log( 'rayDir in degs is ' + incomingRayDir.angle()*180/Math.PI );
       var incomingAngle = incomingRayDir.angle();   //angle in rads between direction of ray and component normal
       var outgoingAngle;
       var component = this.components.get( componentNbr );

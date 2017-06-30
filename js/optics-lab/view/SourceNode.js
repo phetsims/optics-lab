@@ -32,7 +32,6 @@ define( function( require ) {
 
     var self = this;
     this.colorProperty = new Property( 'white' );  //sets color of rays
-    this.sourceNumber;  //for testing
     this.mainModel = mainModel;
     this.pieceModel = sourceModel;   //need generic name because need to loop over all pieces and have pieceModel
     this.mainView = mainView;
@@ -131,7 +130,6 @@ define( function( require ) {
     this.pieceModel.angleProperty.link( function( angle ) {
       if ( !self.settingHeight ) {
         self.translationHandle.rotation = angle;
-        //console.log('calling angleProperty.link');
       }
 
       var cosAngle = Math.cos( angle );
@@ -153,7 +151,6 @@ define( function( require ) {
     } );
 
     this.pieceModel.widthProperty.link( function( width ) {
-      //console.log( 'source callback, height is ' + height );
       if ( self.type === 'beam_source' ) {
         self.setWidth( width );
         self.setRayNodes();
@@ -253,7 +250,6 @@ define( function( require ) {
       this.settingHeight = true;
       var cosAngle = Math.cos( this.pieceModel.angle );
       var sinAngle = Math.sin( this.pieceModel.angle );
-      //console.log( 'setHeight called');
       this.translationHandle.rotation = 0;
       //
       this.translationHandle.setRect( -5, -height / 2, 10, height );

@@ -118,9 +118,8 @@ define( function( require ) {
      * @param {Vector2} position
      * @public
      */
-    setPosition: function( position ) {   //position is vector2
+    setPosition: function( position ) {
       this.position = position;
-      //console.log( 'component position is ' + position );
       if ( !this.mainModel.processingRays ) {
         this.mainModel.processRays();
       }

@@ -173,13 +173,11 @@ define( function( require ) {
           var self = this;
           pieceModel.fProperty.link( function() {
             self.focalLengthReadoutText.text = pieceModel.f.toFixed( 0 );
-            //console.log( 'focalLength' + focalLength.toFixed(0)  );
           } );
         }
 
         var checkBoxOptions = { checkBoxColorBackground: 'white' };
         var spacing = 25;
-        //console.log( 'setControlsForSelectedPiece' + piece.type );
         var focalLengthHBox = hBoxMaker( [ this.focalLengthText, this.focalLengthReadoutText ] );
         switch( type ) {
           case 'fan_source':

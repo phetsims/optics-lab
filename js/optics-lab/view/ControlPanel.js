@@ -210,7 +210,6 @@ define( function( require ) {
 
     mainView.selectedPieceProperty.lazyLink( function( piece ) {
       self.visible = ( piece.type === self.type );
-      console.log( 'selectPieceProperty.link called' );
       self.unlinkToOldPiece();
 
       if ( self.visible ) {
@@ -263,7 +262,6 @@ define( function( require ) {
       this.radiusOfCurvatureProperty.value = 150;
       this.indexOfRefractionProperty.value = 2;
       this.showFocalPointsProperty.value = false;
-      console.log( 'resetProperties called' );
     }
 
   } );//end inherit

@@ -41,7 +41,6 @@ define( function( require ) {
 
     var self = this;
     this.mainModel = mainModel;
-    this.sourceNumber;  //for testing
 
     this.type = type; //'fan_source'|'beam_source'
     this.maxLength = 2000;  //maximum length of rays in pixels
