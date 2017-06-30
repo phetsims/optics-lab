@@ -145,7 +145,7 @@ define( function( require ) {
       var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
       this.shape = new Shape();
       if ( this.type === 'diverging_mirror' ) {
-        this.shape.arc( C, 0, R, -Math.PI + theta, Math.PI - theta, true );
+        this.shape.arc( C, 0, R, -Math.PI + theta, -Math.PI - theta, false );
       }
       else {
         this.shape.arc( -C, 0, R, theta, -theta, true );
