@@ -34,10 +34,9 @@ define( function( require ) {
    */
   function ToolDrawerPanel( mainModel, mainView ) {
 
-    this.mainModel = mainModel; //OpticsLabModel
-    this.mainView = mainView;  //OpticsLabScreenView
+    this.mainModel = mainModel; // OpticsLabModel
+    this.mainView = mainView;  // OpticsLabScreenView
     var self = this;
-
 
     var fanSourceIcon = new Node();
     var beamSourceIcon = new Node();
@@ -96,7 +95,6 @@ define( function( require ) {
       'slit_mask'
     ];
 
-
     var nodeSetup = function( element, index, array ) {
       var xCorner = -8;
       var yCorner = textArray[ index ].height;
@@ -114,7 +112,6 @@ define( function( require ) {
         {
 
           allowTouchSnag: true,
-
 
           start: function( e ) {
             var startPosition = self.globalToParentPoint( e.pointer.point );
@@ -142,47 +139,31 @@ define( function( require ) {
       ) );
     }; //end nodeSetup
 
-
     nodeArray.forEach( nodeSetup );
-
 
     var spacing = 5;
     var sourceVBox = new VBox( {
-      children: [
-        fanSourceIcon,
-        beamSourceIcon
-      ],
+      children: [ fanSourceIcon, beamSourceIcon ],
       align: 'left',
       spacing: spacing
     } );
     var lensVBox = new VBox( {
-      children: [
-        convergingLensIcon,
-        divergingLensIcon
-      ],
+      children: [ convergingLensIcon, divergingLensIcon ],
       align: 'left',
       spacing: spacing
     } );
     var curvedMirrorVBox = new VBox( {
-      children: [
-        convergingMirrorIcon,
-        divergingMirrorIcon
-      ],
+      children: [ convergingMirrorIcon, divergingMirrorIcon ],
       align: 'left',
       spacing: spacing
     } );
     var planeMirrorVBox = new VBox( {
-      children: [
-        planeMirrorIcon,
-      ],
+      children: [ planeMirrorIcon ],
       align: 'left',
       spacing: spacing
     } );
     var maskVBox = new VBox( {
-      children: [
-        simpleMaskIcon,
-        slitMaskIcon
-      ],
+      children: [ simpleMaskIcon, slitMaskIcon ],
       align: 'left',
       spacing: spacing
     } );
@@ -201,7 +182,6 @@ define( function( require ) {
 
     Panel.call( this, content, { xMargin: 15, yMargin: 5, lineWidth: 2, fill: PANEL_COLOR } );
   }//end constructor
-
 
   opticsLab.register( 'ToolDrawerPanel', ToolDrawerPanel );
 

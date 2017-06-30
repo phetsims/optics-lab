@@ -25,19 +25,31 @@ define( function( require ) {
   function RayPath( relativeStartPos, startDir ) {
 
     this.startPos;  //starting position of Path in absolute coordinates
+
+    // @public {Vector2}
     this.startDir = startDir;    //starting direction of the first segment, changes upon rotation of source
+
+    // @public {Vector2}
     this.relativeStartPos = relativeStartPos;  //starting position, relative to source center, of the first segment
 
     this.rayPath = this;
 
     this.maxLength = 2000;  //maximum length of rays in pixels
     this.maxNbrSegments = 50;  //maximum number of segments in ray path, needed to prevent endless loops
+
+    // @public {number}
     this.nbrSegments = 0;    //number of segments in raypath, not to exceed this.maxNbrSegments
 
+    // @public (read-only) {Line[]}
     this.segments = [];     //an array of line segments
+
+    // @public (read-only) {Vector2[]}
     this.dirs = [];         //array of directions, corresponding to the segments
+
+    // @private {number[]}
     this.lengths = [];      //array of lengths of the segments
 
+    // @private {Shape}
     this.shape = new Shape();
 
   }
@@ -78,6 +90,7 @@ define( function( require ) {
     /**
      *
      * @returns {Shape}
+     * @private
      */
     getShape: function() {
       this.shape = new Shape();

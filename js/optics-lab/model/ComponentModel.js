@@ -38,26 +38,30 @@ define( function( require ) {
     var self = this;
     this.mainModel = mainModel;
 
+    // @public (read-only) {string}
     this.type = type; // 'converging_lens'|'diverging_lens'|'converging_mirror'|'plane_mirror'|etc.
     if ( this.type === 'converging_mirror' || this.type === 'diverging_mirror' ) {
       this.index = 2;  //needed so formula for focal length is correct in mirror case
     }
+
     this.diameterProperty.link( function() {
       self.mainModel.processRays();
     } );
+
     this.radiusProperty.link( function( radius ) {
-      var R = self.radius;   //R is signed.  + for converging lenses, - for diverging lenses
+      var R = radius;   // R is signed.  + for converging lenses, - for diverging lenses
       var n = self.index;
       self.f = R / ( 2 * ( n - 1 ));  //focal length gets correct sign from sign of radius R.
       self.mainModel.processRays();
     } );
 
-    this.indexProperty.link( function() {
+    this.indexProperty.link( function( index ) {
       var R = self.radius;
-      var n = self.index;
+      var n = index;
       self.f = R / ( 2 * ( n - 1 ));
       self.mainModel.processRays();
     } );
+
     this.angleProperty.link( function() {
       self.mainModel.processRays();
     } );

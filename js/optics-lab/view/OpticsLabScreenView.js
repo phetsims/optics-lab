@@ -199,7 +199,7 @@ define( function( require ) {
 
     /**
      *
-     * @param {SourceModel|ComponentModel} piece
+     * @param {SourceModel|ComponentModel piece
      * @public
      */
     setSelectedPieceType: function( piece ) {

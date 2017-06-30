@@ -53,6 +53,7 @@ define( function( require ) {
 
   return inherit( Node, ComponentGraphic, {
     /**
+     * Draws the component
      * @private
      */
     makeDrawing: function() {
@@ -89,6 +90,7 @@ define( function( require ) {
 
     },
     /**
+     * Draws a lens (convergent and divergent)
      * @private
      */
     drawLens: function() {
@@ -131,6 +133,7 @@ define( function( require ) {
       this.mirrorBackGraphic.visible = false;
     },//end drawLens()
     /**
+     * Draws a curve mirror (convergent and divergent)
      * @private
      */
     drawCurvedMirror: function() {
@@ -157,6 +160,7 @@ define( function( require ) {
       this.mirrorBackGraphic.visible = true;
     },
     /**
+     * Draws a plane mirror
      * @private
      */
     drawPlaneMirror: function() {
@@ -171,6 +175,7 @@ define( function( require ) {
       this.addChild( lineGraphic );
     },
     /**
+     * draw a background mask
      * @private
      */
     drawMask: function() {
@@ -183,7 +188,7 @@ define( function( require ) {
       this.addChild( lineGraphic );
     },
     /**
-     *
+     * Sets the diameter of the component
      * @param {number} diameter
      * @public
      */
@@ -192,7 +197,7 @@ define( function( require ) {
       this.makeDrawing();
     },
     /**
-     *
+     * Sets the radius of curvature of component
      * @param {number} R
      * @public
      */

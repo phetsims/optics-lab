@@ -22,20 +22,32 @@ define( function( require ) {
    */
   function OpticsLabModel() {
 
-    //var opticsLabModel = this;
-
     PropertySet.call( this, {
       processRaysCount: 0            //@private, number of times processRays() called, flag for further processing
     } );
+
+    // @public (read-only) boolean
     this.processingRays = false;  //true if rays are being processed,
     // needed to ensure current processing to end before new processing begins
 
+    // @private {ObservableArray.<SourceModel>}
     this.sources = new ObservableArray();     //source of light rays
+
+    // @private {ObservableArray.<ComponentModel>}
     this.components = new ObservableArray();  //component = lens, mirror, or mask
+
+    // @private {ObservableArray.<ComponentModel|SourceModel>}
     this.pieces = new ObservableArray();      //piece = source or component
+
     this.maxLength = 2000;  //maximum length of segment of rayPath
+
+    // @public (read-only) {number}
     this.maxNbrOfRaysFromASource = 20;
+
+    // @private {number}
     this.maxNbrIntersections = 100;  //maximum number of segments in a raypath, to prevent endless loops
+
+    // @private {number}
     this.intersectionCounter = 0;
 
   }

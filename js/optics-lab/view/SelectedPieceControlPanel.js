@@ -45,7 +45,7 @@ define( function( require ) {
    * @extends {Node}
    * @param {OpticsLabModel} mainModel
    * @param {OpticsLabScreenView} mainView
-   * @param selectedPiece
+   * @param {ComponentModel|SourceModel} selectedPiece
    * @constructor
    */
   function SelectedPieceControlPanel( mainModel, mainView, selectedPiece ) {

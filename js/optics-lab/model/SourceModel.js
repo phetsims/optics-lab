@@ -84,7 +84,8 @@ define( function( require ) {
   return inherit( PropertySet, SourceModel, {
 
     /**
-     *
+     * Adds rays
+     * @private
      */
     createRays: function() {
       this.rayPaths = [];  //clear any current rays
