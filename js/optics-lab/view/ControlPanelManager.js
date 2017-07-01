@@ -25,6 +25,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
 
   /**
    * @extends {Node}
@@ -52,15 +53,15 @@ define( function( require ) {
     this.previousDisplayFocalLengthUpdate;
     //this.expandedProperty = new Property( true );
     this.typeArray = [
-      'fan_source',
-      'beam_source',
-      'converging_lens',
-      'diverging_lens',
-      'converging_mirror',
-      'plane_mirror',
-      'diverging_mirror',
-      'simple_mask',
-      'slit_mask'
+      Type.FAN_SOURCE,
+      Type.BEAM_SOURCE,
+      Type.CONVERGING_LENS,
+      Type.DIVERGING_LENS,
+      Type.CONVERGING_MIRROR,
+      Type.PLANE_MIRROR,
+      Type.DIVERGING_MIRROR,
+      Type.SIMPLE_MASK,
+      Type.SLIT_MASK
     ];
 
     for ( var i = 0; i < this.typeArray.length; i++ ) {
@@ -84,7 +85,7 @@ define( function( require ) {
   return inherit( Node, ControlPanelManager, {
     /**
      *
-     * @param {string} type
+     * @param {Type} type
      * @returns {number}
      */
     getIndex: function( type ) {
@@ -201,7 +202,7 @@ define( function( require ) {
       setPreviousUpdates();
 
       //switch( type ){
-      //    case 'fan_source':
+      //    case Type.FAN_SOURCE:
       //        //resetPanel(
       //        //    controlPanel.nbrOfRaysProperty,
       //        //    self.previousRaysUpdate,
@@ -228,7 +229,7 @@ define( function( require ) {
       //        controlPanel.colorProperty.link( colorUpdate );
       //        this.previousColorUpdate = colorUpdate;
       //        break;
-      //    case 'beam_source':
+      //    case Type.BEAM_SOURCE:
       //        //controlPanel.nbrOfRaysProperty.unlink( this.previousRaysUpdate );
       //        controlPanel.nbrOfRaysProperty.value = piece.pieceModel.nbrOfRays;
       //        controlPanel.nbrOfRaysProperty.link( raysUpdate );
@@ -242,7 +243,7 @@ define( function( require ) {
       //        controlPanel.colorProperty.link( colorUpdate );
       //        this.previousColorUpdate = colorUpdate;
       //        break;
-      //    case 'converging_lens':
+      //    case Type.CONVERGING_LENS:
       //        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
       //        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
       //        controlPanel.diameterProperty.link( diameterUpdate );
@@ -260,7 +261,7 @@ define( function( require ) {
       //        controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
       //        this.previousShowFocalPointsUpdate = showFocalPointsUpdate;
       //        break;
-      //    case 'diverging_lens':
+      //    case Type.DIVERGING_LENS:
       //        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
       //        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
       //        controlPanel.diameterProperty.link( diameterUpdate );
@@ -278,7 +279,7 @@ define( function( require ) {
       //        controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
       //        this.previousShowFocalPointsUpdate = showFocalPointsUpdate;
       //        break;
-      //    case 'converging_mirror':
+      //    case Type.CONVERGING_MIRROR:
       //        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
       //        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
       //        controlPanel.diameterProperty.link( diameterUpdate );
@@ -292,13 +293,13 @@ define( function( require ) {
       //        controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
       //        this.previousShowFocalPointsUpdate = showFocalPointsUpdate;
       //        break;
-      //    case 'plane_mirror':
+      //    case Type.PLANE_MIRROR:
       //        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
       //        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
       //        controlPanel.diameterProperty.link( diameterUpdate );
       //        this.previousDiameterUpdate = diameterUpdate;
       //        break;
-      //    case 'diverging_mirror':
+      //    case Type.DIVERGING_MIRROR:
       //        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
       //        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
       //        controlPanel.diameterProperty.link( diameterUpdate );
@@ -312,13 +313,13 @@ define( function( require ) {
       //        controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
       //        this.previousShowFocalPointsUpdate = showFocalPointsUpdate;
       //        break;
-      //    case 'simple_mask':
+      //    case Type.SIMPLE_MASK:
       //        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
       //        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
       //        controlPanel.diameterProperty.link( diameterUpdate );
       //        this.previousDiameterUpdate = diameterUpdate;
       //        break;
-      //    case 'slit_mask':
+      //    case Type.SLIT_MASK:
       //        controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
       //        controlPanel.diameterProperty.value = piece.pieceModel.diameter;
       //        controlPanel.diameterProperty.link( diameterUpdate );

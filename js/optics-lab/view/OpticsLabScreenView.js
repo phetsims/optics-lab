@@ -21,6 +21,7 @@ define( function( require ) {
   var SourceModel = require( 'OPTICS_LAB/optics-lab/model/SourceModel' );
   var ToolDrawerPanel = require( 'OPTICS_LAB/optics-lab/view/ToolDrawerPanel' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
 
   /**
    * @extends {ScreenView}
@@ -57,18 +58,18 @@ define( function( require ) {
 
     /**
      *
-     * @param {string} type
+     * @param {Type} type
      * @param {Vector2} startPosition
      * @returns {SourceNode}
      * @private
      */
     addSource: function( type, startPosition ) {
       var sourceModel;
-      if ( type === 'fan_source' ) {
-        sourceModel = new SourceModel( this.mainModel, 'fan_source', 10, startPosition, 45, 0 );
+      if ( type === Type.FAN_SOURCE ) {
+        sourceModel = new SourceModel( this.mainModel, Type.FAN_SOURCE, 10, startPosition, 45, 0 );
       }
       else {
-        sourceModel = new SourceModel( this.mainModel, 'beam_source', 10, startPosition, 0, 50 );
+        sourceModel = new SourceModel( this.mainModel, Type.BEAM_SOURCE, 10, startPosition, 0, 50 );
       }
       this.mainModel.addSource( sourceModel );
       sourceModel.setPosition( startPosition );
@@ -80,7 +81,7 @@ define( function( require ) {
 
     /**
      *
-     * @param {string} type
+     * @param {Type} type
      * @param {Vector2} startPosition
      * @returns {ComponentNode}
      * @private
@@ -88,26 +89,26 @@ define( function( require ) {
     addComponent: function( type, startPosition ) {
       var componentModel;
       switch( type ) {
-        case 'converging_lens':
-          componentModel = new ComponentModel( this.mainModel, 'converging_lens', 125, 350, 1.8 );
+        case Type.CONVERGING_LENS:
+          componentModel = new ComponentModel( this.mainModel, Type.CONVERGING_LENS, 125, 350, 1.8 );
           break;
-        case 'diverging_lens':
-          componentModel = new ComponentModel( this.mainModel, 'diverging_lens', 125, -300, 1.8 );
+        case Type.DIVERGING_LENS:
+          componentModel = new ComponentModel( this.mainModel, Type.DIVERGING_LENS, 125, -300, 1.8 );
           break;
-        case 'converging_mirror':
-          componentModel = new ComponentModel( this.mainModel, 'converging_mirror', 125, 300, undefined );
+        case Type.CONVERGING_MIRROR:
+          componentModel = new ComponentModel( this.mainModel, Type.CONVERGING_MIRROR, 125, 300, undefined );
           break;
-        case 'plane_mirror':
-          componentModel = new ComponentModel( this.mainModel, 'plane_mirror', 125, undefined, undefined );
+        case Type.PLANE_MIRROR:
+          componentModel = new ComponentModel( this.mainModel, Type.PLANE_MIRROR, 125, undefined, undefined );
           break;
-        case 'diverging_mirror':
-          componentModel = new ComponentModel( this.mainModel, 'diverging_mirror', 125, -300, undefined );
+        case Type.DIVERGING_MIRROR:
+          componentModel = new ComponentModel( this.mainModel, Type.DIVERGING_MIRROR, 125, -300, undefined );
           break;
-        case 'simple_mask':
-          componentModel = new ComponentModel( this.mainModel, 'simple_mask', 125, 0, 0 );
+        case Type.SIMPLE_MASK:
+          componentModel = new ComponentModel( this.mainModel, Type.SIMPLE_MASK, 125, 0, 0 );
           break;
-        case 'slit_mask':
-          componentModel = new ComponentModel( this.mainModel, 'simple_mask', 100, 0, 0 );
+        case Type.SLIT_MASK:
+          componentModel = new ComponentModel( this.mainModel, Type.SIMPLE_MASK, 100, 0, 0 );
           break;
         default:
           throw new Error( 'invalid type: ' + type );
@@ -126,14 +127,14 @@ define( function( require ) {
 
     /**
      *
-     * @param {string} type
+     * @param {Type} type
      * @param {Vector2} startPosition
      * @returns {ComponentNode|SourceNode}
      * @public
      */
     addPiece: function( type, startPosition ) {
       var newPiece;
-      if ( type === 'fan_source' || type === 'beam_source' ) {
+      if ( type === Type.FAN_SOURCE || type === Type.BEAM_SOURCE ) {
         newPiece = this.addSource( type, startPosition );
       }
       else {
@@ -177,7 +178,7 @@ define( function( require ) {
      */
     removePiece: function( piece ) {
       var type = piece.type;
-      if ( type === 'fan_source' || type === 'beam_source' ) {
+      if ( type === Type.FAN_SOURCE || type === Type.BEAM_SOURCE ) {
         this.removeSource( piece );
       }
       else {
@@ -199,7 +200,7 @@ define( function( require ) {
 
     /**
      *
-     * @param {SourceModel|ComponentModel piece
+     * @param {SourceModel|ComponentModel} piece
      * @public
      */
     setSelectedPieceType: function( piece ) {

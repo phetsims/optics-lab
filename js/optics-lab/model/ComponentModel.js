@@ -12,13 +12,14 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @extends {PropertySet}
    *
    * @param {OpticsLabModel} mainModel
-   * @param {string} type
+   * @param {Type} type
    * @param {number} diameter
    * @param {number} [radiusCurvature] - plane mirrors do not have a radius of curvature
    * @param {number} [index] - mirrors do not pass as index
@@ -39,8 +40,8 @@ define( function( require ) {
     this.mainModel = mainModel;
 
     // @public (read-only) {string}
-    this.type = type; // 'converging_lens'|'diverging_lens'|'converging_mirror'|'plane_mirror'|etc.
-    if ( this.type === 'converging_mirror' || this.type === 'diverging_mirror' ) {
+    this.type = type; // Type.CONVERGING_LENS|Type.DIVERGING_LENS|Type.CONVERGING_MIRROR|Type.PLANE_MIRROR|etc.
+    if ( this.type === Type.CONVERGING_MIRROR || this.type === Type.DIVERGING_MIRROR ) {
       this.index = 2;  //needed so formula for focal length is correct in mirror case
     }
 
@@ -74,10 +75,10 @@ define( function( require ) {
      *
      */
     updateFocalLength: function() {
-      if ( this.type === 'converging_lens' || this.type === 'diverging_lens' ) {
+      if ( this.type === Type.CONVERGING_LENS || this.type === Type.DIVERGING_LENS ) {
         this.f = ( this.radius / 2 ) / ( this.index - 1 );
       }
-      else if ( this.type === 'converging_mirror' || this.type === 'diverging_mirror' ) {
+      else if ( this.type === Type.CONVERGING_MIRROR || this.type === Type.DIVERGING_MIRROR ) {
         this.f = this.radius / 2;
       }
       else {

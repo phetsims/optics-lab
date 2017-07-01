@@ -33,6 +33,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
   var OpticsLabConstants = require( 'OPTICS_LAB/optics-lab/OpticsLabConstants' );
   var VBox = require( 'SCENERY/nodes/VBox' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
@@ -45,7 +46,7 @@ define( function( require ) {
    * @extends {Node}
    * @param {OpticsLabModel} mainModel
    * @param {OpticsLabScreenView} mainView
-   * @param {string} type
+   * @param {Type} type
    * @constructor
    */
   function ControlPanel( mainModel, mainView, type ) {
@@ -168,31 +169,31 @@ define( function( require ) {
     var panelContent = new Node();
 
     switch( type ) {
-      case 'fan_source':
+      case Type.FAN_SOURCE:
         panelContent = hBoxMaker( [ fillerBox, nbrOfRaysVBox, spreadVBox, colorVBox1, colorVBox2 ] );
         break;
-      case 'beam_source':
+      case Type.BEAM_SOURCE:
         panelContent = hBoxMaker( [ fillerBox, nbrOfRaysVBox, widthVBox, colorVBox1, colorVBox2 ] );
         break;
-      case 'converging_lens':
+      case Type.CONVERGING_LENS:
         panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ] );
         break;
-      case 'diverging_lens':
+      case Type.DIVERGING_LENS:
         panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox2, indexVBox, focalPtCheckBox, focalLengthHBox ] );
         break;
-      case 'converging_mirror':
+      case Type.CONVERGING_MIRROR:
         panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox ] );
         break;
-      case 'plane_mirror':
+      case Type.PLANE_MIRROR:
         panelContent = hBoxMaker( [ fillerBox, diameterVBox ] );
         break;
-      case 'diverging_mirror':
+      case Type.DIVERGING_MIRROR:
         panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox2, focalPtCheckBox, focalLengthHBox ] );
         break;
-      case 'simple_mask':
+      case Type.SIMPLE_MASK:
         panelContent = hBoxMaker( [ fillerBox, diameterVBox ] );
         break;
-      case 'slit_mask':
+      case Type.SLIT_MASK:
         panelContent = hBoxMaker( [ fillerBox ] );
         break;
       default:
@@ -222,7 +223,7 @@ define( function( require ) {
       //    displayPanel.visible = tOrF;
       //}
     } );
-    //if( type !== 'fan_source' && type !== 'beam_source' ){
+    //if( type !== Type.FAN_SOURCE && type !== Type.BEAM_SOURCE ){
     //    mainView.selectedPieceProperty.lazyLink( function( piece ){
     //       var fValue = piece.pieceModel.f;
     //       self.focalLengthReadoutText.text = fValue.toFixed( 0 );

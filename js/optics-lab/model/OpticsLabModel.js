@@ -12,6 +12,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -206,7 +207,7 @@ define( function( require ) {
         //do nothing, ray terminates if too many segments, probably caught in infinite reflection loop
         console.log( 'Max number of raypath segments exceeded' );
       }
-      else if ( component.type === 'converging_lens' || component.type === 'diverging_lens' ) {
+      else if ( component.type === Type.CONVERGING_LENS || component.type === Type.DIVERGING_LENS ) {
         if ( normalDirection ) {
           outgoingAngle = -Math.atan( (r / f) - tanTheta ) + componentAngle;
         }
@@ -218,7 +219,7 @@ define( function( require ) {
         this.launchRay( rayPath, intersection, newDir );
 
       }
-      else if ( component.type === 'converging_mirror' ) {
+      else if ( component.type === Type.CONVERGING_MIRROR ) {
         if ( normalDirection ) {
           outgoingAngle = Math.PI + Math.atan( (r / f) - tanTheta ) + componentAngle;
           newDir = Vector2.createPolar( 1, outgoingAngle );
@@ -226,7 +227,7 @@ define( function( require ) {
         }
 
       }
-      else if ( component.type === 'diverging_mirror' ) {
+      else if ( component.type === Type.DIVERGING_MIRROR ) {
         if ( normalDirection ) {
           outgoingAngle = Math.PI + Math.atan( (r / f) - tanTheta ) + componentAngle;
           newDir = Vector2.createPolar( 1, outgoingAngle );
@@ -234,7 +235,7 @@ define( function( require ) {
         }
 
       }
-      else if ( component.type === 'plane_mirror' ) {
+      else if ( component.type === Type.PLANE_MIRROR ) {
         if ( normalDirection ) {
           outgoingAngle = Math.PI - angleInRads + componentAngle;
           newDir = Vector2.createPolar( 1, outgoingAngle );
@@ -242,7 +243,7 @@ define( function( require ) {
         }
 
       }
-      else if ( component.type === 'simple_mask' ) {
+      else if ( component.type === Type.SIMPLE_MASK ) {
         //Do nothing. The rayPath ends at a mask.
       }
       else {

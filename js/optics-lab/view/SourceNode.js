@@ -20,6 +20,8 @@ define( function( require ) {
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Vector2 = require( 'DOT/Vector2' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
+
 
   /**
    * @extends {Node}
@@ -50,16 +52,16 @@ define( function( require ) {
     } );
 
     // Draw a handle
-    var height = sourceModel.height;   //if type = 'beam_source'
+    var height = sourceModel.height;   //if type = Type.BEAM_SOURCE
     var angle = sourceModel.angle;
     this.defaultHeight = height;
 
     this.translationHandle;
     this.rotationHandle = new Node();
-    if ( sourceModel.type === 'fan_source' ) {
+    if ( sourceModel.type === Type.FAN_SOURCE ) {
       this.translationHandle = new Circle( 20, { x: 0, y: 0, fill: '#8F8' } );
     }
-    else if ( sourceModel.type === 'beam_source' ) {
+    else if ( sourceModel.type === Type.BEAM_SOURCE ) {
       this.translationHandle = new Rectangle( -5, -height / 2, 10, height, { fill: '#8F8', cursor: 'pointer' } );
       this.rotationHandle = new Circle( 5, {
         x: Math.sin( angle ) * height / 2,
@@ -144,14 +146,14 @@ define( function( require ) {
     } );
 
     this.pieceModel.spreadProperty.link( function( nbrOfRays ) {
-      if ( self.type === 'fan_source' ) {
+      if ( self.type === Type.FAN_SOURCE ) {
         self.setRayNodes();
         sourceModel.mainModel.processRays();
       }
     } );
 
     this.pieceModel.widthProperty.link( function( width ) {
-      if ( self.type === 'beam_source' ) {
+      if ( self.type === Type.BEAM_SOURCE ) {
         self.setWidth( width );
         self.setRayNodes();
         sourceModel.mainModel.processRays();
@@ -217,14 +219,14 @@ define( function( require ) {
         var relativeRayEnd = AbsoluteRayEnd.minus( sourceCenter );
         var rayShape = new Shape();
         rayShape.moveToPoint( relativeRayStart );
-        if ( this.pieceModel.type === 'fan_source' ) {
+        if ( this.pieceModel.type === Type.FAN_SOURCE ) {
           this.relativeRayStarts[ r ] = relativeRayStart;
           var relativeEndPt = dir.timesScalar( maxRayLength );
           rayShape.lineToPoint( relativeEndPt );
 
           //var rayNode = new Line( new Vector2( 0, 0 ), dir.timesScalar( maxRayLength ), rayFontObject );
         }
-        else if ( this.pieceModel.type === 'beam_source' ) {
+        else if ( this.pieceModel.type === Type.BEAM_SOURCE ) {
 
           this.relativeRayStarts[ r ] = relativeRayStart;
           rayShape.lineToPoint( relativeRayEnd );

@@ -18,12 +18,13 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
   var Util = require( 'DOT/Util' );
 
   /**
    * @extends {Node}
    *
-   * @param {string} type
+   * @param {Type} type
    * @param {number} diameter
    * @param {number} radius
    * @param {number} index
@@ -58,25 +59,25 @@ define( function( require ) {
      */
     makeDrawing: function() {
       switch( this.type ) {
-        case 'converging_lens':
+        case Type.CONVERGING_LENS:
           this.drawLens();
           break;
-        case 'diverging_lens':
+        case Type.DIVERGING_LENS:
           this.drawLens();
           break;
-        case 'converging_mirror':
+        case Type.CONVERGING_MIRROR:
           this.drawCurvedMirror();
           break;
-        case 'plane_mirror':
+        case Type.PLANE_MIRROR:
           this.drawPlaneMirror();
           break;
-        case 'diverging_mirror':
+        case Type.DIVERGING_MIRROR:
           this.drawCurvedMirror();
           break;
-        case 'simple_mask':
+        case Type.SIMPLE_MASK:
           this.drawMask();
           break;
-        case 'slit_mask':
+        case Type.SLIT_MASK:
           this.drawMask();
           break;
         default:
@@ -100,7 +101,7 @@ define( function( require ) {
       var fudge2 = 2;   //fudge factor to make adjust range of index of refraction
       //fudge * 2 * Math.abs( this.f ) * ( this.n - 1 );  //radius of curvature of lens surface
       var n = fudge2 * this.index;
-      if ( this.type === 'converging_lens' ) {
+      if ( this.type === Type.CONVERGING_LENS ) {
         R = fudge1 * this.radius;
       }
       else {
@@ -144,7 +145,7 @@ define( function( require ) {
       var theta = Math.asin( Util.clamp( h / R, -1, 1 ) ); //magnitude of startAngle and endAngle
       var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
       this.shape = new Shape();
-      if ( this.type === 'diverging_mirror' ) {
+      if ( this.type === Type.DIVERGING_MIRROR ) {
         this.shape.arc( C, 0, R, -Math.PI + theta, -Math.PI - theta, false );
       }
       else {

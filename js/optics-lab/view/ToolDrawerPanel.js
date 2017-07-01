@@ -21,6 +21,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
 
   //constants
   var DISPLAY_FONT = new PhetFont( 12 );
@@ -84,15 +85,15 @@ define( function( require ) {
     ];
 
     var typeArray = [
-      'fan_source',
-      'beam_source',
-      'converging_lens',
-      'diverging_lens',
-      'converging_mirror',
-      'plane_mirror',
-      'diverging_mirror',
-      'simple_mask',
-      'slit_mask'
+      Type.FAN_SOURCE,
+      Type.BEAM_SOURCE,
+      Type.CONVERGING_LENS,
+      Type.DIVERGING_LENS,
+      Type.CONVERGING_MIRROR,
+      Type.PLANE_MIRROR,
+      Type.DIVERGING_MIRROR,
+      Type.SIMPLE_MASK,
+      Type.SLIT_MASK
     ];
 
     var nodeSetup = function( element, index, array ) {
