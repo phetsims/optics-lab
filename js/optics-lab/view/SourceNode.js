@@ -22,7 +22,6 @@ define( function( require ) {
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
   var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
 
-
   /**
    * @extends {Node}
    * @param {OpticsLabModel} mainModel

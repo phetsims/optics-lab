@@ -13,19 +13,18 @@ define( function( require ) {
   var ObservableArray = require( 'AXON/ObservableArray' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
   var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
-   * @extends {PropertySet}
+   * @extends {Object}
    * @constructor
    */
   function OpticsLabModel() {
 
-    PropertySet.call( this, {
-      processRaysCount: 0            //@private, number of times processRays() called, flag for further processing
-    } );
+    // @private {Property.<number>} number of times processRays() called, flag for further processing
+    this.processRaysCountProperty = new NumberProperty( 0 );
 
     // @public (read-only) boolean
     this.processingRays = false;  //true if rays are being processed,
@@ -55,7 +54,7 @@ define( function( require ) {
 
   opticsLab.register( 'OpticsLabModel', OpticsLabModel );
 
-  return inherit( PropertySet, OpticsLabModel, {
+  return inherit( Object, OpticsLabModel, {
 
     /**
      * Adds a source of light to the model
@@ -105,7 +104,7 @@ define( function( require ) {
       for ( var i = 0; i < this.sources.length; i++ ) {
         this.updateSourceLines( this.sources.get( i ) );   //sources is an observable array, hence .get(i)
       }
-      this.processRaysCount += 1;  //increment number of times processRays called
+      this.processRaysCountProperty.value += 1;  //increment number of times processRays called
     },
     /**
      *
