@@ -166,15 +166,18 @@ define( function( require ) {
           controlPanel.widthProperty.value = piece.pieceModel.widthProperty.value;
           controlPanel.widthProperty.link( widthUpdate );
         }
-        if ( piece.pieceModel.diameterProperty !== undefined ) {
+        if ( piece.pieceModel.diameterProperty !== undefined &&
+             piece.pieceModel.diameterProperty.value !== undefined ) {
           controlPanel.diameterProperty.value = piece.pieceModel.diameterProperty.value;
           controlPanel.diameterProperty.link( diameterUpdate );
         }
-        if ( piece.pieceModel.radiusProperty !== undefined ) {
+        if ( piece.pieceModel.radiusProperty !== undefined &&
+             piece.pieceModel.radiusProperty.value !== undefined ) {
           controlPanel.radiusOfCurvatureProperty.value = piece.pieceModel.radiusProperty.value;
           controlPanel.radiusOfCurvatureProperty.link( radiusOfCurvatureUpdate );
         }
-        if ( piece.pieceModel.indexProperty !== undefined ) {
+        if ( piece.pieceModel.indexProperty !== undefined &&
+             piece.pieceModel.indexProperty.value !== undefined ) {
           controlPanel.indexOfRefractionProperty.value = piece.pieceModel.indexProperty.value;
           controlPanel.indexOfRefractionProperty.link( indexOfRefractionUpdate );
         }
