@@ -15,7 +15,7 @@ define( function( require ) {
 
   /**
    * @extends {Node}
-   * @param {number} size
+   * @param {number|null} size
    * @constructor
    */
   function FocalPointGraphic( size ) {

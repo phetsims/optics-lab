@@ -115,6 +115,7 @@ define( function( require ) {
           allowTouchSnag: true,
 
           start: function( e ) {
+
             var startPosition = self.globalToParentPoint( e.pointer.point );
             var type = typeArray[ index ];
             pieceGrabbed = mainView.addPiece( type, startPosition );

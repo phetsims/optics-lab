@@ -10,13 +10,14 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  var Property = require( 'AXON/Property' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
   var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
-   * @extends {PropertySet}
+   * @extends {Object}
    *
    * @param {OpticsLabModel} mainModel
    * @param {Type} type
@@ -27,14 +28,23 @@ define( function( require ) {
    */
   function ComponentModel( mainModel, type, diameter, radiusCurvature, index ) {
 
-    PropertySet.call( this, {
-      position: new Vector2( 0, 0 ),  //@private, position of source on stage
-      diameter: diameter,             //@private
-      radius: radiusCurvature,       //@private
-      index: index,                  //@private, index of refraction of lens
-      f: 500,                        //focal length of component of lens or mirror
-      angle: 0                        //tilt angle of component, 0 = optic axis is horizontal, + angle is CW
-    } );
+    // @private {Property.<Vector2>} position of component on stage
+    this.positionProperty = new Property( new Vector2( 0, 0 ) );
+
+    // @private, {Property.<number>}
+    this.diameterProperty = new NumberProperty( diameter );
+
+    // @public {Property.<number|null>} spread of point source (fan source) in degrees
+    this.radiusProperty = new Property( radiusCurvature );
+
+    // @public {Property.<number|null>} index of refraction of lens
+    this.indexProperty = new Property( index );
+
+    // @public {Property.<number|null>} focal length of component of lens or mirror
+    this.fProperty = new Property( 500 );
+
+    // @public {Property.<number>} tilt angle of component, 0 = optic axis is horizontal, + angle is CW
+    this.angleProperty = new NumberProperty( 0 );
 
     var self = this;
     this.mainModel = mainModel;
@@ -42,7 +52,7 @@ define( function( require ) {
     // @public (read-only) {string}
     this.type = type; // Type.CONVERGING_LENS|Type.DIVERGING_LENS|Type.CONVERGING_MIRROR|Type.PLANE_MIRROR|etc.
     if ( this.type === Type.CONVERGING_MIRROR || this.type === Type.DIVERGING_MIRROR ) {
-      this.index = 2;  //needed so formula for focal length is correct in mirror case
+      this.indexProperty.value = 2;  //needed so formula for focal length is correct in mirror case
     }
 
     this.diameterProperty.link( function() {
@@ -51,15 +61,15 @@ define( function( require ) {
 
     this.radiusProperty.link( function( radius ) {
       var R = radius;   // R is signed.  + for converging lenses, - for diverging lenses
-      var n = self.index;
-      self.f = R / ( 2 * ( n - 1 ));  //focal length gets correct sign from sign of radius R.
+      var n = self.indexProperty.value;
+      self.fProperty.value = R / ( 2 * ( n - 1 ));  //focal length gets correct sign from sign of radius R.
       self.mainModel.processRays();
     } );
 
     this.indexProperty.link( function( index ) {
-      var R = self.radius;
+      var R = self.radiusProperty.value;
       var n = index;
-      self.f = R / ( 2 * ( n - 1 ));
+      self.fProperty.value = R / ( 2 * ( n - 1 ));
       self.mainModel.processRays();
     } );
 
@@ -70,16 +80,29 @@ define( function( require ) {
 
   opticsLab.register( 'ComponentModel', ComponentModel );
 
-  return inherit( PropertySet, ComponentModel, {
+  return inherit( Object, ComponentModel, {
+
+    /**
+     * @public
+     */
+    reset: function() {
+      this.positionProperty.reset();
+      this.diameterProperty.reset();
+      this.radiusProperty.reset();
+      this.indexProperty.reset();
+      this.fProperty.reset();
+      this.angleProperty.reset();
+    },
+
     /**
      *
      */
     updateFocalLength: function() {
       if ( this.type === Type.CONVERGING_LENS || this.type === Type.DIVERGING_LENS ) {
-        this.f = ( this.radius / 2 ) / ( this.index - 1 );
+        this.fProperty.value = ( this.radiusProperty.value / 2 ) / ( this.indexProperty.value - 1 );
       }
       else if ( this.type === Type.CONVERGING_MIRROR || this.type === Type.DIVERGING_MIRROR ) {
-        this.f = this.radius / 2;
+        this.fProperty.value = this.radiusProperty.value / 2;
       }
       else {
         console.log( 'ERROR: plane mirrors and masks do not have finite focal length.' );
@@ -92,7 +115,7 @@ define( function( require ) {
      * @public
      */
     setDiameter: function( diameter ) {
-      this.diameter = diameter;
+      this.diameterProperty.value = diameter;
       this.mainModel.processRays();
     },
 
@@ -102,7 +125,7 @@ define( function( require ) {
      * @public
      */
     setRadius: function( radius ) {
-      this.radius = radius;
+      this.radiusProperty.value = radius;
       this.mainModel.processRays();
     },
     /**
@@ -111,7 +134,7 @@ define( function( require ) {
      * @public
      */
     setIndex: function( index ) {
-      this.index = index;
+      this.indexProperty.value = index;
       this.mainModel.processRays();
     },
     /**
@@ -120,7 +143,7 @@ define( function( require ) {
      * @public
      */
     setPosition: function( position ) {
-      this.position = position;
+      this.positionProperty.value = position;
       if ( !this.mainModel.processingRays ) {
         this.mainModel.processRays();
       }
@@ -132,7 +155,7 @@ define( function( require ) {
      * @public
      */
     setAngle: function( angleInRads ) {
-      this.angle = angleInRads;
+      this.angleProperty.value = angleInRads;
       this.mainModel.processRays();
     }
   } );

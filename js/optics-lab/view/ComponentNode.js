@@ -40,12 +40,12 @@ define( function( require ) {
       cursor: 'pointer'
     } );
 
-    var height = this.pieceModel.diameter;
-    var radius = this.pieceModel.radius;    //radius of curvature
-    var index = this.pieceModel.index;
+    var height = this.pieceModel.diameterProperty.value;
+    var radius = this.pieceModel.radiusProperty.value;    //radius of curvature
+    var index = this.pieceModel.indexProperty.value;
 
     this.componentGraphic = new ComponentGraphic( this.type, height, radius, index );
-    var angle = this.pieceModel.angle;
+    var angle = this.pieceModel.angleProperty.value;
     this.rotationHandle = new Circle( 5, {
       x: Math.sin( angle ) * height / 2,
       y: Math.cos( angle ) * height / 2,
@@ -64,7 +64,7 @@ define( function( require ) {
           self.mainView.setSelectedPiece( self );
           self.mainView.setSelectedPieceType( self );
           var position = self.globalToParentPoint( e.pointer.point );
-          var currentNodePos = self.pieceModel.position;
+          var currentNodePos = self.pieceModel.positionProperty.value;
           mouseDownPosition = position.minus( currentNodePos );
           //self.mouseDownPosition = e.pointer.point;
         },
@@ -106,12 +106,12 @@ define( function( require ) {
       self.componentGraphic.rotation = angle;
       var cosAngle = Math.cos( angle );
       var sinAngle = Math.sin( angle );
-      var diameter = self.pieceModel.diameter;
+      var diameter = self.pieceModel.diameterProperty.value;
       self.rotationHandle.translation = new Vector2( -( diameter / 2 ) * sinAngle, ( diameter / 2 ) * cosAngle );
     } );
     this.pieceModel.diameterProperty.link( function( diameter ) {
       self.componentGraphic.setDiameter( diameter );
-      var angle = self.pieceModel.angle;
+      var angle = self.pieceModel.angleProperty.value;
       var cosAngle = Math.cos( angle );
       var sinAngle = Math.sin( angle );
       //var diameter = self.pieceModel.diameter;

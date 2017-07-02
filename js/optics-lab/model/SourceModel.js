@@ -11,14 +11,15 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  var Property = require( 'AXON/Property' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var RayPath = require( 'OPTICS_LAB/optics-lab/model/RayPath' );
   var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
   var Vector2 = require( 'DOT/Vector2' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
   /**
-   * @extends {PropertySet}
+   * @extends {Object}
    *
    * @param {OpticsLabModel} mainModel for this sim
    * @param {Type} type = Type.FAN_SOURCE|Type.BEAM_SOURCE = fan of diverging rays or beam of parallel rays
@@ -30,15 +31,24 @@ define( function( require ) {
    */
   function SourceModel( mainModel, type, nbrOfRays, position, spread, height ) {
 
-    PropertySet.call( this, {
-      position: position,         //@private, position of source on stage
-      nbrOfRays: nbrOfRays,       //@private, number of rays
-      spread: spread,             //spread of point source (fan source) in degrees
-      width: height,              //width of source, if beam
-      angle: 0,                   //@private angle in rads of beam source, 0 = horizontal. + = CCW, - = CW
-      color: '#FFF'               //@private color of ray in the view (not really part of the model, but it
-                                  //is convenient to put all the Properties of a Source in one place)
-    } );
+    // @private {Property.<Vector2>} position of source on stage
+    this.positionProperty = new Property( position );
+
+    // @private, {Property.<number>} number of rays
+    this.nbrOfRaysProperty = new NumberProperty( nbrOfRays );
+
+    // @public {Property.<number>} spread of point source (fan source) in degrees
+    this.spreadProperty = new NumberProperty( spread );
+
+    // @public {Property.<number>} width of source, if beam
+    this.widthProperty = new NumberProperty( height );
+
+    // @private {Property.<number>} angle in rads of beam source, 0 = horizontal. + = CCW, - = CW
+    this.angleProperty = new NumberProperty( 0 );
+
+    //@private {Property.<string|Color>} color of ray in the view (not really part of the model, but it
+    //is convenient to put all the Properties of a Source in one place)
+    this.colorProperty = new Property( '#FFF' );
 
     var self = this;
     this.mainModel = mainModel;
@@ -48,11 +58,11 @@ define( function( require ) {
     this.maxNbrOfRays = mainModel.maxNbrOfRaysFromASource;
 
     if ( type === Type.FAN_SOURCE ) {
-      this.spread = spread;
+      this.spreadProperty.value = spread;
       this.height = 0;
     }
     else if ( type === Type.BEAM_SOURCE ) {
-      this.spread = 0;
+      this.spreadProperty.value = 0;
       this.height = height;
     }
 
@@ -81,24 +91,35 @@ define( function( require ) {
 
   opticsLab.register( 'SourceModel', SourceModel );
 
-  return inherit( PropertySet, SourceModel, {
+  return inherit( Object, SourceModel, {
 
+    /**
+     * @public
+     */
+    reset: function() {
+      this.positionProperty.reset();
+      this.nbrOfRaysProperty.reset();
+      this.spreadProperty.reset();
+      this.widthProperty.reset();
+      this.angleProperty.reset();
+      this.colorProperty.reset();
+    },
     /**
      * Adds rays
      * @private
      */
     createRays: function() {
       this.rayPaths = [];  //clear any current rays
-      this.nbrOfRays = Math.round( this.nbrOfRays );  //slider may produce non-integer number of rays
+      this.nbrOfRaysProperty.value = Math.round( this.nbrOfRaysProperty.value );  //slider may produce non-integer number of rays
       //for fan source
-      var lowestAngle = -this.spread / 2;  //in degrees
+      var lowestAngle = -this.spreadProperty.value / 2;  //in degrees
       var deltaAngle;
-      if ( this.nbrOfRays === 1 ) {
+      if ( this.nbrOfRaysProperty.value === 1 ) {
         deltaAngle = 0;
         lowestAngle = 0;  //if only one ray, ray is horizontal
       }
       else {
-        deltaAngle = this.spread / ( this.nbrOfRays - 1);    //in degrees
+        deltaAngle = this.spreadProperty.value / ( this.nbrOfRaysProperty.value - 1);    //in degrees
       }
       var theta = ( lowestAngle ) * Math.PI / 180; //in radians
       var dir = new Vector2( Math.cos( theta ), Math.sin( theta ) );
@@ -108,22 +129,23 @@ define( function( require ) {
       var lowestPos;   //in cm
       var startPos;
       var deltaPos;
-      var sinAngle = Math.sin( -this.angle );   //in screen coords, + angle is CW
-      var cosAngle = Math.cos( -this.angle );
-      var h = this.width;
-      if ( this.nbrOfRays === 1 ) {
+      var sinAngle = Math.sin( -this.angleProperty.value );   //in screen coords, + angle is CW
+      var cosAngle = Math.cos( -this.angleProperty.value );
+      var h = this.widthProperty.value;
+      if ( this.nbrOfRaysProperty.value === 1 ) {
         lowestPos = new Vector2( 0, 0 );
         deltaPos = new Vector2( 0, 0 );
       }
       else {
         lowestPos = new Vector2( h * sinAngle / 2, h * cosAngle / 2 );
-        deltaPos = new Vector2( -h * sinAngle / ( this.nbrOfRays - 1 ), -h * cosAngle / ( this.nbrOfRays - 1 ) );
+        deltaPos = new Vector2( -h * sinAngle / ( this.nbrOfRaysProperty.value - 1 ),
+          -h * cosAngle / ( this.nbrOfRaysProperty.value - 1 ) );
 
       }
       startPos = lowestPos;
 
       //loop through and initialize all rayPaths of the source
-      for ( var i = 0; i < this.nbrOfRays; i++ ) {
+      for ( var i = 0; i < this.nbrOfRaysProperty.value; i++ ) {
         if ( this.type === Type.FAN_SOURCE ) {
           theta = ( lowestAngle + i * deltaAngle ) * Math.PI / 180;  //in radians
           relativeStartPos = new Vector2( 0, 0 );
@@ -131,13 +153,13 @@ define( function( require ) {
           //endPosition = this.position.plus( dir.timesScalar( this.maxLength ));
 
           this.rayPaths[ i ] = new RayPath( relativeStartPos, dir );
-          this.rayPaths[ i ].startPos = this.position;
+          this.rayPaths[ i ].startPos = this.positionProperty.value;
           //this.rayPaths[i].addSegment( this.position, endPosition );
         }
         else if ( this.type === Type.BEAM_SOURCE ) {
           dir = new Vector2( cosAngle, -sinAngle );
           relativeStartPos = lowestPos.plus( deltaPos.timesScalar( i ) );
-          startPos = this.position.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
+          startPos = this.positionProperty.value.plus( lowestPos ).plus( deltaPos.timesScalar( i ) );
           this.rayPaths[ i ] = new RayPath( relativeStartPos, dir );
           this.rayPaths[ i ].startPos = startPos;
         }
@@ -149,7 +171,7 @@ define( function( require ) {
      * @private
      */
     setNbrOfRays: function( nbrOfRays ) {
-      this.nbrOfRays = nbrOfRays;
+      this.nbrOfRaysProperty.value = nbrOfRays;
       this.createRays();
       this.mainModel.processRays();
     },
@@ -161,7 +183,7 @@ define( function( require ) {
      */
     setSpreadOfFan: function( angleInDegrees ) {
       if ( this.type === Type.FAN_SOURCE ) {
-        this.spread = angleInDegrees;
+        this.spreadProperty.value = angleInDegrees;
         this.createRays();
         this.mainModel.processRays();
       }
@@ -174,7 +196,7 @@ define( function( require ) {
      */
     setWidthOfBeam: function( widthInCm ) {
       if ( this.type === Type.BEAM_SOURCE ) {
-        this.width = widthInCm;
+        this.widthProperty.value = widthInCm;
         this.createRays();
         this.mainModel.processRays();
       }
@@ -185,7 +207,8 @@ define( function( require ) {
      * @public
      */
     setPosition: function( position ) {   //position = Vector2
-      this.position = position;
+
+      this.positionProperty.value = position;
       for ( var i = 0; i < this.rayPaths.length; i++ ) {
         if ( this.type === Type.FAN_SOURCE ) {
           this.rayPaths[ i ].startPos = position;
@@ -193,16 +216,17 @@ define( function( require ) {
         else if ( this.type === Type.BEAM_SOURCE ) {
           var lowestPos;
           var deltaPos;
-          var sinAngle = Math.sin( -this.angle );   //in screen coords, + angle is CW
-          var cosAngle = Math.cos( -this.angle );
-          var h = this.width;
-          if ( this.nbrOfRays === 1 ) {
+          var sinAngle = Math.sin( -this.angleProperty.value );   //in screen coords, + angle is CW
+          var cosAngle = Math.cos( -this.angleProperty.value );
+          var h = this.widthProperty.value;
+          if ( this.nbrOfRaysProperty.value === 1 ) {
             lowestPos = new Vector2( 0, 0 );
             deltaPos = new Vector2( 0, 0 );
           }
           else {
             lowestPos = new Vector2( h * sinAngle / 2, h * cosAngle / 2 );
-            deltaPos = new Vector2( -h * sinAngle / ( this.nbrOfRays - 1 ), -h * cosAngle / ( this.nbrOfRays - 1 ) );
+            deltaPos = new Vector2( -h * sinAngle / ( this.nbrOfRaysProperty.value - 1 ),
+              -h * cosAngle / ( this.nbrOfRaysProperty.value - 1 ) );
           }
           var relativePos = lowestPos.plus( deltaPos.timesScalar( i ) );
           var pos = position.plus( relativePos );
@@ -223,9 +247,9 @@ define( function( require ) {
      * @public
      */
     setAngle: function( angleInRads ) {
-      this.angle = angleInRads;
+      this.angleProperty.value = angleInRads;
       if ( this.type === Type.BEAM_SOURCE ) {
-        this.setPosition( this.position );
+        this.setPosition( this.positionProperty.value );
       }
     }
 

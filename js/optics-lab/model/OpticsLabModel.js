@@ -57,6 +57,13 @@ define( function( require ) {
   return inherit( Object, OpticsLabModel, {
 
     /**
+     * @public
+     */
+    reset: function() {
+      this.processRaysCountProperty.reset();
+    },
+
+    /**
      * Adds a source of light to the model
      * @param {SourceModel} source
      * @public
@@ -64,7 +71,7 @@ define( function( require ) {
     addSource: function( source ) {
       this.sources.add( source );
       this.pieces.add( source );
-      source.setPosition( source.position );
+      source.setPosition( source.positionProperty.value );
       //this.sources.push( source );
     },
     /**
@@ -142,9 +149,9 @@ define( function( require ) {
       //loop thru all components, checking for intersection of ray and component
       var componentIntersectedIndex;
       for ( var j = 0; j < this.components.length; j++ ) {
-        var compDiameter = this.components.get( j ).diameter;
-        var compCenter = this.components.get( j ).position;
-        var compAngle = -this.components.get( j ).angle;
+        var compDiameter = this.components.get( j ).diameterProperty.value;
+        var compCenter = this.components.get( j ).positionProperty.value;
+        var compAngle = -this.components.get( j ).angleProperty.value;
         var sinAngle = Math.sin( compAngle );
         var cosAngle = Math.cos( compAngle );
         var thisIntersection = Util.lineSegmentIntersection(
@@ -188,7 +195,7 @@ define( function( require ) {
       var incomingAngle = incomingRayDir.angle();   //angle in rads between direction of ray and component normal
       var outgoingAngle;
       var component = this.components.get( componentNbr );
-      var componentAngle = component.angle;  //tilt of component = angle between horizontal and component normal
+      var componentAngle = component.angleProperty.value;  //tilt of component = angle between horizontal and component normal
       var componentNormal = new Vector2( Math.cos( componentAngle ), Math.sin( componentAngle ) );
       var componentParallel = new Vector2( -Math.sin( componentAngle ), Math.cos( componentAngle ) );
       var angleInRads = incomingAngle - componentAngle;
@@ -197,9 +204,9 @@ define( function( require ) {
         normalDirection = false;
       }
 
-      var r = ( intersection.minus( component.position )).dot( componentParallel );
+      var r = ( intersection.minus( component.positionProperty.value )).dot( componentParallel );
 
-      var f = component.f;   //f = focal length
+      var f = component.fProperty.value;   //f = focal length
       var tanTheta = Math.tan( angleInRads );
       var newDir;
       if ( rayPath.nbrSegments > rayPath.maxNbrSegments ) {

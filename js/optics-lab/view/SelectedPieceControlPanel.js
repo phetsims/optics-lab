@@ -38,7 +38,6 @@ define( function( require ) {
   var VBox = require( 'SCENERY/nodes/VBox' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
-
   // constants
   var DISPLAY_FONT = new PhetFont( 12 );
   var TEXT_COLOR = OpticsLabConstants.TEXT_COLOR;
@@ -59,7 +58,6 @@ define( function( require ) {
     this.selectedPiece = selectedPiece;
     this.expandedProperty = new Property( true );
     this.hSliders = []; //array of HSliders in this control panel, used solely for garbage collection
-
 
     //initialize source rays color radio buttons
     var fontInfo = { font: DISPLAY_FONT };
@@ -83,7 +81,6 @@ define( function( require ) {
       cursor: 'pointer'
     } );
 
-
     // All controls are placed on display node, with visibility set by expand/collapse button
     this.panelOptions = {
       fill: 'white',
@@ -98,18 +95,15 @@ define( function( require ) {
       minWidth: 0 // minimum width of the panel
     };
 
-
     this.setControlsForSelectedPiece();
 
     this.expandCollapseButton.expandedProperty.link( function( tOrF ) {
       self.displayPanel.visible = tOrF;
     } );
 
-
     this.mainView.selectedPieceProperty.link( function( piece ) {
       self.visible = ( piece === self.selectedPiece );
     } );
-
 
   }//end constructor
 
@@ -171,10 +165,12 @@ define( function( require ) {
         else {   //if piece = component
           var diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 50, max: 250 }, sliderOptions );
           diameterVBox = vBoxMaker( [ diameterSlider, this.diameterText ] );
-          this.focalLengthReadoutText.text = pieceModel.f.toFixed( 0 );
+          this.focalLengthReadoutText.text = pieceModel.fProperty.value.toFixed( 0 );
           var self = this;
-          pieceModel.fProperty.link( function() {
-            self.focalLengthReadoutText.text = pieceModel.f.toFixed( 0 );
+          pieceModel.fProperty.link( function( f ) {
+            if ( f ) {
+              self.focalLengthReadoutText.text = f.toFixed( 0 );
+            }
           } );
         }
 

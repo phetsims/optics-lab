@@ -150,32 +150,32 @@ define( function( require ) {
       }
 
       function setAllPanelsAndLinkAll() {
-        if ( piece.pieceModel.nbrOfRays !== undefined ) {
-          controlPanel.nbrOfRaysProperty.value = piece.pieceModel.nbrOfRays;
+        if ( piece.pieceModel.nbrOfRaysProperty !== undefined ) {
+          controlPanel.nbrOfRaysProperty.value = piece.pieceModel.nbrOfRaysProperty.value;
           controlPanel.nbrOfRaysProperty.link( raysUpdate );
         }
-        if ( piece.pieceModel.spread !== undefined ) {
-          controlPanel.spreadProperty.value = piece.pieceModel.spread;
+        if ( piece.pieceModel.spreadProperty !== undefined ) {
+          controlPanel.spreadProperty.value = piece.pieceModel.spreadProperty.value;
           controlPanel.spreadProperty.link( spreadUpdate );
         }
         if ( piece.colorProperty !== undefined ) {
           controlPanel.colorProperty.value = piece.colorProperty.value;
           controlPanel.colorProperty.link( colorUpdate );
         }
-        if ( piece.pieceModel.width !== undefined ) {
-          controlPanel.widthProperty.value = piece.pieceModel.width;
+        if ( piece.pieceModel.widthProperty !== undefined ) {
+          controlPanel.widthProperty.value = piece.pieceModel.widthProperty.value;
           controlPanel.widthProperty.link( widthUpdate );
         }
-        if ( piece.pieceModel.diameter !== undefined ) {
-          controlPanel.diameterProperty.value = piece.pieceModel.diameter;
+        if ( piece.pieceModel.diameterProperty !== undefined ) {
+          controlPanel.diameterProperty.value = piece.pieceModel.diameterProperty.value;
           controlPanel.diameterProperty.link( diameterUpdate );
         }
-        if ( piece.pieceModel.radius !== undefined ) {
-          controlPanel.radiusOfCurvatureProperty.value = piece.pieceModel.radius;
+        if ( piece.pieceModel.radiusProperty !== undefined ) {
+          controlPanel.radiusOfCurvatureProperty.value = piece.pieceModel.radiusProperty.value;
           controlPanel.radiusOfCurvatureProperty.link( radiusOfCurvatureUpdate );
         }
-        if ( piece.pieceModel.index !== undefined ) {
-          controlPanel.indexOfRefractionProperty.value = piece.pieceModel.index;
+        if ( piece.pieceModel.indexProperty !== undefined ) {
+          controlPanel.indexOfRefractionProperty.value = piece.pieceModel.indexProperty.value;
           controlPanel.indexOfRefractionProperty.link( indexOfRefractionUpdate );
         }
         if ( piece.showFocalPointsProperty !== undefined ) {

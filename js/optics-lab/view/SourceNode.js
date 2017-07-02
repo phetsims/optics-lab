@@ -52,8 +52,7 @@ define( function( require ) {
 
     // Draw a handle
     var height = sourceModel.height;   //if type = Type.BEAM_SOURCE
-    var angle = sourceModel.angle;
-    this.defaultHeight = height;
+    var angle = sourceModel.angleProperty.value;
 
     this.translationHandle;
     this.rotationHandle = new Node();
@@ -78,7 +77,6 @@ define( function( require ) {
       self.addChild( this.rayNodes[ r ] );
     }
 
-
     // When dragging, move the sample element
     var mouseDownPosition;
     self.translationHandle.addInputListener( new SimpleDragHandler(
@@ -90,7 +88,7 @@ define( function( require ) {
           self.mainView.setSelectedPiece( self );
           self.mainView.setSelectedPieceType( self );
           var position = self.globalToParentPoint( e.pointer.point );
-          var currentNodePos = self.pieceModel.position;
+          var currentNodePos = self.pieceModel.positionProperty.value;
           mouseDownPosition = position.minus( currentNodePos );
         },
 
@@ -144,7 +142,7 @@ define( function( require ) {
       sourceModel.mainModel.processRays();
     } );
 
-    this.pieceModel.spreadProperty.link( function( nbrOfRays ) {
+    this.pieceModel.spreadProperty.link( function() {
       if ( self.type === Type.FAN_SOURCE ) {
         self.setRayNodes();
         sourceModel.mainModel.processRays();
@@ -159,7 +157,7 @@ define( function( require ) {
       }
     } );
 
-    this.mainModel.processRaysCountProperty.link( function( count ) {
+    this.mainModel.processRaysCountProperty.link( function() {
       self.drawRays();
     } );
     this.colorProperty.link( function( color ) {
@@ -211,7 +209,7 @@ define( function( require ) {
         this.rayNodes[ r ].visible = true;
         //this.rayNodes[ r ].strokeColor = this.rayColor;
         var dir = this.pieceModel.rayPaths[ r ].startDir;
-        var sourceCenter = this.pieceModel.position;
+        var sourceCenter = this.pieceModel.positionProperty.value;
         var AbsoluteRayStart = this.pieceModel.rayPaths[ r ].segments[ 0 ].getStart();
         var AbsoluteRayEnd = this.pieceModel.rayPaths[ r ].segments[ 0 ].getEnd();
         var relativeRayStart = AbsoluteRayStart.minus( sourceCenter );
@@ -249,12 +247,12 @@ define( function( require ) {
      */
     setWidth: function( height ) {
       this.settingHeight = true;
-      var cosAngle = Math.cos( this.pieceModel.angle );
-      var sinAngle = Math.sin( this.pieceModel.angle );
+      var cosAngle = Math.cos( this.pieceModel.angleProperty.value );
+      var sinAngle = Math.sin( this.pieceModel.angleProperty.value );
       this.translationHandle.rotation = 0;
       //
       this.translationHandle.setRect( -5, -height / 2, 10, height );
-      this.translationHandle.rotation = this.pieceModel.angle;
+      this.translationHandle.rotation = this.pieceModel.angleProperty.value;
 
       this.rotationHandle.translation = new Vector2( ( -height / 2 ) * sinAngle, ( height / 2 ) * cosAngle );
       this.settingHeight = false;

@@ -173,7 +173,7 @@ define( function( require ) {
 
     /**
      *
-     * @param {SourceModel|ComponentModel} piece
+     * @param {SourceNode|ComponentNode} piece
      * @public
      */
     removePiece: function( piece ) {
@@ -189,7 +189,7 @@ define( function( require ) {
 
     /**
      *
-     * @param {SourceModel|ComponentModel} piece
+     * @param {SourceNode|ComponentNode} piece
      * @public
      */
     setSelectedPiece: function( piece ) {
@@ -200,7 +200,7 @@ define( function( require ) {
 
     /**
      *
-     * @param {SourceModel|ComponentModel} piece
+     * @param {SourceNode|ComponentNode} piece
      * @public
      */
     setSelectedPieceType: function( piece ) {
