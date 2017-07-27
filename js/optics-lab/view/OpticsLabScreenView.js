@@ -22,6 +22,7 @@ define( function( require ) {
   var ToolDrawerPanel = require( 'OPTICS_LAB/optics-lab/view/ToolDrawerPanel' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
   var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
+  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
 
   /**
    * @extends {ScreenView}
@@ -49,6 +50,17 @@ define( function( require ) {
     this.controlPanelManager.top = 10;
     this.toolDrawerPanel.bottom = this.layoutBounds.bottom - 10;
     this.toolDrawerPanel.centerX = this.layoutBounds.centerX;
+
+    var resetAllButton = new ResetAllButton( {
+        listener: function() {
+          opticsLabModel.reset();
+        },
+        right: this.layoutBounds.right - 20,
+        top: this.toolDrawerPanel.top
+      }
+    );
+
+    this.addChild( resetAllButton );
 
   }//end constructor
 

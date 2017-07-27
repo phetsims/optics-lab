@@ -60,6 +60,9 @@ define( function( require ) {
      * @public
      */
     reset: function() {
+      this.sources.clear();
+      this.components.clear();
+      this.pieces.clear();
       this.processRaysCountProperty.reset();
     },
 
