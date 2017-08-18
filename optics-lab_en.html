@@ -23,32 +23,26 @@
   <p id="polite-status" aria-live="polite" role="status"></p>
 </div>
 
-<!--
-Subtract off half the image width and height to center it.
-Additionally, move the entire image up by a bit.  This is done by changing the top margin to be lower than 50%
-
-The logo dimensions are given in splash.svg, currently at width="273.172px" height="130.05px"
--->
-
 <script type="text/javascript">
   ( function() {
+
     // Identify the brand (assume generated brand if not provided with query parameters)
     var brandMatch = location.search.match( /brand=([^&]+)/ );
     var brand = brandMatch ? decodeURIComponent( brandMatch[ 1 ] ) : 'adapted-from-phet';
 
     // Preloads, with more included for phet-io brand
     var preloads = [
-      '../joist/js/splash.js',
-      '../sherpa/lib/jquery-2.1.0.js', 
-      '../sherpa/lib/lodash-4.17.4.js',
-      '../sherpa/lib/FileSaver-b8054a2.js', 
+      '../joist/js/splash.js', 
+      '../sherpa/lib/jquery-2.1.0.js',
+      '../sherpa/lib/lodash-4.17.4.js', 
+      '../sherpa/lib/FileSaver-b8054a2.js',
       '../sherpa/lib/himalaya-0.2.7.js',
       '../assert/js/assert.js',
       '../query-string-machine/js/QueryStringMachine.js',
-      '../chipper/js/initialize-globals.js',
-      '../chipper/js/getVersionForBrand.js', 
+      '../chipper/js/initialize-globals.js', 
+      '../chipper/js/getVersionForBrand.js',
       '../sherpa/lib/seedrandom-2.4.2.js',
-      '../sherpa/lib/game-up-camera-1.0.0.js',
+      '../sherpa/lib/game-up-camera-1.0.0.js', 
       '../sherpa/lib/base64-js-1.2.0.js', 
       '../sherpa/lib/TextEncoderLite-3c9f6f0.js'
     ];
