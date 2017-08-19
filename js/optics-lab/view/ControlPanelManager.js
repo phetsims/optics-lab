@@ -139,14 +139,14 @@ define( function( require ) {
       }
 
       function unlinkAll() {
-        controlPanel.nbrOfRaysProperty.unlink( self.previousRaysUpdate );
-        controlPanel.spreadProperty.unlink( self.previousSpreadUpdate );
-        controlPanel.colorProperty.unlink( self.previousColorUpdate );
-        controlPanel.widthProperty.unlink( self.previousWidthUpdate );
-        controlPanel.diameterProperty.unlink( self.previousDiameterUpdate );
-        controlPanel.radiusOfCurvatureProperty.unlink( self.previousRadiusOfCurvatureUpdate );
-        controlPanel.indexOfRefractionProperty.unlink( self.previousIndexOfRefractionUpdate );
-        controlPanel.showFocalPointsProperty.unlink( self.previousShowFocalPointsUpdate );
+        controlPanel.nbrOfRaysProperty.hasListener( self.previousRaysUpdate ) && controlPanel.nbrOfRaysProperty.unlink( self.previousRaysUpdate );
+        controlPanel.spreadProperty.hasListener( self.previousSpreadUpdate ) && controlPanel.spreadProperty.unlink( self.previousSpreadUpdate );
+        controlPanel.colorProperty.hasListener( self.previousColorUpdate ) && controlPanel.colorProperty.unlink( self.previousColorUpdate );
+        controlPanel.widthProperty.hasListener( self.previousWidthUpdate ) && controlPanel.widthProperty.unlink( self.previousWidthUpdate );
+        controlPanel.diameterProperty.hasListener( self.previousDiameterUpdate ) && controlPanel.diameterProperty.unlink( self.previousDiameterUpdate );
+        controlPanel.radiusOfCurvatureProperty.hasListener( self.previousRadiusOfCurvatureUpdate ) && controlPanel.radiusOfCurvatureProperty.unlink( self.previousRadiusOfCurvatureUpdate );
+        controlPanel.indexOfRefractionProperty.hasListener( self.previousIndexOfRefractionUpdate ) && controlPanel.indexOfRefractionProperty.unlink( self.previousIndexOfRefractionUpdate );
+        controlPanel.showFocalPointsProperty.hasListener( self.previousShowFocalPointsUpdate ) && controlPanel.showFocalPointsProperty.unlink( self.previousShowFocalPointsUpdate );
       }
 
       function setAllPanelsAndLinkAll() {
