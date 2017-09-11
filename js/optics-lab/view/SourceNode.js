@@ -210,6 +210,9 @@ define( function( require ) {
         //this.rayNodes[ r ].strokeColor = this.rayColor;
         var dir = this.pieceModel.rayPaths[ r ].startDir;
         var sourceCenter = this.pieceModel.positionProperty.value;
+        if ( this.pieceModel.rayPaths[ r ].segments.length === 0 ) {
+          return;
+        }
         var AbsoluteRayStart = this.pieceModel.rayPaths[ r ].segments[ 0 ].getStart();
         var AbsoluteRayEnd = this.pieceModel.rayPaths[ r ].segments[ 0 ].getEnd();
         var relativeRayStart = AbsoluteRayStart.minus( sourceCenter );

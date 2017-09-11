@@ -107,14 +107,17 @@ define( function( require ) {
 
       var shape = new Shape();
       shape.moveToPoint( this.relativeStartPos );
-      var startPoint = this.segments[ 0 ].getStart();
-      var nextAbsolutePoint;
-      var nextRelativePoint;
-      for ( var i = 0; i < this.segments.length; i++ ) {
-        nextAbsolutePoint = this.segments[ i ].getEnd();
-        nextRelativePoint = this.relativeStartPos.plus( nextAbsolutePoint.minus( startPoint ) );
-        shape.lineToPoint( nextRelativePoint );
+      if ( this.segments.length > 0 ) {
+        var startPoint = this.segments[ 0 ].getStart();
+        var nextAbsolutePoint;
+        var nextRelativePoint;
+        for ( var i = 0; i < this.segments.length; i++ ) {
+          nextAbsolutePoint = this.segments[ i ].getEnd();
+          nextRelativePoint = this.relativeStartPos.plus( nextAbsolutePoint.minus( startPoint ) );
+          shape.lineToPoint( nextRelativePoint );
+        }
       }
+
       return shape;
     }
 
