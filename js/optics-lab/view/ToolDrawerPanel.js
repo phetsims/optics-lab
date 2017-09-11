@@ -11,17 +11,17 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
   var HBox = require( 'SCENERY/nodes/HBox' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
-  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
   var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
 
   //constants
   var DISPLAY_FONT = new PhetFont( 12 );

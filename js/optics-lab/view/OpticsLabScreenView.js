@@ -10,19 +10,19 @@ define( function( require ) {
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
-  var ControlPanelManager = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager' );
   var ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
   var ComponentNode = require( 'OPTICS_LAB/optics-lab/view/ComponentNode' );
+  var ControlPanelManager = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
-  var Property = require( 'AXON/Property' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var SourceNode = require( 'OPTICS_LAB/optics-lab/view/SourceNode' );
-  var SourceModel = require( 'OPTICS_LAB/optics-lab/model/SourceModel' );
-  var ToolDrawerPanel = require( 'OPTICS_LAB/optics-lab/view/ToolDrawerPanel' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
-  var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
+  var Property = require( 'AXON/Property' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  var ScreenView = require( 'JOIST/ScreenView' );
+  var SourceModel = require( 'OPTICS_LAB/optics-lab/model/SourceModel' );
+  var SourceNode = require( 'OPTICS_LAB/optics-lab/view/SourceNode' );
+  var ToolDrawerPanel = require( 'OPTICS_LAB/optics-lab/view/ToolDrawerPanel' );
+  var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
 
   /**
    * @extends {ScreenView}

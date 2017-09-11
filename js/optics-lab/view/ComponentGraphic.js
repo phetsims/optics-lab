@@ -14,10 +14,10 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
-  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
   var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
   var Util = require( 'DOT/Util' );
 

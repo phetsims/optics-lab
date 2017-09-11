@@ -29,14 +29,14 @@ define( function( require ) {
   var HSlider = require( 'SUN/HSlider' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  var OpticsLabConstants = require( 'OPTICS_LAB/optics-lab/OpticsLabConstants' );
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
-  var OpticsLabConstants = require( 'OPTICS_LAB/optics-lab/OpticsLabConstants' );
   var VBox = require( 'SCENERY/nodes/VBox' );
-  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
   // constants
   var DISPLAY_FONT = new PhetFont( 12 );

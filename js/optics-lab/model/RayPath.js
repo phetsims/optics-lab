@@ -12,8 +12,8 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'KITE/segments/Line' );
-  var Shape = require( 'KITE/Shape' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  var Shape = require( 'KITE/Shape' );
 
   /**
    * @extends {Object}

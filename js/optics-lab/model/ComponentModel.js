@@ -10,9 +10,9 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  var Property = require( 'AXON/Property' );
   var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
   var Vector2 = require( 'DOT/Vector2' );
 
