@@ -13,7 +13,8 @@
     "requirejsNamespace": "OPTICS_LAB",
     "runnable": true,
     "supportedBrands": [
-      "phet"
+      "phet",
+      "adapted-from-phet"
     ],
     "simulation": true
   }
