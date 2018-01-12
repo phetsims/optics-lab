@@ -7,7 +7,7 @@
  * Piece:  Controls
  * fan_source: nbr of rays / spread in degrees / color of rays
  * beam_source: nbr of rays / width in cm / color of rays
- * converging_lens: diameter in cm /radius of curvature in cm/ index of refraction (no units)/ focal points checkBox/ focal length readout
+ * converging_lens: diameter in cm /radius of curvature in cm/ index of refraction (no units)/ focal points checkbox/ focal length readout
  * diverging_lens: diameter/radius/index/focal points checkbox/focal length readout
  * converging_mirror: diameter/radius/focal points checkbox/focal length readout
  * diverging_mirror: diameter/radius/focal points checkbox/focal length readout
@@ -22,7 +22,7 @@ define( function( require ) {
 
   // modules
   var AquaRadioButton = require( 'SUN/AquaRadioButton' );
-  var CheckBox = require( 'SUN/CheckBox' );
+  var Checkbox = require( 'SUN/Checkbox' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -116,7 +116,7 @@ define( function( require ) {
       } );
     };
 
-    //Properties for Sliders, CheckBoxes, and Radio Buttons
+    //Properties for Sliders, Checkboxes, and Radio Buttons
     this.expandedProperty = new Property( true );
     this.nbrOfRaysProperty = new Property( 10 );
     this.spreadProperty = new Property( 20 );
@@ -161,9 +161,9 @@ define( function( require ) {
     var indexSlider = new HSlider( this.indexOfRefractionProperty, { min: 1.4, max: 3 }, sliderOptions );
     var indexVBox = vBoxMaker( [ indexSlider, indexText ] );
 
-    var checkBoxOptions = { checkBoxColorBackground: 'white' };
+    var checkboxOptions = { checkboxColorBackground: 'white' };
 
-    var focalPtCheckBox = new CheckBox( focalPointsText, this.showFocalPointsProperty, checkBoxOptions );
+    var focalPtCheckbox = new Checkbox( focalPointsText, this.showFocalPointsProperty, checkboxOptions );
 
     var focalLengthHBox = hBoxMaker( [ focalLengthText, this.focalLengthReadoutText ] );
     var panelContent = new Node();
@@ -176,19 +176,19 @@ define( function( require ) {
         panelContent = hBoxMaker( [ fillerBox, nbrOfRaysVBox, widthVBox, colorVBox1, colorVBox2 ] );
         break;
       case Type.CONVERGING_LENS:
-        panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ] );
+        panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckbox, focalLengthHBox ] );
         break;
       case Type.DIVERGING_LENS:
-        panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox2, indexVBox, focalPtCheckBox, focalLengthHBox ] );
+        panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox2, indexVBox, focalPtCheckbox, focalLengthHBox ] );
         break;
       case Type.CONVERGING_MIRROR:
-        panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox ] );
+        panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, focalPtCheckbox, focalLengthHBox ] );
         break;
       case Type.PLANE_MIRROR:
         panelContent = hBoxMaker( [ fillerBox, diameterVBox ] );
         break;
       case Type.DIVERGING_MIRROR:
-        panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox2, focalPtCheckBox, focalLengthHBox ] );
+        panelContent = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox2, focalPtCheckbox, focalLengthHBox ] );
         break;
       case Type.SIMPLE_MASK:
         panelContent = hBoxMaker( [ fillerBox, diameterVBox ] );

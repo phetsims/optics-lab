@@ -22,7 +22,7 @@ define( function( require ) {
 
   // modules
   var AquaRadioButton = require( 'SUN/AquaRadioButton' );
-  var CheckBox = require( 'SUN/CheckBox' );
+  var Checkbox = require( 'SUN/Checkbox' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -174,7 +174,7 @@ define( function( require ) {
           } );
         }
 
-        var checkBoxOptions = { checkBoxColorBackground: 'white' };
+        var checkboxOptions = { checkboxColorBackground: 'white' };
         var spacing = 25;
         var focalLengthHBox = hBoxMaker( [ this.focalLengthText, this.focalLengthReadoutText ] );
         switch( type ) {
@@ -197,8 +197,8 @@ define( function( require ) {
             var indexSlider = new HSlider( pieceModel.indexProperty, { min: 1.4, max: 3 }, sliderOptions );
             this.hSliders.push( indexSlider );
             var indexVBox = vBoxMaker( [ indexSlider, this.indexText ] );
-            var focalPtCheckBox = new CheckBox( this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions );
-            this.content = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ] );
+            var focalPtCheckbox = new Checkbox( this.focalPointsText, piece.showFocalPointsProperty, checkboxOptions );
+            this.content = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckbox, focalLengthHBox ] );
             break;
           case Type.DIVERGING_LENS:
             //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
@@ -209,15 +209,15 @@ define( function( require ) {
             indexSlider = new HSlider( pieceModel.indexProperty, { min: 1.4, max: 3 }, sliderOptions );
             this.hSliders.push( indexSlider );
             indexVBox = vBoxMaker( [ indexSlider, this.indexText ] );
-            focalPtCheckBox = new CheckBox( this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions );
-            this.content = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckBox, focalLengthHBox ] );
+            focalPtCheckbox = new Checkbox( this.focalPointsText, piece.showFocalPointsProperty, checkboxOptions );
+            this.content = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckbox, focalLengthHBox ] );
             break;
           case Type.CONVERGING_MIRROR:
             radiusSlider = new HSlider( pieceModel.radiusProperty, { min: 200, max: 1600 }, sliderOptions );
             this.hSliders.push( radiusSlider );
             radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
-            focalPtCheckBox = new CheckBox( this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions );
-            this.content = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox ] );
+            focalPtCheckbox = new Checkbox( this.focalPointsText, piece.showFocalPointsProperty, checkboxOptions );
+            this.content = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, focalPtCheckbox, focalLengthHBox ] );
             break;
           case Type.PLANE_MIRROR:
             this.content = hBoxMaker( [ fillerBox, diameterVBox ] );
@@ -226,8 +226,8 @@ define( function( require ) {
             radiusSlider = new HSlider( pieceModel.radiusProperty, { min: -200, max: -1600 }, sliderOptions );
             this.hSliders.push( radiusSlider );
             radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
-            focalPtCheckBox = new CheckBox( this.focalPointsText, piece.showFocalPointsProperty, checkBoxOptions );
-            this.content = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, focalPtCheckBox, focalLengthHBox ] );
+            focalPtCheckbox = new Checkbox( this.focalPointsText, piece.showFocalPointsProperty, checkboxOptions );
+            this.content = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, focalPtCheckbox, focalLengthHBox ] );
             break;
           case Type.SIMPLE_MASK:
             this.content = hBoxMaker( [ fillerBox, diameterVBox ] );
