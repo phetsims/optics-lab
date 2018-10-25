@@ -34,6 +34,7 @@ define( function( require ) {
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
+  var Range = require( 'DOT/Range' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
   var VBox = require( 'SCENERY/nodes/VBox' );
@@ -155,15 +156,12 @@ define( function( require ) {
         if ( type === Type.FAN_SOURCE || type === Type.BEAM_SOURCE ) {
           //pieceModel = piece.pieceModel;
           var maxNbrRays = pieceModel.maxNbrOfRays;
-          var nbrOfRaysSlider = new HSlider( pieceModel.nbrOfRaysProperty, {
-            min: 1,
-            max: maxNbrRays
-          }, sliderOptions );
+          var nbrOfRaysSlider = new HSlider( pieceModel.nbrOfRaysProperty, new Range( 1, maxNbrRays ), sliderOptions );
           nbrOfRaysVBox = vBoxMaker( [ nbrOfRaysSlider, this.nbrOfRaysText ] );
           this.setColorRadioButtonsForSourceNode( piece );
         }
         else {   //if piece = component
-          var diameterSlider = new HSlider( pieceModel.diameterProperty, { min: 50, max: 250 }, sliderOptions );
+          var diameterSlider = new HSlider( pieceModel.diameterProperty, new Range( 50, 250 ), sliderOptions );
           diameterVBox = vBoxMaker( [ diameterSlider, this.diameterText ] );
           this.focalLengthReadoutText.text = pieceModel.fProperty.value.toFixed( 0 );
           var self = this;
@@ -179,22 +177,22 @@ define( function( require ) {
         var focalLengthHBox = hBoxMaker( [ this.focalLengthText, this.focalLengthReadoutText ] );
         switch( type ) {
           case Type.FAN_SOURCE:
-            var spreadSlider = new HSlider( pieceModel.spreadProperty, { min: 2, max: 180 }, sliderOptions );
+            var spreadSlider = new HSlider( pieceModel.spreadProperty, new Range( 2, 180 ), sliderOptions );
             var spreadVBox = vBoxMaker( [ spreadSlider, this.spreadText ] );
             this.content = hBoxMaker( [ fillerBox, nbrOfRaysVBox, spreadVBox, this.colorVBox1, this.colorVBox2 ] );
             break;
           case Type.BEAM_SOURCE:
-            var heightSlider = new HSlider( pieceModel.heightProperty, { min: 50, max: 250 }, sliderOptions );
+            var heightSlider = new HSlider( pieceModel.heightProperty, new Range( 50, 250 ), sliderOptions );
             var heightVBox = vBoxMaker( [ heightSlider, this.heightText ] );
             this.content = hBoxMaker( [ fillerBox, nbrOfRaysVBox, heightVBox, this.colorVBox1, this.colorVBox2 ] );
             break;
           case Type.CONVERGING_LENS:
             //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
             //radius of curvature R = 2*f*( n - 1 )
-            var radiusSlider = new HSlider( pieceModel.radiusProperty, { min: 100, max: 800 }, sliderOptions );
+            var radiusSlider = new HSlider( pieceModel.radiusProperty, new Range( 100, 800 ), sliderOptions );
             this.hSliders.push( radiusSlider );
             var radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
-            var indexSlider = new HSlider( pieceModel.indexProperty, { min: 1.4, max: 3 }, sliderOptions );
+            var indexSlider = new HSlider( pieceModel.indexProperty, new Range( 1.4, 3 ), sliderOptions );
             this.hSliders.push( indexSlider );
             var indexVBox = vBoxMaker( [ indexSlider, this.indexText ] );
             var focalPtCheckbox = new Checkbox( this.focalPointsText, piece.showFocalPointsProperty, checkboxOptions );
@@ -203,17 +201,17 @@ define( function( require ) {
           case Type.DIVERGING_LENS:
             //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
             //radius of curvature R = 2*f*( n - 1 )
-            radiusSlider = new HSlider( pieceModel.radiusProperty, { min: -100, max: -800 }, sliderOptions );
+            radiusSlider = new HSlider( pieceModel.radiusProperty, new Range( -100, -800 ), sliderOptions );
             this.hSliders.push( radiusSlider );
             radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
-            indexSlider = new HSlider( pieceModel.indexProperty, { min: 1.4, max: 3 }, sliderOptions );
+            indexSlider = new HSlider( pieceModel.indexProperty, new Range( 1.4, 3 ), sliderOptions );
             this.hSliders.push( indexSlider );
             indexVBox = vBoxMaker( [ indexSlider, this.indexText ] );
             focalPtCheckbox = new Checkbox( this.focalPointsText, piece.showFocalPointsProperty, checkboxOptions );
             this.content = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckbox, focalLengthHBox ] );
             break;
           case Type.CONVERGING_MIRROR:
-            radiusSlider = new HSlider( pieceModel.radiusProperty, { min: 200, max: 1600 }, sliderOptions );
+            radiusSlider = new HSlider( pieceModel.radiusProperty, new Range( 200, 1600 ), sliderOptions );
             this.hSliders.push( radiusSlider );
             radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
             focalPtCheckbox = new Checkbox( this.focalPointsText, piece.showFocalPointsProperty, checkboxOptions );
@@ -223,7 +221,7 @@ define( function( require ) {
             this.content = hBoxMaker( [ fillerBox, diameterVBox ] );
             break;
           case Type.DIVERGING_MIRROR:
-            radiusSlider = new HSlider( pieceModel.radiusProperty, { min: -200, max: -1600 }, sliderOptions );
+            radiusSlider = new HSlider( pieceModel.radiusProperty, new Range( -200, -1600 ), sliderOptions );
             this.hSliders.push( radiusSlider );
             radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
             focalPtCheckbox = new Checkbox( this.focalPointsText, piece.showFocalPointsProperty, checkboxOptions );

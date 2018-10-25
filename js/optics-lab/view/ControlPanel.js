@@ -34,6 +34,7 @@ define( function( require ) {
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
+  var Range = require( 'DOT/Range' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
   var VBox = require( 'SCENERY/nodes/VBox' );
@@ -131,13 +132,13 @@ define( function( require ) {
 
     //Create Sliders with Text labels
     var maxNbrRays = mainModel.maxNbrOfRaysFromASource;
-    var nbrOfRaysSlider = new HSlider( this.nbrOfRaysProperty, { min: 1, max: maxNbrRays }, sliderOptions );
+    var nbrOfRaysSlider = new HSlider( this.nbrOfRaysProperty, new Range( 1, maxNbrRays ), sliderOptions );
     var nbrOfRaysVBox = vBoxMaker( [ nbrOfRaysSlider, nbrOfRaysText ] );
 
-    var spreadSlider = new HSlider( this.spreadProperty, { min: 2, max: 180 }, sliderOptions );
+    var spreadSlider = new HSlider( this.spreadProperty, new Range( 2, 180 ), sliderOptions );
     var spreadVBox = vBoxMaker( [ spreadSlider, spreadText ] );
 
-    var widthSlider = new HSlider( this.widthProperty, { min: 50, max: 250 }, sliderOptions );
+    var widthSlider = new HSlider( this.widthProperty, new Range( 50, 250 ), sliderOptions );
     var widthVBox = vBoxMaker( [ widthSlider, widthText ] );
 
     var radioButtonOptions = { radius: 8, fontSize: 12, deselectedColor: 'white' };
@@ -149,16 +150,16 @@ define( function( require ) {
     var colorVBox1 = vBoxMaker2( [ whiteColorRadioButton, greenColorRadioButton ] );
     var colorVBox2 = vBoxMaker2( [ redColorRadioButton, yellowColorRadioButton ] );
 
-    var diameterSlider = new HSlider( this.diameterProperty, { min: 50, max: 250 }, sliderOptions );
+    var diameterSlider = new HSlider( this.diameterProperty, new Range( 50, 250 ), sliderOptions );
     var diameterVBox = vBoxMaker( [ diameterSlider, diameterText ] );
 
-    var radiusSlider = new HSlider( this.radiusOfCurvatureProperty, { min: 100, max: 800 }, sliderOptions );
+    var radiusSlider = new HSlider( this.radiusOfCurvatureProperty, new Range( 100, 800 ), sliderOptions );
     var radiusVBox = vBoxMaker( [ radiusSlider, radiusText ] );
 
-    var radiusSlider2 = new HSlider( this.radiusOfCurvatureProperty, { min: -100, max: -800 }, sliderOptions );
+    var radiusSlider2 = new HSlider( this.radiusOfCurvatureProperty, new Range( -100, -800 ), sliderOptions );
     var radiusVBox2 = vBoxMaker( [ radiusSlider2, radiusText ] );
 
-    var indexSlider = new HSlider( this.indexOfRefractionProperty, { min: 1.4, max: 3 }, sliderOptions );
+    var indexSlider = new HSlider( this.indexOfRefractionProperty, new Range( 1.4, 3 ), sliderOptions );
     var indexVBox = vBoxMaker( [ indexSlider, indexText ] );
 
     var checkboxOptions = { checkboxColorBackground: 'white' };
