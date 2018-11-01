@@ -156,7 +156,8 @@ define( function( require ) {
     var radiusSlider = new HSlider( this.radiusOfCurvatureProperty, new Range( 100, 800 ), sliderOptions );
     var radiusVBox = vBoxMaker( [ radiusSlider, radiusText ] );
 
-    var radiusSlider2 = new HSlider( this.radiusOfCurvatureProperty, new Range( -100, -800 ), sliderOptions );
+    //TODO Range here may be incorrect, see https://github.com/phetsims/optics-lab/issues/22
+    var radiusSlider2 = new HSlider( this.radiusOfCurvatureProperty, new Range( -800, -100 ), sliderOptions );
     var radiusVBox2 = vBoxMaker( [ radiusSlider2, radiusText ] );
 
     var indexSlider = new HSlider( this.indexOfRefractionProperty, new Range( 1.4, 3 ), sliderOptions );
