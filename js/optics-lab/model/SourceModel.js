@@ -16,6 +16,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var RayPath = require( 'OPTICS_LAB/optics-lab/model/RayPath' );
   var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
+  var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -110,7 +111,7 @@ define( function( require ) {
      */
     createRays: function() {
       this.rayPaths = [];  //clear any current rays
-      this.nbrOfRaysProperty.value = Math.round( this.nbrOfRaysProperty.value );  //slider may produce non-integer number of rays
+      this.nbrOfRaysProperty.value = Util.roundSymmetric( this.nbrOfRaysProperty.value );  //slider may produce non-integer number of rays
       //for fan source
       var lowestAngle = -this.spreadProperty.value / 2;  //in degrees
       var deltaAngle;
@@ -119,7 +120,7 @@ define( function( require ) {
         lowestAngle = 0;  //if only one ray, ray is horizontal
       }
       else {
-        deltaAngle = this.spreadProperty.value / ( this.nbrOfRaysProperty.value - 1);    //in degrees
+        deltaAngle = this.spreadProperty.value / ( this.nbrOfRaysProperty.value - 1 );    //in degrees
       }
       var theta = ( lowestAngle ) * Math.PI / 180; //in radians
       var dir = new Vector2( Math.cos( theta ), Math.sin( theta ) );

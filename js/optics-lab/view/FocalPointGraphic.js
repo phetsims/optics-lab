@@ -12,6 +12,7 @@ define( function( require ) {
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * @extends {Node}
@@ -22,7 +23,7 @@ define( function( require ) {
 
     Node.call( this );
 
-    var R = Math.round( size / 2 );
+    var R = Util.roundSymmetric( size / 2 );
     if ( size === undefined ) {
       R = 30;
     }
