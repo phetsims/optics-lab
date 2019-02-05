@@ -37,7 +37,7 @@ define( function( require ) {
     this.diameter = diameter;    //starting direction of the first segment, the one thing that never changes
     this.radius = radius;   // radius of curvature of each surface of lens
     this.index = index;     // index of refraction
-    this.f = this.radius / ( 2 * ( this.index - 1 ));
+    this.f = this.radius / ( 2 * ( this.index - 1 ) );
 
     this.mirrorBackGraphic = new Rectangle( 0, -0.5, 20, 1, { fill: 'red' } );
     this.shape = new Shape();
@@ -121,7 +121,7 @@ define( function( require ) {
         var w = 5;
         this.shape
           .arc( -w - R, 0, R, theta, -theta, true )
-          .lineToRelative( 2 * ( w + ( R - C )) )
+          .lineToRelative( 2 * ( w + ( R - C ) ), 0 )
           .arc( w + R, 0, R, -Math.PI + theta, -Math.PI - theta, true )
           .close();
       }
