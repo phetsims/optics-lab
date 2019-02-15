@@ -92,7 +92,7 @@ define( function( require ) {
 
       drag: function( e ) {
         var mousePosRelative = self.rotationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
-        var angle = mousePosRelative.angle() - Math.PI / 2;  //angle = 0 when beam horizontal, CW is + angle
+        var angle = mousePosRelative.angle - Math.PI / 2;  //angle = 0 when beam horizontal, CW is + angle
         self.pieceModel.setAngle( angle );
 
       }

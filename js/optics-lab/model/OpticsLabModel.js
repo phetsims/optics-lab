@@ -195,7 +195,7 @@ define( function( require ) {
      */
     processIntersection: function( rayPath, intersection, segmentNbr, componentNbr ) {
       var incomingRayDir = rayPath.dirs[ segmentNbr ];
-      var incomingAngle = incomingRayDir.angle();   //angle in rads between direction of ray and component normal
+      var incomingAngle = incomingRayDir.angle;   //angle in rads between direction of ray and component normal
       var outgoingAngle;
       var component = this.components.get( componentNbr );
       var componentAngle = component.angleProperty.value;  //tilt of component = angle between horizontal and component normal
