@@ -81,7 +81,7 @@ define( function( require ) {
       this.nbrSegments += 1;
       var deltaPos = endPos.minus( startPos );
       var dir = deltaPos.normalize();
-      var length = deltaPos.magnitude();
+      var length = deltaPos.magnitude;
       this.dirs.push( dir );
       this.lengths.push( length );
     },
