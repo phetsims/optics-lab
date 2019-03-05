@@ -219,7 +219,7 @@ define( function( require ) {
         self.linkToPiece( piece );
       }
     } );
-    expandCollapseButton.expandedProperty.link( function( tOrF ) {
+    this.expandedProperty.link( function( tOrF ) {
       displayPanel.visible = tOrF;
       //if( displayPanel !== null ){
       //    displayPanel.visible = tOrF;
