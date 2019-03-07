@@ -15,6 +15,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
   var Vector2 = require( 'DOT/Vector2' );
+  var Vector2Property = require( 'DOT/Vector2Property' );
 
   /**
    * @extends {Object}
@@ -28,8 +29,8 @@ define( function( require ) {
    */
   function ComponentModel( mainModel, type, diameter, radiusCurvature, index ) {
 
-    // @private {Property.<Vector2>} position of component on stage
-    this.positionProperty = new Property( new Vector2( 0, 0 ) );
+    // @private - position of component on stage
+    this.positionProperty = new Vector2Property( new Vector2( 0, 0 ) );
 
     // @private, {Property.<number>}
     this.diameterProperty = new NumberProperty( diameter );

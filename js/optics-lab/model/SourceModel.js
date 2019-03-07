@@ -18,6 +18,7 @@ define( function( require ) {
   var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
+  var Vector2Property = require( 'DOT/Vector2Property' );
 
   /**
    * @extends {Object}
@@ -32,8 +33,8 @@ define( function( require ) {
    */
   function SourceModel( mainModel, type, nbrOfRays, position, spread, height ) {
 
-    // @private {Property.<Vector2>} position of source on stage
-    this.positionProperty = new Property( position );
+    // @private position of source on stage
+    this.positionProperty = new Vector2Property( position );
 
     // @private, {Property.<number>} number of rays
     this.nbrOfRaysProperty = new NumberProperty( nbrOfRays );
