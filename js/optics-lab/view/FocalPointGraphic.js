@@ -4,15 +4,15 @@
  * @author Michael Dubson (PhET Interactive Simulations)
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'SCENERY/nodes/Line' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
-  var Util = require( 'DOT/Util' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Line = require( 'SCENERY/nodes/Line' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  const Util = require( 'DOT/Util' );
 
   /**
    * @extends {Node}

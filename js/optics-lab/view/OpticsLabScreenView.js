@@ -5,24 +5,24 @@
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
-  var ComponentNode = require( 'OPTICS_LAB/optics-lab/view/ComponentNode' );
-  var ControlPanelManager = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
-  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
-  var Property = require( 'AXON/Property' );
-  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var SourceModel = require( 'OPTICS_LAB/optics-lab/model/SourceModel' );
-  var SourceNode = require( 'OPTICS_LAB/optics-lab/view/SourceNode' );
-  var ToolDrawerPanel = require( 'OPTICS_LAB/optics-lab/view/ToolDrawerPanel' );
-  var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
+  const Bounds2 = require( 'DOT/Bounds2' );
+  const ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
+  const ComponentNode = require( 'OPTICS_LAB/optics-lab/view/ComponentNode' );
+  const ControlPanelManager = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
+  const opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  const Property = require( 'AXON/Property' );
+  const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  const ScreenView = require( 'JOIST/ScreenView' );
+  const SourceModel = require( 'OPTICS_LAB/optics-lab/model/SourceModel' );
+  const SourceNode = require( 'OPTICS_LAB/optics-lab/view/SourceNode' );
+  const ToolDrawerPanel = require( 'OPTICS_LAB/optics-lab/view/ToolDrawerPanel' );
+  const Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
 
   /**
    * @extends {ScreenView}

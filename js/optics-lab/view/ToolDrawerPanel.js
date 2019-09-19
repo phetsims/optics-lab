@@ -7,21 +7,21 @@
  *
  * @author Michael Dubson (PhET Interactive Simulations)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
-  var Panel = require( 'SUN/Panel' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  const Panel = require( 'SUN/Panel' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   //constants
   var DISPLAY_FONT = new PhetFont( 12 );

@@ -16,17 +16,17 @@
  *
  * @author Michael Dubson (PhET Interactive Simulations)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ControlPanel = require( 'OPTICS_LAB/optics-lab/view/ControlPanel' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var ObservableArray = require( 'AXON/ObservableArray' );
-  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
-  var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
-  var Util = require( 'DOT/Util' );
+  const ControlPanel = require( 'OPTICS_LAB/optics-lab/view/ControlPanel' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const ObservableArray = require( 'AXON/ObservableArray' );
+  const opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  const Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
+  const Util = require( 'DOT/Util' );
 
   /**
    * @extends {Node}

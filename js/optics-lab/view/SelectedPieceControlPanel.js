@@ -17,27 +17,27 @@
  *
  * @author Michael Dubson (PhET Interactive Simulations)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AquaRadioButton = require( 'SUN/AquaRadioButton' );
-  var Checkbox = require( 'SUN/Checkbox' );
-  var Dimension2 = require( 'DOT/Dimension2' );
-  var ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var HSlider = require( 'SUN/HSlider' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
-  var OpticsLabConstants = require( 'OPTICS_LAB/optics-lab/OpticsLabConstants' );
-  var Panel = require( 'SUN/Panel' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  const AquaRadioButton = require( 'SUN/AquaRadioButton' );
+  const Checkbox = require( 'SUN/Checkbox' );
+  const Dimension2 = require( 'DOT/Dimension2' );
+  const ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const HSlider = require( 'SUN/HSlider' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  const OpticsLabConstants = require( 'OPTICS_LAB/optics-lab/OpticsLabConstants' );
+  const Panel = require( 'SUN/Panel' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Property = require( 'AXON/Property' );
+  const Range = require( 'DOT/Range' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
   var DISPLAY_FONT = new PhetFont( 12 );

@@ -6,20 +6,20 @@
  *
  * @author Michael Dubson (PhET Interactive Simulations)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var FocalPointGraphic = require( 'OPTICS_LAB/optics-lab/view/FocalPointGraphic' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'SCENERY/nodes/Line' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Shape = require( 'KITE/Shape' );
-  var Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
-  var Util = require( 'DOT/Util' );
+  const FocalPointGraphic = require( 'OPTICS_LAB/optics-lab/view/FocalPointGraphic' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Line = require( 'SCENERY/nodes/Line' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  const Path = require( 'SCENERY/nodes/Path' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const Shape = require( 'KITE/Shape' );
+  const Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
+  const Util = require( 'DOT/Util' );
 
   /**
    * @extends {Node}

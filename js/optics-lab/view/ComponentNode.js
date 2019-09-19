@@ -5,18 +5,18 @@
  *
  * @author Michael Dubson (PhET Interactive Simulations)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Circle = require( 'SCENERY/nodes/Circle' );
-  var ComponentGraphic = require( 'OPTICS_LAB/optics-lab/view/ComponentGraphic' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
-  var Property = require( 'AXON/Property' );
-  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const Circle = require( 'SCENERY/nodes/Circle' );
+  const ComponentGraphic = require( 'OPTICS_LAB/optics-lab/view/ComponentGraphic' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  const Property = require( 'AXON/Property' );
+  const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   /**
    * Constructor for ComponentNode which renders sample element as a scenery node.

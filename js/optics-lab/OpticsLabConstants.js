@@ -5,12 +5,12 @@
  *
  * @author Michael Dubson (PhET Interactive Simulations)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  const Bounds2 = require( 'DOT/Bounds2' );
+  const opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
   return opticsLab.register( 'OpticsLabConstants', {
     // layout bounds used throughout the simulation for laying out the screens

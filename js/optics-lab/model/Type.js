@@ -5,11 +5,11 @@
  *
  * @author Martin Veillette (Berea College)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  const opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
   var Type = {
     SLIT_MASK: 'SLIT_MASK',

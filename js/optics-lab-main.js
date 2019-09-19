@@ -5,17 +5,17 @@
  *
  * @author Michael Dubson (PhET Interactive Simulations)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var OpticsLabScreen = require( 'OPTICS_LAB/optics-lab/OpticsLabScreen' );
+  const OpticsLabScreen = require( 'OPTICS_LAB/optics-lab/OpticsLabScreen' );
   //following 2 lines always required in every sim
-  var Sim = require( 'JOIST/Sim' );
-  var SimLauncher = require( 'JOIST/SimLauncher' );
+  const Sim = require( 'JOIST/Sim' );
+  const SimLauncher = require( 'JOIST/SimLauncher' );
 
   // strings
-  var opticsLabTitleString = require( 'string!OPTICS_LAB/optics-lab.title' );
+  const opticsLabTitleString = require( 'string!OPTICS_LAB/optics-lab.title' );
 
   var simOptions = {
     credits: {

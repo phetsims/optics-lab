@@ -5,16 +5,16 @@
  *
  * @author Michael Dubson (PhET Interactive Simulations)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
-  var OpticsLabModel = require( 'OPTICS_LAB/optics-lab/model/OpticsLabModel' );
-  var OpticsLabScreenView = require( 'OPTICS_LAB/optics-lab/view/OpticsLabScreenView' );
-  var Property = require( 'AXON/Property' );
-  var Screen = require( 'JOIST/Screen' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  const OpticsLabModel = require( 'OPTICS_LAB/optics-lab/model/OpticsLabModel' );
+  const OpticsLabScreenView = require( 'OPTICS_LAB/optics-lab/view/OpticsLabScreenView' );
+  const Property = require( 'AXON/Property' );
+  const Screen = require( 'JOIST/Screen' );
 
   /**
    * @extends {Screen}

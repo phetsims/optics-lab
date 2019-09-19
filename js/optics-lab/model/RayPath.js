@@ -6,14 +6,14 @@
  *
  * @author Michael Dubson (PhET Interactive Simulations)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'KITE/segments/Line' );
-  var opticsLab = require( 'OPTICS_LAB/opticsLab' );
-  var Shape = require( 'KITE/Shape' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Line = require( 'KITE/segments/Line' );
+  const opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  const Shape = require( 'KITE/Shape' );
 
   /**
    * @extends {Object}
