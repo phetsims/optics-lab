@@ -47,7 +47,7 @@ define( require => {
     // @public {Property.<number>} tilt angle of component, 0 = optic axis is horizontal, + angle is CW
     this.angleProperty = new NumberProperty( 0 );
 
-    var self = this;
+    const self = this;
     this.mainModel = mainModel;
 
     // @public (read-only) {string}
@@ -61,15 +61,15 @@ define( require => {
     } );
 
     this.radiusProperty.link( function( radius ) {
-      var R = radius;   // R is signed.  + for converging lenses, - for diverging lenses
-      var n = self.indexProperty.value;
+      const R = radius;   // R is signed.  + for converging lenses, - for diverging lenses
+      const n = self.indexProperty.value;
       self.fProperty.value = R / ( 2 * ( n - 1 ));  //focal length gets correct sign from sign of radius R.
       self.mainModel.processRays();
     } );
 
     this.indexProperty.link( function( index ) {
-      var R = self.radiusProperty.value;
-      var n = index;
+      const R = self.radiusProperty.value;
+      const n = index;
       self.fProperty.value = R / ( 2 * ( n - 1 ));
       self.mainModel.processRays();
     } );

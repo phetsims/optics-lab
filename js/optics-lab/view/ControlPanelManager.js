@@ -37,7 +37,7 @@ define( require => {
   function ControlPanelManager( mainModel, mainView ) {
 
     Node.call( this );
-    var self = this;
+    const self = this;
     this.mainModel = mainModel;
     this.mainView = mainView;
     this.controlPanels = [];     //one display for each piece on the stage, only display of selected piece is visible
@@ -65,8 +65,8 @@ define( require => {
       Type.SLIT_MASK
     ];
 
-    for ( var i = 0; i < this.typeArray.length; i++ ) {
-      var newControlPanel = new ControlPanel( mainModel, mainView, this.typeArray[ i ] );
+    for ( let i = 0; i < this.typeArray.length; i++ ) {
+      const newControlPanel = new ControlPanel( mainModel, mainView, this.typeArray[ i ] );
       this.controlPanels[ i ] = newControlPanel;
       this.addChild( newControlPanel );
     }
@@ -90,8 +90,8 @@ define( require => {
      * @returns {number}
      */
     getIndex: function( type ) {
-      var index;
-      for ( var i = 0; i < this.typeArray.length; i++ ) {
+      let index;
+      for ( let i = 0; i < this.typeArray.length; i++ ) {
         if ( this.controlPanels[ i ].type === type ) {
           index = i;
         }
@@ -102,10 +102,10 @@ define( require => {
      * @private
      */
     linkControls: function() {
-      var type = this.selectedPieceType;
-      var piece = this.selectedPiece;
-      var controlPanel = this.controlPanels[ this.getIndex( type ) ];
-      var self = this;
+      const type = this.selectedPieceType;
+      const piece = this.selectedPiece;
+      const controlPanel = this.controlPanels[ this.getIndex( type ) ];
+      const self = this;
 
       function raysUpdate( nbrOfRays ) {
         piece.pieceModel.nbrOfRaysProperty.value = Util.roundSymmetric( nbrOfRays );

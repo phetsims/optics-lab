@@ -79,9 +79,9 @@ define( require => {
     addSegment: function( startPos, endPos ) {
       this.segments.push( new Line( startPos, endPos ) );
       this.nbrSegments += 1;
-      var deltaPos = endPos.minus( startPos );
-      var dir = deltaPos.normalize();
-      var length = deltaPos.magnitude;
+      const deltaPos = endPos.minus( startPos );
+      const dir = deltaPos.normalize();
+      const length = deltaPos.magnitude;
       this.dirs.push( dir );
       this.lengths.push( length );
     },
@@ -93,7 +93,7 @@ define( require => {
     getShape: function() {
       this.shape = new Shape();
       this.shape.moveToPoint( this.segments[ 0 ].getStart() );
-      for ( var i = 0; i < this.segments.length; i++ ) {
+      for ( let i = 0; i < this.segments.length; i++ ) {
         this.shape.lineToPoint( this.segments[ i ].getEnd() );
       }
       return this.shape;
@@ -105,13 +105,13 @@ define( require => {
      */
     getRelativeShape: function() {
 
-      var shape = new Shape();
+      const shape = new Shape();
       shape.moveToPoint( this.relativeStartPos );
       if ( this.segments.length > 0 ) {
-        var startPoint = this.segments[ 0 ].getStart();
-        var nextAbsolutePoint;
-        var nextRelativePoint;
-        for ( var i = 0; i < this.segments.length; i++ ) {
+        const startPoint = this.segments[ 0 ].getStart();
+        let nextAbsolutePoint;
+        let nextRelativePoint;
+        for ( let i = 0; i < this.segments.length; i++ ) {
           nextAbsolutePoint = this.segments[ i ].getEnd();
           nextRelativePoint = this.relativeStartPos.plus( nextAbsolutePoint.minus( startPoint ) );
           shape.lineToPoint( nextRelativePoint );

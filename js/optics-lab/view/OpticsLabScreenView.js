@@ -51,7 +51,7 @@ define( require => {
     this.toolDrawerPanel.bottom = this.layoutBounds.bottom - 10;
     this.toolDrawerPanel.centerX = this.layoutBounds.centerX;
 
-    var resetAllButton = new ResetAllButton( {
+    const resetAllButton = new ResetAllButton( {
         listener: function() {
           opticsLabModel.reset();
         },
@@ -76,7 +76,7 @@ define( require => {
      * @private
      */
     addSource: function( type, startPosition ) {
-      var sourceModel;
+      let sourceModel;
       if ( type === Type.FAN_SOURCE ) {
         sourceModel = new SourceModel( this.mainModel, Type.FAN_SOURCE, 10, startPosition, 45, 0 );
       }
@@ -85,7 +85,7 @@ define( require => {
       }
       this.mainModel.addSource( sourceModel );
       sourceModel.setPosition( startPosition );
-      var sourceNode = new SourceNode( this.mainModel, sourceModel, this );
+      const sourceNode = new SourceNode( this.mainModel, sourceModel, this );
       this.addChild( sourceNode );
       return sourceNode;
       //sourceNode.addRayNodesToParent( this );
@@ -99,7 +99,7 @@ define( require => {
      * @private
      */
     addComponent: function( type, startPosition ) {
-      var componentModel;
+      let componentModel;
       switch( type ) {
         case Type.CONVERGING_LENS:
           componentModel = new ComponentModel( this.mainModel, Type.CONVERGING_LENS, 125, 350, 1.8 );
@@ -125,7 +125,7 @@ define( require => {
         default:
           throw new Error( 'invalid type: ' + type );
       }//end switch()
-      var componentNode;
+      let componentNode;
       if ( componentModel !== undefined ) {
         this.mainModel.addComponent( componentModel );
         componentNode = new ComponentNode( componentModel, this );
@@ -145,7 +145,7 @@ define( require => {
      * @public
      */
     addPiece: function( type, startPosition ) {
-      var newPiece;
+      let newPiece;
       if ( type === Type.FAN_SOURCE || type === Type.BEAM_SOURCE ) {
         newPiece = this.addSource( type, startPosition );
       }
@@ -153,8 +153,8 @@ define( require => {
         newPiece = this.addComponent( type, startPosition );
       }
       //since it is a new piece, have to reset its control panel settings
-      var panelIndex = this.controlPanelManager.getIndex( newPiece.type );
-      var controlPanelOfThisType = this.controlPanelManager.controlPanels[ panelIndex ];
+      const panelIndex = this.controlPanelManager.getIndex( newPiece.type );
+      const controlPanelOfThisType = this.controlPanelManager.controlPanels[ panelIndex ];
       controlPanelOfThisType.resetProperties();
 
       //this.controlPanelManager.displayControlPanelForNewPiece( newPiece );
@@ -167,7 +167,7 @@ define( require => {
      * @private
      */
     removeSource: function( sourceNode ) {
-      var sourceModel = sourceNode.pieceModel;
+      const sourceModel = sourceNode.pieceModel;
       this.removeChild( sourceNode );
       this.mainModel.removeSource( sourceModel );
     },
@@ -179,7 +179,7 @@ define( require => {
      */
     removeComponent: function( componentNode ) {
       this.removeChild( componentNode );
-      var componentModel = componentNode.pieceModel;
+      const componentModel = componentNode.pieceModel;
       this.mainModel.removeComponent( componentModel );
     },
 
@@ -189,7 +189,7 @@ define( require => {
      * @public
      */
     removePiece: function( piece ) {
-      var type = piece.type;
+      const type = piece.type;
       if ( type === Type.FAN_SOURCE || type === Type.BEAM_SOURCE ) {
         this.removeSource( piece );
       }

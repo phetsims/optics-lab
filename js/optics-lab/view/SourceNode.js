@@ -32,7 +32,7 @@ define( require => {
    */
   function SourceNode( mainModel, sourceModel, mainView ) {
 
-    var self = this;
+    const self = this;
     this.colorProperty = new Property( 'white' );  //sets color of rays
     this.mainModel = mainModel;
     this.pieceModel = sourceModel;   //need generic name because need to loop over all pieces and have pieceModel
@@ -52,8 +52,8 @@ define( require => {
     } );
 
     // Draw a handle
-    var height = sourceModel.height;   //if type = Type.BEAM_SOURCE
-    var angle = sourceModel.angleProperty.value;
+    const height = sourceModel.height;   //if type = Type.BEAM_SOURCE
+    const angle = sourceModel.angleProperty.value;
 
     this.translationHandle;
     this.rotationHandle = new Node();
@@ -72,14 +72,14 @@ define( require => {
 
     self.insertChild( 0, this.translationHandle );
 
-    var rayOptionsObject = { stroke: 'black', lineWidth: 1.5, lineJoin: 'bevel' }; //, lineDash: [ 5, 1 ]
-    for ( var r = 0; r < this.maxNbrOfRays; r++ ) {
+    const rayOptionsObject = { stroke: 'black', lineWidth: 1.5, lineJoin: 'bevel' }; //, lineDash: [ 5, 1 ]
+    for ( let r = 0; r < this.maxNbrOfRays; r++ ) {
       this.rayNodes[ r ] = new Path( new Shape(), rayOptionsObject );
       self.addChild( this.rayNodes[ r ] );
     }
 
     // When dragging, move the sample element
-    var mouseDownPosition;
+    let mouseDownPosition;
     self.translationHandle.addInputListener( new SimpleDragHandler(
       {
         // When dragging across it in a mobile device, pick it up
@@ -88,18 +88,18 @@ define( require => {
         start: function( e ) {
           self.mainView.setSelectedPiece( self );
           self.mainView.setSelectedPieceType( self );
-          var position = self.globalToParentPoint( e.pointer.point );
-          var currentNodePos = self.pieceModel.positionProperty.value;
+          const position = self.globalToParentPoint( e.pointer.point );
+          const currentNodePos = self.pieceModel.positionProperty.value;
           mouseDownPosition = position.minus( currentNodePos );
         },
 
         drag: function( e ) {
-          var position = self.globalToParentPoint( e.pointer.point );
+          let position = self.globalToParentPoint( e.pointer.point );
           position = position.minus( mouseDownPosition );
           self.pieceModel.setPosition( position );
         },
         end: function( e ) {
-          var position = self.globalToParentPoint( e.pointer.point );
+          const position = self.globalToParentPoint( e.pointer.point );
           if ( self.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y ) ) {
             self.mainView.removePiece( self );
           }
@@ -115,8 +115,8 @@ define( require => {
       },
 
       drag: function( e ) {
-        var mousePosRelative = self.translationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
-        var angle = mousePosRelative.angle - Math.PI / 2;  //angle = 0 when beam horizontal, CW is + angle
+        const mousePosRelative = self.translationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
+        const angle = mousePosRelative.angle - Math.PI / 2;  //angle = 0 when beam horizontal, CW is + angle
         self.pieceModel.setAngle( angle );
 
       }
@@ -132,9 +132,9 @@ define( require => {
         self.translationHandle.rotation = angle;
       }
 
-      var cosAngle = Math.cos( angle );
-      var sinAngle = Math.sin( angle );
-      var height = self.pieceModel.height;
+      const cosAngle = Math.cos( angle );
+      const sinAngle = Math.sin( angle );
+      const height = self.pieceModel.height;
       self.rotationHandle.translation = new Vector2( -( height / 2 ) * sinAngle, ( height / 2 ) * cosAngle );
     } );
 
@@ -162,7 +162,7 @@ define( require => {
       self.drawRays();
     } );
     this.colorProperty.link( function( color ) {
-      var colorCode;            //switch ( color )
+      let colorCode;            //switch ( color )
       switch( color ) {
         case 'white':
           colorCode = '#fff';
@@ -180,7 +180,7 @@ define( require => {
           throw new Error( 'invalid color: ' + color );
       }
       self.rayColor = colorCode;
-      for ( var i = 0; i < self.maxNbrOfRays; i++ ) {
+      for ( let i = 0; i < self.maxNbrOfRays; i++ ) {
         self.rayNodes[ i ].strokeColor = colorCode;
       }
     } );
@@ -200,29 +200,29 @@ define( require => {
       //this.rayNodes = [];
       nbrOfRays = Util.roundSymmetric( nbrOfRays );
 
-      for ( var i = nbrOfRays; i < this.maxNbrOfRays; i++ ) {
+      for ( let i = nbrOfRays; i < this.maxNbrOfRays; i++ ) {
         this.rayNodes[ i ].visible = false;
 
       }
-      var maxRayLength = this.pieceModel.maxLength;
+      const maxRayLength = this.pieceModel.maxLength;
       //var rayFontObject = { stroke: 'white', lineWidth: 2 } ;
-      for ( var r = 0; r < this.pieceModel.rayPaths.length; r++ ) {
+      for ( let r = 0; r < this.pieceModel.rayPaths.length; r++ ) {
         this.rayNodes[ r ].visible = true;
         //this.rayNodes[ r ].strokeColor = this.rayColor;
-        var dir = this.pieceModel.rayPaths[ r ].startDir;
-        var sourceCenter = this.pieceModel.positionProperty.value;
+        const dir = this.pieceModel.rayPaths[ r ].startDir;
+        const sourceCenter = this.pieceModel.positionProperty.value;
         if ( this.pieceModel.rayPaths[ r ].segments.length === 0 ) {
           return;
         }
-        var AbsoluteRayStart = this.pieceModel.rayPaths[ r ].segments[ 0 ].getStart();
-        var AbsoluteRayEnd = this.pieceModel.rayPaths[ r ].segments[ 0 ].getEnd();
-        var relativeRayStart = AbsoluteRayStart.minus( sourceCenter );
-        var relativeRayEnd = AbsoluteRayEnd.minus( sourceCenter );
-        var rayShape = new Shape();
+        const AbsoluteRayStart = this.pieceModel.rayPaths[ r ].segments[ 0 ].getStart();
+        const AbsoluteRayEnd = this.pieceModel.rayPaths[ r ].segments[ 0 ].getEnd();
+        const relativeRayStart = AbsoluteRayStart.minus( sourceCenter );
+        const relativeRayEnd = AbsoluteRayEnd.minus( sourceCenter );
+        const rayShape = new Shape();
         rayShape.moveToPoint( relativeRayStart );
         if ( this.pieceModel.type === Type.FAN_SOURCE ) {
           this.relativeRayStarts[ r ] = relativeRayStart;
-          var relativeEndPt = dir.timesScalar( maxRayLength );
+          const relativeEndPt = dir.timesScalar( maxRayLength );
           rayShape.lineToPoint( relativeEndPt );
 
           //var rayNode = new Line( new Vector2( 0, 0 ), dir.timesScalar( maxRayLength ), rayFontObject );
@@ -239,8 +239,8 @@ define( require => {
      * @private
      */
     drawRays: function() {
-      for ( var i = 0; i < this.pieceModel.rayPaths.length; i++ ) {
-        var shape = this.pieceModel.rayPaths[ i ].getRelativeShape();//getShape();
+      for ( let i = 0; i < this.pieceModel.rayPaths.length; i++ ) {
+        const shape = this.pieceModel.rayPaths[ i ].getRelativeShape();//getShape();
         this.rayNodes[ i ].setShape( shape );
       }
     },
@@ -251,8 +251,8 @@ define( require => {
      */
     setWidth: function( height ) {
       this.settingHeight = true;
-      var cosAngle = Math.cos( this.pieceModel.angleProperty.value );
-      var sinAngle = Math.sin( this.pieceModel.angleProperty.value );
+      const cosAngle = Math.cos( this.pieceModel.angleProperty.value );
+      const sinAngle = Math.sin( this.pieceModel.angleProperty.value );
       this.translationHandle.rotation = 0;
       //
       this.translationHandle.setRect( -5, -height / 2, 10, height );
@@ -267,7 +267,7 @@ define( require => {
      * @private
      */
     setColor: function( color ) {
-      for ( var i = 0; i < this.pieceModel.rayPaths.length; i++ ) {
+      for ( let i = 0; i < this.pieceModel.rayPaths.length; i++ ) {
         this.rayNodes[ i ].strokeColor = color;
       }
     }

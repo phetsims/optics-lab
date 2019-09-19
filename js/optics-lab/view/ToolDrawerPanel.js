@@ -24,8 +24,8 @@ define( require => {
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   //constants
-  var DISPLAY_FONT = new PhetFont( 12 );
-  var PANEL_COLOR = '#ccc';
+  const DISPLAY_FONT = new PhetFont( 12 );
+  const PANEL_COLOR = '#ccc';
 
   /**
    * @extends {Panel}
@@ -37,30 +37,30 @@ define( require => {
 
     this.mainModel = mainModel; // OpticsLabModel
     this.mainView = mainView;  // OpticsLabScreenView
-    var self = this;
+    const self = this;
 
-    var fanSourceIcon = new Node();
-    var beamSourceIcon = new Node();
-    var convergingLensIcon = new Node();
-    var divergingLensIcon = new Node();
-    var convergingMirrorIcon = new Node();
-    var planeMirrorIcon = new Node();
-    var divergingMirrorIcon = new Node();
-    var simpleMaskIcon = new Node();
-    var slitMaskIcon = new Node();
+    const fanSourceIcon = new Node();
+    const beamSourceIcon = new Node();
+    const convergingLensIcon = new Node();
+    const divergingLensIcon = new Node();
+    const convergingMirrorIcon = new Node();
+    const planeMirrorIcon = new Node();
+    const divergingMirrorIcon = new Node();
+    const simpleMaskIcon = new Node();
+    const slitMaskIcon = new Node();
 
-    var fontInfo = { font: DISPLAY_FONT };
-    var fanSourceText = new Text( 'fan source', fontInfo );
-    var beamSourceText = new Text( 'beam source', fontInfo );
-    var convergingLensText = new Text( 'converging lens', fontInfo );
-    var divergingLensText = new Text( 'diverging lens', fontInfo );
-    var convergingMirrorText = new Text( 'converging mirror', fontInfo );
-    var planeMirrorText = new Text( 'plane mirror', fontInfo );
-    var divergingMirrorText = new Text( 'diverging mirror', fontInfo );
-    var simpleMaskText = new Text( 'simple mask', fontInfo );
-    var slitMaskText = new Text( 'slit mask', fontInfo );
+    const fontInfo = { font: DISPLAY_FONT };
+    const fanSourceText = new Text( 'fan source', fontInfo );
+    const beamSourceText = new Text( 'beam source', fontInfo );
+    const convergingLensText = new Text( 'converging lens', fontInfo );
+    const divergingLensText = new Text( 'diverging lens', fontInfo );
+    const convergingMirrorText = new Text( 'converging mirror', fontInfo );
+    const planeMirrorText = new Text( 'plane mirror', fontInfo );
+    const divergingMirrorText = new Text( 'diverging mirror', fontInfo );
+    const simpleMaskText = new Text( 'simple mask', fontInfo );
+    const slitMaskText = new Text( 'slit mask', fontInfo );
 
-    var nodeArray = [
+    const nodeArray = [
       fanSourceIcon,
       beamSourceIcon,
       convergingLensIcon,
@@ -72,7 +72,7 @@ define( require => {
       slitMaskIcon
     ];
 
-    var textArray = [
+    const textArray = [
       fanSourceText,
       beamSourceText,
       convergingLensText,
@@ -84,7 +84,7 @@ define( require => {
       slitMaskText
     ];
 
-    var typeArray = [
+    const typeArray = [
       Type.FAN_SOURCE,
       Type.BEAM_SOURCE,
       Type.CONVERGING_LENS,
@@ -96,12 +96,12 @@ define( require => {
       Type.SLIT_MASK
     ];
 
-    var nodeSetup = function( element, index, array ) {
-      var xCorner = -8;
-      var yCorner = textArray[ index ].height;
-      var elementWidth = textArray[ index ].width + 16;
-      var elementHeight = textArray[ index ].height + 10;
-      var pieceGrabbed;
+    const nodeSetup = function( element, index, array ) {
+      const xCorner = -8;
+      const yCorner = textArray[ index ].height;
+      const elementWidth = textArray[ index ].width + 16;
+      const elementHeight = textArray[ index ].height + 10;
+      let pieceGrabbed;
       element.addChild( textArray[ index ] );
       element.addChild( new Rectangle( xCorner, -yCorner, elementWidth, elementHeight, {
         fill: 'green',
@@ -116,8 +116,8 @@ define( require => {
 
           start: function( e ) {
 
-            var startPosition = self.globalToParentPoint( e.pointer.point );
-            var type = typeArray[ index ];
+            const startPosition = self.globalToParentPoint( e.pointer.point );
+            const type = typeArray[ index ];
             pieceGrabbed = mainView.addPiece( type, startPosition );
             //pieceGrabbed.mainView.setSelectedPiece( pieceGrabbed );
             mainView.setSelectedPiece( pieceGrabbed );
@@ -125,12 +125,12 @@ define( require => {
           },
 
           drag: function( e ) {
-            var position = self.globalToParentPoint( e.pointer.point );   //returns Vector2
+            const position = self.globalToParentPoint( e.pointer.point );   //returns Vector2
 
             pieceGrabbed.pieceModel.setPosition( position );
           },
           end: function( e ) {
-            var vEnd = self.globalToParentPoint( e.pointer.point );
+            const vEnd = self.globalToParentPoint( e.pointer.point );
             if ( self.visibleBounds.containsCoordinates( vEnd.x, vEnd.y ) ) {
               mainView.removePiece( pieceGrabbed );
             }
@@ -142,34 +142,34 @@ define( require => {
 
     nodeArray.forEach( nodeSetup );
 
-    var spacing = 5;
-    var sourceVBox = new VBox( {
+    let spacing = 5;
+    const sourceVBox = new VBox( {
       children: [ fanSourceIcon, beamSourceIcon ],
       align: 'left',
       spacing: spacing
     } );
-    var lensVBox = new VBox( {
+    const lensVBox = new VBox( {
       children: [ convergingLensIcon, divergingLensIcon ],
       align: 'left',
       spacing: spacing
     } );
-    var curvedMirrorVBox = new VBox( {
+    const curvedMirrorVBox = new VBox( {
       children: [ convergingMirrorIcon, divergingMirrorIcon ],
       align: 'left',
       spacing: spacing
     } );
-    var planeMirrorVBox = new VBox( {
+    const planeMirrorVBox = new VBox( {
       children: [ planeMirrorIcon ],
       align: 'left',
       spacing: spacing
     } );
-    var maskVBox = new VBox( {
+    const maskVBox = new VBox( {
       children: [ simpleMaskIcon, slitMaskIcon ],
       align: 'left',
       spacing: spacing
     } );
     spacing = 10;
-    var content = new HBox( {
+    const content = new HBox( {
       children: [
         sourceVBox,
         lensVBox,

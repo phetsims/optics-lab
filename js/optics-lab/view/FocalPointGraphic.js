@@ -23,13 +23,13 @@ define( require => {
 
     Node.call( this );
 
-    var R = Util.roundSymmetric( size / 2 );
+    let R = Util.roundSymmetric( size / 2 );
     if ( size === undefined ) {
       R = 30;
     }
-    var strokeInfo = { stroke: 'yellow', lineWidth: 4, lineCap: 'butt' };
-    var line1 = new Line( -R, -R, R, R, strokeInfo );
-    var line2 = new Line( R, -R, -R, R, strokeInfo );
+    const strokeInfo = { stroke: 'yellow', lineWidth: 4, lineCap: 'butt' };
+    const line1 = new Line( -R, -R, R, R, strokeInfo );
+    const line2 = new Line( R, -R, -R, R, strokeInfo );
     this.children = [ line1, line2 ];
 
   }

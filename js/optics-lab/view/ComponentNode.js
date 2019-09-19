@@ -27,7 +27,7 @@ define( require => {
    */
   function ComponentNode( componentModel, mainView ) {
 
-    var self = this;
+    const self = this;
     this.pieceModel = componentModel;
     this.mainView = mainView;
     this.modelViewTransform = mainView.modelViewTransform;
@@ -40,12 +40,12 @@ define( require => {
       cursor: 'pointer'
     } );
 
-    var height = this.pieceModel.diameterProperty.value;
-    var radius = this.pieceModel.radiusProperty.value;    //radius of curvature
-    var index = this.pieceModel.indexProperty.value;
+    const height = this.pieceModel.diameterProperty.value;
+    const radius = this.pieceModel.radiusProperty.value;    //radius of curvature
+    const index = this.pieceModel.indexProperty.value;
 
     this.componentGraphic = new ComponentGraphic( this.type, height, radius, index );
-    var angle = this.pieceModel.angleProperty.value;
+    const angle = this.pieceModel.angleProperty.value;
     this.rotationHandle = new Circle( 5, {
       x: Math.sin( angle ) * height / 2,
       y: Math.cos( angle ) * height / 2,
@@ -55,7 +55,7 @@ define( require => {
     self.addChild( this.rotationHandle );
 
     // When dragging, move the sample element
-    var mouseDownPosition;
+    let mouseDownPosition;
     self.addInputListener( new SimpleDragHandler(
       {
         // When dragging across it in a mobile device, pick it up
@@ -63,19 +63,19 @@ define( require => {
         start: function( e ) {
           self.mainView.setSelectedPiece( self );
           self.mainView.setSelectedPieceType( self );
-          var position = self.globalToParentPoint( e.pointer.point );
-          var currentNodePos = self.pieceModel.positionProperty.value;
+          const position = self.globalToParentPoint( e.pointer.point );
+          const currentNodePos = self.pieceModel.positionProperty.value;
           mouseDownPosition = position.minus( currentNodePos );
           //self.mouseDownPosition = e.pointer.point;
         },
 
         drag: function( e ) {
-          var position = self.globalToParentPoint( e.pointer.point );
+          let position = self.globalToParentPoint( e.pointer.point );
           position = position.minus( mouseDownPosition );
           self.pieceModel.setPosition( position );
         },
         end: function( e ) {
-          var position = self.globalToParentPoint( e.pointer.point );
+          const position = self.globalToParentPoint( e.pointer.point );
           if ( self.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y ) ) {
             self.mainView.removePiece( self );
           }
@@ -91,8 +91,8 @@ define( require => {
       },
 
       drag: function( e ) {
-        var mousePosRelative = self.rotationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
-        var angle = mousePosRelative.angle - Math.PI / 2;  //angle = 0 when beam horizontal, CW is + angle
+        const mousePosRelative = self.rotationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
+        const angle = mousePosRelative.angle - Math.PI / 2;  //angle = 0 when beam horizontal, CW is + angle
         self.pieceModel.setAngle( angle );
 
       }
@@ -104,16 +104,16 @@ define( require => {
     } );
     this.pieceModel.angleProperty.link( function( angle ) {
       self.componentGraphic.rotation = angle;
-      var cosAngle = Math.cos( angle );
-      var sinAngle = Math.sin( angle );
-      var diameter = self.pieceModel.diameterProperty.value;
+      const cosAngle = Math.cos( angle );
+      const sinAngle = Math.sin( angle );
+      const diameter = self.pieceModel.diameterProperty.value;
       self.rotationHandle.translation = new Vector2( -( diameter / 2 ) * sinAngle, ( diameter / 2 ) * cosAngle );
     } );
     this.pieceModel.diameterProperty.link( function( diameter ) {
       self.componentGraphic.setDiameter( diameter );
-      var angle = self.pieceModel.angleProperty.value;
-      var cosAngle = Math.cos( angle );
-      var sinAngle = Math.sin( angle );
+      const angle = self.pieceModel.angleProperty.value;
+      const cosAngle = Math.cos( angle );
+      const sinAngle = Math.sin( angle );
       //var diameter = self.pieceModel.diameter;
       self.rotationHandle.translation = new Vector2( -( diameter / 2 ) * sinAngle, ( diameter / 2 ) * cosAngle );
     } );

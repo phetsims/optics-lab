@@ -40,8 +40,8 @@ define( require => {
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
-  var DISPLAY_FONT = new PhetFont( 12 );
-  var TEXT_COLOR = OpticsLabConstants.TEXT_COLOR;
+  const DISPLAY_FONT = new PhetFont( 12 );
+  const TEXT_COLOR = OpticsLabConstants.TEXT_COLOR;
 
   /**
    * @extends {Node}
@@ -52,29 +52,29 @@ define( require => {
    */
   function ControlPanel( mainModel, mainView, type ) {
     Node.call( this );
-    var self = this;
+    const self = this;
     this.type = type;
 
-    var fontInfo = { font: DISPLAY_FONT };
-    var whiteText = new Text( 'white', fontInfo );
-    var greenText = new Text( 'green', fontInfo );
-    var redText = new Text( 'red', fontInfo );
-    var yellowText = new Text( 'yellow', fontInfo );
+    let fontInfo = { font: DISPLAY_FONT };
+    const whiteText = new Text( 'white', fontInfo );
+    const greenText = new Text( 'green', fontInfo );
+    const redText = new Text( 'red', fontInfo );
+    const yellowText = new Text( 'yellow', fontInfo );
 
     fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
-    var nbrOfRaysText = new Text( 'number of rays', fontInfo );
-    var focalPointsText = new Text( 'focal points', fontInfo );
-    var widthText = new Text( 'width', fontInfo );
-    var spreadText = new Text( 'spread', fontInfo );
-    var diameterText = new Text( 'diameter', fontInfo );
-    var radiusText = new Text( 'radius of curvature', fontInfo );
-    var focalLengthText = new Text( 'f : ', fontInfo );
+    const nbrOfRaysText = new Text( 'number of rays', fontInfo );
+    const focalPointsText = new Text( 'focal points', fontInfo );
+    const widthText = new Text( 'width', fontInfo );
+    const spreadText = new Text( 'spread', fontInfo );
+    const diameterText = new Text( 'diameter', fontInfo );
+    const radiusText = new Text( 'radius of curvature', fontInfo );
+    const focalLengthText = new Text( 'f : ', fontInfo );
     this.focalLengthReadoutText = new Text( 'filler', fontInfo );
-    var indexText = new Text( 'refractive index', fontInfo );
+    const indexText = new Text( 'refractive index', fontInfo );
 
 
     // All controls are placed on display node, with visibility set by expand/collapse button
-    var panelOptions = {
+    const panelOptions = {
       fill: 'white',
       stroke: 'black',
       lineWidth: 1, // width of the background border
@@ -87,29 +87,29 @@ define( require => {
       minWidth: 0 // minimum width of the panel
     };
 
-    var sliderOptions = {
+    const sliderOptions = {
       trackSize: new Dimension2( 120, 5 ),
       thumbSize: new Dimension2( 12, 25 ),
       thumbTouchAreaXDilation: 6,
       thumbTouchAreaYDilation: 6
     };
 
-    var vBoxMaker = function( childrenArray ) {
+    const vBoxMaker = function( childrenArray ) {
       return new VBox( {
         children: childrenArray,
         align: 'center',
         resize: false
       } );
     };
-    var vBoxMaker2 = function( childrenArray ) {
+    const vBoxMaker2 = function( childrenArray ) {
       return new VBox( {
         children: childrenArray,
         align: 'left',
         resize: false
       } );
     };
-    var spacing = 20;
-    var hBoxMaker = function( childrenArray ) {
+    const spacing = 20;
+    const hBoxMaker = function( childrenArray ) {
       return new HBox( {
         children: childrenArray,
         spacing: spacing,
@@ -128,47 +128,47 @@ define( require => {
     this.indexOfRefractionProperty = new Property( 2 );
     this.showFocalPointsProperty = new Property( false );
 
-    var fillerBox = new Text( ' ', { font: DISPLAY_FONT } );
+    const fillerBox = new Text( ' ', { font: DISPLAY_FONT } );
 
     //Create Sliders with Text labels
-    var maxNbrRays = mainModel.maxNbrOfRaysFromASource;
-    var nbrOfRaysSlider = new HSlider( this.nbrOfRaysProperty, new Range( 1, maxNbrRays ), sliderOptions );
-    var nbrOfRaysVBox = vBoxMaker( [ nbrOfRaysSlider, nbrOfRaysText ] );
+    const maxNbrRays = mainModel.maxNbrOfRaysFromASource;
+    const nbrOfRaysSlider = new HSlider( this.nbrOfRaysProperty, new Range( 1, maxNbrRays ), sliderOptions );
+    const nbrOfRaysVBox = vBoxMaker( [ nbrOfRaysSlider, nbrOfRaysText ] );
 
-    var spreadSlider = new HSlider( this.spreadProperty, new Range( 2, 180 ), sliderOptions );
-    var spreadVBox = vBoxMaker( [ spreadSlider, spreadText ] );
+    const spreadSlider = new HSlider( this.spreadProperty, new Range( 2, 180 ), sliderOptions );
+    const spreadVBox = vBoxMaker( [ spreadSlider, spreadText ] );
 
-    var widthSlider = new HSlider( this.widthProperty, new Range( 50, 250 ), sliderOptions );
-    var widthVBox = vBoxMaker( [ widthSlider, widthText ] );
+    const widthSlider = new HSlider( this.widthProperty, new Range( 50, 250 ), sliderOptions );
+    const widthVBox = vBoxMaker( [ widthSlider, widthText ] );
 
-    var radioButtonOptions = { radius: 8, fontSize: 12, deselectedColor: 'white' };
-    var whiteColorRadioButton = new AquaRadioButton( this.colorProperty, 'white', whiteText, radioButtonOptions );
-    var greenColorRadioButton = new AquaRadioButton( this.colorProperty, 'green', greenText, radioButtonOptions );
-    var redColorRadioButton = new AquaRadioButton( this.colorProperty, 'red', redText, radioButtonOptions );
-    var yellowColorRadioButton = new AquaRadioButton( this.colorProperty, 'yellow', yellowText, radioButtonOptions );
+    const radioButtonOptions = { radius: 8, fontSize: 12, deselectedColor: 'white' };
+    const whiteColorRadioButton = new AquaRadioButton( this.colorProperty, 'white', whiteText, radioButtonOptions );
+    const greenColorRadioButton = new AquaRadioButton( this.colorProperty, 'green', greenText, radioButtonOptions );
+    const redColorRadioButton = new AquaRadioButton( this.colorProperty, 'red', redText, radioButtonOptions );
+    const yellowColorRadioButton = new AquaRadioButton( this.colorProperty, 'yellow', yellowText, radioButtonOptions );
 
-    var colorVBox1 = vBoxMaker2( [ whiteColorRadioButton, greenColorRadioButton ] );
-    var colorVBox2 = vBoxMaker2( [ redColorRadioButton, yellowColorRadioButton ] );
+    const colorVBox1 = vBoxMaker2( [ whiteColorRadioButton, greenColorRadioButton ] );
+    const colorVBox2 = vBoxMaker2( [ redColorRadioButton, yellowColorRadioButton ] );
 
-    var diameterSlider = new HSlider( this.diameterProperty, new Range( 50, 250 ), sliderOptions );
-    var diameterVBox = vBoxMaker( [ diameterSlider, diameterText ] );
+    const diameterSlider = new HSlider( this.diameterProperty, new Range( 50, 250 ), sliderOptions );
+    const diameterVBox = vBoxMaker( [ diameterSlider, diameterText ] );
 
-    var radiusSlider = new HSlider( this.radiusOfCurvatureProperty, new Range( 100, 800 ), sliderOptions );
-    var radiusVBox = vBoxMaker( [ radiusSlider, radiusText ] );
+    const radiusSlider = new HSlider( this.radiusOfCurvatureProperty, new Range( 100, 800 ), sliderOptions );
+    const radiusVBox = vBoxMaker( [ radiusSlider, radiusText ] );
 
     //TODO Range here may be incorrect, see https://github.com/phetsims/optics-lab/issues/22
-    var radiusSlider2 = new HSlider( this.radiusOfCurvatureProperty, new Range( -800, -100 ), sliderOptions );
-    var radiusVBox2 = vBoxMaker( [ radiusSlider2, radiusText ] );
+    const radiusSlider2 = new HSlider( this.radiusOfCurvatureProperty, new Range( -800, -100 ), sliderOptions );
+    const radiusVBox2 = vBoxMaker( [ radiusSlider2, radiusText ] );
 
-    var indexSlider = new HSlider( this.indexOfRefractionProperty, new Range( 1.4, 3 ), sliderOptions );
-    var indexVBox = vBoxMaker( [ indexSlider, indexText ] );
+    const indexSlider = new HSlider( this.indexOfRefractionProperty, new Range( 1.4, 3 ), sliderOptions );
+    const indexVBox = vBoxMaker( [ indexSlider, indexText ] );
 
-    var checkboxOptions = { checkboxColorBackground: 'white' };
+    const checkboxOptions = { checkboxColorBackground: 'white' };
 
-    var focalPtCheckbox = new Checkbox( focalPointsText, this.showFocalPointsProperty, checkboxOptions );
+    const focalPtCheckbox = new Checkbox( focalPointsText, this.showFocalPointsProperty, checkboxOptions );
 
-    var focalLengthHBox = hBoxMaker( [ focalLengthText, this.focalLengthReadoutText ] );
-    var panelContent = new Node();
+    const focalLengthHBox = hBoxMaker( [ focalLengthText, this.focalLengthReadoutText ] );
+    let panelContent = new Node();
 
     switch( type ) {
       case Type.FAN_SOURCE:
@@ -202,11 +202,11 @@ define( require => {
         throw new Error( 'invalid type: ' + type );
 
     }//end switch()
-    var expandCollapseButton = new ExpandCollapseButton( this.expandedProperty, {
+    const expandCollapseButton = new ExpandCollapseButton( this.expandedProperty, {
       sideLength: 15,
       cursor: 'pointer'
     } );
-    var displayPanel = new Panel( panelContent, panelOptions );
+    const displayPanel = new Panel( panelContent, panelOptions );
     self.children = [ displayPanel, expandCollapseButton ];
     expandCollapseButton.left = 5;
     expandCollapseButton.top = 5;

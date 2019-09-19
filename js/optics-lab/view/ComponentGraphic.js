@@ -96,11 +96,11 @@ define( require => {
      */
     drawLens: function() {
       this.shape = new Shape();
-      var R;  //same as this.radius = radius of curvature of lens, not to be confused with half-diameter of lens
-      var fudge1 = 1;   //fudge factor to make lens radius big enough to be apparent to eye
-      var fudge2 = 2;   //fudge factor to make adjust range of index of refraction
+      let R;  //same as this.radius = radius of curvature of lens, not to be confused with half-diameter of lens
+      const fudge1 = 1;   //fudge factor to make lens radius big enough to be apparent to eye
+      const fudge2 = 2;   //fudge factor to make adjust range of index of refraction
       //fudge * 2 * Math.abs( this.f ) * ( this.n - 1 );  //radius of curvature of lens surface
-      var n = fudge2 * this.index;
+      const n = fudge2 * this.index;
       if ( this.type === Type.CONVERGING_LENS ) {
         R = fudge1 * this.radius;
       }
@@ -108,17 +108,17 @@ define( require => {
         R = -fudge1 * this.radius;   //radius has sign, R is positive
       }
       this.f = ( this.radius / 2 ) * ( 1 / ( n - 1 ) );  //f takes sign of R
-      var h = this.diameter / 2;                          //h = height = radius of lens
+      const h = this.diameter / 2;                          //h = height = radius of lens
       //  temporary fixed for theta, see #12   set the maximum ratio to be one
-      var theta = Math.asin( Util.clamp( h / R, -1, 1 ) );                     //magnitude of startAngle and endAngle
-      var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
+      const theta = Math.asin( Util.clamp( h / R, -1, 1 ) );                     //magnitude of startAngle and endAngle
+      const C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
       if ( this.f > 0 ) {
         this.shape
           .arc( -C, 0, R, theta, -theta, true )//arc( -diameter, 0,)
           .arc( C, 0, R, -Math.PI + theta, -Math.PI - theta, true );
       }
       else if ( this.f < 0 ) {
-        var w = 5;
+        const w = 5;
         this.shape
           .arc( -w - R, 0, R, theta, -theta, true )
           .lineToRelative( 2 * ( w + ( R - C ) ), 0 )
@@ -138,12 +138,12 @@ define( require => {
      * @private
      */
     drawCurvedMirror: function() {
-      var fudge = 1;
-      var R = fudge * this.radius;
-      var h = this.diameter / 2;          //h = height = radius of lens
+      const fudge = 1;
+      const R = fudge * this.radius;
+      const h = this.diameter / 2;          //h = height = radius of lens
       //  temporary fixed for theta, see #12   set the maximum ratio to be one
-      var theta = Math.asin( Util.clamp( h / R, -1, 1 ) ); //magnitude of startAngle and endAngle
-      var C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
+      const theta = Math.asin( Util.clamp( h / R, -1, 1 ) ); //magnitude of startAngle and endAngle
+      const C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
       this.shape = new Shape();
       if ( this.type === Type.DIVERGING_MIRROR ) {
         this.shape.arc( C, 0, R, -Math.PI + theta, -Math.PI - theta, false );
@@ -166,12 +166,12 @@ define( require => {
      */
     drawPlaneMirror: function() {
       this.removeAllChildren();
-      var w = 20;
-      var height = this.diameter;
+      const w = 20;
+      const height = this.diameter;
       //Rectangle( x, y, width, height, arcWidth, arcHeight, options )
-      var maskGraphic = new Rectangle( 0, -height / 2, w, height, { fill: 'red' } );
+      const maskGraphic = new Rectangle( 0, -height / 2, w, height, { fill: 'red' } );
       //Line( x1, y1, x2, y2, options )
-      var lineGraphic = new Line( 0, -height / 2, 0, height / 2, { stroke: '#FFF', lineWidth: 4 } );
+      const lineGraphic = new Line( 0, -height / 2, 0, height / 2, { stroke: '#FFF', lineWidth: 4 } );
       this.addChild( maskGraphic );
       this.addChild( lineGraphic );
     },
@@ -181,10 +181,10 @@ define( require => {
      */
     drawMask: function() {
       this.removeAllChildren();
-      var w = 20;
-      var height = this.diameter;
-      var maskGraphic = new Rectangle( 0, -height / 2, w, height, { fill: 'green' } );
-      var lineGraphic = new Line( 0, -height / 2, 0, height / 2, { stroke: 'black', lineWidth: 4 } );
+      const w = 20;
+      const height = this.diameter;
+      const maskGraphic = new Rectangle( 0, -height / 2, w, height, { fill: 'green' } );
+      const lineGraphic = new Line( 0, -height / 2, 0, height / 2, { stroke: 'black', lineWidth: 4 } );
       this.addChild( maskGraphic );
       this.addChild( lineGraphic );
     },

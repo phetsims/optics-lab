@@ -17,7 +17,7 @@ define( require => {
   // strings
   const opticsLabTitleString = require( 'string!OPTICS_LAB/optics-lab.title' );
 
-  var simOptions = {
+  const simOptions = {
     credits: {
       //TODO fill in credits
       leadDesign: 'Michael Dubson',
@@ -28,7 +28,7 @@ define( require => {
   };
 
   SimLauncher.launch( function() {
-    var sim = new Sim( opticsLabTitleString, [ new OpticsLabScreen() ], simOptions );
+    const sim = new Sim( opticsLabTitleString, [ new OpticsLabScreen() ], simOptions );
     sim.start();
   } );
 } );

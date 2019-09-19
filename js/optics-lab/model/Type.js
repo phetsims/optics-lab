@@ -11,7 +11,7 @@ define( require => {
   // modules
   const opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
-  var Type = {
+  const Type = {
     SLIT_MASK: 'SLIT_MASK',
     SIMPLE_MASK: 'SIMPLE_MASK',
     DIVERGING_MIRROR: 'DIVERGING_MIRROR',

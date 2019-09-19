@@ -40,8 +40,8 @@ define( require => {
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
-  var DISPLAY_FONT = new PhetFont( 12 );
-  var TEXT_COLOR = OpticsLabConstants.TEXT_COLOR;
+  const DISPLAY_FONT = new PhetFont( 12 );
+  const TEXT_COLOR = OpticsLabConstants.TEXT_COLOR;
 
   /**
    * @extends {Node}
@@ -53,7 +53,7 @@ define( require => {
   function SelectedPieceControlPanel( mainModel, mainView, selectedPiece ) {
 
     Node.call( this );
-    var self = this;
+    const self = this;
     this.mainModel = mainModel;
     this.mainView = mainView;
     this.selectedPiece = selectedPiece;
@@ -61,7 +61,7 @@ define( require => {
     this.hSliders = []; //array of HSliders in this control panel, used solely for garbage collection
 
     //initialize source rays color radio buttons
-    var fontInfo = { font: DISPLAY_FONT };
+    let fontInfo = { font: DISPLAY_FONT };
     this.whiteText = new Text( 'white', fontInfo );
     this.greenText = new Text( 'green', fontInfo );
     this.redText = new Text( 'red', fontInfo );
@@ -127,26 +127,26 @@ define( require => {
      */
     setControlsForSelectedPiece: function() {
       if ( this.selectedPiece !== null ) {
-        var piece = this.selectedPiece;
-        var pieceModel = piece.pieceModel;
-        var type = piece.type;
-        var fillerBox = new Text( ' ', { font: DISPLAY_FONT } );
-        var nbrOfRaysVBox;
-        var diameterVBox;
-        var sliderOptions = {
+        const piece = this.selectedPiece;
+        const pieceModel = piece.pieceModel;
+        const type = piece.type;
+        const fillerBox = new Text( ' ', { font: DISPLAY_FONT } );
+        let nbrOfRaysVBox;
+        let diameterVBox;
+        const sliderOptions = {
           trackSize: new Dimension2( 120, 5 ),
           thumbSize: new Dimension2( 12, 25 ),
           thumbTouchAreaXDilation: 6,
           thumbTouchAreaYDilation: 6
         };
-        var vBoxMaker = function( childrenArray ) {
+        const vBoxMaker = function( childrenArray ) {
           return new VBox( {
             children: childrenArray,
             align: 'center',
             resize: false
           } );
         };
-        var hBoxMaker = function( childrenArray ) {
+        const hBoxMaker = function( childrenArray ) {
           return new HBox( {
             children: childrenArray,
             spacing: spacing,
@@ -155,16 +155,16 @@ define( require => {
         };
         if ( type === Type.FAN_SOURCE || type === Type.BEAM_SOURCE ) {
           //pieceModel = piece.pieceModel;
-          var maxNbrRays = pieceModel.maxNbrOfRays;
-          var nbrOfRaysSlider = new HSlider( pieceModel.nbrOfRaysProperty, new Range( 1, maxNbrRays ), sliderOptions );
+          const maxNbrRays = pieceModel.maxNbrOfRays;
+          const nbrOfRaysSlider = new HSlider( pieceModel.nbrOfRaysProperty, new Range( 1, maxNbrRays ), sliderOptions );
           nbrOfRaysVBox = vBoxMaker( [ nbrOfRaysSlider, this.nbrOfRaysText ] );
           this.setColorRadioButtonsForSourceNode( piece );
         }
         else {   //if piece = component
-          var diameterSlider = new HSlider( pieceModel.diameterProperty, new Range( 50, 250 ), sliderOptions );
+          const diameterSlider = new HSlider( pieceModel.diameterProperty, new Range( 50, 250 ), sliderOptions );
           diameterVBox = vBoxMaker( [ diameterSlider, this.diameterText ] );
           this.focalLengthReadoutText.text = pieceModel.fProperty.value.toFixed( 0 );
-          var self = this;
+          const self = this;
           pieceModel.fProperty.link( function( f ) {
             if ( f ) {
               self.focalLengthReadoutText.text = f.toFixed( 0 );
@@ -172,9 +172,9 @@ define( require => {
           } );
         }
 
-        var checkboxOptions = { checkboxColorBackground: 'white' };
+        const checkboxOptions = { checkboxColorBackground: 'white' };
         var spacing = 25;
-        var focalLengthHBox = hBoxMaker( [ this.focalLengthText, this.focalLengthReadoutText ] );
+        const focalLengthHBox = hBoxMaker( [ this.focalLengthText, this.focalLengthReadoutText ] );
         switch( type ) {
           case Type.FAN_SOURCE:
             var spreadSlider = new HSlider( pieceModel.spreadProperty, new Range( 2, 180 ), sliderOptions );
@@ -250,12 +250,12 @@ define( require => {
      * @private
      */
     setColorRadioButtonsForSourceNode: function( sourceNode ) {
-      var radioButtonOptions = { radius: 8, fontSize: 12, deselectedColor: 'white' };
-      var whiteColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'white', this.whiteText, radioButtonOptions );
-      var greenColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'green', this.greenText, radioButtonOptions );
-      var redColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'red', this.redText, radioButtonOptions );
-      var yellowColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'yellow', this.yellowText, radioButtonOptions );
-      var spacing = 5;
+      const radioButtonOptions = { radius: 8, fontSize: 12, deselectedColor: 'white' };
+      const whiteColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'white', this.whiteText, radioButtonOptions );
+      const greenColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'green', this.greenText, radioButtonOptions );
+      const redColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'red', this.redText, radioButtonOptions );
+      const yellowColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'yellow', this.yellowText, radioButtonOptions );
+      const spacing = 5;
       this.colorVBox1 = new VBox( {
         children: [ whiteColorRadioButton, greenColorRadioButton ],
         align: 'left',
@@ -272,7 +272,7 @@ define( require => {
      *  @public
      */
     dispose: function() {
-      for ( var i = 0; i < this.hSliders.length; i++ ) {
+      for ( let i = 0; i < this.hSliders.length; i++ ) {
         this.hSliders[ i ].dispose();
       }
     }

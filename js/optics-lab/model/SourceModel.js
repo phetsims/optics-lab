@@ -52,7 +52,7 @@ define( require => {
     //is convenient to put all the Properties of a Source in one place)
     this.colorProperty = new Property( '#FFF' );
 
-    var self = this;
+    const self = this;
     this.mainModel = mainModel;
 
     this.type = type; // {Type.FAN_SOURCE|Type.BEAM_SOURCE}
@@ -114,8 +114,8 @@ define( require => {
       this.rayPaths = [];  //clear any current rays
       this.nbrOfRaysProperty.value = Util.roundSymmetric( this.nbrOfRaysProperty.value );  //slider may produce non-integer number of rays
       //for fan source
-      var lowestAngle = -this.spreadProperty.value / 2;  //in degrees
-      var deltaAngle;
+      let lowestAngle = -this.spreadProperty.value / 2;  //in degrees
+      let deltaAngle;
       if ( this.nbrOfRaysProperty.value === 1 ) {
         deltaAngle = 0;
         lowestAngle = 0;  //if only one ray, ray is horizontal
@@ -123,17 +123,17 @@ define( require => {
       else {
         deltaAngle = this.spreadProperty.value / ( this.nbrOfRaysProperty.value - 1 );    //in degrees
       }
-      var theta = ( lowestAngle ) * Math.PI / 180; //in radians
-      var dir = new Vector2( Math.cos( theta ), Math.sin( theta ) );
-      var relativeStartPos = new Vector2( 0, 0 );
+      let theta = ( lowestAngle ) * Math.PI / 180; //in radians
+      let dir = new Vector2( Math.cos( theta ), Math.sin( theta ) );
+      let relativeStartPos = new Vector2( 0, 0 );
 
       //for beam source
-      var lowestPos;   //in cm
-      var startPos;
-      var deltaPos;
-      var sinAngle = Math.sin( -this.angleProperty.value );   //in screen coords, + angle is CW
-      var cosAngle = Math.cos( -this.angleProperty.value );
-      var h = this.widthProperty.value;
+      let lowestPos;   //in cm
+      let startPos;
+      let deltaPos;
+      const sinAngle = Math.sin( -this.angleProperty.value );   //in screen coords, + angle is CW
+      const cosAngle = Math.cos( -this.angleProperty.value );
+      const h = this.widthProperty.value;
       if ( this.nbrOfRaysProperty.value === 1 ) {
         lowestPos = new Vector2( 0, 0 );
         deltaPos = new Vector2( 0, 0 );
@@ -147,7 +147,7 @@ define( require => {
       startPos = lowestPos;
 
       //loop through and initialize all rayPaths of the source
-      for ( var i = 0; i < this.nbrOfRaysProperty.value; i++ ) {
+      for ( let i = 0; i < this.nbrOfRaysProperty.value; i++ ) {
         if ( this.type === Type.FAN_SOURCE ) {
           theta = ( lowestAngle + i * deltaAngle ) * Math.PI / 180;  //in radians
           relativeStartPos = new Vector2( 0, 0 );
@@ -211,16 +211,16 @@ define( require => {
     setPosition: function( position ) {   //position = Vector2
 
       this.positionProperty.value = position;
-      for ( var i = 0; i < this.rayPaths.length; i++ ) {
+      for ( let i = 0; i < this.rayPaths.length; i++ ) {
         if ( this.type === Type.FAN_SOURCE ) {
           this.rayPaths[ i ].startPos = position;
         }
         else if ( this.type === Type.BEAM_SOURCE ) {
           var lowestPos;
           var deltaPos;
-          var sinAngle = Math.sin( -this.angleProperty.value );   //in screen coords, + angle is CW
-          var cosAngle = Math.cos( -this.angleProperty.value );
-          var h = this.widthProperty.value;
+          const sinAngle = Math.sin( -this.angleProperty.value );   //in screen coords, + angle is CW
+          const cosAngle = Math.cos( -this.angleProperty.value );
+          const h = this.widthProperty.value;
           if ( this.nbrOfRaysProperty.value === 1 ) {
             lowestPos = new Vector2( 0, 0 );
             deltaPos = new Vector2( 0, 0 );
@@ -230,8 +230,8 @@ define( require => {
             deltaPos = new Vector2( -h * sinAngle / ( this.nbrOfRaysProperty.value - 1 ),
               -h * cosAngle / ( this.nbrOfRaysProperty.value - 1 ) );
           }
-          var relativePos = lowestPos.plus( deltaPos.timesScalar( i ) );
-          var pos = position.plus( relativePos );
+          const relativePos = lowestPos.plus( deltaPos.timesScalar( i ) );
+          const pos = position.plus( relativePos );
           this.rayPaths[ i ].relativeStartPos = relativePos;
           this.rayPaths[ i ].startPos = pos;
           this.rayPaths[ i ].startDir.x = cosAngle;
