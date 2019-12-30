@@ -16,7 +16,7 @@ define( require => {
   const Property = require( 'AXON/Property' );
   const RayPath = require( 'OPTICS_LAB/optics-lab/model/RayPath' );
   const Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const Vector2 = require( 'DOT/Vector2' );
   const Vector2Property = require( 'DOT/Vector2Property' );
 
@@ -112,7 +112,7 @@ define( require => {
      */
     createRays: function() {
       this.rayPaths = [];  //clear any current rays
-      this.nbrOfRaysProperty.value = Util.roundSymmetric( this.nbrOfRaysProperty.value );  //slider may produce non-integer number of rays
+      this.nbrOfRaysProperty.value = Utils.roundSymmetric( this.nbrOfRaysProperty.value );  //slider may produce non-integer number of rays
       //for fan source
       let lowestAngle = -this.spreadProperty.value / 2;  //in degrees
       let deltaAngle;

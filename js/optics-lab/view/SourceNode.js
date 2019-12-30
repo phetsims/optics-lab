@@ -21,7 +21,7 @@ define( require => {
   const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   const Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
   const Vector2 = require( 'DOT/Vector2' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   /**
    * @extends {Node}
@@ -198,7 +198,7 @@ define( require => {
     setRayNodes: function( nbrOfRays ) {
       //this.translationHandle.removeAllChildren();
       //this.rayNodes = [];
-      nbrOfRays = Util.roundSymmetric( nbrOfRays );
+      nbrOfRays = Utils.roundSymmetric( nbrOfRays );
 
       for ( let i = nbrOfRays; i < this.maxNbrOfRays; i++ ) {
         this.rayNodes[ i ].visible = false;

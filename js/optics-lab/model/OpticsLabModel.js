@@ -14,7 +14,7 @@ define( require => {
   const ObservableArray = require( 'AXON/ObservableArray' );
   const opticsLab = require( 'OPTICS_LAB/opticsLab' );
   const Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -157,7 +157,7 @@ define( require => {
         const compAngle = -this.components.get( j ).angleProperty.value;
         const sinAngle = Math.sin( compAngle );
         const cosAngle = Math.cos( compAngle );
-        const thisIntersection = Util.lineSegmentIntersection(
+        const thisIntersection = Utils.lineSegmentIntersection(
           startPoint.x, startPoint.y, rayTip.x, rayTip.y,
           compCenter.x - ( compDiameter / 2 ) * sinAngle,
           compCenter.y - ( compDiameter / 2 ) * cosAngle,

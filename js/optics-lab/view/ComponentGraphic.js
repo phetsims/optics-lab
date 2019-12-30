@@ -19,7 +19,7 @@ define( require => {
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const Shape = require( 'KITE/Shape' );
   const Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   /**
    * @extends {Node}
@@ -110,7 +110,7 @@ define( require => {
       this.f = ( this.radius / 2 ) * ( 1 / ( n - 1 ) );  //f takes sign of R
       const h = this.diameter / 2;                          //h = height = radius of lens
       //  temporary fixed for theta, see #12   set the maximum ratio to be one
-      const theta = Math.asin( Util.clamp( h / R, -1, 1 ) );                     //magnitude of startAngle and endAngle
+      const theta = Math.asin( Utils.clamp( h / R, -1, 1 ) );                     //magnitude of startAngle and endAngle
       const C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
       if ( this.f > 0 ) {
         this.shape
@@ -142,7 +142,7 @@ define( require => {
       const R = fudge * this.radius;
       const h = this.diameter / 2;          //h = height = radius of lens
       //  temporary fixed for theta, see #12   set the maximum ratio to be one
-      const theta = Math.asin( Util.clamp( h / R, -1, 1 ) ); //magnitude of startAngle and endAngle
+      const theta = Math.asin( Utils.clamp( h / R, -1, 1 ) ); //magnitude of startAngle and endAngle
       const C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
       this.shape = new Shape();
       if ( this.type === Type.DIVERGING_MIRROR ) {

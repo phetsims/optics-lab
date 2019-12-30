@@ -26,7 +26,7 @@ define( require => {
   const ObservableArray = require( 'AXON/ObservableArray' );
   const opticsLab = require( 'OPTICS_LAB/opticsLab' );
   const Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   /**
    * @extends {Node}
@@ -108,11 +108,11 @@ define( require => {
       const self = this;
 
       function raysUpdate( nbrOfRays ) {
-        piece.pieceModel.nbrOfRaysProperty.value = Util.roundSymmetric( nbrOfRays );
+        piece.pieceModel.nbrOfRaysProperty.value = Utils.roundSymmetric( nbrOfRays );
       }
 
       function spreadUpdate( spread ) {
-        piece.pieceModel.spreadProperty.value = Util.roundSymmetric( spread );
+        piece.pieceModel.spreadProperty.value = Utils.roundSymmetric( spread );
       }
 
       function colorUpdate( colorString ) {
