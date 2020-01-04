@@ -13,7 +13,6 @@ define( require => {
   const ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
   const ComponentNode = require( 'OPTICS_LAB/optics-lab/view/ComponentNode' );
   const ControlPanelManager = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager' );
-  const inherit = require( 'PHET_CORE/inherit' );
   const ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   const opticsLab = require( 'OPTICS_LAB/opticsLab' );
   const Property = require( 'AXON/Property' );
@@ -24,49 +23,45 @@ define( require => {
   const ToolDrawerPanel = require( 'OPTICS_LAB/optics-lab/view/ToolDrawerPanel' );
   const Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
 
-  /**
-   * @extends {ScreenView}
-   * @param {OpticsLabModel} opticsLabModel
-   * @constructor
-   */
-  function OpticsLabScreenView( opticsLabModel ) {
+  class OpticsLabScreenView extends ScreenView {
+    /**
+     * @param {OpticsLabModel} opticsLabModel
+     */
+    constructor( opticsLabModel ) {
 
-    this.mainModel = opticsLabModel;
-    this.selectedPieceProperty = new Property( null );
-    this.selectedPieceTypeProperty = new Property( null );
+      super( { layoutBounds: new Bounds2( 0, 0, 768, 504 ) } );
 
-    ScreenView.call( this, { layoutBounds: new Bounds2( 0, 0, 768, 504 ) } );
+      this.mainModel = opticsLabModel;
+      this.selectedPieceProperty = new Property( null );
 
-    // model-view transform
-    this.modelViewTransform = ModelViewTransform2.createIdentity();
-    this.controlPanelManager = new ControlPanelManager( this.mainModel, this );
-    this.addChild( this.controlPanelManager );
+      this.selectedPieceTypeProperty = new Property( null );
 
-    this.toolDrawerPanel = new ToolDrawerPanel( opticsLabModel, this );
-    this.addChild( this.toolDrawerPanel );
+      // model-view transform
+      this.modelViewTransform = ModelViewTransform2.createIdentity();
+      this.controlPanelManager = new ControlPanelManager( this.mainModel, this );
+      this.addChild( this.controlPanelManager );
 
-    //Layout
-    this.controlPanelManager.left = 40;       //this line crashes sim unless controlPanelManager has graphic content
-    this.controlPanelManager.top = 10;
-    this.toolDrawerPanel.bottom = this.layoutBounds.bottom - 10;
-    this.toolDrawerPanel.centerX = this.layoutBounds.centerX;
+      this.toolDrawerPanel = new ToolDrawerPanel( opticsLabModel, this );
+      this.addChild( this.toolDrawerPanel );
 
-    const resetAllButton = new ResetAllButton( {
-        listener: function() {
-          opticsLabModel.reset();
-        },
-        right: this.layoutBounds.right - 20,
-        top: this.toolDrawerPanel.top
-      }
-    );
+      //Layout
+      this.controlPanelManager.left = 40;       //this line crashes sim unless controlPanelManager has graphic content
+      this.controlPanelManager.top = 10;
+      this.toolDrawerPanel.bottom = this.layoutBounds.bottom - 10;
+      this.toolDrawerPanel.centerX = this.layoutBounds.centerX;
 
-    this.addChild( resetAllButton );
+      const resetAllButton = new ResetAllButton( {
+          listener: function() {
+            opticsLabModel.reset();
+          },
+          right: this.layoutBounds.right - 20,
+          top: this.toolDrawerPanel.top
+        }
+      );
 
-  }//end constructor
+      this.addChild( resetAllButton );
 
-  opticsLab.register( 'OpticsLabScreenView', OpticsLabScreenView );
-
-  return inherit( ScreenView, OpticsLabScreenView, {
+    }//end constructor
 
     /**
      *
@@ -75,11 +70,14 @@ define( require => {
      * @returns {SourceNode}
      * @private
      */
-    addSource: function( type, startPosition ) {
+    addSource( type, startPosition ) {
       let sourceModel;
-      if ( type === Type.FAN_SOURCE ) {
+
+      if ( type === Type.FAN_SOURCE
+      ) {
         sourceModel = new SourceModel( this.mainModel, Type.FAN_SOURCE, 10, startPosition, 45, 0 );
       }
+
       else {
         sourceModel = new SourceModel( this.mainModel, Type.BEAM_SOURCE, 10, startPosition, 0, 50 );
       }
@@ -89,7 +87,7 @@ define( require => {
       this.addChild( sourceNode );
       return sourceNode;
       //sourceNode.addRayNodesToParent( this );
-    },
+    }
 
     /**
      *
@@ -98,7 +96,7 @@ define( require => {
      * @returns {ComponentNode}
      * @private
      */
-    addComponent: function( type, startPosition ) {
+    addComponent( type, startPosition ) {
       let componentModel;
       switch( type ) {
         case Type.CONVERGING_LENS:
@@ -134,9 +132,9 @@ define( require => {
       }
       return componentNode;
 
-    },//end addComponent()
-    //A piece is either a source or a component
+    }//end addComponent()
 
+    //A piece is either a source or a component
     /**
      *
      * @param {Type} type
@@ -144,7 +142,7 @@ define( require => {
      * @returns {ComponentNode|SourceNode}
      * @public
      */
-    addPiece: function( type, startPosition ) {
+    addPiece( type, startPosition ) {
       let newPiece;
       if ( type === Type.FAN_SOURCE || type === Type.BEAM_SOURCE ) {
         newPiece = this.addSource( type, startPosition );
@@ -159,36 +157,36 @@ define( require => {
 
       //this.controlPanelManager.displayControlPanelForNewPiece( newPiece );
       return newPiece;
-    },//end AddPiece
+    }//end AddPiece
 
     /**
      *
      * @param {SourceNode} sourceNode
      * @private
      */
-    removeSource: function( sourceNode ) {
+    removeSource( sourceNode ) {
       const sourceModel = sourceNode.pieceModel;
       this.removeChild( sourceNode );
       this.mainModel.removeSource( sourceModel );
-    },
+    }
 
     /**
      *
      * @param {ComponentNode} componentNode
      * @private
      */
-    removeComponent: function( componentNode ) {
+    removeComponent( componentNode ) {
       this.removeChild( componentNode );
       const componentModel = componentNode.pieceModel;
       this.mainModel.removeComponent( componentModel );
-    },
+    }
 
     /**
      *
      * @param {SourceNode|ComponentNode} piece
      * @public
      */
-    removePiece: function( piece ) {
+    removePiece( piece ) {
       const type = piece.type;
       if ( type === Type.FAN_SOURCE || type === Type.BEAM_SOURCE ) {
         this.removeSource( piece );
@@ -197,28 +195,32 @@ define( require => {
         this.removeComponent( piece );
       }
 
-    },
+    }
 
     /**
      *
      * @param {SourceNode|ComponentNode} piece
      * @public
      */
-    setSelectedPiece: function( piece ) {
+    setSelectedPiece( piece ) {
       this.selectedPieceProperty.value = piece;
-      this.selectedPieceTypeProperty.value = piece.type;
-      piece.moveToFront();
-    },
-
-    /**
-     *
-     * @param {SourceNode|ComponentNode} piece
-     * @public
-     */
-    setSelectedPieceType: function( piece ) {
       this.selectedPieceTypeProperty.value = piece.type;
       piece.moveToFront();
     }
 
-  } );
+    /**
+     *
+     * @param {SourceNode|ComponentNode} piece
+     * @public
+     */
+    setSelectedPieceType( piece ) {
+      this.selectedPieceTypeProperty.value = piece.type;
+      piece.moveToFront();
+    }
+
+  }
+
+  return opticsLab.register( 'OpticsLabScreenView', OpticsLabScreenView );
+
+
 } );

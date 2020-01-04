@@ -21,75 +21,68 @@ define( require => {
 
   // modules
   const ControlPanel = require( 'OPTICS_LAB/optics-lab/view/ControlPanel' );
-  const inherit = require( 'PHET_CORE/inherit' );
   const Node = require( 'SCENERY/nodes/Node' );
   const ObservableArray = require( 'AXON/ObservableArray' );
   const opticsLab = require( 'OPTICS_LAB/opticsLab' );
   const Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
   const Utils = require( 'DOT/Utils' );
 
-  /**
-   * @extends {Node}
-   * @param {OpticsLabModel} mainModel
-   * @param {OpticsLabScreenView} mainView
-   * @constructor
-   */
-  function ControlPanelManager( mainModel, mainView ) {
+  class ControlPanelManager extends Node {
+    /**
+     * @param {OpticsLabModel} mainModel
+     * @param {OpticsLabScreenView} mainView
+     */
+    constructor( mainModel, mainView ) {
 
-    Node.call( this );
-    const self = this;
-    this.mainModel = mainModel;
-    this.mainView = mainView;
-    this.controlPanels = [];     //one display for each piece on the stage, only display of selected piece is visible
-    this.pieces = new ObservableArray();
-    this.selectedPiece = new Node();
-    this.selectedPieceType;
-    this.previousRaysUpdate;
-    this.previousSpreadUpdate;
-    this.previousColorUpdate;
-    this.previousDiameterUpdate;
-    this.previousRadiusOfCurvatureUpdate;
-    this.previousIndexOfRefractionUpdate;
-    this.previousShowFocalPointsUpdate;
-    this.previousDisplayFocalLengthUpdate;
-    //this.expandedProperty = new Property( true );
-    this.typeArray = [
-      Type.FAN_SOURCE,
-      Type.BEAM_SOURCE,
-      Type.CONVERGING_LENS,
-      Type.DIVERGING_LENS,
-      Type.CONVERGING_MIRROR,
-      Type.PLANE_MIRROR,
-      Type.DIVERGING_MIRROR,
-      Type.SIMPLE_MASK,
-      Type.SLIT_MASK
-    ];
+      super();
+      this.mainModel = mainModel;
+      this.mainView = mainView;
+      this.controlPanels = [];     //one display for each piece on the stage, only display of selected piece is visible
+      this.pieces = new ObservableArray();
+      this.selectedPiece = new Node();
+      this.selectedPieceType;
+      this.previousRaysUpdate;
+      this.previousSpreadUpdate;
+      this.previousColorUpdate;
+      this.previousDiameterUpdate;
+      this.previousRadiusOfCurvatureUpdate;
+      this.previousIndexOfRefractionUpdate;
+      this.previousShowFocalPointsUpdate;
+      this.previousDisplayFocalLengthUpdate;
+      //this.expandedProperty = new Property( true );
+      this.typeArray = [
+        Type.FAN_SOURCE,
+        Type.BEAM_SOURCE,
+        Type.CONVERGING_LENS,
+        Type.DIVERGING_LENS,
+        Type.CONVERGING_MIRROR,
+        Type.PLANE_MIRROR,
+        Type.DIVERGING_MIRROR,
+        Type.SIMPLE_MASK,
+        Type.SLIT_MASK
+      ];
 
-    for ( let i = 0; i < this.typeArray.length; i++ ) {
-      const newControlPanel = new ControlPanel( mainModel, mainView, this.typeArray[ i ] );
-      this.controlPanels[ i ] = newControlPanel;
-      this.addChild( newControlPanel );
-    }
+      for ( let i = 0; i < this.typeArray.length; i++ ) {
+        const newControlPanel = new ControlPanel( mainModel, mainView, this.typeArray[ i ] );
+        this.controlPanels[ i ] = newControlPanel;
+        this.addChild( newControlPanel );
+      }
 
-    this.mainView.selectedPieceProperty.lazyLink( function( piece ) {
-      self.selectedPiece = piece;
-      self.selectedPieceType = piece.type;
-      self.linkControls();
-    } );
+      this.mainView.selectedPieceProperty.lazyLink( piece => {
+        this.selectedPiece = piece;
+        this.selectedPieceType = piece.type;
+        this.linkControls();
+      } );
 
-    // All controls are placed on display node, with visibility set by accordionBox button
+      // All controls are placed on display node, with visibility set by accordionBox button
 
-  }//end constructor
-
-  opticsLab.register( 'ControlPanelManager', ControlPanelManager );
-
-  return inherit( Node, ControlPanelManager, {
+    }//end constructor
     /**
      *
      * @param {Type} type
      * @returns {number}
      */
-    getIndex: function( type ) {
+    getIndex( type ) {
       let index;
       for ( let i = 0; i < this.typeArray.length; i++ ) {
         if ( this.controlPanels[ i ].type === type ) {
@@ -97,11 +90,12 @@ define( require => {
         }
       }
       return index;
-    },
+    }
+
     /**
      * @private
      */
-    linkControls: function() {
+    linkControls() {
       const type = this.selectedPieceType;
       const piece = this.selectedPiece;
       const controlPanel = this.controlPanels[ this.getIndex( type ) ];
@@ -336,5 +330,8 @@ define( require => {
     //    this.panelTitle.text = titleString;
     //}
 
-  } );
+  }
+
+  return opticsLab.register( 'ControlPanelManager', ControlPanelManager );
+
 } );

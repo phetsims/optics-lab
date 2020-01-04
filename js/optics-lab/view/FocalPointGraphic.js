@@ -8,33 +8,30 @@ define( require => {
   'use strict';
 
   // modules
-  const inherit = require( 'PHET_CORE/inherit' );
   const Line = require( 'SCENERY/nodes/Line' );
   const Node = require( 'SCENERY/nodes/Node' );
   const opticsLab = require( 'OPTICS_LAB/opticsLab' );
   const Utils = require( 'DOT/Utils' );
 
-  /**
-   * @extends {Node}
-   * @param {number|null} size
-   * @constructor
-   */
-  function FocalPointGraphic( size ) {
+  class FocalPointGraphic extends Node {
+    /**
+     * @param {number|null} size
+     */
+    constructor( size ) {
 
-    Node.call( this );
+      super();
+      let R = Utils.roundSymmetric( size / 2 );
+      if ( size === undefined ) {
+        R = 30;
+      }
+      const strokeInfo = { stroke: 'yellow', lineWidth: 4, lineCap: 'butt' };
+      const line1 = new Line( -R, -R, R, R, strokeInfo );
+      const line2 = new Line( R, -R, -R, R, strokeInfo );
+      this.children = [line1, line2];
 
-    let R = Utils.roundSymmetric( size / 2 );
-    if ( size === undefined ) {
-      R = 30;
     }
-    const strokeInfo = { stroke: 'yellow', lineWidth: 4, lineCap: 'butt' };
-    const line1 = new Line( -R, -R, R, R, strokeInfo );
-    const line2 = new Line( R, -R, -R, R, strokeInfo );
-    this.children = [ line1, line2 ];
 
   }
 
-  opticsLab.register( 'FocalPointGraphic', FocalPointGraphic );
-
-  return inherit( Node, FocalPointGraphic );
+  return opticsLab.register( 'FocalPointGraphic', FocalPointGraphic );
 } );
