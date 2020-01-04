@@ -27,8 +27,8 @@ define( require => {
     }
   };
 
-  SimLauncher.launch( function() {
-    const sim = new Sim( opticsLabTitleString, [ new OpticsLabScreen() ], simOptions );
+  SimLauncher.launch( () => {
+    const sim = new Sim( opticsLabTitleString, [new OpticsLabScreen()], simOptions );
     sim.start();
   } );
 } );
