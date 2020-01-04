@@ -9,7 +9,6 @@ define( require => {
   'use strict';
 
   // modules
-  const inherit = require( 'PHET_CORE/inherit' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const ObservableArray = require( 'AXON/ObservableArray' );
   const opticsLab = require( 'OPTICS_LAB/opticsLab' );
@@ -17,111 +16,110 @@ define( require => {
   const Utils = require( 'DOT/Utils' );
   const Vector2 = require( 'DOT/Vector2' );
 
-  /**
-   * @extends {Object}
-   * @constructor
-   */
-  function OpticsLabModel() {
+  class OpticsLabModel {
 
-    // @private {Property.<number>} number of times processRays() called, flag for further processing
-    this.processRaysCountProperty = new NumberProperty( 0 );
+    constructor() {
 
-    // @public (read-only) boolean
-    this.processingRays = false;  //true if rays are being processed,
-    // needed to ensure current processing to end before new processing begins
+      // @private {Property.<number>} number of times processRays() called, flag for further processing
+      this.processRaysCountProperty = new NumberProperty( 0 );
 
-    // @private {ObservableArray.<SourceModel>}
-    this.sources = new ObservableArray();     //source of light rays
+      // @public (read-only) boolean
+      this.processingRays = false;  //true if rays are being processed,
+      // needed to ensure current processing to end before new processing begins
 
-    // @private {ObservableArray.<ComponentModel>}
-    this.components = new ObservableArray();  //component = lens, mirror, or mask
+      // @private {ObservableArray.<SourceModel>}
+      this.sources = new ObservableArray();     //source of light rays
 
-    // @private {ObservableArray.<ComponentModel|SourceModel>}
-    this.pieces = new ObservableArray();      //piece = source or component
+      // @private {ObservableArray.<ComponentModel>}
+      this.components = new ObservableArray();  //component = lens, mirror, or mask
 
-    this.maxLength = 2000;  //maximum length of segment of rayPath
+      // @private {ObservableArray.<ComponentModel|SourceModel>}
+      this.pieces = new ObservableArray();      //piece = source or component
 
-    // @public (read-only) {number}
-    this.maxNbrOfRaysFromASource = 20;
+      this.maxLength = 2000;  //maximum length of segment of rayPath
 
-    // @private {number}
-    this.maxNbrIntersections = 100;  //maximum number of segments in a raypath, to prevent endless loops
+      // @public (read-only) {number}
+      this.maxNbrOfRaysFromASource = 20;
 
-    // @private {number}
-    this.intersectionCounter = 0;
+      // @private {number}
+      this.maxNbrIntersections = 100;  //maximum number of segments in a raypath, to prevent endless loops
 
-  }
+      // @private {number}
+      this.intersectionCounter = 0;
 
-  opticsLab.register( 'OpticsLabModel', OpticsLabModel );
+    }
 
-  return inherit( Object, OpticsLabModel, {
 
     /**
      * @public
      */
-    reset: function() {
+    reset() {
       this.sources.clear();
       this.components.clear();
       this.pieces.clear();
       this.processRaysCountProperty.reset();
-    },
+    }
 
     /**
      * Adds a source of light to the model
      * @param {SourceModel} source
      * @public
      */
-    addSource: function( source ) {
+    addSource( source ) {
       this.sources.add( source );
       this.pieces.add( source );
       source.setPosition( source.positionProperty.value );
       //this.sources.push( source );
-    },
+    }
+
     /**
      * Adds a component (lens/mirror) to the model
      * @param {ComponentModel} component
      * @public
      */
-    addComponent: function( component ) {
+    addComponent( component ) {
       this.components.add( component );
       this.pieces.add( component );
       //this.components.push( component );
-    },
+    }
+
     /**
      * Removes a source of light from the model
      * @param {SourceModel} source
      * @public
      */
-    removeSource: function( source ) {
+    removeSource( source ) {
       this.sources.remove( source );
       this.processRays();
-    },
+    }
+
     /**
      * Removes a component (mirror/lens) from the model
      * @param {ComponentModel} component
      * @public
      */
-    removeComponent: function( component ) {
+    removeComponent( component ) {
       this.components.remove( component );
       this.processRays();
-    },
+    }
 
     /**
      * @public
      */
-    processRays: function() {
+    processRays() {
       //loop through all sources
       for ( let i = 0; i < this.sources.length; i++ ) {
         this.updateSourceLines( this.sources.get( i ) );   //sources is an observable array, hence .get(i)
       }
       this.processRaysCountProperty.value += 1;  //increment number of times processRays called
-    },
+    }
+
     /**
      *
      * @param {SourceModel} source
      * @private
      */
-    updateSourceLines: function( source ) {
+    updateSourceLines( source ) {
       this.processingRays = true;
       this.intersectionCounter = 0;
       //loop thru all rayPaths of this source
@@ -134,7 +132,7 @@ define( require => {
 
       }//end rayPath loop
       this.processingRays = false;
-    }, //end updateSourceLines()
+    } //end updateSourceLines()
 
     /**
      *
@@ -143,7 +141,7 @@ define( require => {
      * @param {Vector2} direction
      * @private
      */
-    launchRay: function( rayPath, startPoint, direction ) {
+    launchRay( rayPath, startPoint, direction ) {
       const dir = direction;
       let intersection = null;
       let distanceToIntersection = this.maxLength;
@@ -183,7 +181,7 @@ define( require => {
         rayPath.addSegment( startPoint, rayTip );   //rayPath ends
       }
 
-    }, //end launchRay()
+    } //end launchRay()
 
     /**
      *
@@ -193,7 +191,7 @@ define( require => {
      * @param {number} componentNbr
      * @private
      */
-    processIntersection: function( rayPath, intersection, segmentNbr, componentNbr ) {
+    processIntersection( rayPath, intersection, segmentNbr, componentNbr ) {
       const incomingRayDir = rayPath.dirs[ segmentNbr ];
       const incomingAngle = incomingRayDir.angle;   //angle in rads between direction of ray and component normal
       let outgoingAngle;
@@ -207,7 +205,7 @@ define( require => {
         normalDirection = false;
       }
 
-      const r = ( intersection.minus( component.positionProperty.value )).dot( componentParallel );
+      const r = ( intersection.minus( component.positionProperty.value ) ).dot( componentParallel );
 
       const f = component.fProperty.value;   //f = focal length
       const tanTheta = Math.tan( angleInRads );
@@ -218,10 +216,10 @@ define( require => {
       }
       else if ( component.type === Type.CONVERGING_LENS || component.type === Type.DIVERGING_LENS ) {
         if ( normalDirection ) {
-          outgoingAngle = -Math.atan( (r / f) - tanTheta ) + componentAngle;
+          outgoingAngle = -Math.atan( ( r / f ) - tanTheta ) + componentAngle;
         }
         else {
-          outgoingAngle = Math.PI + Math.atan( (r / f) + tanTheta ) + componentAngle;
+          outgoingAngle = Math.PI + Math.atan( ( r / f ) + tanTheta ) + componentAngle;
         }
 
         newDir = Vector2.createPolar( 1, outgoingAngle );
@@ -230,7 +228,7 @@ define( require => {
       }
       else if ( component.type === Type.CONVERGING_MIRROR ) {
         if ( normalDirection ) {
-          outgoingAngle = Math.PI + Math.atan( (r / f) - tanTheta ) + componentAngle;
+          outgoingAngle = Math.PI + Math.atan( ( r / f ) - tanTheta ) + componentAngle;
           newDir = Vector2.createPolar( 1, outgoingAngle );
           this.launchRay( rayPath, intersection, newDir );
         }
@@ -238,7 +236,7 @@ define( require => {
       }
       else if ( component.type === Type.DIVERGING_MIRROR ) {
         if ( normalDirection ) {
-          outgoingAngle = Math.PI + Math.atan( (r / f) - tanTheta ) + componentAngle;
+          outgoingAngle = Math.PI + Math.atan( ( r / f ) - tanTheta ) + componentAngle;
           newDir = Vector2.createPolar( 1, outgoingAngle );
           this.launchRay( rayPath, intersection, newDir );
         }
@@ -259,5 +257,7 @@ define( require => {
         console.log( 'ERROR: intersection component is unknown.' );
       }
     }//end processIntersection()
-  } );
+  }
+
+  return opticsLab.register( 'OpticsLabModel', OpticsLabModel );
 } );

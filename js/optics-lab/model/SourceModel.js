@@ -10,7 +10,6 @@ define( require => {
   'use strict';
 
   // modules
-  const inherit = require( 'PHET_CORE/inherit' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const opticsLab = require( 'OPTICS_LAB/opticsLab' );
   const Property = require( 'AXON/Property' );
@@ -20,97 +19,93 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
   const Vector2Property = require( 'DOT/Vector2Property' );
 
-  /**
-   * @extends {Object}
-   *
-   * @param {OpticsLabModel} mainModel for this sim
-   * @param {Type} type = Type.FAN_SOURCE|Type.BEAM_SOURCE = fan of diverging rays or beam of parallel rays
-   * @param {number} nbrOfRays
-   * @param {Vector2} position
-   * @param {number} spread = for fan source, range of angles in degrees; for beam, spread is zero
-   * @param {number} height = for beam source, range of y-position in cm; for fan, height is zero
-   * @constructor
-   */
-  function SourceModel( mainModel, type, nbrOfRays, position, spread, height ) {
+  class SourceModel {
+    /**
+     *
+     * @param {OpticsLabModel} mainModel for this sim
+     * @param {Type} type = Type.FAN_SOURCE|Type.BEAM_SOURCE = fan of diverging rays or beam of parallel rays
+     * @param {number} nbrOfRays
+     * @param {Vector2} position
+     * @param {number} spread = for fan source, range of angles in degrees; for beam, spread is zero
+     * @param {number} height = for beam source, range of y-position in cm; for fan, height is zero
+     */
+    constructor( mainModel, type, nbrOfRays, position, spread, height ) {
 
-    // @private position of source on stage
-    this.positionProperty = new Vector2Property( position );
+      // @private position of source on stage
+      this.positionProperty = new Vector2Property( position );
 
-    // @private, {Property.<number>} number of rays
-    this.nbrOfRaysProperty = new NumberProperty( nbrOfRays );
+      // @private, {Property.<number>} number of rays
+      this.nbrOfRaysProperty = new NumberProperty( nbrOfRays );
 
-    // @public {Property.<number>} spread of point source (fan source) in degrees
-    this.spreadProperty = new NumberProperty( spread );
+      // @public {Property.<number>} spread of point source (fan source) in degrees
+      this.spreadProperty = new NumberProperty( spread );
 
-    // @public {Property.<number>} width of source, if beam
-    this.widthProperty = new NumberProperty( height );
+      // @public {Property.<number>} width of source, if beam
+      this.widthProperty = new NumberProperty( height );
 
-    // @private {Property.<number>} angle in rads of beam source, 0 = horizontal. + = CCW, - = CW
-    this.angleProperty = new NumberProperty( 0 );
+      // @private {Property.<number>} angle in rads of beam source, 0 = horizontal. + = CCW, - = CW
+      this.angleProperty = new NumberProperty( 0 );
 
-    //@private {Property.<string|Color>} color of ray in the view (not really part of the model, but it
-    //is convenient to put all the Properties of a Source in one place)
-    this.colorProperty = new Property( '#FFF' );
+      //@private {Property.<string|Color>} color of ray in the view (not really part of the model, but it
+      //is convenient to put all the Properties of a Source in one place)
+      this.colorProperty = new Property( '#FFF' );
 
-    const self = this;
-    this.mainModel = mainModel;
+      const self = this;
+      this.mainModel = mainModel;
 
-    this.type = type; // {Type.FAN_SOURCE|Type.BEAM_SOURCE}
-    this.maxLength = 2000;  //maximum length of rays in pixels
-    this.maxNbrOfRays = mainModel.maxNbrOfRaysFromASource;
+      this.type = type; // {Type.FAN_SOURCE|Type.BEAM_SOURCE}
+      this.maxLength = 2000;  //maximum length of rays in pixels
+      this.maxNbrOfRays = mainModel.maxNbrOfRaysFromASource;
 
-    if ( type === Type.FAN_SOURCE ) {
-      this.spreadProperty.value = spread;
-      this.height = 0;
+      if ( type === Type.FAN_SOURCE ) {
+        this.spreadProperty.value = spread;
+        this.height = 0;
+      }
+      else if ( type === Type.BEAM_SOURCE ) {
+        this.spreadProperty.value = 0;
+        this.height = height;
+      }
+
+      this.nbrOfRaysProperty.lazyLink( function() {
+        self.createRays();
+        self.mainModel.processRays();
+      } );
+      this.spreadProperty.lazyLink( function() {
+        self.createRays();
+        self.mainModel.processRays();
+      } );
+      this.widthProperty.lazyLink( function() {
+        self.createRays();
+        self.mainModel.processRays();
+      } );
+      this.angleProperty.lazyLink( function() {
+        self.createRays();
+        self.mainModel.processRays();
+      } );
+
+      this.rayPaths = [];    //an array of RayPaths
+
+      this.createRays();
+
     }
-    else if ( type === Type.BEAM_SOURCE ) {
-      this.spreadProperty.value = 0;
-      this.height = height;
-    }
-
-    this.nbrOfRaysProperty.lazyLink( function() {
-      self.createRays();
-      self.mainModel.processRays();
-    } );
-    this.spreadProperty.lazyLink( function() {
-      self.createRays();
-      self.mainModel.processRays();
-    } );
-    this.widthProperty.lazyLink( function() {
-      self.createRays();
-      self.mainModel.processRays();
-    } );
-    this.angleProperty.lazyLink( function() {
-      self.createRays();
-      self.mainModel.processRays();
-    } );
-
-    this.rayPaths = [];    //an array of RayPaths
-
-    this.createRays();
-
-  }
-
-  opticsLab.register( 'SourceModel', SourceModel );
-
-  return inherit( Object, SourceModel, {
 
     /**
      * @public
      */
-    reset: function() {
+    reset() {
       this.positionProperty.reset();
       this.nbrOfRaysProperty.reset();
       this.spreadProperty.reset();
       this.widthProperty.reset();
       this.angleProperty.reset();
       this.colorProperty.reset();
-    },
+    }
+
     /**
      * Adds rays
      * @private
      */
-    createRays: function() {
+    createRays() {
       this.rayPaths = [];  //clear any current rays
       this.nbrOfRaysProperty.value = Utils.roundSymmetric( this.nbrOfRaysProperty.value );  //slider may produce non-integer number of rays
       //for fan source
@@ -166,49 +161,52 @@ define( require => {
           this.rayPaths[ i ].startPos = startPos;
         }
       }
-    }, //end createRays()
+    }
+
     /**
      *
      * @param {number} nbrOfRays
      * @private
      */
-    setNbrOfRays: function( nbrOfRays ) {
+    setNbrOfRays( nbrOfRays ) {
       this.nbrOfRaysProperty.value = nbrOfRays;
       this.createRays();
       this.mainModel.processRays();
-    },
+    }
 
     /**
      *
      * @param {number} angleInDegrees
      * @private
      */
-    setSpreadOfFan: function( angleInDegrees ) {
+    setSpreadOfFan( angleInDegrees ) {
       if ( this.type === Type.FAN_SOURCE ) {
         this.spreadProperty.value = angleInDegrees;
         this.createRays();
         this.mainModel.processRays();
       }
-    },
+    }
 
     /**
      *
      * @param {number} widthInCm
      * @private
      */
-    setWidthOfBeam: function( widthInCm ) {
+    setWidthOfBeam( widthInCm ) {
       if ( this.type === Type.BEAM_SOURCE ) {
         this.widthProperty.value = widthInCm;
         this.createRays();
         this.mainModel.processRays();
       }
-    },
+    }
+
+
     /**
      * Sets the position of the source
      * @param {Vector2} position
      * @public
      */
-    setPosition: function( position ) {   //position = Vector2
+    setPosition( position ) {   //position = Vector2
 
       this.positionProperty.value = position;
       for ( let i = 0; i < this.rayPaths.length; i++ ) {
@@ -242,18 +240,21 @@ define( require => {
         this.mainModel.processRays();
       }
 
-    }, //end setPosition()
+    }
+
     /**
      * Sets the rotation angle of the source of light
      * @param {number} angleInRads - angle in radians
      * @public
      */
-    setAngle: function( angleInRads ) {
+    setAngle( angleInRads ) {
       this.angleProperty.value = angleInRads;
       if ( this.type === Type.BEAM_SOURCE ) {
         this.setPosition( this.positionProperty.value );
       }
     }
+  }
 
-  } );
+  return opticsLab.register( 'SourceModel', SourceModel );
+
 } );

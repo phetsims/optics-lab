@@ -9,7 +9,6 @@ define( require => {
   'use strict';
 
   // modules
-  const inherit = require( 'PHET_CORE/inherit' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const opticsLab = require( 'OPTICS_LAB/opticsLab' );
   const Property = require( 'AXON/Property' );
@@ -17,88 +16,82 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
   const Vector2Property = require( 'DOT/Vector2Property' );
 
-  /**
-   * @extends {Object}
-   *
-   * @param {OpticsLabModel} mainModel
-   * @param {Type} type
-   * @param {number} diameter
-   * @param {number} [radiusCurvature] - plane mirrors do not have a radius of curvature
-   * @param {number} [index] - mirrors do not pass as index
-   * @constructor
-   */
-  function ComponentModel( mainModel, type, diameter, radiusCurvature, index ) {
+  class ComponentModel {
+    /**
+     * @param {OpticsLabModel} mainModel
+     * @param {Type} type
+     * @param {number} diameter
+     * @param {number} [radiusCurvature] - plane mirrors do not have a radius of curvature
+     * @param {number} [index] - mirrors do not pass as index
+     */
+    constructor( mainModel, type, diameter, radiusCurvature, index ) {
 
-    // @private - position of component on stage
-    this.positionProperty = new Vector2Property( new Vector2( 0, 0 ) );
+      // @private - position of component on stage
+      this.positionProperty = new Vector2Property( new Vector2( 0, 0 ) );
 
-    // @private, {Property.<number>}
-    this.diameterProperty = new NumberProperty( diameter );
+      // @private, {Property.<number>}
+      this.diameterProperty = new NumberProperty( diameter );
 
-    // @public {Property.<number|null>} spread of point source (fan source) in degrees
-    this.radiusProperty = new Property( radiusCurvature );
+      // @public {Property.<number|null>} spread of point source (fan source) in degrees
+      this.radiusProperty = new Property( radiusCurvature );
 
-    // @public {Property.<number|null>} index of refraction of lens
-    this.indexProperty = new Property( index );
+      // @public {Property.<number|null>} index of refraction of lens
+      this.indexProperty = new Property( index );
 
-    // @public {Property.<number|null>} focal length of component of lens or mirror
-    this.fProperty = new Property( 500 );
+      // @public {Property.<number|null>} focal length of component of lens or mirror
+      this.fProperty = new Property( 500 );
 
-    // @public {Property.<number>} tilt angle of component, 0 = optic axis is horizontal, + angle is CW
-    this.angleProperty = new NumberProperty( 0 );
+      // @public {Property.<number>} tilt angle of component, 0 = optic axis is horizontal, + angle is CW
+      this.angleProperty = new NumberProperty( 0 );
 
-    const self = this;
-    this.mainModel = mainModel;
+      const self = this;
+      this.mainModel = mainModel;
 
-    // @public (read-only) {string}
-    this.type = type; // Type.CONVERGING_LENS|Type.DIVERGING_LENS|Type.CONVERGING_MIRROR|Type.PLANE_MIRROR|etc.
-    if ( this.type === Type.CONVERGING_MIRROR || this.type === Type.DIVERGING_MIRROR ) {
-      this.indexProperty.value = 2;  //needed so formula for focal length is correct in mirror case
+      // @public (read-only) {string}
+      this.type = type; // Type.CONVERGING_LENS|Type.DIVERGING_LENS|Type.CONVERGING_MIRROR|Type.PLANE_MIRROR|etc.
+      if ( this.type === Type.CONVERGING_MIRROR || this.type === Type.DIVERGING_MIRROR ) {
+        this.indexProperty.value = 2;  //needed so formula for focal length is correct in mirror case
+      }
+
+      this.diameterProperty.link( function() {
+        self.mainModel.processRays();
+      } );
+
+      this.radiusProperty.link( function( radius ) {
+        const R = radius;   // R is signed.  + for converging lenses, - for diverging lenses
+        const n = self.indexProperty.value;
+        self.fProperty.value = R / ( 2 * ( n - 1 ) );  //focal length gets correct sign from sign of radius R.
+        self.mainModel.processRays();
+      } );
+
+      this.indexProperty.link( function( index ) {
+        const R = self.radiusProperty.value;
+        const n = index;
+        self.fProperty.value = R / ( 2 * ( n - 1 ) );
+        self.mainModel.processRays();
+      } );
+
+      this.angleProperty.link( function() {
+        self.mainModel.processRays();
+      } );
     }
-
-    this.diameterProperty.link( function() {
-      self.mainModel.processRays();
-    } );
-
-    this.radiusProperty.link( function( radius ) {
-      const R = radius;   // R is signed.  + for converging lenses, - for diverging lenses
-      const n = self.indexProperty.value;
-      self.fProperty.value = R / ( 2 * ( n - 1 ));  //focal length gets correct sign from sign of radius R.
-      self.mainModel.processRays();
-    } );
-
-    this.indexProperty.link( function( index ) {
-      const R = self.radiusProperty.value;
-      const n = index;
-      self.fProperty.value = R / ( 2 * ( n - 1 ));
-      self.mainModel.processRays();
-    } );
-
-    this.angleProperty.link( function() {
-      self.mainModel.processRays();
-    } );
-  }
-
-  opticsLab.register( 'ComponentModel', ComponentModel );
-
-  return inherit( Object, ComponentModel, {
 
     /**
      * @public
      */
-    reset: function() {
+    reset() {
       this.positionProperty.reset();
       this.diameterProperty.reset();
       this.radiusProperty.reset();
       this.indexProperty.reset();
       this.fProperty.reset();
       this.angleProperty.reset();
-    },
+    }
 
     /**
      *
      */
-    updateFocalLength: function() {
+    updateFocalLength() {
       if ( this.type === Type.CONVERGING_LENS || this.type === Type.DIVERGING_LENS ) {
         this.fProperty.value = ( this.radiusProperty.value / 2 ) / ( this.indexProperty.value - 1 );
       }
@@ -109,55 +102,60 @@ define( require => {
         console.log( 'ERROR: plane mirrors and masks do not have finite focal length.' );
       }
       this.mainModel.processRays();
-    },
+    }
+
     /**
      * Sets the diameter of the component
      * @param {number} diameter
      * @public
      */
-    setDiameter: function( diameter ) {
+    setDiameter( diameter ) {
       this.diameterProperty.value = diameter;
       this.mainModel.processRays();
-    },
+    }
 
     /**
      * Sets the radius of the component
      * @param {number} radius
      * @public
      */
-    setRadius: function( radius ) {
+    setRadius( radius ) {
       this.radiusProperty.value = radius;
       this.mainModel.processRays();
-    },
+    }
+
     /**
      * Sets the index of refraction of the component
      * @param {number} index
      * @public
      */
-    setIndex: function( index ) {
+    setIndex( index ) {
       this.indexProperty.value = index;
       this.mainModel.processRays();
-    },
+    }
+
     /**
      * Sets the position of the component
      * @param {Vector2} position
      * @public
      */
-    setPosition: function( position ) {
+    setPosition( position ) {
       this.positionProperty.value = position;
       if ( !this.mainModel.processingRays ) {
         this.mainModel.processRays();
       }
-    },
+    }
 
     /**
      * Sets the rotation angle of the component (with respect to its center)
      * @param {number} angleInRads
      * @public
      */
-    setAngle: function( angleInRads ) {
+    setAngle( angleInRads ) {
       this.angleProperty.value = angleInRads;
       this.mainModel.processRays();
     }
-  } );
+  }
+
+  return opticsLab.register( 'ComponentModel', ComponentModel );
 } );

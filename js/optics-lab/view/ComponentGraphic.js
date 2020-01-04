@@ -11,7 +11,6 @@ define( require => {
 
   // modules
   const FocalPointGraphic = require( 'OPTICS_LAB/optics-lab/view/FocalPointGraphic' );
-  const inherit = require( 'PHET_CORE/inherit' );
   const Line = require( 'SCENERY/nodes/Line' );
   const Node = require( 'SCENERY/nodes/Node' );
   const opticsLab = require( 'OPTICS_LAB/opticsLab' );
@@ -21,43 +20,38 @@ define( require => {
   const Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
   const Utils = require( 'DOT/Utils' );
 
-  /**
-   * @extends {Node}
-   *
-   * @param {Type} type
-   * @param {number} diameter
-   * @param {number} radius
-   * @param {number} index
-   * @constructor
-   */
-  function ComponentGraphic( type, diameter, radius, index ) {
-    Node.call( this );
+  class ComponentGraphic extends Node {
+    /**
+     * @param {Type} type
+     * @param {number} diameter
+     * @param {number} radius
+     * @param {number} index
+     */
+    constructor( type, diameter, radius, index ) {
+      super();
 
-    this.type = type;
-    this.diameter = diameter;    //starting direction of the first segment, the one thing that never changes
-    this.radius = radius;   // radius of curvature of each surface of lens
-    this.index = index;     // index of refraction
-    this.f = this.radius / ( 2 * ( this.index - 1 ) );
+      this.type = type;
+      this.diameter = diameter;    //starting direction of the first segment, the one thing that never changes
+      this.radius = radius;   // radius of curvature of each surface of lens
+      this.index = index;     // index of refraction
+      this.f = this.radius / ( 2 * ( this.index - 1 ) );
 
-    this.mirrorBackGraphic = new Rectangle( 0, -0.5, 20, 1, { fill: 'red' } );
-    this.shape = new Shape();
-    this.path = new Path( this.shape );
-    this.focalPtRight = new FocalPointGraphic( 15 );
-    this.focalPtLeft = new FocalPointGraphic( 15 );
-    this.focalPtRight.visible = true;
-    this.focalPtLeft.visible = true;
-    this.children = [ this.mirrorBackGraphic, this.path, this.focalPtLeft, this.focalPtRight ];
+      this.mirrorBackGraphic = new Rectangle( 0, -0.5, 20, 1, { fill: 'red' } );
+      this.shape = new Shape();
+      this.path = new Path( this.shape );
+      this.focalPtRight = new FocalPointGraphic( 15 );
+      this.focalPtLeft = new FocalPointGraphic( 15 );
+      this.focalPtRight.visible = true;
+      this.focalPtLeft.visible = true;
+      this.children = [this.mirrorBackGraphic, this.path, this.focalPtLeft, this.focalPtRight];
 
-  }
+    }
 
-  opticsLab.register( 'ComponentGraphic', ComponentGraphic );
-
-  return inherit( Node, ComponentGraphic, {
     /**
      * Draws the component
      * @private
      */
-    makeDrawing: function() {
+    makeDrawing() {
       switch( this.type ) {
         case Type.CONVERGING_LENS:
           this.drawLens();
@@ -83,18 +77,21 @@ define( require => {
         default:
           throw new Error( 'invalid type: ' + this.type );
       }//end switch
-    },  //end makeDrawing()
+    }
+
+    //end makeDrawing()
     /**
      * @private
      */
-    clearDrawing: function() {
+    clearDrawing() {
 
-    },
+    }
+
     /**
      * Draws a lens (convergent and divergent)
      * @private
      */
-    drawLens: function() {
+    drawLens() {
       this.shape = new Shape();
       let R;  //same as this.radius = radius of curvature of lens, not to be confused with half-diameter of lens
       const fudge1 = 1;   //fudge factor to make lens radius big enough to be apparent to eye
@@ -132,12 +129,12 @@ define( require => {
       this.path.opacity = 0.85;
       this.path.setShape( this.shape );
       this.mirrorBackGraphic.visible = false;
-    },//end drawLens()
+    }//end drawLens()
     /**
      * Draws a curve mirror (convergent and divergent)
      * @private
      */
-    drawCurvedMirror: function() {
+    drawCurvedMirror() {
       const fudge = 1;
       const R = fudge * this.radius;
       const h = this.diameter / 2;          //h = height = radius of lens
@@ -159,12 +156,13 @@ define( require => {
       //this.mirrorBackGraphic = new Rectangle( 0, -h, w, 2*h, {fill:'red'} );
       this.mirrorBackGraphic.setScaleMagnitude( 1, 2 * h );
       this.mirrorBackGraphic.visible = true;
-    },
+    }
+
     /**
      * Draws a plane mirror
      * @private
      */
-    drawPlaneMirror: function() {
+    drawPlaneMirror() {
       this.removeAllChildren();
       const w = 20;
       const height = this.diameter;
@@ -174,12 +172,13 @@ define( require => {
       const lineGraphic = new Line( 0, -height / 2, 0, height / 2, { stroke: '#FFF', lineWidth: 4 } );
       this.addChild( maskGraphic );
       this.addChild( lineGraphic );
-    },
+    }
+
     /**
      * draw a background mask
      * @private
      */
-    drawMask: function() {
+    drawMask() {
       this.removeAllChildren();
       const w = 20;
       const height = this.diameter;
@@ -187,54 +186,58 @@ define( require => {
       const lineGraphic = new Line( 0, -height / 2, 0, height / 2, { stroke: 'black', lineWidth: 4 } );
       this.addChild( maskGraphic );
       this.addChild( lineGraphic );
-    },
+    }
+
     /**
      * Sets the diameter of the component
      * @param {number} diameter
      * @public
      */
-    setDiameter: function( diameter ) {
+    setDiameter( diameter ) {
       this.diameter = diameter;
       this.makeDrawing();
-    },
+    }
+
     /**
      * Sets the radius of curvature of component
      * @param {number} R
      * @public
      */
-    setRadius: function( R ) {
+    setRadius( R ) {
       this.radius = R;
       this.makeDrawing();
-    },
+    }
 
     /**
      * Sets the index of refraction of the component
      * @param {number} index
      * @public
      */
-    setIndex: function( index ) {
+    setIndex( index ) {
       this.index = index;
       this.makeDrawing();
-    },
+    }
+
     /**
      *
      * @param {number} distance
      * @public
      */
-    setFocalPointPositions: function( distance ) {
+    setFocalPointPositions( distance ) {
       this.focalPtLeft.x = -distance;
       this.focalPtRight.x = distance;
-    },
+    }
 
     /**
      *
      * @param {boolean} isVisible
      * @public
      */
-    setFocalPointsVisibility: function( isVisible ) {
+    setFocalPointsVisibility( isVisible ) {
       this.focalPtLeft.visible = isVisible;
       this.focalPtRight.visible = isVisible;
     }
+  }
 
-  } );
+  return opticsLab.register( 'ComponentGraphic', ComponentGraphic );
 } );
