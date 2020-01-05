@@ -85,8 +85,8 @@ define( require => {
           allowTouchSnag: true,
 
           start: e => {
-            self.mainView.setSelectedPiece( self );
-            self.mainView.setSelectedPieceType( self );
+            mainView.setSelectedPiece( self );
+            mainView.setSelectedPieceType( self );
             const position = self.globalToParentPoint( e.pointer.point );
             const currentNodePos = self.pieceModel.positionProperty.value;
             mouseDownPosition = position.minus( currentNodePos );
@@ -99,8 +99,8 @@ define( require => {
           },
           end: e => {
             const position = self.globalToParentPoint( e.pointer.point );
-            if ( self.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y ) ) {
-              self.mainView.removePiece( self );
+            if ( mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y ) ) {
+              mainView.removePiece( self );
             }
           }
         } ) );//end translationHandle.addInputListener()
@@ -109,8 +109,8 @@ define( require => {
         allowTouchSnag: true,
         //start function for testing only
         start: e => {
-          self.mainView.setSelectedPiece( self );
-          self.mainView.setSelectedPieceType( self );
+          mainView.setSelectedPiece( self );
+          mainView.setSelectedPieceType( self );
         },
 
         drag: e => {

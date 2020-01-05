@@ -209,7 +209,7 @@ define( require => {
       expandCollapseButton.top = 5;
 
       mainView.selectedPieceProperty.lazyLink( piece => {
-        this.visible = ( piece.type === this.type );
+        this.visible = ( piece.type === type );
         this.unlinkToOldPiece();
 
         if ( this.visible ) {
