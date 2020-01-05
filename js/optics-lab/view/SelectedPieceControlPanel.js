@@ -27,7 +27,6 @@ define( require => {
   const ExpandCollapseButton = require( 'SUN/ExpandCollapseButton' );
   const HBox = require( 'SCENERY/nodes/HBox' );
   const HSlider = require( 'SUN/HSlider' );
-  const inherit = require( 'PHET_CORE/inherit' );
   const Node = require( 'SCENERY/nodes/Node' );
   const opticsLab = require( 'OPTICS_LAB/opticsLab' );
   const OpticsLabConstants = require( 'OPTICS_LAB/optics-lab/OpticsLabConstants' );
@@ -43,89 +42,84 @@ define( require => {
   const DISPLAY_FONT = new PhetFont( 12 );
   const TEXT_COLOR = OpticsLabConstants.TEXT_COLOR;
 
-  /**
-   * @extends {Node}
-   * @param {OpticsLabModel} mainModel
-   * @param {OpticsLabScreenView} mainView
-   * @param {ComponentModel|SourceModel} selectedPiece
-   * @constructor
-   */
-  function SelectedPieceControlPanel( mainModel, mainView, selectedPiece ) {
+  class SelectedPieceControlPanel extends Node {
+    /**
+     * @param {OpticsLabModel} mainModel
+     * @param {OpticsLabScreenView} mainView
+     * @param {ComponentModel|SourceModel} selectedPiece
+     */
+    constructor( mainModel, mainView, selectedPiece ) {
 
-    Node.call( this );
-    const self = this;
-    this.mainModel = mainModel;
-    this.mainView = mainView;
-    this.selectedPiece = selectedPiece;
-    this.expandedProperty = new Property( true );
-    this.hSliders = []; //array of HSliders in this control panel, used solely for garbage collection
+      super();
+      this.mainModel = mainModel;
+      this.mainView = mainView;
+      this.selectedPiece = selectedPiece;
+      this.expandedProperty = new Property( true );
+      this.hSliders = []; //array of HSliders in this control panel, used solely for garbage collection
 
-    //initialize source rays color radio buttons
-    let fontInfo = { font: DISPLAY_FONT };
-    this.whiteText = new Text( 'white', fontInfo );
-    this.greenText = new Text( 'green', fontInfo );
-    this.redText = new Text( 'red', fontInfo );
-    this.yellowText = new Text( 'yellow', fontInfo );
+      //initialize source rays color radio buttons
+      let fontInfo = { font: DISPLAY_FONT };
+      this.whiteText = new Text( 'white', fontInfo );
+      this.greenText = new Text( 'green', fontInfo );
+      this.redText = new Text( 'red', fontInfo );
+      this.yellowText = new Text( 'yellow', fontInfo );
 
-    fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
-    this.nbrOfRaysText = new Text( 'number of rays', fontInfo );
-    this.focalPointsText = new Text( 'focal points', fontInfo );
-    this.heightText = new Text( 'height', fontInfo );
-    this.spreadText = new Text( 'spread', fontInfo );
-    this.diameterText = new Text( 'diameter', fontInfo );
-    this.radiusText = new Text( 'radius of curvature', fontInfo );
-    this.focalLengthText = new Text( 'f : ', fontInfo );
-    this.focalLengthReadoutText = new Text( 'filler', fontInfo );
-    this.indexText = new Text( 'refractive index', fontInfo );
-    this.expandCollapseButton = new ExpandCollapseButton( this.expandedProperty, {
-      sideLength: 15,
-      cursor: 'pointer'
-    } );
+      fontInfo = { font: DISPLAY_FONT, fill: TEXT_COLOR };
+      this.nbrOfRaysText = new Text( 'number of rays', fontInfo );
+      this.focalPointsText = new Text( 'focal points', fontInfo );
+      this.heightText = new Text( 'height', fontInfo );
+      this.spreadText = new Text( 'spread', fontInfo );
+      this.diameterText = new Text( 'diameter', fontInfo );
+      this.radiusText = new Text( 'radius of curvature', fontInfo );
+      this.focalLengthText = new Text( 'f : ', fontInfo );
+      this.focalLengthReadoutText = new Text( 'filler', fontInfo );
+      this.indexText = new Text( 'refractive index', fontInfo );
+      this.expandCollapseButton = new ExpandCollapseButton( this.expandedProperty, {
+        sideLength: 15,
+        cursor: 'pointer'
+      } );
 
-    // All controls are placed on display node, with visibility set by expand/collapse button
-    this.panelOptions = {
-      fill: 'white',
-      stroke: 'black',
-      lineWidth: 1, // width of the background border
-      xMargin: 15,
-      yMargin: 5,
-      cornerRadius: 5, // radius of the rounded corners on the background
-      resize: false, // dynamically resize when content bounds change
-      backgroundPickable: false,
-      align: 'left', // {string} horizontal of content in the pane, left|center|right
-      minWidth: 0 // minimum width of the panel
-    };
+      // All controls are placed on display node, with visibility set by expand/collapse button
+      this.panelOptions = {
+        fill: 'white',
+        stroke: 'black',
+        lineWidth: 1, // width of the background border
+        xMargin: 15,
+        yMargin: 5,
+        cornerRadius: 5, // radius of the rounded corners on the background
+        resize: false, // dynamically resize when content bounds change
+        backgroundPickable: false,
+        align: 'left', // {string} horizontal of content in the pane, left|center|right
+        minWidth: 0 // minimum width of the panel
+      };
 
-    this.setControlsForSelectedPiece();
+      this.setControlsForSelectedPiece();
 
-    this.expandCollapseButton.expandedProperty.link( function( tOrF ) {
-      self.displayPanel.visible = tOrF;
-    } );
+      this.expandCollapseButton.expandedProperty.link( tOrF => {
+        this.displayPanel.visible = tOrF;
+      } );
 
-    this.mainView.selectedPieceProperty.link( function( piece ) {
-      self.visible = ( piece === self.selectedPiece );
-    } );
+      this.mainView.selectedPieceProperty.link( piece => {
+        this.visible = ( piece === this.selectedPiece );
+      } );
 
-  }//end constructor
+    }//end constructor
 
-  opticsLab.register( 'SelectedPieceControlPanel', SelectedPieceControlPanel );
-
-  return inherit( Node, SelectedPieceControlPanel, {
 
     /**
      *
      * @param {string} titleString
      * @public
      */
-    setTitleBar: function( titleString ) {
+    setTitleBar( titleString ) {
       this.panelTitle.text = titleString;
-    },
+    }
 
     /**
      * change the piece that this panel controls
      * @private
      */
-    setControlsForSelectedPiece: function() {
+    setControlsForSelectedPiece() {
       if ( this.selectedPiece !== null ) {
         const piece = this.selectedPiece;
         const pieceModel = piece.pieceModel;
@@ -139,14 +133,14 @@ define( require => {
           thumbTouchAreaXDilation: 6,
           thumbTouchAreaYDilation: 6
         };
-        const vBoxMaker = function( childrenArray ) {
+        const vBoxMaker = childrenArray => {
           return new VBox( {
             children: childrenArray,
             align: 'center',
             resize: false
           } );
         };
-        const hBoxMaker = function( childrenArray ) {
+        const hBoxMaker = childrenArray => {
           return new HBox( {
             children: childrenArray,
             spacing: spacing,
@@ -157,99 +151,98 @@ define( require => {
           //pieceModel = piece.pieceModel;
           const maxNbrRays = pieceModel.maxNbrOfRays;
           const nbrOfRaysSlider = new HSlider( pieceModel.nbrOfRaysProperty, new Range( 1, maxNbrRays ), sliderOptions );
-          nbrOfRaysVBox = vBoxMaker( [ nbrOfRaysSlider, this.nbrOfRaysText ] );
+          nbrOfRaysVBox = vBoxMaker( [nbrOfRaysSlider, this.nbrOfRaysText] );
           this.setColorRadioButtonsForSourceNode( piece );
         }
         else {   //if piece = component
           const diameterSlider = new HSlider( pieceModel.diameterProperty, new Range( 50, 250 ), sliderOptions );
-          diameterVBox = vBoxMaker( [ diameterSlider, this.diameterText ] );
+          diameterVBox = vBoxMaker( [diameterSlider, this.diameterText] );
           this.focalLengthReadoutText.text = pieceModel.fProperty.value.toFixed( 0 );
-          const self = this;
-          pieceModel.fProperty.link( function( f ) {
+          pieceModel.fProperty.link( f => {
             if ( f ) {
-              self.focalLengthReadoutText.text = f.toFixed( 0 );
+              this.focalLengthReadoutText.text = f.toFixed( 0 );
             }
           } );
         }
 
         const checkboxOptions = { checkboxColorBackground: 'white' };
         var spacing = 25;
-        const focalLengthHBox = hBoxMaker( [ this.focalLengthText, this.focalLengthReadoutText ] );
+        const focalLengthHBox = hBoxMaker( [this.focalLengthText, this.focalLengthReadoutText] );
         switch( type ) {
           case Type.FAN_SOURCE:
             var spreadSlider = new HSlider( pieceModel.spreadProperty, new Range( 2, 180 ), sliderOptions );
-            var spreadVBox = vBoxMaker( [ spreadSlider, this.spreadText ] );
-            this.content = hBoxMaker( [ fillerBox, nbrOfRaysVBox, spreadVBox, this.colorVBox1, this.colorVBox2 ] );
+            var spreadVBox = vBoxMaker( [spreadSlider, this.spreadText] );
+            this.content = hBoxMaker( [fillerBox, nbrOfRaysVBox, spreadVBox, this.colorVBox1, this.colorVBox2] );
             break;
           case Type.BEAM_SOURCE:
             var heightSlider = new HSlider( pieceModel.heightProperty, new Range( 50, 250 ), sliderOptions );
-            var heightVBox = vBoxMaker( [ heightSlider, this.heightText ] );
-            this.content = hBoxMaker( [ fillerBox, nbrOfRaysVBox, heightVBox, this.colorVBox1, this.colorVBox2 ] );
+            var heightVBox = vBoxMaker( [heightSlider, this.heightText] );
+            this.content = hBoxMaker( [fillerBox, nbrOfRaysVBox, heightVBox, this.colorVBox1, this.colorVBox2] );
             break;
           case Type.CONVERGING_LENS:
             //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
             //radius of curvature R = 2*f*( n - 1 )
             var radiusSlider = new HSlider( pieceModel.radiusProperty, new Range( 100, 800 ), sliderOptions );
             this.hSliders.push( radiusSlider );
-            var radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
+            var radiusVBox = vBoxMaker( [radiusSlider, this.radiusText] );
             var indexSlider = new HSlider( pieceModel.indexProperty, new Range( 1.4, 3 ), sliderOptions );
             this.hSliders.push( indexSlider );
-            var indexVBox = vBoxMaker( [ indexSlider, this.indexText ] );
+            var indexVBox = vBoxMaker( [indexSlider, this.indexText] );
             var focalPtCheckbox = new Checkbox( this.focalPointsText, piece.showFocalPointsProperty, checkboxOptions );
-            this.content = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckbox, focalLengthHBox ] );
+            this.content = hBoxMaker( [fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckbox, focalLengthHBox] );
             break;
           case Type.DIVERGING_LENS:
             //ComponentModel( mainModel, type, diameter, radiusCurvature, focalLength, index )
             //radius of curvature R = 2*f*( n - 1 )
             radiusSlider = new HSlider( pieceModel.radiusProperty, new Range( -100, -800 ), sliderOptions );
             this.hSliders.push( radiusSlider );
-            radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
+            radiusVBox = vBoxMaker( [radiusSlider, this.radiusText] );
             indexSlider = new HSlider( pieceModel.indexProperty, new Range( 1.4, 3 ), sliderOptions );
             this.hSliders.push( indexSlider );
-            indexVBox = vBoxMaker( [ indexSlider, this.indexText ] );
+            indexVBox = vBoxMaker( [indexSlider, this.indexText] );
             focalPtCheckbox = new Checkbox( this.focalPointsText, piece.showFocalPointsProperty, checkboxOptions );
-            this.content = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckbox, focalLengthHBox ] );
+            this.content = hBoxMaker( [fillerBox, diameterVBox, radiusVBox, indexVBox, focalPtCheckbox, focalLengthHBox] );
             break;
           case Type.CONVERGING_MIRROR:
             radiusSlider = new HSlider( pieceModel.radiusProperty, new Range( 200, 1600 ), sliderOptions );
             this.hSliders.push( radiusSlider );
-            radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
+            radiusVBox = vBoxMaker( [radiusSlider, this.radiusText] );
             focalPtCheckbox = new Checkbox( this.focalPointsText, piece.showFocalPointsProperty, checkboxOptions );
-            this.content = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, focalPtCheckbox, focalLengthHBox ] );
+            this.content = hBoxMaker( [fillerBox, diameterVBox, radiusVBox, focalPtCheckbox, focalLengthHBox] );
             break;
           case Type.PLANE_MIRROR:
-            this.content = hBoxMaker( [ fillerBox, diameterVBox ] );
+            this.content = hBoxMaker( [fillerBox, diameterVBox] );
             break;
           case Type.DIVERGING_MIRROR:
             radiusSlider = new HSlider( pieceModel.radiusProperty, new Range( -200, -1600 ), sliderOptions );
             this.hSliders.push( radiusSlider );
-            radiusVBox = vBoxMaker( [ radiusSlider, this.radiusText ] );
+            radiusVBox = vBoxMaker( [radiusSlider, this.radiusText] );
             focalPtCheckbox = new Checkbox( this.focalPointsText, piece.showFocalPointsProperty, checkboxOptions );
-            this.content = hBoxMaker( [ fillerBox, diameterVBox, radiusVBox, focalPtCheckbox, focalLengthHBox ] );
+            this.content = hBoxMaker( [fillerBox, diameterVBox, radiusVBox, focalPtCheckbox, focalLengthHBox] );
             break;
           case Type.SIMPLE_MASK:
-            this.content = hBoxMaker( [ fillerBox, diameterVBox ] );
+            this.content = hBoxMaker( [fillerBox, diameterVBox] );
             break;
           case Type.SLIT_MASK:
-            this.content = hBoxMaker( [ fillerBox ] );
+            this.content = hBoxMaker( [fillerBox] );
             break;
           default:
             throw new Error( 'invalid type: ' + type );
 
         }//end switch()
         this.displayPanel = new Panel( this.content, this.panelOptions );
-        this.children = [ this.displayPanel, this.expandCollapseButton ];
+        this.children = [this.displayPanel, this.expandCollapseButton];
         this.expandCollapseButton.left = 5;
         this.expandCollapseButton.top = 5;
       }//end if (type != null)
-    }, // end setControlsForSelectedPiece()
+    }// end setControlsForSelectedPiece()
 
     /**
      *
      * @param {SourceNode} sourceNode
      * @private
      */
-    setColorRadioButtonsForSourceNode: function( sourceNode ) {
+    setColorRadioButtonsForSourceNode( sourceNode ) {
       const radioButtonOptions = { radius: 8, fontSize: 12, deselectedColor: 'white' };
       const whiteColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'white', this.whiteText, radioButtonOptions );
       const greenColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'green', this.greenText, radioButtonOptions );
@@ -257,25 +250,27 @@ define( require => {
       const yellowColorRadioButton = new AquaRadioButton( sourceNode.colorProperty, 'yellow', this.yellowText, radioButtonOptions );
       const spacing = 5;
       this.colorVBox1 = new VBox( {
-        children: [ whiteColorRadioButton, greenColorRadioButton ],
+        children: [whiteColorRadioButton, greenColorRadioButton],
         align: 'left',
         spacing: spacing
       } );
       this.colorVBox2 = new VBox( {
-        children: [ redColorRadioButton, yellowColorRadioButton ],
+        children: [redColorRadioButton, yellowColorRadioButton],
         align: 'left',
         spacing: spacing
       } );
-    },
+    }
+
 
     /**
      *  @public
      */
-    dispose: function() {
+    dispose() {
       for ( let i = 0; i < this.hSliders.length; i++ ) {
         this.hSliders[ i ].dispose();
       }
     }
+  }
 
-  } );//end inherit
+  return opticsLab.register( 'SelectedPieceControlPanel', SelectedPieceControlPanel );
 } );

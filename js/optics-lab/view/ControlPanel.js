@@ -50,7 +50,6 @@ define( require => {
      */
     constructor( mainModel, mainView, type ) {
       super();
-      const self = this;
       this.type = type;
 
       let fontInfo = { font: DISPLAY_FONT };
@@ -205,19 +204,19 @@ define( require => {
         cursor: 'pointer'
       } );
       const displayPanel = new Panel( panelContent, panelOptions );
-      self.children = [displayPanel, expandCollapseButton];
+      this.children = [displayPanel, expandCollapseButton];
       expandCollapseButton.left = 5;
       expandCollapseButton.top = 5;
 
-      mainView.selectedPieceProperty.lazyLink( function( piece ) {
-        self.visible = ( piece.type === self.type );
-        self.unlinkToOldPiece();
+      mainView.selectedPieceProperty.lazyLink( piece => {
+        this.visible = ( piece.type === this.type );
+        this.unlinkToOldPiece();
 
-        if ( self.visible ) {
-          self.linkToPiece( piece );
+        if ( this.visible ) {
+          this.linkToPiece( piece );
         }
       } );
-      this.expandedProperty.link( function( tOrF ) {
+      this.expandedProperty.link( tOrF => {
         displayPanel.visible = tOrF;
         //if( displayPanel !== null ){
         //    displayPanel.visible = tOrF;
@@ -226,7 +225,7 @@ define( require => {
       //if( type !== Type.FAN_SOURCE && type !== Type.BEAM_SOURCE ){
       //    mainView.selectedPieceProperty.lazyLink( function( piece ){
       //       var fValue = piece.pieceModel.f;
-      //       self.focalLengthReadoutText.text = fValue.toFixed( 0 );
+      //       this.focalLengthReadoutText.text = fValue.toFixed( 0 );
       //    });
       //}
 
