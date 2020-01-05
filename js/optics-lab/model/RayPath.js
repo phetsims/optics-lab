@@ -43,9 +43,6 @@ define( require => {
       // @private {number[]}
       this.lengths = [];      //array of lengths of the segments
 
-      // @private {Shape}
-      this.shape = new Shape();
-
     }
 
     /**
@@ -87,12 +84,12 @@ define( require => {
      * @private
      */
     getShape() {
-      this.shape = new Shape();
-      this.shape.moveToPoint( this.segments[ 0 ].getStart() );
+      const shape = new Shape();
+      shape.moveToPoint( this.segments[ 0 ].getStart() );
       for ( let i = 0; i < this.segments.length; i++ ) {
-        this.shape.lineToPoint( this.segments[ i ].getEnd() );
+        shape.lineToPoint( this.segments[ i ].getEnd() );
       }
-      return this.shape;
+      return shape;
     }
 
     /**
