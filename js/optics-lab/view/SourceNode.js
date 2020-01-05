@@ -139,13 +139,13 @@ define( require => {
 
       sourceModel.nbrOfRaysProperty.link( nbrOfRays => {
         this.setRayNodes( nbrOfRays );
-        sourceModel.mainModel.processRays();
+        this.mainModel.processRays();
       } );
 
       sourceModel.spreadProperty.link( () => {
         if ( this.type === Type.FAN_SOURCE ) {
           this.setRayNodes();
-          sourceModel.mainModel.processRays();
+          this.mainModel.processRays();
         }
       } );
 
@@ -153,7 +153,7 @@ define( require => {
         if ( this.type === Type.BEAM_SOURCE ) {
           this.setWidth( width );
           this.setRayNodes();
-          sourceModel.mainModel.processRays();
+          this.mainModel.processRays();
         }
       } );
 
