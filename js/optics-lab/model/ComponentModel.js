@@ -53,25 +53,25 @@ define( require => {
       }
 
       this.diameterProperty.link( () => {
-        this.mainModel.processRays();
+        mainModel.processRays();
       } );
 
       this.radiusProperty.link( radius => {
         const R = radius;   // R is signed.  + for converging lenses, - for diverging lenses
         const n = this.indexProperty.value;
         this.fProperty.value = R / ( 2 * ( n - 1 ) );  //focal length gets correct sign from sign of radius R.
-        this.mainModel.processRays();
+        mainModel.processRays();
       } );
 
       this.indexProperty.link( index => {
         const R = this.radiusProperty.value;
         const n = index;
         this.fProperty.value = R / ( 2 * ( n - 1 ) );
-        this.mainModel.processRays();
+        mainModel.processRays();
       } );
 
       this.angleProperty.link( () => {
-        this.mainModel.processRays();
+        mainModel.processRays();
       } );
     }
 

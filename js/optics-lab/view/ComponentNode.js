@@ -34,17 +34,17 @@ define( require => {
       this.pieceModel = componentModel;
       this.mainView = mainView;
       this.modelViewTransform = mainView.modelViewTransform;
-      this.type = this.pieceModel.type;
+      this.type = componentModel.type;
 
       this.showFocalPointsProperty = new Property( false );
 
-      const height = this.pieceModel.diameterProperty.value;
+      const height = componentModel.diameterProperty.value;
 
-      const radius = this.pieceModel.radiusProperty.value;    //radius of curvature
-      const index = this.pieceModel.indexProperty.value;
+      const radius = componentModel.radiusProperty.value;    //radius of curvature
+      const index = componentModel.indexProperty.value;
 
-      this.componentGraphic = new ComponentGraphic( this.type, height, radius, index );
-      const angle = this.pieceModel.angleProperty.value;
+      this.componentGraphic = new ComponentGraphic( componentModel.type, height, radius, index );
+      const angle = componentModel.angleProperty.value;
       this.rotationHandle = new Circle( 5, {
         x: Math.sin( angle ) * height / 2,
         y: Math.cos( angle ) * height / 2,
@@ -60,8 +60,8 @@ define( require => {
           // When dragging across it in a mobile device, pick it up
           allowTouchSnag: true,
           start: e => {
-            self.mainView.setSelectedPiece( self );
-            self.mainView.setSelectedPieceType( self );
+            mainView.setSelectedPiece( self );
+            mainView.setSelectedPieceType( self );
             const position = self.globalToParentPoint( e.pointer.point );
             const currentNodePos = self.pieceModel.positionProperty.value;
             mouseDownPosition = position.minus( currentNodePos );
@@ -75,8 +75,8 @@ define( require => {
           },
           end: e => {
             const position = self.globalToParentPoint( e.pointer.point );
-            if ( self.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y ) ) {
-              self.mainView.removePiece( self );
+            if ( mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y ) ) {
+              mainView.removePiece( self );
             }
           }
         } ) );
@@ -85,8 +85,8 @@ define( require => {
         allowTouchSnag: true,
         //start function for testing only
         start: e => {
-          self.mainView.setSelectedPiece( self );
-          self.mainView.setSelectedPieceType( self );
+          mainView.setSelectedPiece( self );
+          mainView.setSelectedPieceType( self );
         },
 
         drag: e => {
@@ -98,35 +98,35 @@ define( require => {
       } ) );//end this.rotationHandle.addInputListener()
 
       // Register for synchronization with pieceModel.
-      this.pieceModel.positionProperty.link( position => {
+      componentModel.positionProperty.link( position => {
         this.translation = position;
       } );
-      this.pieceModel.angleProperty.link( angle => {
+      componentModel.angleProperty.link( angle => {
         this.componentGraphic.rotation = angle;
         const cosAngle = Math.cos( angle );
         const sinAngle = Math.sin( angle );
-        const diameter = this.pieceModel.diameterProperty.value;
+        const diameter = componentModel.diameterProperty.value;
         this.rotationHandle.translation = new Vector2( -( diameter / 2 ) * sinAngle, ( diameter / 2 ) * cosAngle );
       } );
-      this.pieceModel.diameterProperty.link( diameter => {
+      componentModel.diameterProperty.link( diameter => {
         this.componentGraphic.setDiameter( diameter );
-        const angle = this.pieceModel.angleProperty.value;
+        const angle = componentModel.angleProperty.value;
         const cosAngle = Math.cos( angle );
         const sinAngle = Math.sin( angle );
         //var diameter = self.pieceModel.diameter;
         this.rotationHandle.translation = new Vector2( -( diameter / 2 ) * sinAngle, ( diameter / 2 ) * cosAngle );
       } );
-      this.pieceModel.radiusProperty.link( R => {
+      componentModel.radiusProperty.link( R => {
         this.componentGraphic.setRadius( R );
       } );
-      this.pieceModel.indexProperty.link( n => {
+      componentModel.indexProperty.link( n => {
         this.componentGraphic.setIndex( n );
       } );
       this.showFocalPointsProperty.link( isVisible => {
         this.componentGraphic.setFocalPointsVisibility( isVisible );
       } );
 
-      this.pieceModel.fProperty.link( focalLength => {
+      componentModel.fProperty.link( focalLength => {
         if ( focalLength ) {
           this.componentGraphic.setFocalPointPositions( focalLength );
         }
