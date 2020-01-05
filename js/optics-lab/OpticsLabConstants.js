@@ -21,7 +21,10 @@ define( require => {
     LINE_COLOR: '#000',
     PANEL_COLOR: '#EEE', //'#FFD9B3',  //
     LENS_COLOR: '#0C0',
-    MIRROR_COS_COLOR: '#00D'
+    MIRROR_COS_COLOR: '#00D',
+
+    MAXIMUM_LIGHT_RAYS: 20 // Maximum number of light rays from a source
+
   } );
 } );
 

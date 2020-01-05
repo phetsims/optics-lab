@@ -44,11 +44,10 @@ define( require => {
 
   class ControlPanel extends Node {
     /**
-     * @param {OpticsLabModel} mainModel
      * @param {OpticsLabScreenView} mainView
      * @param {Type} type
      */
-    constructor( mainModel, mainView, type ) {
+    constructor( mainView, type ) {
       super();
       this.type = type;
 
@@ -128,8 +127,7 @@ define( require => {
       const fillerBox = new Text( ' ', { font: DISPLAY_FONT } );
 
       //Create Sliders with Text labels
-      const maxNbrRays = mainModel.maxNbrOfRaysFromASource;
-      const nbrOfRaysSlider = new HSlider( this.nbrOfRaysProperty, new Range( 1, maxNbrRays ), sliderOptions );
+      const nbrOfRaysSlider = new HSlider( this.nbrOfRaysProperty, new Range( 1, OpticsLabConstants.MAXIMUM_LIGHT_RAYS ), sliderOptions );
       const nbrOfRaysVBox = vBoxMaker( [nbrOfRaysSlider, nbrOfRaysText] );
 
       const spreadSlider = new HSlider( this.spreadProperty, new Range( 2, 180 ), sliderOptions );

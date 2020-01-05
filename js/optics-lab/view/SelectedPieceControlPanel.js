@@ -149,7 +149,7 @@ define( require => {
         };
         if ( type === Type.FAN_SOURCE || type === Type.BEAM_SOURCE ) {
           //pieceModel = piece.pieceModel;
-          const maxNbrRays = pieceModel.maxNbrOfRays;
+          const maxNbrRays = OpticsLabConstants.MAXIMUM_LIGHT_RAYS;
           const nbrOfRaysSlider = new HSlider( pieceModel.nbrOfRaysProperty, new Range( 1, maxNbrRays ), sliderOptions );
           nbrOfRaysVBox = vBoxMaker( [nbrOfRaysSlider, this.nbrOfRaysText] );
           this.setColorRadioButtonsForSourceNode( piece );

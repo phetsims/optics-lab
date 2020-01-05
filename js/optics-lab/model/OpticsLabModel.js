@@ -38,9 +38,6 @@ define( require => {
 
       this.maxLength = 2000;  //maximum length of segment of rayPath
 
-      // @public (read-only) {number}
-      this.maxNbrOfRaysFromASource = 20;
-
       // @private {number}
       this.maxNbrIntersections = 100;  //maximum number of segments in a raypath, to prevent endless loops
 

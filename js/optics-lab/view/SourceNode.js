@@ -13,6 +13,7 @@ define( require => {
   const Circle = require( 'SCENERY/nodes/Circle' );
   const Node = require( 'SCENERY/nodes/Node' );
   const opticsLab = require( 'OPTICS_LAB/opticsLab' );
+  const OpticsLabConstants = require( 'OPTICS_LAB/optics-lab/OpticsLabConstants' );
   const Path = require( 'SCENERY/nodes/Path' );
   const Property = require( 'AXON/Property' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -21,6 +22,9 @@ define( require => {
   const Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
   const Utils = require( 'DOT/Utils' );
   const Vector2 = require( 'DOT/Vector2' );
+
+  // constants
+  const MAXIMUM_LIGHT_RAYS = OpticsLabConstants.MAXIMUM_LIGHT_RAYS;
 
   class SourceNode extends Node {
     /**
@@ -41,7 +45,6 @@ define( require => {
       this.type = sourceModel.type;
       this.relativeRayStarts = []; //starting positions, relative to source center, of each ray
       this.rayNodes = [];   //array of rayNodes, a rayNode is a path of a ray from source through components to end
-      this.maxNbrOfRays = sourceModel.maxNbrOfRays;
       this.counter = 0; //for testing only
       this.rayColor = '#fff';
       this.settingHeight = false; //flag used to prevent conflicting calls to set angle of translation handle
@@ -69,7 +72,7 @@ define( require => {
       this.insertChild( 0, this.translationHandle );
 
       const rayOptionsObject = { stroke: 'black', lineWidth: 1.5, lineJoin: 'bevel' }; //, lineDash: [ 5, 1 ]
-      for ( let r = 0; r < this.maxNbrOfRays; r++ ) {
+      for ( let r = 0; r < MAXIMUM_LIGHT_RAYS; r++ ) {
         this.rayNodes[ r ] = new Path( new Shape(), rayOptionsObject );
         this.addChild( this.rayNodes[ r ] );
       }
@@ -176,7 +179,7 @@ define( require => {
             throw new Error( 'invalid color: ' + color );
         }
         this.rayColor = colorCode;
-        for ( let i = 0; i < this.maxNbrOfRays; i++ ) {
+        for ( let i = 0; i < MAXIMUM_LIGHT_RAYS; i++ ) {
           this.rayNodes[ i ].strokeColor = colorCode;
         }
       } );
@@ -193,7 +196,7 @@ define( require => {
       //this.rayNodes = [];
       nbrOfRays = Utils.roundSymmetric( nbrOfRays );
 
-      for ( let i = nbrOfRays; i < this.maxNbrOfRays; i++ ) {
+      for ( let i = nbrOfRays; i < MAXIMUM_LIGHT_RAYS; i++ ) {
         this.rayNodes[ i ].visible = false;
 
       }

@@ -29,13 +29,11 @@ define( require => {
 
   class ControlPanelManager extends Node {
     /**
-     * @param {OpticsLabModel} mainModel
      * @param {OpticsLabScreenView} mainView
      */
-    constructor( mainModel, mainView ) {
+    constructor( mainView ) {
 
       super();
-      this.mainModel = mainModel;
       this.mainView = mainView;
       this.controlPanels = [];     //one display for each piece on the stage, only display of selected piece is visible
       this.pieces = new ObservableArray();
@@ -63,7 +61,7 @@ define( require => {
       ];
 
       for ( let i = 0; i < this.typeArray.length; i++ ) {
-        const newControlPanel = new ControlPanel( mainModel, mainView, this.typeArray[ i ] );
+        const newControlPanel = new ControlPanel( mainView, this.typeArray[ i ] );
         this.controlPanels[ i ] = newControlPanel;
         this.addChild( newControlPanel );
       }

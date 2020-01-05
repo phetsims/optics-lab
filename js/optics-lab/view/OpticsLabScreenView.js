@@ -36,7 +36,7 @@ define( require => {
 
       this.selectedPieceTypeProperty = new Property( null );
 
-      this.controlPanelManager = new ControlPanelManager( this.mainModel, this );
+      this.controlPanelManager = new ControlPanelManager( this );
       this.addChild( this.controlPanelManager );
 
       this.toolDrawerPanel = new ToolDrawerPanel( opticsLabModel, this );
