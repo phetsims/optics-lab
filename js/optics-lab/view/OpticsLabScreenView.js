@@ -13,7 +13,7 @@ define( require => {
   const ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
   const ComponentNode = require( 'OPTICS_LAB/optics-lab/view/ComponentNode' );
   const ControlPanelManager = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager' );
-  const ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
+  // const ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   const opticsLab = require( 'OPTICS_LAB/opticsLab' );
   const Property = require( 'AXON/Property' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
@@ -36,8 +36,6 @@ define( require => {
 
       this.selectedPieceTypeProperty = new Property( null );
 
-      // model-view transform
-      this.modelViewTransform = ModelViewTransform2.createIdentity();
       this.controlPanelManager = new ControlPanelManager( this.mainModel, this );
       this.addChild( this.controlPanelManager );
 
