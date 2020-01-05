@@ -28,10 +28,9 @@ define( require => {
 
   class ToolDrawerPanel extends Panel {
     /**
-     * @param {OpticsLabModel} mainModel
      * @param {OpticsLabScreenView} mainView
      */
-    constructor( mainModel, mainView ) {
+    constructor( mainView ) {
 
       const fanSourceIcon = new Node();
       const beamSourceIcon = new Node();

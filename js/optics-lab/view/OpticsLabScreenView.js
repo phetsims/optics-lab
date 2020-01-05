@@ -39,7 +39,7 @@ define( require => {
       this.controlPanelManager = new ControlPanelManager( this );
       this.addChild( this.controlPanelManager );
 
-      this.toolDrawerPanel = new ToolDrawerPanel( opticsLabModel, this );
+      this.toolDrawerPanel = new ToolDrawerPanel( this );
       this.addChild( this.toolDrawerPanel );
 
       //Layout
