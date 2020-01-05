@@ -12,7 +12,6 @@ define( require => {
 
   // modules
   const HBox = require( 'SCENERY/nodes/HBox' );
-  const inherit = require( 'PHET_CORE/inherit' );
   const Node = require( 'SCENERY/nodes/Node' );
   const opticsLab = require( 'OPTICS_LAB/opticsLab' );
   const Panel = require( 'SUN/Panel' );
@@ -27,164 +26,163 @@ define( require => {
   const DISPLAY_FONT = new PhetFont( 12 );
   const PANEL_COLOR = '#ccc';
 
-  /**
-   * @extends {Panel}
-   * @param {OpticsLabModel} mainModel
-   * @param {OpticsLabScreenView} mainView
-   * @constructor
-   */
-  function ToolDrawerPanel( mainModel, mainView ) {
+  class ToolDrawerPanel extends Panel {
+    /**
+     * @param {OpticsLabModel} mainModel
+     * @param {OpticsLabScreenView} mainView
+     */
+    constructor( mainModel, mainView ) {
 
-    this.mainModel = mainModel; // OpticsLabModel
-    this.mainView = mainView;  // OpticsLabScreenView
-    const self = this;
+      const fanSourceIcon = new Node();
+      const beamSourceIcon = new Node();
+      const convergingLensIcon = new Node();
+      const divergingLensIcon = new Node();
+      const convergingMirrorIcon = new Node();
+      const planeMirrorIcon = new Node();
+      const divergingMirrorIcon = new Node();
+      const simpleMaskIcon = new Node();
+      const slitMaskIcon = new Node();
 
-    const fanSourceIcon = new Node();
-    const beamSourceIcon = new Node();
-    const convergingLensIcon = new Node();
-    const divergingLensIcon = new Node();
-    const convergingMirrorIcon = new Node();
-    const planeMirrorIcon = new Node();
-    const divergingMirrorIcon = new Node();
-    const simpleMaskIcon = new Node();
-    const slitMaskIcon = new Node();
+      const fontInfo = { font: DISPLAY_FONT };
+      const fanSourceText = new Text( 'fan source', fontInfo );
+      const beamSourceText = new Text( 'beam source', fontInfo );
+      const convergingLensText = new Text( 'converging lens', fontInfo );
+      const divergingLensText = new Text( 'diverging lens', fontInfo );
+      const convergingMirrorText = new Text( 'converging mirror', fontInfo );
+      const planeMirrorText = new Text( 'plane mirror', fontInfo );
+      const divergingMirrorText = new Text( 'diverging mirror', fontInfo );
+      const simpleMaskText = new Text( 'simple mask', fontInfo );
+      const slitMaskText = new Text( 'slit mask', fontInfo );
 
-    const fontInfo = { font: DISPLAY_FONT };
-    const fanSourceText = new Text( 'fan source', fontInfo );
-    const beamSourceText = new Text( 'beam source', fontInfo );
-    const convergingLensText = new Text( 'converging lens', fontInfo );
-    const divergingLensText = new Text( 'diverging lens', fontInfo );
-    const convergingMirrorText = new Text( 'converging mirror', fontInfo );
-    const planeMirrorText = new Text( 'plane mirror', fontInfo );
-    const divergingMirrorText = new Text( 'diverging mirror', fontInfo );
-    const simpleMaskText = new Text( 'simple mask', fontInfo );
-    const slitMaskText = new Text( 'slit mask', fontInfo );
+      const nodeArray = [
+        fanSourceIcon,
+        beamSourceIcon,
+        convergingLensIcon,
+        divergingLensIcon,
+        convergingMirrorIcon,
+        planeMirrorIcon,
+        divergingMirrorIcon,
+        simpleMaskIcon,
+        slitMaskIcon
+      ];
 
-    const nodeArray = [
-      fanSourceIcon,
-      beamSourceIcon,
-      convergingLensIcon,
-      divergingLensIcon,
-      convergingMirrorIcon,
-      planeMirrorIcon,
-      divergingMirrorIcon,
-      simpleMaskIcon,
-      slitMaskIcon
-    ];
+      const textArray = [
+        fanSourceText,
+        beamSourceText,
+        convergingLensText,
+        divergingLensText,
+        convergingMirrorText,
+        planeMirrorText,
+        divergingMirrorText,
+        simpleMaskText,
+        slitMaskText
+      ];
 
-    const textArray = [
-      fanSourceText,
-      beamSourceText,
-      convergingLensText,
-      divergingLensText,
-      convergingMirrorText,
-      planeMirrorText,
-      divergingMirrorText,
-      simpleMaskText,
-      slitMaskText
-    ];
+      const typeArray = [
+        Type.FAN_SOURCE,
+        Type.BEAM_SOURCE,
+        Type.CONVERGING_LENS,
+        Type.DIVERGING_LENS,
+        Type.CONVERGING_MIRROR,
+        Type.PLANE_MIRROR,
+        Type.DIVERGING_MIRROR,
+        Type.SIMPLE_MASK,
+        Type.SLIT_MASK
+      ];
 
-    const typeArray = [
-      Type.FAN_SOURCE,
-      Type.BEAM_SOURCE,
-      Type.CONVERGING_LENS,
-      Type.DIVERGING_LENS,
-      Type.CONVERGING_MIRROR,
-      Type.PLANE_MIRROR,
-      Type.DIVERGING_MIRROR,
-      Type.SIMPLE_MASK,
-      Type.SLIT_MASK
-    ];
+      let spacing = 5;
+      const sourceVBox = new VBox( {
+        children: [fanSourceIcon, beamSourceIcon],
+        align: 'left',
+        spacing: spacing
+      } );
+      const lensVBox = new VBox( {
+        children: [convergingLensIcon, divergingLensIcon],
+        align: 'left',
+        spacing: spacing
+      } );
+      const curvedMirrorVBox = new VBox( {
+        children: [convergingMirrorIcon, divergingMirrorIcon],
+        align: 'left',
+        spacing: spacing
+      } );
+      const planeMirrorVBox = new VBox( {
+        children: [planeMirrorIcon],
+        align: 'left',
+        spacing: spacing
+      } );
+      const maskVBox = new VBox( {
+        children: [simpleMaskIcon, slitMaskIcon],
+        align: 'left',
+        spacing: spacing
+      } );
+      spacing = 10;
+      const content = new HBox( {
+        children: [
+          sourceVBox,
+          lensVBox,
+          planeMirrorVBox,
+          curvedMirrorVBox,
+          maskVBox
+        ],
+        align: 'top',
+        spacing: spacing
+      } );
 
-    const nodeSetup = function( element, index, array ) {
-      const xCorner = -8;
-      const yCorner = textArray[ index ].height;
-      const elementWidth = textArray[ index ].width + 16;
-      const elementHeight = textArray[ index ].height + 10;
-      let pieceGrabbed;
-      element.addChild( textArray[ index ] );
-      element.addChild( new Rectangle( xCorner, -yCorner, elementWidth, elementHeight, {
-        fill: 'green',
-        cursor: 'pointer',
-        opacity: 0.1
-      } ) );
+      super( content, { xMargin: 15, yMargin: 5, lineWidth: 2, fill: PANEL_COLOR } );
 
-      element.addInputListener( new SimpleDragHandler(
-        {
+      this.mainModel = mainModel; // OpticsLabModel
+      this.mainView = mainView;  // OpticsLabScreenView
 
-          allowTouchSnag: true,
+      const nodeSetup = ( element, index, array ) => {
+        const xCorner = -8;
+        const yCorner = textArray[ index ].height;
+        const elementWidth = textArray[ index ].width + 16;
+        const elementHeight = textArray[ index ].height + 10;
+        let pieceGrabbed;
+        element.addChild( textArray[ index ] );
+        element.addChild( new Rectangle( xCorner, -yCorner, elementWidth, elementHeight, {
+          fill: 'green',
+          cursor: 'pointer',
+          opacity: 0.1
+        } ) );
 
-          start: function( e ) {
+        element.addInputListener( new SimpleDragHandler(
+          {
 
-            const startPosition = self.globalToParentPoint( e.pointer.point );
-            const type = typeArray[ index ];
-            pieceGrabbed = mainView.addPiece( type, startPosition );
-            //pieceGrabbed.mainView.setSelectedPiece( pieceGrabbed );
-            mainView.setSelectedPiece( pieceGrabbed );
-            mainView.setSelectedPieceType( pieceGrabbed );
-          },
+            allowTouchSnag: true,
 
-          drag: function( e ) {
-            const position = self.globalToParentPoint( e.pointer.point );   //returns Vector2
+            start: e => {
 
-            pieceGrabbed.pieceModel.setPosition( position );
-          },
-          end: function( e ) {
-            const vEnd = self.globalToParentPoint( e.pointer.point );
-            if ( self.visibleBounds.containsCoordinates( vEnd.x, vEnd.y ) ) {
-              mainView.removePiece( pieceGrabbed );
+              const startPosition = this.globalToParentPoint( e.pointer.point );
+              const type = typeArray[ index ];
+              pieceGrabbed = mainView.addPiece( type, startPosition );
+              //pieceGrabbed.mainView.setSelectedPiece( pieceGrabbed );
+              mainView.setSelectedPiece( pieceGrabbed );
+              mainView.setSelectedPieceType( pieceGrabbed );
+            },
+
+            drag: e => {
+              const position = this.globalToParentPoint( e.pointer.point );   //returns Vector2
+
+              pieceGrabbed.pieceModel.setPosition( position );
+            },
+            end: e => {
+              const vEnd = this.globalToParentPoint( e.pointer.point );
+              if ( this.visibleBounds.containsCoordinates( vEnd.x, vEnd.y ) ) {
+                mainView.removePiece( pieceGrabbed );
+              }
             }
-          }
-        }//end addInputListener
+          }//end addInputListener
 
-      ) );
-    }; //end nodeSetup
+        ) );
+      }; //end nodeSetup
 
-    nodeArray.forEach( nodeSetup );
+      nodeArray.forEach( nodeSetup );
 
-    let spacing = 5;
-    const sourceVBox = new VBox( {
-      children: [ fanSourceIcon, beamSourceIcon ],
-      align: 'left',
-      spacing: spacing
-    } );
-    const lensVBox = new VBox( {
-      children: [ convergingLensIcon, divergingLensIcon ],
-      align: 'left',
-      spacing: spacing
-    } );
-    const curvedMirrorVBox = new VBox( {
-      children: [ convergingMirrorIcon, divergingMirrorIcon ],
-      align: 'left',
-      spacing: spacing
-    } );
-    const planeMirrorVBox = new VBox( {
-      children: [ planeMirrorIcon ],
-      align: 'left',
-      spacing: spacing
-    } );
-    const maskVBox = new VBox( {
-      children: [ simpleMaskIcon, slitMaskIcon ],
-      align: 'left',
-      spacing: spacing
-    } );
-    spacing = 10;
-    const content = new HBox( {
-      children: [
-        sourceVBox,
-        lensVBox,
-        planeMirrorVBox,
-        curvedMirrorVBox,
-        maskVBox
-      ],
-      align: 'top',
-      spacing: spacing
-    } );
+    }//end constructor
+  }
 
-    Panel.call( this, content, { xMargin: 15, yMargin: 5, lineWidth: 2, fill: PANEL_COLOR } );
-  }//end constructor
+  return opticsLab.register( 'ToolDrawerPanel', ToolDrawerPanel );
 
-  opticsLab.register( 'ToolDrawerPanel', ToolDrawerPanel );
-
-  return inherit( Panel, ToolDrawerPanel );
 } );
