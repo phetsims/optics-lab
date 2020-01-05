@@ -252,15 +252,15 @@ define( require => {
      * @public
      */
     resetProperties() {
-      this.expandedProperty.value = true;
-      this.nbrOfRaysProperty.value = 10;
-      this.spreadProperty.value = 20;
-      this.widthProperty.value = 50;
-      this.colorProperty.value = 'white';
-      this.diameterProperty.value = 50;
-      this.radiusOfCurvatureProperty.value = 150;
-      this.indexOfRefractionProperty.value = 2;
-      this.showFocalPointsProperty.value = false;
+      this.expandedProperty.reset();
+      this.nbrOfRaysProperty.reset();
+      this.spreadProperty.reset();
+      this.widthProperty.reset();
+      this.colorProperty.reset();
+      this.diameterProperty.reset();
+      this.radiusOfCurvatureProperty.reset();
+      this.indexOfRefractionProperty.reset();
+      this.showFocalPointsProperty.reset();
     }
 
   }
