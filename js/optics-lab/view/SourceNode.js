@@ -35,7 +35,6 @@ define( require => {
         cursor: 'pointer'
       } );
 
-      const self = this;
       this.colorProperty = new Property( 'white' );  //sets color of rays
       this.mainModel = mainModel;
       this.pieceModel = sourceModel;   //need generic name because need to loop over all pieces and have pieceModel
@@ -83,8 +82,8 @@ define( require => {
           allowTouchSnag: true,
 
           start: e => {
-            mainView.setSelectedPiece( self );
-            mainView.setSelectedPieceType( self );
+            mainView.setSelectedPiece( this );
+            mainView.setSelectedPieceType( this );
             const position = this.globalToParentPoint( e.pointer.point );
             const currentNodePos = this.pieceModel.positionProperty.value;
             mouseDownPosition = position.minus( currentNodePos );
@@ -98,7 +97,7 @@ define( require => {
           end: e => {
             const position = this.globalToParentPoint( e.pointer.point );
             if ( mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y ) ) {
-              mainView.removePiece( self );
+              mainView.removePiece( this );
             }
           }
         } ) );//end translationHandle.addInputListener()
@@ -107,8 +106,8 @@ define( require => {
         allowTouchSnag: true,
         //start function for testing only
         start: e => {
-          mainView.setSelectedPiece( self );
-          mainView.setSelectedPieceType( self );
+          mainView.setSelectedPiece( this );
+          mainView.setSelectedPieceType( this );
         },
 
         drag: e => {

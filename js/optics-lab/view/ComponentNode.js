@@ -30,7 +30,6 @@ define( require => {
         cursor: 'pointer'
       } );
 
-      const self = this;
       this.pieceModel = componentModel;
       this.type = componentModel.type;
 
@@ -58,12 +57,12 @@ define( require => {
           // When dragging across it in a mobile device, pick it up
           allowTouchSnag: true,
           start: e => {
-            mainView.setSelectedPiece( self );
-            mainView.setSelectedPieceType( self );
+            mainView.setSelectedPiece( this );
+            mainView.setSelectedPieceType( this );
             const position = this.globalToParentPoint( e.pointer.point );
             const currentNodePos = componentModel.positionProperty.value;
             mouseDownPosition = position.minus( currentNodePos );
-            //self.mouseDownPosition = e.pointer.point;
+            //this.mouseDownPosition = e.pointer.point;
           },
 
           drag: e => {
@@ -74,7 +73,7 @@ define( require => {
           end: e => {
             const position = this.globalToParentPoint( e.pointer.point );
             if ( mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y ) ) {
-              mainView.removePiece( self );
+              mainView.removePiece( this );
             }
           }
         } ) );
@@ -83,8 +82,8 @@ define( require => {
         allowTouchSnag: true,
         //start function for testing only
         start: e => {
-          mainView.setSelectedPiece( self );
-          mainView.setSelectedPieceType( self );
+          mainView.setSelectedPiece( this );
+          mainView.setSelectedPieceType( this );
         },
 
         drag: e => {
