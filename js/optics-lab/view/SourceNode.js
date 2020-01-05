@@ -41,7 +41,7 @@ define( require => {
       this.pieceModel = sourceModel;   //need generic name because need to loop over all pieces and have pieceModel
       this.mainView = mainView;
       this.modelViewTransform = mainView.modelViewTransform;
-      this.type = this.pieceModel.type;
+      this.type = sourceModel.type;
       this.relativeRayStarts = []; //starting positions, relative to source center, of each ray
       this.rayNodes = [];   //array of rayNodes, a rayNode is a path of a ray from source through components to end
       this.maxNbrOfRays = sourceModel.maxNbrOfRays;
@@ -66,20 +66,20 @@ define( require => {
           y: Math.cos( angle ) * height / 2,
           fill: 'yellow'
         } );
-        self.addChild( this.rotationHandle );
+        this.addChild( this.rotationHandle );
       }
 
-      self.insertChild( 0, this.translationHandle );
+      this.insertChild( 0, this.translationHandle );
 
       const rayOptionsObject = { stroke: 'black', lineWidth: 1.5, lineJoin: 'bevel' }; //, lineDash: [ 5, 1 ]
       for ( let r = 0; r < this.maxNbrOfRays; r++ ) {
         this.rayNodes[ r ] = new Path( new Shape(), rayOptionsObject );
-        self.addChild( this.rayNodes[ r ] );
+        this.addChild( this.rayNodes[ r ] );
       }
 
       // When dragging, move the sample element
       let mouseDownPosition;
-      self.translationHandle.addInputListener( new SimpleDragHandler(
+      this.translationHandle.addInputListener( new SimpleDragHandler(
         {
           // When dragging across it in a mobile device, pick it up
           allowTouchSnag: true,
@@ -87,18 +87,18 @@ define( require => {
           start: e => {
             mainView.setSelectedPiece( self );
             mainView.setSelectedPieceType( self );
-            const position = self.globalToParentPoint( e.pointer.point );
-            const currentNodePos = self.pieceModel.positionProperty.value;
+            const position = this.globalToParentPoint( e.pointer.point );
+            const currentNodePos = this.pieceModel.positionProperty.value;
             mouseDownPosition = position.minus( currentNodePos );
           },
 
           drag: e => {
-            let position = self.globalToParentPoint( e.pointer.point );
+            let position = this.globalToParentPoint( e.pointer.point );
             position = position.minus( mouseDownPosition );
-            self.pieceModel.setPosition( position );
+            this.pieceModel.setPosition( position );
           },
           end: e => {
-            const position = self.globalToParentPoint( e.pointer.point );
+            const position = this.globalToParentPoint( e.pointer.point );
             if ( mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y ) ) {
               mainView.removePiece( self );
             }
@@ -114,51 +114,51 @@ define( require => {
         },
 
         drag: e => {
-          const mousePosRelative = self.translationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
+          const mousePosRelative = this.translationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
           const angle = mousePosRelative.angle - Math.PI / 2;  //angle = 0 when beam horizontal, CW is + angle
-          self.pieceModel.setAngle( angle );
+          this.pieceModel.setAngle( angle );
 
         }
       } ) );//end this.rotationHandle.addInputListener()
 
       // Register for synchronization with pieceModel and mainModel.
-      this.pieceModel.positionProperty.link( position => {
-        self.translation = position;
+      sourceModel.positionProperty.link( position => {
+        this.translation = position;
       } );
 
-      this.pieceModel.angleProperty.link( angle => {
-        if ( !self.settingHeight ) {
-          self.translationHandle.rotation = angle;
+      sourceModel.angleProperty.link( angle => {
+        if ( !this.settingHeight ) {
+          this.translationHandle.rotation = angle;
         }
 
         const cosAngle = Math.cos( angle );
         const sinAngle = Math.sin( angle );
-        const height = self.pieceModel.height;
-        self.rotationHandle.translation = new Vector2( -( height / 2 ) * sinAngle, ( height / 2 ) * cosAngle );
+        const height = this.pieceModel.height;
+        this.rotationHandle.translation = new Vector2( -( height / 2 ) * sinAngle, ( height / 2 ) * cosAngle );
       } );
 
-      this.pieceModel.nbrOfRaysProperty.link( nbrOfRays => {
-        self.setRayNodes( nbrOfRays );
+      sourceModel.nbrOfRaysProperty.link( nbrOfRays => {
+        this.setRayNodes( nbrOfRays );
         sourceModel.mainModel.processRays();
       } );
 
-      this.pieceModel.spreadProperty.link( () => {
-        if ( self.type === Type.FAN_SOURCE ) {
-          self.setRayNodes();
+      sourceModel.spreadProperty.link( () => {
+        if ( this.type === Type.FAN_SOURCE ) {
+          this.setRayNodes();
           sourceModel.mainModel.processRays();
         }
       } );
 
-      this.pieceModel.widthProperty.link( width => {
-        if ( self.type === Type.BEAM_SOURCE ) {
-          self.setWidth( width );
-          self.setRayNodes();
+      sourceModel.widthProperty.link( width => {
+        if ( this.type === Type.BEAM_SOURCE ) {
+          this.setWidth( width );
+          this.setRayNodes();
           sourceModel.mainModel.processRays();
         }
       } );
 
       this.mainModel.processRaysCountProperty.link( () => {
-        self.drawRays();
+        this.drawRays();
       } );
       this.colorProperty.link( color => {
         let colorCode;            //switch ( color )
@@ -178,9 +178,9 @@ define( require => {
           default:
             throw new Error( 'invalid color: ' + color );
         }
-        self.rayColor = colorCode;
-        for ( let i = 0; i < self.maxNbrOfRays; i++ ) {
-          self.rayNodes[ i ].strokeColor = colorCode;
+        this.rayColor = colorCode;
+        for ( let i = 0; i < this.maxNbrOfRays; i++ ) {
+          this.rayNodes[ i ].strokeColor = colorCode;
         }
       } );
 
