@@ -9,11 +9,11 @@ define( require => {
   'use strict';
 
   // modules
+  // const ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const ComponentModel = require( 'OPTICS_LAB/optics-lab/model/ComponentModel' );
   const ComponentNode = require( 'OPTICS_LAB/optics-lab/view/ComponentNode' );
   const ControlPanelManager = require( 'OPTICS_LAB/optics-lab/view/ControlPanelManager' );
-  // const ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   const opticsLab = require( 'OPTICS_LAB/opticsLab' );
   const Property = require( 'AXON/Property' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );

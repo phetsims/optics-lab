@@ -19,8 +19,8 @@ define( require => {
   const Shape = require( 'KITE/Shape' );
   const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   const Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
-  const Vector2 = require( 'DOT/Vector2' );
   const Utils = require( 'DOT/Utils' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   class SourceNode extends Node {
     /**
