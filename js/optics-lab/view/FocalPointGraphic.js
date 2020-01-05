@@ -1,6 +1,7 @@
 // Copyright 2015-2020, University of Colorado Boulder
 
 /**
+ * X shape representing the focal point
  * @author Michael Dubson (PhET Interactive Simulations)
  */
 
@@ -19,15 +20,14 @@ define( require => {
      */
     constructor( size ) {
 
-      super();
       let R = Utils.roundSymmetric( size / 2 );
       if ( size === undefined ) {
         R = 30;
       }
-      const strokeInfo = { stroke: 'yellow', lineWidth: 4, lineCap: 'butt' };
-      const line1 = new Line( -R, -R, R, R, strokeInfo );
-      const line2 = new Line( R, -R, -R, R, strokeInfo );
-      this.children = [line1, line2];
+      const lineOptions = { stroke: 'yellow', lineWidth: 4, lineCap: 'butt' };
+      const line1 = new Line( -R, -R, R, R, lineOptions );
+      const line2 = new Line( R, -R, -R, R, lineOptions );
+      super( { children: [line1, line2] } );
 
     }
 
