@@ -43,14 +43,14 @@ define( require => {
       const radius = componentModel.radiusProperty.value;    //radius of curvature
       const index = componentModel.indexProperty.value;
 
-      this.componentGraphic = new ComponentGraphic( componentModel.type, height, radius, index );
+      const componentGraphic = new ComponentGraphic( componentModel.type, height, radius, index );
       const angle = componentModel.angleProperty.value;
       this.rotationHandle = new Circle( 5, {
         x: Math.sin( angle ) * height / 2,
         y: Math.cos( angle ) * height / 2,
         fill: 'yellow'
       } );
-      this.addChild( this.componentGraphic );
+      this.addChild( componentGraphic );
       this.addChild( this.rotationHandle );
 
       // When dragging, move the sample element
@@ -63,7 +63,7 @@ define( require => {
             mainView.setSelectedPiece( self );
             mainView.setSelectedPieceType( self );
             const position = self.globalToParentPoint( e.pointer.point );
-            const currentNodePos = self.pieceModel.positionProperty.value;
+            const currentNodePos = componentModel.positionProperty.value;
             mouseDownPosition = position.minus( currentNodePos );
             //self.mouseDownPosition = e.pointer.point;
           },
@@ -71,7 +71,7 @@ define( require => {
           drag: e => {
             let position = self.globalToParentPoint( e.pointer.point );
             position = position.minus( mouseDownPosition );
-            self.pieceModel.setPosition( position );
+            componentModel.setPosition( position );
           },
           end: e => {
             const position = self.globalToParentPoint( e.pointer.point );
@@ -92,7 +92,7 @@ define( require => {
         drag: e => {
           const mousePosRelative = self.rotationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
           const angle = mousePosRelative.angle - Math.PI / 2;  //angle = 0 when beam horizontal, CW is + angle
-          self.pieceModel.setAngle( angle );
+          componentModel.setAngle( angle );
 
         }
       } ) );//end this.rotationHandle.addInputListener()
@@ -102,33 +102,33 @@ define( require => {
         this.translation = position;
       } );
       componentModel.angleProperty.link( angle => {
-        this.componentGraphic.rotation = angle;
+        componentGraphic.rotation = angle;
         const cosAngle = Math.cos( angle );
         const sinAngle = Math.sin( angle );
         const diameter = componentModel.diameterProperty.value;
         this.rotationHandle.translation = new Vector2( -( diameter / 2 ) * sinAngle, ( diameter / 2 ) * cosAngle );
       } );
       componentModel.diameterProperty.link( diameter => {
-        this.componentGraphic.setDiameter( diameter );
+        componentGraphic.setDiameter( diameter );
         const angle = componentModel.angleProperty.value;
         const cosAngle = Math.cos( angle );
         const sinAngle = Math.sin( angle );
-        //var diameter = self.pieceModel.diameter;
+        //var diameter = componentModel.diameter;
         this.rotationHandle.translation = new Vector2( -( diameter / 2 ) * sinAngle, ( diameter / 2 ) * cosAngle );
       } );
       componentModel.radiusProperty.link( R => {
-        this.componentGraphic.setRadius( R );
+        componentGraphic.setRadius( R );
       } );
       componentModel.indexProperty.link( n => {
-        this.componentGraphic.setIndex( n );
+        componentGraphic.setIndex( n );
       } );
       this.showFocalPointsProperty.link( isVisible => {
-        this.componentGraphic.setFocalPointsVisibility( isVisible );
+        componentGraphic.setFocalPointsVisibility( isVisible );
       } );
 
       componentModel.fProperty.link( focalLength => {
         if ( focalLength ) {
-          this.componentGraphic.setFocalPointPositions( focalLength );
+          componentGraphic.setFocalPointPositions( focalLength );
         }
       } );
 
