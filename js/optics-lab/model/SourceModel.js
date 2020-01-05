@@ -53,7 +53,6 @@ define( require => {
       this.mainModel = mainModel;
 
       this.type = type; // {Type.FAN_SOURCE|Type.BEAM_SOURCE}
-      this.maxLength = 2000;  //maximum length of rays in pixels
 
       if ( type === Type.FAN_SOURCE ) {
         this.spreadProperty.value = spread;

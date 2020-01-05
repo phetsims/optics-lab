@@ -23,8 +23,10 @@ define( require => {
     LENS_COLOR: '#0C0',
     MIRROR_COS_COLOR: '#00D',
 
-    MAXIMUM_LIGHT_RAYS: 20 // Maximum number of light rays from a source
+    MAXIMUM_LIGHT_RAYS: 20, // Maximum number of light rays from a source
 
+    // TODO convert the length to model coordinates (see #31)
+    MAXIMUM_RAY_LENGTH: 2000 // maximum length of segment of rayPath
   } );
 } );
 

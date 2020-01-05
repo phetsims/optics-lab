@@ -200,7 +200,7 @@ define( require => {
         this.rayNodes[ i ].visible = false;
 
       }
-      const maxRayLength = this.pieceModel.maxLength;
+      const maxRayLength = OpticsLabConstants.MAXIMUM_RAY_LENGTH;
       //var rayFontObject = { stroke: 'white', lineWidth: 2 } ;
       for ( let r = 0; r < this.pieceModel.rayPaths.length; r++ ) {
         this.rayNodes[ r ].visible = true;

@@ -11,6 +11,7 @@ define( require => {
   // modules
   const NumberProperty = require( 'AXON/NumberProperty' );
   const ObservableArray = require( 'AXON/ObservableArray' );
+  const OpticsLabConstants = require( 'OPTICS_LAB/optics-lab/OpticsLabConstants' );
   const opticsLab = require( 'OPTICS_LAB/opticsLab' );
   const Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
   const Utils = require( 'DOT/Utils' );
@@ -35,9 +36,6 @@ define( require => {
 
       // @private {ObservableArray.<ComponentModel|SourceModel>}
       this.pieces = new ObservableArray();      //piece = source or component
-
-      this.maxLength = 2000;  //maximum length of segment of rayPath
-
     }
 
 
@@ -134,8 +132,8 @@ define( require => {
     launchRay( rayPath, startPoint, direction ) {
       const dir = direction;
       let intersection = null;
-      let distanceToIntersection = this.maxLength;
-      const rayTip = startPoint.plus( dir.timesScalar( this.maxLength ) );
+      let distanceToIntersection = OpticsLabConstants.MAXIMUM_RAY_LENGTH;
+      const rayTip = startPoint.plus( dir.timesScalar( OpticsLabConstants.MAXIMUM_RAY_LENGTH ) );
 
       //loop thru all components, checking for intersection of ray and component
       let componentIntersectedIndex;

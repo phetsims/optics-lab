@@ -29,7 +29,6 @@ define( require => {
       // @public {Vector2}
       this.relativeStartPos = relativeStartPos;  //starting position, relative to source center, of the first segment
 
-      this.maxLength = 2000;  //maximum length of rays in pixels
       this.maxNbrSegments = 50;  //maximum number of segments in ray path, needed to prevent endless loops
 
       // @public {number}
