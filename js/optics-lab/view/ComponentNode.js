@@ -32,7 +32,6 @@ define( require => {
 
       const self = this;
       this.pieceModel = componentModel;
-      this.mainView = mainView;
       this.modelViewTransform = mainView.modelViewTransform;
       this.type = componentModel.type;
 
@@ -131,10 +130,7 @@ define( require => {
           componentGraphic.setFocalPointPositions( focalLength );
         }
       } );
-
     }
   }
-
   return opticsLab.register( 'ComponentNode', ComponentNode );
-
 } );
