@@ -32,7 +32,6 @@ define( require => {
 
       const self = this;
       this.pieceModel = componentModel;
-      this.modelViewTransform = mainView.modelViewTransform;
       this.type = componentModel.type;
 
       this.showFocalPointsProperty = new Property( false );
