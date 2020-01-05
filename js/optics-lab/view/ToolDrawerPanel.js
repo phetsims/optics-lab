@@ -131,9 +131,6 @@ define( require => {
 
       super( content, { xMargin: 15, yMargin: 5, lineWidth: 2, fill: PANEL_COLOR } );
 
-      this.mainModel = mainModel; // OpticsLabModel
-      this.mainView = mainView;  // OpticsLabScreenView
-
       const nodeSetup = ( element, index, array ) => {
         const xCorner = -8;
         const yCorner = textArray[ index ].height;
