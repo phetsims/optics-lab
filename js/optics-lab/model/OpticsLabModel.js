@@ -38,12 +38,6 @@ define( require => {
 
       this.maxLength = 2000;  //maximum length of segment of rayPath
 
-      // @private {number}
-      this.maxNbrIntersections = 100;  //maximum number of segments in a raypath, to prevent endless loops
-
-      // @private {number}
-      this.intersectionCounter = 0;
-
     }
 
 
@@ -118,7 +112,6 @@ define( require => {
      */
     updateSourceLines( source ) {
       this.processingRays = true;
-      this.intersectionCounter = 0;
       //loop thru all rayPaths of this source
       for ( let r = 0; r < source.rayPaths.length; r++ ) {
         const rayPath = source.rayPaths[ r ];
