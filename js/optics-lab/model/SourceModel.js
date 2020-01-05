@@ -50,7 +50,6 @@ define( require => {
       //is convenient to put all the Properties of a Source in one place)
       this.colorProperty = new Property( '#FFF' );
 
-      const self = this;
       this.mainModel = mainModel;
 
       this.type = type; // {Type.FAN_SOURCE|Type.BEAM_SOURCE}
@@ -66,21 +65,21 @@ define( require => {
         this.height = height;
       }
 
-      this.nbrOfRaysProperty.lazyLink( function() {
-        self.createRays();
-        self.mainModel.processRays();
+      this.nbrOfRaysProperty.lazyLink( () => {
+        this.createRays();
+        this.mainModel.processRays();
       } );
-      this.spreadProperty.lazyLink( function() {
-        self.createRays();
-        self.mainModel.processRays();
+      this.spreadProperty.lazyLink( () => {
+        this.createRays();
+        this.mainModel.processRays();
       } );
-      this.widthProperty.lazyLink( function() {
-        self.createRays();
-        self.mainModel.processRays();
+      this.widthProperty.lazyLink( () => {
+        this.createRays();
+        this.mainModel.processRays();
       } );
-      this.angleProperty.lazyLink( function() {
-        self.createRays();
-        self.mainModel.processRays();
+      this.angleProperty.lazyLink( () => {
+        this.createRays();
+        this.mainModel.processRays();
       } );
 
       this.rayPaths = [];    //an array of RayPaths

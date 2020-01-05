@@ -44,7 +44,6 @@ define( require => {
       // @public {Property.<number>} tilt angle of component, 0 = optic axis is horizontal, + angle is CW
       this.angleProperty = new NumberProperty( 0 );
 
-      const self = this;
       this.mainModel = mainModel;
 
       // @public (read-only) {string}
@@ -53,26 +52,26 @@ define( require => {
         this.indexProperty.value = 2;  //needed so formula for focal length is correct in mirror case
       }
 
-      this.diameterProperty.link( function() {
-        self.mainModel.processRays();
+      this.diameterProperty.link( () => {
+        this.mainModel.processRays();
       } );
 
-      this.radiusProperty.link( function( radius ) {
+      this.radiusProperty.link( radius => {
         const R = radius;   // R is signed.  + for converging lenses, - for diverging lenses
-        const n = self.indexProperty.value;
-        self.fProperty.value = R / ( 2 * ( n - 1 ) );  //focal length gets correct sign from sign of radius R.
-        self.mainModel.processRays();
+        const n = this.indexProperty.value;
+        this.fProperty.value = R / ( 2 * ( n - 1 ) );  //focal length gets correct sign from sign of radius R.
+        this.mainModel.processRays();
       } );
 
-      this.indexProperty.link( function( index ) {
-        const R = self.radiusProperty.value;
+      this.indexProperty.link( index => {
+        const R = this.radiusProperty.value;
         const n = index;
-        self.fProperty.value = R / ( 2 * ( n - 1 ) );
-        self.mainModel.processRays();
+        this.fProperty.value = R / ( 2 * ( n - 1 ) );
+        this.mainModel.processRays();
       } );
 
-      this.angleProperty.link( function() {
-        self.mainModel.processRays();
+      this.angleProperty.link( () => {
+        this.mainModel.processRays();
       } );
     }
 
