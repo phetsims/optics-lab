@@ -45,13 +45,13 @@ define( require => {
 
       const componentGraphic = new ComponentGraphic( componentModel.type, height, radius, index );
       const angle = componentModel.angleProperty.value;
-      this.rotationHandle = new Circle( 5, {
+      const rotationHandle = new Circle( 5, {
         x: Math.sin( angle ) * height / 2,
         y: Math.cos( angle ) * height / 2,
         fill: 'yellow'
       } );
       this.addChild( componentGraphic );
-      this.addChild( this.rotationHandle );
+      this.addChild( rotationHandle );
 
       // When dragging, move the sample element
       let mouseDownPosition;
@@ -62,26 +62,26 @@ define( require => {
           start: e => {
             mainView.setSelectedPiece( self );
             mainView.setSelectedPieceType( self );
-            const position = self.globalToParentPoint( e.pointer.point );
+            const position = this.globalToParentPoint( e.pointer.point );
             const currentNodePos = componentModel.positionProperty.value;
             mouseDownPosition = position.minus( currentNodePos );
             //self.mouseDownPosition = e.pointer.point;
           },
 
           drag: e => {
-            let position = self.globalToParentPoint( e.pointer.point );
+            let position = this.globalToParentPoint( e.pointer.point );
             position = position.minus( mouseDownPosition );
             componentModel.setPosition( position );
           },
           end: e => {
-            const position = self.globalToParentPoint( e.pointer.point );
+            const position = this.globalToParentPoint( e.pointer.point );
             if ( mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y ) ) {
               mainView.removePiece( self );
             }
           }
         } ) );
 
-      this.rotationHandle.addInputListener( new SimpleDragHandler( {
+      rotationHandle.addInputListener( new SimpleDragHandler( {
         allowTouchSnag: true,
         //start function for testing only
         start: e => {
@@ -90,12 +90,12 @@ define( require => {
         },
 
         drag: e => {
-          const mousePosRelative = self.rotationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
+          const mousePosRelative = rotationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
           const angle = mousePosRelative.angle - Math.PI / 2;  //angle = 0 when beam horizontal, CW is + angle
           componentModel.setAngle( angle );
 
         }
-      } ) );//end this.rotationHandle.addInputListener()
+      } ) );//end rotationHandle.addInputListener()
 
       // Register for synchronization with pieceModel.
       componentModel.positionProperty.link( position => {
@@ -106,7 +106,7 @@ define( require => {
         const cosAngle = Math.cos( angle );
         const sinAngle = Math.sin( angle );
         const diameter = componentModel.diameterProperty.value;
-        this.rotationHandle.translation = new Vector2( -( diameter / 2 ) * sinAngle, ( diameter / 2 ) * cosAngle );
+        rotationHandle.translation = new Vector2( -( diameter / 2 ) * sinAngle, ( diameter / 2 ) * cosAngle );
       } );
       componentModel.diameterProperty.link( diameter => {
         componentGraphic.setDiameter( diameter );
@@ -114,7 +114,7 @@ define( require => {
         const cosAngle = Math.cos( angle );
         const sinAngle = Math.sin( angle );
         //var diameter = componentModel.diameter;
-        this.rotationHandle.translation = new Vector2( -( diameter / 2 ) * sinAngle, ( diameter / 2 ) * cosAngle );
+        rotationHandle.translation = new Vector2( -( diameter / 2 ) * sinAngle, ( diameter / 2 ) * cosAngle );
       } );
       componentModel.radiusProperty.link( R => {
         componentGraphic.setRadius( R );
