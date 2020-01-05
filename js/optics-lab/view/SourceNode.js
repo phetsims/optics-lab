@@ -84,7 +84,7 @@ define( require => {
           // When dragging across it in a mobile device, pick it up
           allowTouchSnag: true,
 
-          start: function( e ) {
+          start: e => {
             self.mainView.setSelectedPiece( self );
             self.mainView.setSelectedPieceType( self );
             const position = self.globalToParentPoint( e.pointer.point );
@@ -92,12 +92,12 @@ define( require => {
             mouseDownPosition = position.minus( currentNodePos );
           },
 
-          drag: function( e ) {
+          drag: e => {
             let position = self.globalToParentPoint( e.pointer.point );
             position = position.minus( mouseDownPosition );
             self.pieceModel.setPosition( position );
           },
-          end: function( e ) {
+          end: e => {
             const position = self.globalToParentPoint( e.pointer.point );
             if ( self.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y ) ) {
               self.mainView.removePiece( self );
@@ -108,12 +108,12 @@ define( require => {
       this.rotationHandle.addInputListener( new SimpleDragHandler( {
         allowTouchSnag: true,
         //start function for testing only
-        start: function( e ) {
+        start: e => {
           self.mainView.setSelectedPiece( self );
           self.mainView.setSelectedPieceType( self );
         },
 
-        drag: function( e ) {
+        drag: e => {
           const mousePosRelative = self.translationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
           const angle = mousePosRelative.angle - Math.PI / 2;  //angle = 0 when beam horizontal, CW is + angle
           self.pieceModel.setAngle( angle );
@@ -122,11 +122,11 @@ define( require => {
       } ) );//end this.rotationHandle.addInputListener()
 
       // Register for synchronization with pieceModel and mainModel.
-      this.pieceModel.positionProperty.link( function( position ) {
+      this.pieceModel.positionProperty.link( position => {
         self.translation = position;
       } );
 
-      this.pieceModel.angleProperty.link( function( angle ) {
+      this.pieceModel.angleProperty.link( angle => {
         if ( !self.settingHeight ) {
           self.translationHandle.rotation = angle;
         }
@@ -137,19 +137,19 @@ define( require => {
         self.rotationHandle.translation = new Vector2( -( height / 2 ) * sinAngle, ( height / 2 ) * cosAngle );
       } );
 
-      this.pieceModel.nbrOfRaysProperty.link( function( nbrOfRays ) {
+      this.pieceModel.nbrOfRaysProperty.link( nbrOfRays => {
         self.setRayNodes( nbrOfRays );
         sourceModel.mainModel.processRays();
       } );
 
-      this.pieceModel.spreadProperty.link( function() {
+      this.pieceModel.spreadProperty.link( () => {
         if ( self.type === Type.FAN_SOURCE ) {
           self.setRayNodes();
           sourceModel.mainModel.processRays();
         }
       } );
 
-      this.pieceModel.widthProperty.link( function( width ) {
+      this.pieceModel.widthProperty.link( width => {
         if ( self.type === Type.BEAM_SOURCE ) {
           self.setWidth( width );
           self.setRayNodes();
@@ -157,10 +157,10 @@ define( require => {
         }
       } );
 
-      this.mainModel.processRaysCountProperty.link( function() {
+      this.mainModel.processRaysCountProperty.link( () => {
         self.drawRays();
       } );
-      this.colorProperty.link( function( color ) {
+      this.colorProperty.link( color => {
         let colorCode;            //switch ( color )
         switch( color ) {
           case 'white':

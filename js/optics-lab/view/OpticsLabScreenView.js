@@ -51,7 +51,7 @@ define( require => {
       this.toolDrawerPanel.centerX = this.layoutBounds.centerX;
 
       const resetAllButton = new ResetAllButton( {
-          listener: function() {
+          listener: () => {
             opticsLabModel.reset();
           },
           right: this.layoutBounds.right - 20,

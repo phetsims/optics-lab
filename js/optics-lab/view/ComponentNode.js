@@ -59,7 +59,7 @@ define( require => {
         {
           // When dragging across it in a mobile device, pick it up
           allowTouchSnag: true,
-          start: function( e ) {
+          start: e => {
             self.mainView.setSelectedPiece( self );
             self.mainView.setSelectedPieceType( self );
             const position = self.globalToParentPoint( e.pointer.point );
@@ -68,12 +68,12 @@ define( require => {
             //self.mouseDownPosition = e.pointer.point;
           },
 
-          drag: function( e ) {
+          drag: e => {
             let position = self.globalToParentPoint( e.pointer.point );
             position = position.minus( mouseDownPosition );
             self.pieceModel.setPosition( position );
           },
-          end: function( e ) {
+          end: e => {
             const position = self.globalToParentPoint( e.pointer.point );
             if ( self.mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y ) ) {
               self.mainView.removePiece( self );
@@ -84,12 +84,12 @@ define( require => {
       this.rotationHandle.addInputListener( new SimpleDragHandler( {
         allowTouchSnag: true,
         //start function for testing only
-        start: function( e ) {
+        start: e => {
           self.mainView.setSelectedPiece( self );
           self.mainView.setSelectedPieceType( self );
         },
 
-        drag: function( e ) {
+        drag: e => {
           const mousePosRelative = self.rotationHandle.globalToParentPoint( e.pointer.point );   //returns Vector2
           const angle = mousePosRelative.angle - Math.PI / 2;  //angle = 0 when beam horizontal, CW is + angle
           self.pieceModel.setAngle( angle );

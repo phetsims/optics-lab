@@ -91,14 +91,14 @@ define( require => {
         thumbTouchAreaYDilation: 6
       };
 
-      const vBoxMaker = function( childrenArray ) {
+      const vBoxMaker = childrenArray => {
         return new VBox( {
           children: childrenArray,
           align: 'center',
           resize: false
         } );
       };
-      const vBoxMaker2 = function( childrenArray ) {
+      const vBoxMaker2 = childrenArray => {
         return new VBox( {
           children: childrenArray,
           align: 'left',
@@ -106,7 +106,7 @@ define( require => {
         } );
       };
       const spacing = 20;
-      const hBoxMaker = function( childrenArray ) {
+      const hBoxMaker = childrenArray => {
         return new HBox( {
           children: childrenArray,
           spacing: spacing,

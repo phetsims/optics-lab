@@ -99,52 +99,51 @@ define( require => {
       const type = this.selectedPieceType;
       const piece = this.selectedPiece;
       const controlPanel = this.controlPanels[ this.getIndex( type ) ];
-      const self = this;
 
-      function raysUpdate( nbrOfRays ) {
+      const raysUpdate = nbrOfRays => {
         piece.pieceModel.nbrOfRaysProperty.value = Utils.roundSymmetric( nbrOfRays );
-      }
+      };
 
-      function spreadUpdate( spread ) {
+      const spreadUpdate = spread => {
         piece.pieceModel.spreadProperty.value = Utils.roundSymmetric( spread );
-      }
+      };
 
-      function colorUpdate( colorString ) {
+      const colorUpdate = colorString => {
         piece.colorProperty.value = colorString;
-      }
+      };
 
-      function widthUpdate( width ) {
+      const widthUpdate = width => {
         piece.pieceModel.widthProperty.value = width;
-      }
+      };
 
-      function diameterUpdate( diameter ) {
+      const diameterUpdate = diameter => {
         piece.pieceModel.diameterProperty.value = diameter;
-      }
+      };
 
-      function radiusOfCurvatureUpdate( radius ) {
+      const radiusOfCurvatureUpdate = radius => {
         piece.pieceModel.radiusProperty.value = radius;
-      }
+      };
 
-      function indexOfRefractionUpdate( index ) {
+      const indexOfRefractionUpdate = index => {
         piece.pieceModel.indexProperty.value = index;
-      }
+      };
 
-      function showFocalPointsUpdate( tOrF ) {
+      const showFocalPointsUpdate = tOrF => {
         piece.showFocalPointsProperty.value = tOrF;
-      }
+      };
 
-      function unlinkAll() {
-        controlPanel.nbrOfRaysProperty.hasListener( self.previousRaysUpdate ) && controlPanel.nbrOfRaysProperty.unlink( self.previousRaysUpdate );
-        controlPanel.spreadProperty.hasListener( self.previousSpreadUpdate ) && controlPanel.spreadProperty.unlink( self.previousSpreadUpdate );
-        controlPanel.colorProperty.hasListener( self.previousColorUpdate ) && controlPanel.colorProperty.unlink( self.previousColorUpdate );
-        controlPanel.widthProperty.hasListener( self.previousWidthUpdate ) && controlPanel.widthProperty.unlink( self.previousWidthUpdate );
-        controlPanel.diameterProperty.hasListener( self.previousDiameterUpdate ) && controlPanel.diameterProperty.unlink( self.previousDiameterUpdate );
-        controlPanel.radiusOfCurvatureProperty.hasListener( self.previousRadiusOfCurvatureUpdate ) && controlPanel.radiusOfCurvatureProperty.unlink( self.previousRadiusOfCurvatureUpdate );
-        controlPanel.indexOfRefractionProperty.hasListener( self.previousIndexOfRefractionUpdate ) && controlPanel.indexOfRefractionProperty.unlink( self.previousIndexOfRefractionUpdate );
-        controlPanel.showFocalPointsProperty.hasListener( self.previousShowFocalPointsUpdate ) && controlPanel.showFocalPointsProperty.unlink( self.previousShowFocalPointsUpdate );
-      }
+      const unlinkAll = () => {
+        controlPanel.nbrOfRaysProperty.hasListener( this.previousRaysUpdate ) && controlPanel.nbrOfRaysProperty.unlink( this.previousRaysUpdate );
+        controlPanel.spreadProperty.hasListener( this.previousSpreadUpdate ) && controlPanel.spreadProperty.unlink( this.previousSpreadUpdate );
+        controlPanel.colorProperty.hasListener( this.previousColorUpdate ) && controlPanel.colorProperty.unlink( this.previousColorUpdate );
+        controlPanel.widthProperty.hasListener( this.previousWidthUpdate ) && controlPanel.widthProperty.unlink( this.previousWidthUpdate );
+        controlPanel.diameterProperty.hasListener( this.previousDiameterUpdate ) && controlPanel.diameterProperty.unlink( this.previousDiameterUpdate );
+        controlPanel.radiusOfCurvatureProperty.hasListener( this.previousRadiusOfCurvatureUpdate ) && controlPanel.radiusOfCurvatureProperty.unlink( this.previousRadiusOfCurvatureUpdate );
+        controlPanel.indexOfRefractionProperty.hasListener( this.previousIndexOfRefractionUpdate ) && controlPanel.indexOfRefractionProperty.unlink( this.previousIndexOfRefractionUpdate );
+        controlPanel.showFocalPointsProperty.hasListener( this.previousShowFocalPointsUpdate ) && controlPanel.showFocalPointsProperty.unlink( this.previousShowFocalPointsUpdate );
+      };
 
-      function setAllPanelsAndLinkAll() {
+      const setAllPanelsAndLinkAll = () => {
         if ( piece.pieceModel.nbrOfRaysProperty !== undefined ) {
           controlPanel.nbrOfRaysProperty.value = piece.pieceModel.nbrOfRaysProperty.value;
           controlPanel.nbrOfRaysProperty.link( raysUpdate );
@@ -180,19 +179,19 @@ define( require => {
           controlPanel.showFocalPointsProperty.value = piece.showFocalPointsProperty.value;
           controlPanel.showFocalPointsProperty.link( showFocalPointsUpdate );
         }
-      }
+      };
 
-      function setPreviousUpdates() {
-        self.previousRaysUpdate = raysUpdate;
-        self.previousSpreadUpdate = spreadUpdate;
-        self.previousColorUpdate = colorUpdate;
-        self.previousWidthUpdate = widthUpdate;
-        self.previousDiameterUpdate = diameterUpdate;
-        self.previousRadiusOfCurvatureUpdate = radiusOfCurvatureUpdate;
-        self.previousIndexOfRefractionUpdate = indexOfRefractionUpdate;
-        self.previousShowFocalPointsUpdate = showFocalPointsUpdate;
+      const setPreviousUpdates = () => {
+        this.previousRaysUpdate = raysUpdate;
+        this.previousSpreadUpdate = spreadUpdate;
+        this.previousColorUpdate = colorUpdate;
+        this.previousWidthUpdate = widthUpdate;
+        this.previousDiameterUpdate = diameterUpdate;
+        this.previousRadiusOfCurvatureUpdate = radiusOfCurvatureUpdate;
+        this.previousIndexOfRefractionUpdate = indexOfRefractionUpdate;
+        this.previousShowFocalPointsUpdate = showFocalPointsUpdate;
 
-      }
+      };
 
       unlinkAll();
       setAllPanelsAndLinkAll();
@@ -203,7 +202,7 @@ define( require => {
       //    case Type.FAN_SOURCE:
       //        //resetPanel(
       //        //    controlPanel.nbrOfRaysProperty,
-      //        //    self.previousRaysUpdate,
+      //        //    this.previousRaysUpdate,
       //        //    raysUpdate,
       //        //    piece.pieceModel.nbrOfRays
       //        //);
@@ -213,7 +212,7 @@ define( require => {
       //        this.previousRaysUpdate = raysUpdate;
       //        //resetPanel(
       //        //    controlPanel.spreadProperty,
-      //        //    self.previousSpreadUpdate,
+      //        //    this.previousSpreadUpdate,
       //        //    spreadUpdate,
       //        //    piece.pieceModel.spread
       //        //);
