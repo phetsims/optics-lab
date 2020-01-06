@@ -13,6 +13,7 @@ define( require => {
   // modules
   const HBox = require( 'SCENERY/nodes/HBox' );
   const Node = require( 'SCENERY/nodes/Node' );
+  const merge = require( 'PHET_CORE/merge' );
   const opticsLab = require( 'OPTICS_LAB/opticsLab' );
   const Panel = require( 'SUN/Panel' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -89,48 +90,23 @@ define( require => {
         Type.SLIT_MASK
       ];
 
-      let spacing = 5;
-      const sourceVBox = new VBox( {
-        children: [fanSourceIcon, beamSourceIcon],
-        align: 'left',
-        spacing: spacing
-      } );
-      const lensVBox = new VBox( {
-        children: [convergingLensIcon, divergingLensIcon],
-        align: 'left',
-        spacing: spacing
-      } );
-      const curvedMirrorVBox = new VBox( {
-        children: [convergingMirrorIcon, divergingMirrorIcon],
-        align: 'left',
-        spacing: spacing
-      } );
-      const planeMirrorVBox = new VBox( {
-        children: [planeMirrorIcon],
-        align: 'left',
-        spacing: spacing
-      } );
-      const maskVBox = new VBox( {
-        children: [simpleMaskIcon, slitMaskIcon],
-        align: 'left',
-        spacing: spacing
-      } );
-      spacing = 10;
+      const vBoxOptions = { align: 'left', spacing: 5 };
+
+      const sourceVBox = new VBox( merge( { children: [fanSourceIcon, beamSourceIcon] }, vBoxOptions ) );
+      const lensVBox = new VBox( merge( { children: [convergingLensIcon, divergingLensIcon] }, vBoxOptions ) );
+      const curvedMirrorVBox = new VBox( merge( { children: [convergingMirrorIcon, divergingMirrorIcon] }, vBoxOptions ) );
+      const planeMirrorVBox = new VBox( merge( { children: [planeMirrorIcon] }, vBoxOptions ) );
+      const maskVBox = new VBox( merge( { children: [simpleMaskIcon, slitMaskIcon] }, vBoxOptions ) );
+
       const content = new HBox( {
-        children: [
-          sourceVBox,
-          lensVBox,
-          planeMirrorVBox,
-          curvedMirrorVBox,
-          maskVBox
-        ],
+        children: [sourceVBox, lensVBox, planeMirrorVBox, curvedMirrorVBox, maskVBox],
         align: 'top',
-        spacing: spacing
+        spacing: 10
       } );
 
       super( content, { xMargin: 15, yMargin: 5, lineWidth: 2, fill: PANEL_COLOR } );
 
-      const nodeSetup = ( element, index, array ) => {
+      const nodeSetup = ( element, index ) => {
         const xCorner = -8;
         const yCorner = textArray[ index ].height;
         const elementWidth = textArray[ index ].width + 16;
