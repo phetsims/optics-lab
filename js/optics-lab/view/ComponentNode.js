@@ -66,13 +66,12 @@ define( require => {
           },
 
           drag: e => {
-            let position = this.globalToParentPoint( e.pointer.point );
-            position = position.minus( mouseDownPosition );
+            const position = this.globalToParentPoint( e.pointer.point ).minus( mouseDownPosition );
             componentModel.setPosition( position );
           },
           end: e => {
             const position = this.globalToParentPoint( e.pointer.point );
-            if ( mainView.toolDrawerPanel.visibleBounds.containsCoordinates( position.x, position.y ) ) {
+            if ( mainView.toolDrawerPanel.visibleBounds.containsPoint( position ) ) {
               mainView.removePiece( this );
             }
           }
@@ -130,5 +129,6 @@ define( require => {
       } );
     }
   }
+
   return opticsLab.register( 'ComponentNode', ComponentNode );
 } );

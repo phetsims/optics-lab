@@ -260,10 +260,7 @@ define( require => {
       this.indexOfRefractionProperty.reset();
       this.showFocalPointsProperty.reset();
     }
-
   }
-
   return opticsLab.register( 'ControlPanel', ControlPanel );
-
 } );
 
