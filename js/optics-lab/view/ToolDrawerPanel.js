@@ -131,7 +131,6 @@ define( require => {
               pieceGrabbed = mainView.addPiece( type, startPosition );
               //pieceGrabbed.mainView.setSelectedPiece( pieceGrabbed );
               mainView.setSelectedPiece( pieceGrabbed );
-              mainView.setSelectedPieceType( pieceGrabbed );
             },
 
             drag: e => {

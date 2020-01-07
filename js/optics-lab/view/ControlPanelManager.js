@@ -38,7 +38,6 @@ define( require => {
       this.controlPanels = [];     //one display for each piece on the stage, only display of selected piece is visible
       this.pieces = new ObservableArray();
       this.selectedPiece = new Node();
-      this.selectedPieceType;
       this.previousRaysUpdate;
       this.previousSpreadUpdate;
       this.previousColorUpdate;
@@ -68,7 +67,6 @@ define( require => {
 
       this.mainView.selectedPieceProperty.lazyLink( piece => {
         this.selectedPiece = piece;
-        this.selectedPieceType = piece.type;
         this.linkControls();
       } );
 
@@ -94,9 +92,8 @@ define( require => {
      * @private
      */
     linkControls() {
-      const type = this.selectedPieceType;
       const piece = this.selectedPiece;
-      const controlPanel = this.controlPanels[ this.getIndex( type ) ];
+      const controlPanel = this.controlPanels[ this.getIndex( piece.type ) ];
 
       const raysUpdate = nbrOfRays => {
         piece.pieceModel.nbrOfRaysProperty.value = Utils.roundSymmetric( nbrOfRays );

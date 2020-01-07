@@ -86,7 +86,6 @@ define( require => {
 
           start: e => {
             mainView.setSelectedPiece( this );
-            mainView.setSelectedPieceType( this );
             const position = this.globalToParentPoint( e.pointer.point );
             const currentNodePos = this.pieceModel.positionProperty.value;
             mouseDownPosition = position.minus( currentNodePos );
@@ -110,7 +109,6 @@ define( require => {
         //start function for testing only
         start: e => {
           mainView.setSelectedPiece( this );
-          mainView.setSelectedPieceType( this );
         },
 
         drag: e => {

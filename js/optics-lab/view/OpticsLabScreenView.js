@@ -34,8 +34,6 @@ define( require => {
       this.mainModel = opticsLabModel;
       this.selectedPieceProperty = new Property( null );
 
-      this.selectedPieceTypeProperty = new Property( null );
-
       this.controlPanelManager = new ControlPanelManager( this );
       this.addChild( this.controlPanelManager );
 
@@ -202,20 +200,8 @@ define( require => {
      */
     setSelectedPiece( piece ) {
       this.selectedPieceProperty.value = piece;
-      this.selectedPieceTypeProperty.value = piece.type;
       piece.moveToFront();
     }
-
-    /**
-     *
-     * @param {SourceNode|ComponentNode} piece
-     * @public
-     */
-    setSelectedPieceType( piece ) {
-      this.selectedPieceTypeProperty.value = piece.type;
-      piece.moveToFront();
-    }
-
   }
 
   return opticsLab.register( 'OpticsLabScreenView', OpticsLabScreenView );
