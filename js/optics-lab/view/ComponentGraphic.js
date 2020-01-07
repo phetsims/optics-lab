@@ -31,20 +31,33 @@ define( require => {
       super();
 
       this.type = type;
+
+      // @private {number}
       this.diameter = diameter;    //starting direction of the first segment, the one thing that never changes
+
+      // @private {number}
       this.radius = radius;   // radius of curvature of each surface of lens
+
+      //@private
       this.index = index;     // index of refraction
+
+      // @private
       this.f = this.radius / ( 2 * ( this.index - 1 ) );
 
+      // @private
       this.mirrorBackGraphic = new Rectangle( 0, -0.5, 20, 1, { fill: 'red' } );
-      this.shape = new Shape();
-      this.path = new Path( this.shape );
-      this.focalPtRight = new FocalPointGraphic( 15 );
-      this.focalPtLeft = new FocalPointGraphic( 15 );
-      this.focalPtRight.visible = true;
-      this.focalPtLeft.visible = true;
-      this.children = [this.mirrorBackGraphic, this.path, this.focalPtLeft, this.focalPtRight];
 
+      // @private
+      this.path = new Path( new Shape() );
+
+      // @private
+      this.focalPtRight = new FocalPointGraphic( 15 );
+
+      //@private
+      this.focalPtLeft = new FocalPointGraphic( 15 );
+
+      //@private
+      this.children = [this.mirrorBackGraphic, this.path, this.focalPtLeft, this.focalPtRight];
     }
 
     /**
@@ -92,7 +105,7 @@ define( require => {
      * @private
      */
     drawLens() {
-      this.shape = new Shape();
+      const shape = new Shape();
       let R;  //same as this.radius = radius of curvature of lens, not to be confused with half-diameter of lens
       const fudge1 = 1;   //fudge factor to make lens radius big enough to be apparent to eye
       const fudge2 = 2;   //fudge factor to make adjust range of index of refraction
@@ -110,13 +123,13 @@ define( require => {
       const theta = Math.asin( Utils.clamp( h / R, -1, 1 ) );                     //magnitude of startAngle and endAngle
       const C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
       if ( this.f > 0 ) {
-        this.shape
+        shape
           .arc( -C, 0, R, theta, -theta, true )//arc( -diameter, 0,)
           .arc( C, 0, R, -Math.PI + theta, -Math.PI - theta, true );
       }
       else if ( this.f < 0 ) {
         const w = 5;
-        this.shape
+        shape
           .arc( -w - R, 0, R, theta, -theta, true )
           .lineToRelative( 2 * ( w + ( R - C ) ), 0 )
           .arc( w + R, 0, R, -Math.PI + theta, -Math.PI - theta, true )
@@ -127,7 +140,7 @@ define( require => {
       this.path.lineWidth = 2;
 
       this.path.opacity = 0.85;
-      this.path.setShape( this.shape );
+      this.path.setShape( shape );
       this.mirrorBackGraphic.visible = false;
     }//end drawLens()
     /**
@@ -141,17 +154,17 @@ define( require => {
       //  temporary fixed for theta, see #12   set the maximum ratio to be one
       const theta = Math.asin( Utils.clamp( h / R, -1, 1 ) ); //magnitude of startAngle and endAngle
       const C = R * Math.cos( theta );                      //distance from center of lens to center of curvature of lens surface
-      this.shape = new Shape();
+      const shape = new Shape();
       if ( this.type === Type.DIVERGING_MIRROR ) {
-        this.shape.arc( C, 0, R, -Math.PI + theta, -Math.PI - theta, false );
+        shape.arc( C, 0, R, -Math.PI + theta, -Math.PI - theta, false );
       }
       else {
-        this.shape.arc( -C, 0, R, theta, -theta, true );
+        shape.arc( -C, 0, R, theta, -theta, true );
       }
       this.path.stroke = 'white';
       this.path.lineWidth = 8;
       //this.path.opacity = 0.95;
-      this.path.setShape( this.shape );
+      this.path.setShape( shape );
       //var w = 20;
       //this.mirrorBackGraphic = new Rectangle( 0, -h, w, 2*h, {fill:'red'} );
       this.mirrorBackGraphic.setScaleMagnitude( 1, 2 * h );
