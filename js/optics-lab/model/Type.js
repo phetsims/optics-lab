@@ -1,7 +1,7 @@
 // Copyright 2017-2019, University of Colorado Boulder
 
 /**
- * What type of piece is being shown.
+ * Enumeration of type of piece (Sources or Components) is being shown.
  *
  * @author Martin Veillette (Berea College)
  */
@@ -11,20 +11,22 @@ define( require => {
   // modules
   const opticsLab = require( 'OPTICS_LAB/opticsLab' );
 
-  const Type = {
-    SLIT_MASK: 'SLIT_MASK',
-    SIMPLE_MASK: 'SIMPLE_MASK',
-    DIVERGING_MIRROR: 'DIVERGING_MIRROR',
-    CONVERGING_MIRROR: 'CONVERGING_MIRROR',
-    PLANE_MIRROR: 'PLANE_MIRROR',
-    CONVERGING_LENS: 'CONVERGING_LENS',
-    DIVERGING_LENS: 'DIVERGING_LENS',
-    FAN_SOURCE: 'FAN_SOURCE',
-    BEAM_SOURCE: 'BEAM_SOURCE'
-  };
 
-  // verify that enum is immutable, without the runtime penalty in production code
-  if ( assert ) { Object.freeze( Type ); }
+  // modules
+  const Enumeration = require( 'PHET_CORE/Enumeration' );
+
+  const Type = Enumeration.byKeys( [
+
+    'SLIT_MASK',
+    'SIMPLE_MASK',
+    'DIVERGING_MIRROR',
+    'CONVERGING_MIRROR',
+    'PLANE_MIRROR',
+    'CONVERGING_LENS',
+    'DIVERGING_LENS',
+    'FAN_SOURCE',
+    'BEAM_SOURCE'
+  ] );
 
   return opticsLab.register( 'Type', Type );
 } );
