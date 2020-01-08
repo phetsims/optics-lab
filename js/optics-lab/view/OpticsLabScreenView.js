@@ -37,21 +37,21 @@ define( require => {
       this.controlPanelManager = new ControlPanelManager( this );
       this.addChild( this.controlPanelManager );
 
-      this.toolDrawerPanel = new ToolDrawerPanel( this );
-      this.addChild( this.toolDrawerPanel );
+      const toolDrawerPanel = new ToolDrawerPanel( this );
+      this.addChild( toolDrawerPanel );
 
       //Layout
       this.controlPanelManager.left = 40;       //this line crashes sim unless controlPanelManager has graphic content
       this.controlPanelManager.top = 10;
-      this.toolDrawerPanel.bottom = this.layoutBounds.bottom - 10;
-      this.toolDrawerPanel.centerX = this.layoutBounds.centerX;
+      toolDrawerPanel.bottom = this.layoutBounds.bottom - 10;
+      toolDrawerPanel.centerX = this.layoutBounds.centerX;
 
       const resetAllButton = new ResetAllButton( {
           listener: () => {
             opticsLabModel.reset();
           },
           right: this.layoutBounds.right - 20,
-          top: this.toolDrawerPanel.top
+          top: toolDrawerPanel.top
         }
       );
 
