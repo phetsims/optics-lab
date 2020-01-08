@@ -33,93 +33,26 @@ define( require => {
      */
     constructor( mainView ) {
 
-      const fanSourceIcon = new Node();
-      const beamSourceIcon = new Node();
-      const convergingLensIcon = new Node();
-      const divergingLensIcon = new Node();
-      const convergingMirrorIcon = new Node();
-      const planeMirrorIcon = new Node();
-      const divergingMirrorIcon = new Node();
-      const simpleMaskIcon = new Node();
-      const slitMaskIcon = new Node();
+      /**
+       * Create icon with dragListener
+       * @param {string} string
+       * @param {Type} type
+       * @returns {Node}
+       */
+      const createIcon = ( string, type ) => {
 
-      const fontInfo = { font: DISPLAY_FONT };
-      const fanSourceText = new Text( 'fan source', fontInfo );
-      const beamSourceText = new Text( 'beam source', fontInfo );
-      const convergingLensText = new Text( 'converging lens', fontInfo );
-      const divergingLensText = new Text( 'diverging lens', fontInfo );
-      const convergingMirrorText = new Text( 'converging mirror', fontInfo );
-      const planeMirrorText = new Text( 'plane mirror', fontInfo );
-      const divergingMirrorText = new Text( 'diverging mirror', fontInfo );
-      const simpleMaskText = new Text( 'simple mask', fontInfo );
-      const slitMaskText = new Text( 'slit mask', fontInfo );
-
-      const nodeArray = [
-        fanSourceIcon,
-        beamSourceIcon,
-        convergingLensIcon,
-        divergingLensIcon,
-        convergingMirrorIcon,
-        planeMirrorIcon,
-        divergingMirrorIcon,
-        simpleMaskIcon,
-        slitMaskIcon
-      ];
-
-      const textArray = [
-        fanSourceText,
-        beamSourceText,
-        convergingLensText,
-        divergingLensText,
-        convergingMirrorText,
-        planeMirrorText,
-        divergingMirrorText,
-        simpleMaskText,
-        slitMaskText
-      ];
-
-      const typeArray = [
-        Type.FAN_SOURCE,
-        Type.BEAM_SOURCE,
-        Type.CONVERGING_LENS,
-        Type.DIVERGING_LENS,
-        Type.CONVERGING_MIRROR,
-        Type.PLANE_MIRROR,
-        Type.DIVERGING_MIRROR,
-        Type.SIMPLE_MASK,
-        Type.SLIT_MASK
-      ];
-
-      const vBoxOptions = { align: 'left', spacing: 5 };
-
-      const sourceVBox = new VBox( merge( { children: [fanSourceIcon, beamSourceIcon] }, vBoxOptions ) );
-      const lensVBox = new VBox( merge( { children: [convergingLensIcon, divergingLensIcon] }, vBoxOptions ) );
-      const curvedMirrorVBox = new VBox( merge( { children: [convergingMirrorIcon, divergingMirrorIcon] }, vBoxOptions ) );
-      const planeMirrorVBox = new VBox( merge( { children: [planeMirrorIcon] }, vBoxOptions ) );
-      const maskVBox = new VBox( merge( { children: [simpleMaskIcon, slitMaskIcon] }, vBoxOptions ) );
-
-      const content = new HBox( {
-        children: [sourceVBox, lensVBox, planeMirrorVBox, curvedMirrorVBox, maskVBox],
-        align: 'top',
-        spacing: 10
-      } );
-
-      super( content, { xMargin: 15, yMargin: 5, lineWidth: 2, fill: PANEL_COLOR } );
-
-      const nodeSetup = ( element, index ) => {
-        const xCorner = -8;
-        const yCorner = textArray[ index ].height;
-        const elementWidth = textArray[ index ].width + 16;
-        const elementHeight = textArray[ index ].height + 10;
-        let pieceGrabbed;
-        element.addChild( textArray[ index ] );
-        element.addChild( new Rectangle( xCorner, -yCorner, elementWidth, elementHeight, {
+        const fontOptions = { font: DISPLAY_FONT };
+        const pieceText= new Text( string, fontOptions );
+        const iconLayer = new Node();
+        iconLayer.addChild( pieceText);
+        iconLayer.addChild( new Rectangle( pieceText.bounds.dilatedXY(8,5), {
           fill: 'green',
           cursor: 'pointer',
           opacity: 0.1
         } ) );
 
-        element.addInputListener( new SimpleDragHandler(
+        let pieceGrabbed;
+        iconLayer.addInputListener( new SimpleDragHandler(
           {
 
             allowTouchSnag: true,
@@ -127,7 +60,6 @@ define( require => {
             start: e => {
 
               const startPosition = this.globalToParentPoint( e.pointer.point );
-              const type = typeArray[ index ];
               pieceGrabbed = mainView.addPiece( type, startPosition );
               //pieceGrabbed.mainView.setSelectedPiece( pieceGrabbed );
               mainView.setSelectedPiece( pieceGrabbed );
@@ -145,15 +77,37 @@ define( require => {
               }
             }
           }//end addInputListener
-
         ) );
+        return iconLayer;
       }; //end nodeSetup
 
-      nodeArray.forEach( nodeSetup );
+      const fanSourceIcon = createIcon( 'Fan Source', Type.FAN_SOURCE);
+      const beamSourceIcon = createIcon( 'Beam Source', Type.BEAM_SOURCE);
+      const convergingLensIcon= createIcon( 'Converging Lens', Type.CONVERGING_LENS);
+      const convergingMirrorIcon= createIcon( 'Converging Mirror', Type.CONVERGING_MIRROR);
+      const divergingLensIcon= createIcon( 'Diverging Lens', Type.DIVERGING_LENS);
+      const divergingMirrorIcon= createIcon( 'Diverging Mirror', Type.DIVERGING_MIRROR);
+      const simpleMaskIcon = createIcon( 'Simple Mask', Type.SIMPLE_MASK);
+      const slitMaskIcon = createIcon( 'Slit Mask', Type.SLIT_MASK);
+      const planeMirrorIcon = createIcon( 'Plane Mirror', Type.PLANE_MIRROR);
+
+      const vBoxOptions = { align: 'left', spacing: 5 };
+
+      const sourceVBox = new VBox( merge( { children: [fanSourceIcon, beamSourceIcon] }, vBoxOptions ) );
+      const lensVBox = new VBox( merge( { children: [convergingLensIcon, divergingLensIcon] }, vBoxOptions ) );
+      const curvedMirrorVBox = new VBox( merge( { children: [convergingMirrorIcon, divergingMirrorIcon] }, vBoxOptions ) );
+      const planeMirrorVBox = new VBox( merge( { children: [planeMirrorIcon] }, vBoxOptions ) );
+      const maskVBox = new VBox( merge( { children: [simpleMaskIcon, slitMaskIcon] }, vBoxOptions ) );
+
+      const panelContent = new HBox( {
+        children: [sourceVBox, lensVBox, planeMirrorVBox, curvedMirrorVBox, maskVBox],
+        align: 'top',
+        spacing: 10
+      } );
+
+      super( panelContent, { xMargin: 15, yMargin: 5, lineWidth: 2, fill: PANEL_COLOR } );
 
     }//end constructor
   }
-
   return opticsLab.register( 'ToolDrawerPanel', ToolDrawerPanel );
-
 } );
