@@ -58,7 +58,6 @@ define( require => {
       this.sources.add( source );
       this.pieces.add( source );
       source.setPosition( source.positionProperty.value );
-      //this.sources.push( source );
     }
 
     /**
@@ -69,7 +68,6 @@ define( require => {
     addComponent( component ) {
       this.components.add( component );
       this.pieces.add( component );
-      //this.components.push( component );
     }
 
     /**
