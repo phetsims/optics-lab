@@ -57,13 +57,6 @@ define( require => {
 
     /**
      *
-     */
-    clearSegments() {
-      this.segments = [];
-    }
-
-    /**
-     *
      * @param {Vector2} startPos
      * @param {Vector2} endPos
      * @public
