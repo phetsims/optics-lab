@@ -10,9 +10,6 @@ define( require => {
 
   // modules
   const opticsLab = require( 'OPTICS_LAB/opticsLab' );
-
-
-  // modules
   const Enumeration = require( 'PHET_CORE/Enumeration' );
 
   const Type = Enumeration.byKeys( [
