@@ -216,17 +216,7 @@ define( require => {
       } );
       this.expandedProperty.link( tOrF => {
         displayPanel.visible = tOrF;
-        //if( displayPanel !== null ){
-        //    displayPanel.visible = tOrF;
-        //}
       } );
-      //if( type !== Type.FAN_SOURCE && type !== Type.BEAM_SOURCE ){
-      //    mainView.selectedPieceProperty.lazyLink( function( piece ){
-      //       var fValue = piece.pieceModel.f;
-      //       this.focalLengthReadoutText.text = fValue.toFixed( 0 );
-      //    });
-      //}
-
 
     }//end constructor
 
