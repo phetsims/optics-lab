@@ -46,7 +46,6 @@ define( require => {
       this.relativeRayStarts = []; //starting positions, relative to source center, of each ray
       this.rayNodes = [];   //array of rayNodes, a rayNode is a path of a ray from source through components to end
       this.counter = 0; //for testing only
-      this.rayColor = '#fff';
       this.settingHeight = false; //flag used to prevent conflicting calls to set angle of translation handle
       // Call the super constructor
 
@@ -176,7 +175,6 @@ define( require => {
           default:
             throw new Error( 'invalid color: ' + color );
         }
-        this.rayColor = colorCode;
         for ( let i = 0; i < MAXIMUM_LIGHT_RAYS; i++ ) {
           this.rayNodes[ i ].strokeColor = colorCode;
         }
@@ -202,7 +200,6 @@ define( require => {
       //var rayFontObject = { stroke: 'white', lineWidth: 2 } ;
       for ( let r = 0; r < this.pieceModel.rayPaths.length; r++ ) {
         this.rayNodes[ r ].visible = true;
-        //this.rayNodes[ r ].strokeColor = this.rayColor;
         const dir = this.pieceModel.rayPaths[ r ].startDir;
         const sourceCenter = this.pieceModel.positionProperty.value;
         if ( this.pieceModel.rayPaths[ r ].segments.length === 0 ) {
