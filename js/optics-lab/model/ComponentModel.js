@@ -65,8 +65,7 @@ define( require => {
 
       this.indexProperty.link( index => {
         const R = this.radiusProperty.value;
-        const n = index;
-        this.fProperty.value = R / ( 2 * ( n - 1 ) );
+        this.fProperty.value = R / ( 2 * ( index - 1 ) );
         mainModel.processRays();
       } );
 
