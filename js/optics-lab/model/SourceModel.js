@@ -211,8 +211,8 @@ define( require => {
           this.rayPaths[ i ].startPos = position;
         }
         else if ( this.type === Type.BEAM_SOURCE ) {
-          var lowestPos;
-          var deltaPos;
+          let lowestPos;
+          let deltaPos;
           const sinAngle = Math.sin( -this.angleProperty.value );   //in screen coords, + angle is CW
           const cosAngle = Math.cos( -this.angleProperty.value );
           const h = this.widthProperty.value;
