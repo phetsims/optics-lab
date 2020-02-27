@@ -5,25 +5,22 @@
  *
  * @author Martin Veillette (Berea College)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const opticsLab = require( 'OPTICS_LAB/opticsLab' );
-  const Enumeration = require( 'PHET_CORE/Enumeration' );
+import Enumeration from '../../../../phet-core/js/Enumeration.js';
+import opticsLab from '../../opticsLab.js';
 
-  const Type = Enumeration.byKeys( [
+const Type = Enumeration.byKeys( [
 
-    'SLIT_MASK',
-    'SIMPLE_MASK',
-    'DIVERGING_MIRROR',
-    'CONVERGING_MIRROR',
-    'PLANE_MIRROR',
-    'CONVERGING_LENS',
-    'DIVERGING_LENS',
-    'FAN_SOURCE',
-    'BEAM_SOURCE'
-  ] );
+  'SLIT_MASK',
+  'SIMPLE_MASK',
+  'DIVERGING_MIRROR',
+  'CONVERGING_MIRROR',
+  'PLANE_MIRROR',
+  'CONVERGING_LENS',
+  'DIVERGING_LENS',
+  'FAN_SOURCE',
+  'BEAM_SOURCE'
+] );
 
-  return opticsLab.register( 'Type', Type );
-} );
+opticsLab.register( 'Type', Type );
+export default Type;

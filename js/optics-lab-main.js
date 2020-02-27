@@ -5,30 +5,27 @@
  *
  * @author Michael Dubson (PhET Interactive Simulations)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const OpticsLabScreen = require( 'OPTICS_LAB/optics-lab/OpticsLabScreen' );
-  //following 2 lines always required in every sim
-  const Sim = require( 'JOIST/Sim' );
-  const SimLauncher = require( 'JOIST/SimLauncher' );
+import Sim from '../../joist/js/Sim.js';
+import SimLauncher from '../../joist/js/SimLauncher.js';
+import opticsLabStrings from './optics-lab-strings.js';
+import OpticsLabScreen from './optics-lab/OpticsLabScreen.js';
 
-  // strings
-  const opticsLabTitleString = require( 'string!OPTICS_LAB/optics-lab.title' );
+//following 2 lines always required in every sim
 
-  const simOptions = {
-    credits: {
-      //TODO fill in credits
-      leadDesign: 'Michael Dubson',
-      softwareDevelopment: 'Michael Dubson',
-      team: '',
-      thanks: ''
-    }
-  };
+const opticsLabTitleString = opticsLabStrings[ 'optics-lab' ].title;
 
-  SimLauncher.launch( () => {
-    const sim = new Sim( opticsLabTitleString, [new OpticsLabScreen()], simOptions );
-    sim.start();
-  } );
+const simOptions = {
+  credits: {
+    //TODO fill in credits
+    leadDesign: 'Michael Dubson',
+    softwareDevelopment: 'Michael Dubson',
+    team: '',
+    thanks: ''
+  }
+};
+
+SimLauncher.launch( () => {
+  const sim = new Sim( opticsLabTitleString, [ new OpticsLabScreen() ], simOptions );
+  sim.start();
 } );

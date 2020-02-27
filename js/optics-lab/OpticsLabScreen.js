@@ -5,26 +5,23 @@
  *
  * @author Michael Dubson (PhET Interactive Simulations)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const opticsLab = require( 'OPTICS_LAB/opticsLab' );
-  const OpticsLabModel = require( 'OPTICS_LAB/optics-lab/model/OpticsLabModel' );
-  const OpticsLabScreenView = require( 'OPTICS_LAB/optics-lab/view/OpticsLabScreenView' );
-  const Property = require( 'AXON/Property' );
-  const Screen = require( 'JOIST/Screen' );
+import Property from '../../../axon/js/Property.js';
+import Screen from '../../../joist/js/Screen.js';
+import opticsLab from '../opticsLab.js';
+import OpticsLabModel from './model/OpticsLabModel.js';
+import OpticsLabScreenView from './view/OpticsLabScreenView.js';
 
-  class OpticsLabScreen extends Screen {
+class OpticsLabScreen extends Screen {
 
-    constructor() {
-      super(
-        () => new OpticsLabModel(),
-        model => new OpticsLabScreenView( model ),
-        { backgroundColorProperty: new Property( '#0000CC' ) }
-      );
-    }
+  constructor() {
+    super(
+      () => new OpticsLabModel(),
+      model => new OpticsLabScreenView( model ),
+      { backgroundColorProperty: new Property( '#0000CC' ) }
+    );
   }
+}
 
-  return opticsLab.register( 'OpticsLabScreen', OpticsLabScreen );
-} );
+opticsLab.register( 'OpticsLabScreen', OpticsLabScreen );
+export default OpticsLabScreen;

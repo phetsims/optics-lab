@@ -7,107 +7,105 @@
  *
  * @author Michael Dubson (PhET Interactive Simulations)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const HBox = require( 'SCENERY/nodes/HBox' );
-  const Node = require( 'SCENERY/nodes/Node' );
-  const merge = require( 'PHET_CORE/merge' );
-  const opticsLab = require( 'OPTICS_LAB/opticsLab' );
-  const Panel = require( 'SUN/Panel' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  const Text = require( 'SCENERY/nodes/Text' );
-  const Type = require( 'OPTICS_LAB/optics-lab/model/Type' );
-  const VBox = require( 'SCENERY/nodes/VBox' );
+import merge from '../../../../phet-core/js/merge.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import SimpleDragHandler from '../../../../scenery/js/input/SimpleDragHandler.js';
+import HBox from '../../../../scenery/js/nodes/HBox.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import VBox from '../../../../scenery/js/nodes/VBox.js';
+import Panel from '../../../../sun/js/Panel.js';
+import opticsLab from '../../opticsLab.js';
+import Type from '../model/Type.js';
 
-  //constants
-  const DISPLAY_FONT = new PhetFont( 12 );
-  const PANEL_COLOR = '#ccc';
+//constants
+const DISPLAY_FONT = new PhetFont( 12 );
+const PANEL_COLOR = '#ccc';
 
-  class ToolDrawerPanel extends Panel {
+class ToolDrawerPanel extends Panel {
+  /**
+   * @param {OpticsLabScreenView} mainView
+   */
+  constructor( mainView ) {
+
     /**
-     * @param {OpticsLabScreenView} mainView
+     * Create icon with dragListener
+     * @param {string} string
+     * @param {Type} type
+     * @returns {Node}
      */
-    constructor( mainView ) {
+    const createIcon = ( string, type ) => {
 
-      /**
-       * Create icon with dragListener
-       * @param {string} string
-       * @param {Type} type
-       * @returns {Node}
-       */
-      const createIcon = ( string, type ) => {
+      const fontOptions = { font: DISPLAY_FONT };
+      const pieceText = new Text( string, fontOptions );
+      const iconLayer = new Node();
+      iconLayer.addChild( pieceText );
+      iconLayer.addChild( new Rectangle( pieceText.bounds.dilatedXY( 8, 5 ), {
+        fill: 'green',
+        cursor: 'pointer',
+        opacity: 0.1
+      } ) );
 
-        const fontOptions = { font: DISPLAY_FONT };
-        const pieceText= new Text( string, fontOptions );
-        const iconLayer = new Node();
-        iconLayer.addChild( pieceText);
-        iconLayer.addChild( new Rectangle( pieceText.bounds.dilatedXY(8,5), {
-          fill: 'green',
-          cursor: 'pointer',
-          opacity: 0.1
-        } ) );
+      let pieceGrabbed;
+      iconLayer.addInputListener( new SimpleDragHandler(
+        {
 
-        let pieceGrabbed;
-        iconLayer.addInputListener( new SimpleDragHandler(
-          {
+          allowTouchSnag: true,
 
-            allowTouchSnag: true,
+          start: e => {
 
-            start: e => {
+            const startPosition = this.globalToParentPoint( e.pointer.point );
+            pieceGrabbed = mainView.addPiece( type, startPosition );
+            //pieceGrabbed.mainView.setSelectedPiece( pieceGrabbed );
+            mainView.setSelectedPiece( pieceGrabbed );
+          },
 
-              const startPosition = this.globalToParentPoint( e.pointer.point );
-              pieceGrabbed = mainView.addPiece( type, startPosition );
-              //pieceGrabbed.mainView.setSelectedPiece( pieceGrabbed );
-              mainView.setSelectedPiece( pieceGrabbed );
-            },
+          drag: e => {
+            const position = this.globalToParentPoint( e.pointer.point );   //returns Vector2
 
-            drag: e => {
-              const position = this.globalToParentPoint( e.pointer.point );   //returns Vector2
-
-              pieceGrabbed.pieceModel.setPosition( position );
-            },
-            end: e => {
-              const vEnd = this.globalToParentPoint( e.pointer.point );
-              if ( this.visibleBounds.containsCoordinates( vEnd.x, vEnd.y ) ) {
-                mainView.removePiece( pieceGrabbed );
-              }
+            pieceGrabbed.pieceModel.setPosition( position );
+          },
+          end: e => {
+            const vEnd = this.globalToParentPoint( e.pointer.point );
+            if ( this.visibleBounds.containsCoordinates( vEnd.x, vEnd.y ) ) {
+              mainView.removePiece( pieceGrabbed );
             }
-          }//end addInputListener
-        ) );
-        return iconLayer;
-      }; //end nodeSetup
+          }
+        }//end addInputListener
+      ) );
+      return iconLayer;
+    }; //end nodeSetup
 
-      const fanSourceIcon = createIcon( 'Fan Source', Type.FAN_SOURCE);
-      const beamSourceIcon = createIcon( 'Beam Source', Type.BEAM_SOURCE);
-      const convergingLensIcon= createIcon( 'Converging Lens', Type.CONVERGING_LENS);
-      const convergingMirrorIcon= createIcon( 'Converging Mirror', Type.CONVERGING_MIRROR);
-      const divergingLensIcon= createIcon( 'Diverging Lens', Type.DIVERGING_LENS);
-      const divergingMirrorIcon= createIcon( 'Diverging Mirror', Type.DIVERGING_MIRROR);
-      const simpleMaskIcon = createIcon( 'Simple Mask', Type.SIMPLE_MASK);
-      const slitMaskIcon = createIcon( 'Slit Mask', Type.SLIT_MASK);
-      const planeMirrorIcon = createIcon( 'Plane Mirror', Type.PLANE_MIRROR);
+    const fanSourceIcon = createIcon( 'Fan Source', Type.FAN_SOURCE );
+    const beamSourceIcon = createIcon( 'Beam Source', Type.BEAM_SOURCE );
+    const convergingLensIcon = createIcon( 'Converging Lens', Type.CONVERGING_LENS );
+    const convergingMirrorIcon = createIcon( 'Converging Mirror', Type.CONVERGING_MIRROR );
+    const divergingLensIcon = createIcon( 'Diverging Lens', Type.DIVERGING_LENS );
+    const divergingMirrorIcon = createIcon( 'Diverging Mirror', Type.DIVERGING_MIRROR );
+    const simpleMaskIcon = createIcon( 'Simple Mask', Type.SIMPLE_MASK );
+    const slitMaskIcon = createIcon( 'Slit Mask', Type.SLIT_MASK );
+    const planeMirrorIcon = createIcon( 'Plane Mirror', Type.PLANE_MIRROR );
 
-      const vBoxOptions = { align: 'left', spacing: 5 };
+    const vBoxOptions = { align: 'left', spacing: 5 };
 
-      const sourceVBox = new VBox( merge( { children: [fanSourceIcon, beamSourceIcon] }, vBoxOptions ) );
-      const lensVBox = new VBox( merge( { children: [convergingLensIcon, divergingLensIcon] }, vBoxOptions ) );
-      const curvedMirrorVBox = new VBox( merge( { children: [convergingMirrorIcon, divergingMirrorIcon] }, vBoxOptions ) );
-      const planeMirrorVBox = new VBox( merge( { children: [planeMirrorIcon] }, vBoxOptions ) );
-      const maskVBox = new VBox( merge( { children: [simpleMaskIcon, slitMaskIcon] }, vBoxOptions ) );
+    const sourceVBox = new VBox( merge( { children: [ fanSourceIcon, beamSourceIcon ] }, vBoxOptions ) );
+    const lensVBox = new VBox( merge( { children: [ convergingLensIcon, divergingLensIcon ] }, vBoxOptions ) );
+    const curvedMirrorVBox = new VBox( merge( { children: [ convergingMirrorIcon, divergingMirrorIcon ] }, vBoxOptions ) );
+    const planeMirrorVBox = new VBox( merge( { children: [ planeMirrorIcon ] }, vBoxOptions ) );
+    const maskVBox = new VBox( merge( { children: [ simpleMaskIcon, slitMaskIcon ] }, vBoxOptions ) );
 
-      const panelContent = new HBox( {
-        children: [sourceVBox, lensVBox, planeMirrorVBox, curvedMirrorVBox, maskVBox],
-        align: 'top',
-        spacing: 10
-      } );
+    const panelContent = new HBox( {
+      children: [ sourceVBox, lensVBox, planeMirrorVBox, curvedMirrorVBox, maskVBox ],
+      align: 'top',
+      spacing: 10
+    } );
 
-      super( panelContent, { xMargin: 15, yMargin: 5, lineWidth: 2, fill: PANEL_COLOR } );
+    super( panelContent, { xMargin: 15, yMargin: 5, lineWidth: 2, fill: PANEL_COLOR } );
 
-    }//end constructor
-  }
-  return opticsLab.register( 'ToolDrawerPanel', ToolDrawerPanel );
-} );
+  }//end constructor
+}
+
+opticsLab.register( 'ToolDrawerPanel', ToolDrawerPanel );
+export default ToolDrawerPanel;
