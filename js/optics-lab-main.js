@@ -8,7 +8,7 @@
 
 import Sim from '../../joist/js/Sim.js';
 import SimLauncher from '../../joist/js/SimLauncher.js';
-import opticsLabStrings from './optics-lab-strings.js';
+import opticsLabStrings from './opticsLabStrings.js';
 import OpticsLabScreen from './optics-lab/OpticsLabScreen.js';
 
 //following 2 lines always required in every sim
