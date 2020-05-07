@@ -7,7 +7,7 @@
  */
 
 import Sim from '../../joist/js/Sim.js';
-import SimLauncher from '../../joist/js/SimLauncher.js';
+import simLauncher from '../../joist/js/simLauncher.js';
 import opticsLabStrings from './opticsLabStrings.js';
 import OpticsLabScreen from './optics-lab/OpticsLabScreen.js';
 
@@ -25,7 +25,7 @@ const simOptions = {
   }
 };
 
-SimLauncher.launch( () => {
+simLauncher.launch( () => {
   const sim = new Sim( opticsLabTitleString, [ new OpticsLabScreen() ], simOptions );
   sim.start();
 } );
