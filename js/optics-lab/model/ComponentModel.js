@@ -84,7 +84,7 @@ class ComponentModel {
   }
 
   /**
-   *
+   * @private TODO- looks unused
    */
   updateFocalLength() {
     if ( this.type === Type.CONVERGING_LENS || this.type === Type.DIVERGING_LENS ) {

@@ -221,13 +221,14 @@ class ControlPanel extends Node {
   /**
    *
    * @param {SourceNode|ComponentNode} piece
+   * @private
    */
   linkToPiece( piece ) {
 
   }
 
   /**
-   *
+   * @private
    */
   unlinkToOldPiece() {
 

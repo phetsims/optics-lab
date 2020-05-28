@@ -74,6 +74,7 @@ class ControlPanelManager extends Node {
    *
    * @param {Type} type
    * @returns {number}
+   * @public
    */
   getIndex( type ) {
     let index;
