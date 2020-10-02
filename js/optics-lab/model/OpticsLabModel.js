@@ -25,13 +25,13 @@ class OpticsLabModel {
     this.processingRays = false;  //true if rays are being processed,
     // needed to ensure current processing to end before new processing begins
 
-    // @private {ObservableArray.<SourceModel>}
+    // @private {ObservableArrayDef.<SourceModel>}
     this.sources = createObservableArray();     //source of light rays
 
-    // @private {ObservableArray.<ComponentModel>}
+    // @private {ObservableArrayDef.<ComponentModel>}
     this.components = createObservableArray();  //component = lens, mirror, or mask
 
-    // @private {ObservableArray.<ComponentModel|SourceModel>}
+    // @private {ObservableArrayDef.<ComponentModel|SourceModel>}
     this.pieces = createObservableArray();      //piece = source or component
   }
 
