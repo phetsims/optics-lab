@@ -7,7 +7,7 @@
  */
 
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import ObservableArray from '../../../../axon/js/ObservableArray.js';
+import createObservableArray from '../../../../axon/js/createObservableArray.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import opticsLab from '../../opticsLab.js';
@@ -26,13 +26,13 @@ class OpticsLabModel {
     // needed to ensure current processing to end before new processing begins
 
     // @private {ObservableArray.<SourceModel>}
-    this.sources = new ObservableArray();     //source of light rays
+    this.sources = createObservableArray();     //source of light rays
 
     // @private {ObservableArray.<ComponentModel>}
-    this.components = new ObservableArray();  //component = lens, mirror, or mask
+    this.components = createObservableArray();  //component = lens, mirror, or mask
 
     // @private {ObservableArray.<ComponentModel|SourceModel>}
-    this.pieces = new ObservableArray();      //piece = source or component
+    this.pieces = createObservableArray();      //piece = source or component
   }
 
 

@@ -17,7 +17,7 @@
  * @author Michael Dubson (PhET Interactive Simulations)
  */
 
-import ObservableArray from '../../../../axon/js/ObservableArray.js';
+import createObservableArray from '../../../../axon/js/createObservableArray.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import opticsLab from '../../opticsLab.js';
@@ -33,7 +33,7 @@ class ControlPanelManager extends Node {
     super();
     this.mainView = mainView;
     this.controlPanels = [];     //one display for each piece on the stage, only display of selected piece is visible
-    this.pieces = new ObservableArray();
+    this.pieces = createObservableArray();
     this.selectedPiece = new Node();
     this.previousRaysUpdate;
     this.previousSpreadUpdate;
