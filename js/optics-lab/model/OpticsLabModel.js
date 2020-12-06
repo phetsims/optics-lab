@@ -83,7 +83,9 @@ class OpticsLabModel {
    * @public
    */
   removeComponent( component ) {
-    this.components.remove( component );
+    if ( this.components.includes( component ) ) {
+      this.components.remove( component );
+    }
     this.processRays();
   }
 
