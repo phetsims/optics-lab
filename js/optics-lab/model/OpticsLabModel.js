@@ -73,7 +73,10 @@ class OpticsLabModel {
    * @public
    */
   removeSource( source ) {
-    this.sources.remove( source );
+    if ( this.sources.includes( source ) ) {
+      this.sources.remove( source );
+    }
+
     this.processRays();
   }
 
