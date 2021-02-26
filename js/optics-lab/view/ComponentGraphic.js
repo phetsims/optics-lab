@@ -140,6 +140,7 @@ class ComponentGraphic extends Node {
     this.path.setShape( shape );
     this.mirrorBackGraphic.visible = false;
   }//end drawLens()
+
   /**
    * Draws a curve mirror (convergent and divergent)
    * @private

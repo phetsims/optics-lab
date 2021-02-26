@@ -70,6 +70,7 @@ class ControlPanelManager extends Node {
     // All controls are placed on display node, with visibility set by accordionBox button
 
   }//end constructor
+
   /**
    *
    * @param {Type} type
