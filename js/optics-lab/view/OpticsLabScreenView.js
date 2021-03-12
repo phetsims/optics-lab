@@ -117,7 +117,7 @@ class OpticsLabScreenView extends ScreenView {
         componentModel = new ComponentModel( this.mainModel, Type.SIMPLE_MASK, 100, 0, 0 );
         break;
       default:
-        throw new Error( 'invalid type: ' + type );
+        throw new Error( `invalid type: ${type}` );
     }//end switch()
     let componentNode;
     if ( componentModel !== undefined ) {

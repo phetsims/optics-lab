@@ -85,7 +85,7 @@ class ComponentGraphic extends Node {
         this.drawMask();
         break;
       default:
-        throw new Error( 'invalid type: ' + this.type );
+        throw new Error( `invalid type: ${this.type}` );
     }//end switch
   }
 

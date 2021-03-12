@@ -191,7 +191,7 @@ class ControlPanel extends Node {
         panelContent = hBoxMaker( [ fillerBox ] );
         break;
       default:
-        throw new Error( 'invalid type: ' + type );
+        throw new Error( `invalid type: ${type}` );
 
     }//end switch()
     const expandCollapseButton = new ExpandCollapseButton( this.expandedProperty, {

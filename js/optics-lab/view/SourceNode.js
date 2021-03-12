@@ -170,7 +170,7 @@ class SourceNode extends Node {
           colorCode = '#ff0';
           break;
         default:
-          throw new Error( 'invalid color: ' + color );
+          throw new Error( `invalid color: ${color}` );
       }
       for ( let i = 0; i < MAXIMUM_LIGHT_RAYS; i++ ) {
         this.rayNodes[ i ].strokeColor = colorCode;
