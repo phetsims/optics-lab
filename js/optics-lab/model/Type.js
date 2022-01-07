@@ -6,10 +6,10 @@
  * @author Martin Veillette (Berea College)
  */
 
-import Enumeration from '../../../../phet-core/js/Enumeration.js';
+import EnumerationDeprecated from '../../../../phet-core/js/EnumerationDeprecated.js';
 import opticsLab from '../../opticsLab.js';
 
-const Type = Enumeration.byKeys( [
+const Type = EnumerationDeprecated.byKeys( [
 
   'SLIT_MASK',
   'SIMPLE_MASK',
