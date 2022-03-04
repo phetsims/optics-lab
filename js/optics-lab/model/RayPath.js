@@ -7,8 +7,8 @@
  * @author Michael Dubson (PhET Interactive Simulations)
  */
 
-import Line from '../../../../kite/js/segments/Line.js';
-import Shape from '../../../../kite/js/Shape.js';
+import { Line } from '../../../../kite/js/imports.js';
+import { Shape } from '../../../../kite/js/imports.js';
 import opticsLab from '../../opticsLab.js';
 
 class RayPath {
