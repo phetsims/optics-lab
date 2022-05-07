@@ -9,7 +9,7 @@ import opticsLab from './opticsLab.js';
 
 type StringsType = {
   'optics-lab': {
-    'title': string
+    'title': string;
   }
 };
 
