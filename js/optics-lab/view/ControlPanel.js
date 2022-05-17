@@ -22,10 +22,7 @@ import Property from '../../../../axon/js/Property.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Range from '../../../../dot/js/Range.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Text } from '../../../../scenery/js/imports.js';
-import { VBox } from '../../../../scenery/js/imports.js';
+import { HBox, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import AquaRadioButton from '../../../../sun/js/AquaRadioButton.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import ExpandCollapseButton from '../../../../sun/js/ExpandCollapseButton.js';
@@ -146,11 +143,11 @@ class ControlPanel extends Node {
     const diameterVBox = vBoxMaker( [ diameterSlider, diameterText ] );
 
     const radiusSlider = new HSlider( this.radiusOfCurvatureProperty, new Range( 100, 800 ), sliderOptions );
-    const radiusVBox = vBoxMaker( [ radiusSlider, radiusText ] );
+    const radiusVBox = vBoxMaker( [ radiusSlider, new Node( { children: [ radiusText ] } ) ] );
 
     //TODO Range here may be incorrect, see https://github.com/phetsims/optics-lab/issues/22
     const radiusSlider2 = new HSlider( this.radiusOfCurvatureProperty, new Range( -800, -100 ), sliderOptions );
-    const radiusVBox2 = vBoxMaker( [ radiusSlider2, radiusText ] );
+    const radiusVBox2 = vBoxMaker( [ radiusSlider2, new Node( { children: [ radiusText ] } ) ] );
 
     const indexSlider = new HSlider( this.indexOfRefractionProperty, new Range( 1.4, 3 ), sliderOptions );
     const indexVBox = vBoxMaker( [ indexSlider, indexText ] );
