@@ -154,7 +154,7 @@ class ControlPanel extends Node {
 
     const checkboxOptions = { checkboxColorBackground: 'white' };
 
-    const focalPtCheckbox = new Checkbox( focalPointsText, this.showFocalPointsProperty, checkboxOptions );
+    const focalPtCheckbox = new Checkbox( this.showFocalPointsProperty, focalPointsText, checkboxOptions );
 
     const focalLengthHBox = hBoxMaker( [ focalLengthText, this.focalLengthReadoutText ] );
     let panelContent = new Node();
