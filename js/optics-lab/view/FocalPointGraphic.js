@@ -6,8 +6,7 @@
  */
 
 import Utils from '../../../../dot/js/Utils.js';
-import { Line } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import { Line, Node } from '../../../../scenery/js/imports.js';
 import opticsLab from '../../opticsLab.js';
 
 class FocalPointGraphic extends Node {

@@ -9,10 +9,7 @@
 
 import Utils from '../../../../dot/js/Utils.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import { Line } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Path } from '../../../../scenery/js/imports.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
+import { Line, Node, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import opticsLab from '../../opticsLab.js';
 import Type from '../model/Type.js';
 import FocalPointGraphic from './FocalPointGraphic.js';
