@@ -5,11 +5,13 @@
  */
 /* eslint-disable */
 import getStringModule from '../../chipper/js/getStringModule.js';
+import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import opticsLab from './opticsLab.js';
 
 type StringsType = {
   'optics-lab': {
     'title': string;
+    'titleProperty': TReadOnlyProperty<string>;
   }
 };
 
