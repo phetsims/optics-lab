@@ -11,7 +11,7 @@ import opticsLab from './opticsLab.js';
 type StringsType = {
   'optics-lab': {
     'title': string;
-    'titleProperty': TReadOnlyProperty<string>;
+    'titleStringProperty': TReadOnlyProperty<string>;
   }
 };
 
