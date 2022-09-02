@@ -13,7 +13,7 @@ import opticsLabStrings from './opticsLabStrings.js';
 
 //following 2 lines always required in every sim
 
-const opticsLabTitleString = opticsLabStrings[ 'optics-lab' ].title;
+const opticsLabTitleStringProperty = opticsLabStrings[ 'optics-lab' ].titleStringProperty;
 
 const simOptions = {
   credits: {
@@ -26,6 +26,6 @@ const simOptions = {
 };
 
 simLauncher.launch( () => {
-  const sim = new Sim( opticsLabTitleString, [ new OpticsLabScreen() ], simOptions );
+  const sim = new Sim( opticsLabTitleStringProperty, [ new OpticsLabScreen() ], simOptions );
   sim.start();
 } );
