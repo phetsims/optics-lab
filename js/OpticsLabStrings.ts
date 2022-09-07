@@ -15,8 +15,8 @@ type StringsType = {
   }
 };
 
-const opticsLabStrings = getStringModule( 'OPTICS_LAB' ) as StringsType;
+const OpticsLabStrings = getStringModule( 'OPTICS_LAB' ) as StringsType;
 
-opticsLab.register( 'opticsLabStrings', opticsLabStrings );
+opticsLab.register( 'OpticsLabStrings', OpticsLabStrings );
 
-export default opticsLabStrings;
+export default OpticsLabStrings;
