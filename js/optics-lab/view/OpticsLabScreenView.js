@@ -162,7 +162,9 @@ class OpticsLabScreenView extends ScreenView {
    */
   removeSource( sourceNode ) {
     const sourceModel = sourceNode.pieceModel;
-    if ( this.hasChildren( sourceNode ) ) {
+
+    // add guard see https://github.com/phetsims/optics-lab/issues/37
+    if ( this.hasChild( sourceNode ) ) {
       this.removeChild( sourceNode );
     }
     this.mainModel.removeSource( sourceModel );
@@ -175,6 +177,7 @@ class OpticsLabScreenView extends ScreenView {
    */
   removeComponent( componentNode ) {
 
+    // add guard see https://github.com/phetsims/optics-lab/issues/37
     if ( this.hasChild( componentNode ) ) {
       this.removeChild( componentNode );
     }
