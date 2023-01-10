@@ -162,7 +162,9 @@ class OpticsLabScreenView extends ScreenView {
    */
   removeSource( sourceNode ) {
     const sourceModel = sourceNode.pieceModel;
-    this.removeChild( sourceNode );
+    if ( this.hasChildren( sourceNode ) ) {
+      this.removeChild( sourceNode );
+    }
     this.mainModel.removeSource( sourceModel );
   }
 
@@ -172,7 +174,10 @@ class OpticsLabScreenView extends ScreenView {
    * @private
    */
   removeComponent( componentNode ) {
-    this.removeChild( componentNode );
+
+    if ( this.hasChild( componentNode ) ) {
+      this.removeChild( componentNode );
+    }
     const componentModel = componentNode.pieceModel;
     this.mainModel.removeComponent( componentModel );
   }
