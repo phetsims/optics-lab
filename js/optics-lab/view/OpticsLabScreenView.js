@@ -1,4 +1,4 @@
-// Copyright 2014-2021, University of Colorado Boulder
+// Copyright 2014-2023, University of Colorado Boulder
 
 /**
  * View for the 'Optics Lab' screen.
