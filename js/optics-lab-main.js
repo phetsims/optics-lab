@@ -17,7 +17,7 @@ const opticsLabTitleStringProperty = OpticsLabStrings[ 'optics-lab' ].titleStrin
 
 const simOptions = {
   credits: {
-    //TODO fill in credits
+    //TODO fill in credits https://github.com/phetsims/tasks/issues/1129
     leadDesign: 'Michael Dubson',
     softwareDevelopment: 'Michael Dubson',
     team: '',

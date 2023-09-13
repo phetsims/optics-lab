@@ -84,7 +84,7 @@ class ComponentModel {
   }
 
   /**
-   * @private TODO- looks unused
+   * @private TODO- looks unused https://github.com/phetsims/tasks/issues/1129
    */
   updateFocalLength() {
     if ( this.type === Type.CONVERGING_LENS || this.type === Type.DIVERGING_LENS ) {
