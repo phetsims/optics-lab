@@ -83,8 +83,9 @@ class ComponentModel {
     this.angleProperty.reset();
   }
 
+  //TODO https://github.com/phetsims/optics-lab/issues/42 appears to be unused, delete?
   /**
-   * @private TODO- looks unused https://github.com/phetsims/tasks/issues/1129
+   * @private
    */
   updateFocalLength() {
     if ( this.type === Type.CONVERGING_LENS || this.type === Type.DIVERGING_LENS ) {
