@@ -8,7 +8,7 @@
 
 
 // modules
-// const ModelViewTransform2 = require( '/phetcommon/js/view/ModelViewTransform2' );
+// const ModelViewTransform2 = require( '/phetcommon/js/view/ModelViewTransform2.js' );
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
