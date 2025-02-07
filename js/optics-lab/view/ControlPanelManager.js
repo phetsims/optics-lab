@@ -19,7 +19,7 @@
 
 import createObservableArray from '../../../../axon/js/createObservableArray.js';
 import Utils from '../../../../dot/js/Utils.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import opticsLab from '../../opticsLab.js';
 import Type from '../model/Type.js';
 import ControlPanel from './ControlPanel.js';

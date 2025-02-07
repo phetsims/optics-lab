@@ -10,7 +10,12 @@
 
 import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox, Node, Rectangle, SimpleDragHandler, Text, VBox } from '../../../../scenery/js/imports.js';
+import SimpleDragHandler from '../../../../scenery/js/input/SimpleDragHandler.js';
+import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
+import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
 import Panel from '../../../../sun/js/Panel.js';
 import opticsLab from '../../opticsLab.js';
 import Type from '../model/Type.js';

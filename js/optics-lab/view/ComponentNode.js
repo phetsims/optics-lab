@@ -8,7 +8,9 @@
 
 import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import { Circle, Node, SimpleDragHandler } from '../../../../scenery/js/imports.js';
+import SimpleDragHandler from '../../../../scenery/js/input/SimpleDragHandler.js';
+import Circle from '../../../../scenery/js/nodes/Circle.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import opticsLab from '../../opticsLab.js';
 import ComponentGraphic from './ComponentGraphic.js';
 

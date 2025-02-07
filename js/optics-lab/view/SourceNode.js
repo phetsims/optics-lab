@@ -10,8 +10,12 @@
 import Property from '../../../../axon/js/Property.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import { Shape } from '../../../../kite/js/imports.js';
-import { Circle, Node, Path, Rectangle, SimpleDragHandler } from '../../../../scenery/js/imports.js';
+import Shape from '../../../../kite/js/Shape.js';
+import SimpleDragHandler from '../../../../scenery/js/input/SimpleDragHandler.js';
+import Circle from '../../../../scenery/js/nodes/Circle.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import opticsLab from '../../opticsLab.js';
 import Type from '../model/Type.js';
 import OpticsLabConstants from '../OpticsLabConstants.js';
