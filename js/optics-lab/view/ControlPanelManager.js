@@ -1,4 +1,4 @@
-// Copyright 2015-2021, University of Colorado Boulder
+// Copyright 2015-2025, University of Colorado Boulder
 
 /**
  * Control panel for a particular source (fan or beam) or a particular component (lens, mirror, or mask)
