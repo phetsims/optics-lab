@@ -16,7 +16,6 @@ import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import opticsLab from '../../opticsLab.js';
 import Type from '../model/Type.js';
 import OpticsLabConstants from '../OpticsLabConstants.js';
 
@@ -264,5 +263,4 @@ class SourceNode extends Node {
   }
 }
 
-opticsLab.register( 'SourceNode', SourceNode );
 export default SourceNode;

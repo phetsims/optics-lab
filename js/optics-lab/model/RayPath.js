@@ -9,7 +9,6 @@
 
 import { Line } from '../../../../kite/js/segments/Segment.js';
 import Shape from '../../../../kite/js/Shape.js';
-import opticsLab from '../../opticsLab.js';
 
 class RayPath {
   /**
@@ -106,5 +105,4 @@ class RayPath {
   }
 }
 
-opticsLab.register( 'RayPath', RayPath );
 export default RayPath;

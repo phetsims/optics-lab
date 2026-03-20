@@ -11,7 +11,6 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import SimpleDragHandler from '../../../../scenery/js/input/SimpleDragHandler.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import opticsLab from '../../opticsLab.js';
 import ComponentGraphic from './ComponentGraphic.js';
 
 class ComponentNode extends Node {
@@ -125,5 +124,4 @@ class ComponentNode extends Node {
   }
 }
 
-opticsLab.register( 'ComponentNode', ComponentNode );
 export default ComponentNode;

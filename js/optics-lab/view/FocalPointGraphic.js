@@ -8,7 +8,6 @@
 import Utils from '../../../../dot/js/Utils.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import opticsLab from '../../opticsLab.js';
 
 class FocalPointGraphic extends Node {
   /**
@@ -29,5 +28,4 @@ class FocalPointGraphic extends Node {
 
 }
 
-opticsLab.register( 'FocalPointGraphic', FocalPointGraphic );
 export default FocalPointGraphic;

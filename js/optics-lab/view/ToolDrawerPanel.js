@@ -17,7 +17,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Panel from '../../../../sun/js/Panel.js';
-import opticsLab from '../../opticsLab.js';
 import Type from '../model/Type.js';
 
 //constants
@@ -107,5 +106,4 @@ class ToolDrawerPanel extends Panel {
   }//end constructor
 }
 
-opticsLab.register( 'ToolDrawerPanel', ToolDrawerPanel );
 export default ToolDrawerPanel;

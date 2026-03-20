@@ -10,7 +10,6 @@ import createObservableArray from '../../../../axon/js/createObservableArray.js'
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import opticsLab from '../../opticsLab.js';
 import OpticsLabConstants from '../OpticsLabConstants.js';
 import Type from './Type.js';
 
@@ -247,5 +246,4 @@ class OpticsLabModel {
   }//end processIntersection()
 }
 
-opticsLab.register( 'OpticsLabModel', OpticsLabModel );
 export default OpticsLabModel;

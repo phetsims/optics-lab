@@ -8,7 +8,6 @@
 
 import Property from '../../../axon/js/Property.js';
 import Screen from '../../../joist/js/Screen.js';
-import opticsLab from '../opticsLab.js';
 import OpticsLabModel from './model/OpticsLabModel.js';
 import OpticsLabScreenView from './view/OpticsLabScreenView.js';
 
@@ -23,5 +22,4 @@ class OpticsLabScreen extends Screen {
   }
 }
 
-opticsLab.register( 'OpticsLabScreen', OpticsLabScreen );
 export default OpticsLabScreen;

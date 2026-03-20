@@ -13,7 +13,6 @@ import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import opticsLab from '../../opticsLab.js';
 import ComponentModel from '../model/ComponentModel.js';
 import SourceModel from '../model/SourceModel.js';
 import Type from '../model/Type.js';
@@ -215,5 +214,4 @@ class OpticsLabScreenView extends ScreenView {
   }
 }
 
-opticsLab.register( 'OpticsLabScreenView', OpticsLabScreenView );
 export default OpticsLabScreenView;

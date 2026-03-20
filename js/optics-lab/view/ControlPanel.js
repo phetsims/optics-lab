@@ -31,7 +31,6 @@ import Checkbox from '../../../../sun/js/Checkbox.js';
 import ExpandCollapseButton from '../../../../sun/js/ExpandCollapseButton.js';
 import HSlider from '../../../../sun/js/HSlider.js';
 import Panel from '../../../../sun/js/Panel.js';
-import opticsLab from '../../opticsLab.js';
 import Type from '../model/Type.js';
 import OpticsLabConstants from '../OpticsLabConstants.js';
 
@@ -250,5 +249,4 @@ class ControlPanel extends Node {
   }
 }
 
-opticsLab.register( 'ControlPanel', ControlPanel );
 export default ControlPanel;

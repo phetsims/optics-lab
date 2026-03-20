@@ -7,7 +7,6 @@
  */
 
 import EnumerationDeprecated from '../../../../phet-core/js/EnumerationDeprecated.js';
-import opticsLab from '../../opticsLab.js';
 
 const Type = EnumerationDeprecated.byKeys( [
 
@@ -22,5 +21,4 @@ const Type = EnumerationDeprecated.byKeys( [
   'BEAM_SOURCE'
 ] );
 
-opticsLab.register( 'Type', Type );
 export default Type;

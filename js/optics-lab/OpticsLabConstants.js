@@ -7,7 +7,6 @@
  */
 
 import Bounds2 from '../../../dot/js/Bounds2.js';
-import opticsLab from '../opticsLab.js';
 
 const OpticsLabConstants = {
   // layout bounds used throughout the simulation for laying out the screens
@@ -25,5 +24,4 @@ const OpticsLabConstants = {
   // TODO convert the length to model coordinates (see #31)
   MAXIMUM_RAY_LENGTH: 2000 // maximum length of segment of rayPath
 };
-opticsLab.register( 'OpticsLabConstants', OpticsLabConstants );
 export default OpticsLabConstants;

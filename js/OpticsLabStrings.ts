@@ -20,6 +20,4 @@ type StringsType = {
 
 const OpticsLabStrings = getStringModule( 'OPTICS_LAB' ) as StringsType;
 
-opticsLab.register( 'OpticsLabStrings', OpticsLabStrings );
-
 export default OpticsLabStrings;

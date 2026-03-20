@@ -13,7 +13,6 @@ import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import opticsLab from '../../opticsLab.js';
 import Type from '../model/Type.js';
 import FocalPointGraphic from './FocalPointGraphic.js';
 
@@ -250,5 +249,4 @@ class ComponentGraphic extends Node {
   }
 }
 
-opticsLab.register( 'ComponentGraphic', ComponentGraphic );
 export default ComponentGraphic;
